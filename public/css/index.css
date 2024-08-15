@@ -6,7 +6,7 @@
 }
 
 #sessao-home{
-    width: 100%;
+    width: 100vw;
     height: 100%;
     background: #071607;
 }
@@ -33,6 +33,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100vw;
+    height: 100vh;
 }
 
 .texto-inicio{
