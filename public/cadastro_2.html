@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/cadastro_css.css">
+  <title>SERVGUARD - LOGIN</title>
+</head>
+
+<body>
+
+
+  <div class="header"  id="div_exibir">
+
+
+
+    <div
+      style="background-color: white; height: 100%; 
+         border-radius: 45px 0 0 45px; width: 40%; display: flex; justify-content: center; align-items: center; flex-direction: column;"
+      class="imagem">
+
+      <h1>ServGuard</h1>
+
+
+      <img class="logo" style="float: right;"
+        src="assets/img/Imagem_do_WhatsApp_de_2024-08-07_à_s__14.44.05_fedbd8fd-removebg-preview 1.svg" alt="">
+
+
+      <button class="botao_first" style="width: 60%; margin-bottom: 10%;" type="button" onclick="verificar()">Entrar
+
+      </button>
+
+
+      <a class="se-cadastre" href="login.html">
+        <span class="esquece-senha" style="color: #B691FF; font-weight: bold;">Já possui login?</span>
+      </a>
+
+
+
+    </div>
+
+
+
+
+
+
+    <div class="login-container">
+
+      <div class="fonte">
+        <h2 style="margin-bottom: 10%; padding-top: 8px; color: white;">CADASTRO</h2>
+      </div>
+
+      <select  onchange="mudarUsuario()"  class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
+        <option value="#">Selecione o tipo de funcionário</option>
+        <option value="adm">Adminsitrador</option>
+        <option value="comum">Comum</option>
+      </select> 
+
+      <form class="login-form" style="transform: translate(0%, -2%);">
+
+        <label class="nome" for="nome" style="margin-top: -20px;">Nome:</label>
+        <input class="input_nome" placeholder="Insira seu nome:" type="text" id="inp_nome" name="nome" required>
+
+
+        <label class="e-mail" for="username">Registro de funcionário (RF):</label>
+        <input class="input_email" placeholder="Insira seu código:" type="text" id="inp_usermail" name="usermail"
+          required>
+
+        <label style="padding-top: 15px;" for="password">Senha:</label>
+        <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+          required>
+
+        <label style="padding-top: 15px;" for="password">Confirmar senha:</label>
+        <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+          required>
+
+
+
+
+
+
+        <div class="botao_form">
+          <button style="width: 60%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;"
+            type="button" onclick="verificar()">Cadastre-se</button>
+        </div>
+
+        <br>
+
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+  </div>
+
+  <!-- <div id="div_exibir"> -->
+
+  </div>
+
+
+
+</body>
+
+</html>
+<!-- 
+<select  onchange="mudarUsuario()"  class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
+    <option value="#">Tipo de funcionário</option>
+    <option value="adm">Adminsitrador</option>
+    <option value="comum">Comum</option>
+  </select>  -->
+
+  <script>
+    function mudarUsuario() {
+
+        var User = tipo_usuario.value;
+
+        var mensagem = ""
+
+        if (User == "adm") {
+          mensagem =  `<div class="header">
+
+
+
+
+    <div
+      style="background-color: white; height: 100%; 
+         border-radius: 45px 0 0 45px; width: 40%; display: flex; justify-content: center; align-items: center; flex-direction: column;"
+      class="imagem">
+
+      <h1>ServGuard</h1>
+
+
+      <img class="logo" style="float: right;"
+        src="assets/img/Imagem_do_WhatsApp_de_2024-08-07_à_s__14.44.05_fedbd8fd-removebg-preview 1.svg" alt="">
+
+
+      <button class="botao_first" style="width: 60%; margin-bottom: 10%;" type="button" onclick="verificar()">Entrar
+
+      </button>
+
+
+      <a class="se-cadastre" href="login.html">
+        <span class="esquece-senha" style="color: #B691FF; font-weight: bold;">Já possui login?</span>
+      </a>
+
+
+
+    </div>
+
+
+
+
+
+
+    <div class="login-container">
+
+      <div class="fonte">
+        <h2 style="margin-bottom: 10%; padding-top: 8px; color: white;">CADASTRO</h2>
+      </div>
+
+      <select  onchange="mudarUsuario()"  class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
+        <option value="#">Selecione o tipo de funcionário</option>
+        <option value="adm">Adminsitrador</option>
+        <option value="comum">Comum</option>
+      </select>
+
+      <form class="login-form" style="transform: translate(0%, -2%);">
+
+        <label class="nome" for="nome" style="margin-top: -20px;">Nome:</label>
+        <input class="input_nome" placeholder="Insira seu nome:" type="text" id="inp_nome" name="nome" required>
+
+
+        <label class="e-mail" for="username">E-mail do Usuário:</label>
+        <input class="input_email" placeholder="Insira seu E-mail:" type="text" id="inp_usermail" name="usermail"
+          required>
+
+        <label style="padding-top: 15px;" for="password">Senha:</label>
+        <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+          required>
+
+        <label style="padding-top: 15px;" for="password">Confirmar senha:</label>
+        <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+          required>
+
+
+
+
+
+
+        <div class="botao_form">
+          <button style="width: 60%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;"
+            type="button" onclick="verificar()">Cadastre-se</button>
+        </div>
+
+        <br>
+
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+  </div>
+
+
+
+</body>
+
+</html>
+
+
+
+`
+        } else if (User == "comum") {
+           mensagem = `<div class="header"  id="div_exibir">
+
+
+
+
+    <div
+      style="background-color: white; height: 100%; 
+         border-radius: 45px 0 0 45px; width: 40%; display: flex; justify-content: center; align-items: center; flex-direction: column;"
+      class="imagem">
+
+      <h1>ServGuard</h1>
+
+
+      <img class="logo" style="float: right;"
+        src="assets/img/Imagem_do_WhatsApp_de_2024-08-07_à_s__14.44.05_fedbd8fd-removebg-preview 1.svg" alt="">
+
+
+      <button class="botao_first" style="width: 60%; margin-bottom: 10%;" type="button" onclick="verificar()">Entrar
+
+      </button>
+
+
+      <a class="se-cadastre" href="login.html">
+        <span class="esquece-senha" style="color: #B691FF; font-weight: bold;">Já possui login?</span>
+      </a>
+
+
+
+    </div>
+
+
+
+
+
+
+    <div class="login-container">
+
+      <div class="fonte">
+        <h2 style="margin-bottom: 10%; padding-top: 8px; color: white;">CADASTRO</h2>
+      </div>
+
+      <select  onchange="mudarUsuario()"  class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
+        <option value="#">Selecione o tipo de funcionário</option>
+        <option value="adm">Adminsitrador</option>
+        <option value="comum">Comum</option>
+      </select> 
+
+      <form class="login-form" style="transform: translate(0%, -2%);">
+
+        <label class="nome" for="nome" style="margin-top: -20px;">Nome:</label>
+        <input class="input_nome" placeholder="Insira seu nome:" type="text" id="inp_nome" name="nome" required>
+
+
+        <label class="e-mail" for="username">Registro de funcionário (RF):</label>
+        <input class="input_email" placeholder="Insira seu código:" type="text" id="inp_usermail" name="usermail"
+          required>
+
+        <label style="padding-top: 15px;" for="password">Senha:</label>
+        <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+          required>
+
+        <label style="padding-top: 15px;" for="password">Confirmar senha:</label>
+        <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+          required>
+
+
+
+
+
+
+        <div class="botao_form">
+          <button style="width: 60%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;"
+            type="button" onclick="verificar()">Cadastre-se</button>
+        </div>
+
+        <br>
+
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+  </div>
+
+  <!-- <div id="div_exibir"> -->
+
+  </div>
+
+`
+        } else {
+
+        }
+
+        div_exibir.innerHTML = mensagem
+
+    }
+
+
+    function verificar() {
+
+        window.location.href = "login.html"
+        
+    }
+
+
+  </script>
