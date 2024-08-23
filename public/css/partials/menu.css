@@ -74,6 +74,7 @@ header{
     .hamburger {
         display: block;
         cursor: pointer;
+        margin: 10px;
     }
 
     .hamburger.active .bar:nth-child(2) {
