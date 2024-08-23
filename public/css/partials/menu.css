@@ -32,10 +32,10 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-right: 3%;
 }
 
 .nav-item {
-    margin-left: 5rem;
     list-style: none;
 }
 
