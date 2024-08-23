@@ -1,0 +1,11 @@
+@import url(./partials/menu.css);
+@import url(./partials/tipografia.css);
+@import url(./partials/sessaoInicio.css);
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+

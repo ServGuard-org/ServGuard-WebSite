@@ -1,0 +1,161 @@
+header{
+    width: 100vw;
+    height: 9vh;
+    background: #09000F;
+    position: fixed;
+    z-index: 999;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 9vh;
+    justify-content: space-between;
+}
+
+.hamburger {
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    margin-left: 5rem;
+    list-style: none;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 300;
+}
+
+@media(max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 5rem;
+        flex-direction: column;
+        background-color: #09000F;
+        width: 100%;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-link {
+        color: #fff;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-item {
+        margin: 2.5rem 0;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+}
+
+.div-logo{
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background: #09000F;
+    justify-content: end;
+}
+
+.logo{
+    width: 54px;
+    height: 47px;
+}
+
+.barraLogo{
+    background: #fff;
+    width: 0.1vw;
+    height: 47px;
+    color: #fff;
+}
+
+.tituloServGuard{
+    color: #fff;
+}
+
+ul{
+    display: flex;
+    background: #09000F;
+    align-items: center;
+    width: 55%;
+    justify-content: space-around;
+}
+
+@media(max-width:960px){
+    ul{
+        background: #09000F;
+        width: 70%;
+    }
+
+    .div-logo{
+        width: 30%;
+        background: #09000F;
+    }
+}
+
+@media(max-width:540px){
+    ul{
+        background: #09000F;
+        width: 70%;
+    }
+
+    .div-logo{
+        width: 30%;
+        background: #09000F;
+    }
+}
+
+@media(max-width:375px){
+    ul{
+        background: #09000F;
+        width: 70%;
+    }
+
+    .div-logo{
+        width: 50%;
+        background: #09000F;
+    }
+}

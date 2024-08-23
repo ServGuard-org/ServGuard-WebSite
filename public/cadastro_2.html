@@ -11,9 +11,7 @@
 <body>
 
 
-  <div class="header"  id="div_exibir">
-
-
+  <div class="header" id="div_exibir">
 
     <div
       style="background-color: white; height: 100%; 
@@ -31,19 +29,11 @@
 
       </button>
 
-
       <a class="se-cadastre" href="login.html">
         <span class="esquece-senha" style="color: #B691FF; font-weight: bold;">Já possui login?</span>
       </a>
 
-
-
     </div>
-
-
-
-
-
 
     <div class="login-container">
 
@@ -51,11 +41,11 @@
         <h2 style="margin-bottom: 10%; padding-top: 8px; color: white;">CADASTRO</h2>
       </div>
 
-      <select  onchange="mudarUsuario()"  class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
+      <select onchange="mudarUsuario()" class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
         <option value="#">Selecione o tipo de funcionário</option>
         <option value="adm">Adminsitrador</option>
         <option value="comum">Comum</option>
-      </select> 
+      </select>
 
       <form class="login-form" style="transform: translate(0%, -2%);">
 
@@ -74,11 +64,6 @@
         <label style="padding-top: 15px;" for="password">Confirmar senha:</label>
         <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
           required>
-
-
-
-
-
 
         <div class="botao_form">
           <button style="width: 60%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;"
@@ -113,15 +98,15 @@
     <option value="comum">Comum</option>
   </select>  -->
 
-  <script>
-    function mudarUsuario() {
+<script>
+  function mudarUsuario() {
 
-        var User = tipo_usuario.value;
+    var User = tipo_usuario.value;
 
-        var mensagem = ""
+    var mensagem = ""
 
-        if (User == "adm") {
-          mensagem =  `<div class="header">
+    if (User == "adm") {
+      mensagem = `<div class="header">
 
 
 
@@ -150,10 +135,6 @@
 
 
     </div>
-
-
-
-
 
 
     <div class="login-container">
@@ -186,11 +167,6 @@
         <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
           required>
 
-
-
-
-
-
         <div class="botao_form">
           <button style="width: 60%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;"
             type="button" onclick="verificar()">Cadastre-se</button>
@@ -217,11 +193,8 @@
 
 
 `
-        } else if (User == "comum") {
-           mensagem = `<div class="header"  id="div_exibir">
-
-
-
+    } else if (User == "comum") {
+      mensagem = `<div class="header"  id="div_exibir">
 
     <div
       style="background-color: white; height: 100%; 
@@ -310,20 +283,20 @@
   </div>
 
 `
-        } else {
-
-        }
-
-        div_exibir.innerHTML = mensagem
+    } else {
 
     }
 
+    div_exibir.innerHTML = mensagem
 
-    function verificar() {
-
-        window.location.href = "login.html"
-        
-    }
+  }
 
 
-  </script>
+  function verificar() {
+
+    window.location.href = "login.html"
+
+  }
+
+
+</script>

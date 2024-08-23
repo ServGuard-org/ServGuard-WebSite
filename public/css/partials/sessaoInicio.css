@@ -1,0 +1,136 @@
+.sessao-inicial{
+    width: 100vw;
+    height: 100vh;
+    background: #09000F;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 9vh;
+    position: relative;
+}
+
+.pai-inicial{
+    display: flex;
+    flex-direction: row;
+    background: #09000F;
+    width: 100%;
+    height: 100%;
+}
+
+.textosInicial{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: #09000F;
+    justify-content: center;
+    padding-left: 8%;
+}
+
+#botao-conheca{
+    color: #09000F;
+    font-weight: 600;
+}
+
+.botao-conheca{
+    border-radius: 10px;
+    background: #fff;
+    width: 9vw;
+    height: 5vh;
+    text-align: center;
+}
+
+#img-bolhas{
+    width: 50%;
+    background: #09000F;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.img-bolhas{
+    width: 80%;
+}
+
+.img-onda{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+@media(max-width:960px){
+    .pai-inicial{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #img-bolhas{
+        display: none;
+    }
+    .img-bolhas{
+        display: none;
+    }
+
+    .botao-conheca{
+        border-radius: 10px;
+        background: #fff;
+        width: 14vw;
+        height: 5vh;
+        text-align: center;
+    }
+
+    
+}
+
+@media(max-width:540px){
+    .pai-inicial{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #img-bolhas{
+        display: none;
+    }
+    .img-bolhas{
+        display: none;
+    }
+
+    .botao-conheca{
+        border-radius: 10px;
+        background: #fff;
+        width: 14vw;
+        height: 5vh;
+        text-align: center;
+        padding-top: 6px;
+    }
+}
+
+@media(max-width:375px){
+    .pai-inicial{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #img-bolhas{
+        display: none;
+    }
+    .img-bolhas{
+        display: none;
+    }
+
+    .botao-conheca{
+        border-radius: 10px;
+        background: #fff;
+        width: 21vw;
+        height: 5vh;
+        text-align: center;
+        padding-top: 8px;
+    }
+
+}
