@@ -7,6 +7,7 @@ body {
     align-items: center;
     min-height: 100vh;
     color: black;
+    background-image: url(space2.svg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -23,11 +24,13 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    background-color: rgb(255, 255, 255);
-    height: 500px;
-    border-radius: 50px;
-    box-shadow: -6px 0 12px #787575;
-    border: 2px solid #B691FF;
+    background-color: rgba(73, 72, 72, 0.2);
+    backdrop-filter: blur(3px);
+
+    height: 545px;
+    border-radius: 20px;
+    box-shadow: 0 0 1px 2px #ffffffb4;
+    border: 1px solid #B691FF;
 
     /* background-color: ; */
 }
@@ -80,7 +83,8 @@ body {
 
 
 .login-container {
-    width: 420px;
+
+    width: 300px;
     /* background: rgba(203, 198, 198, 0.2); */
     /* background-color: #68ec34; */
     /* border: 2px solid rgba(255, 254, 254, 0.2);
@@ -91,17 +95,23 @@ body {
     float: left;
     margin-right: 100px;
     margin-top: -7px;
+    transform: translate(9%, 0%);
+
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; */
     /* margin-bottom: 200px; */
 
 }
 
 h2 {
 
-    margin-bottom: 3%;
-    color: #B691FF;
+    margin-bottom: 4%;
+    color: #fff;
     display: flex;
     justify-content: center;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
 }
 
@@ -116,7 +126,7 @@ h2 {
     margin-bottom: 5px;
     font-size: 22px;
     /* font-weight: bold; */
-    color: #B691FF;
+    color: #fff;
     /* padding-top: 7px; */
     padding-bottom: 20px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -127,18 +137,31 @@ h2 {
 
 
 .login-form input {
+    background-color: rgba(73, 72, 72, 0.2);
     width: 100%;
+    height: 22px;
     padding: 9px;
     margin-bottom: 20px;
-    border-bottom: 3px solid #B691FF;
+    /* border: 2px solid rgba(227, 209, 209, 0.532); */
+    border-bottom: 2px solid #e1e1e1;
     border-top: none;
     border-right: none;
     border-left: none;
     border-radius: 3px;
-    color: #B691FF;
+    color: #fff;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
+
+/* 
+.div_retorno{
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+
+} */
 
 
 
@@ -150,75 +173,85 @@ h2 {
 }
 
 .login-form input::placeholder {
-    color: #B691FF;
+    color: #fff;
+    font-weight: bold;
 
 }
-
-
 
 
 
 
 .login-form button {
-    background-color: #B691FF;
+    position: relative;
+    /* Mantém a posição relativa para o pseudo-elemento */
+    padding: 10px 20px;
+    font-size: 20px;
     color: #fff;
-    font-weight: bolder;
-    font-size: 20px;
-    padding: 10px 20px;
+    background: transparent;
+    /* Fundo transparente para mostrar o gradiente */
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     width: 100%;
     height: 50px;
-    transition: transform 0.3s ease;
-    border-radius: 40px;
+    overflow: hidden;
+    /* Garante que o pseudo-elemento não transborde */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* padding-: ; */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-.botao_first {
-    background-color: white;
-    color: #B691FF;
-    font-weight: bolder;
-    font-size: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    width: 100%;
-    height: 50px;
-    transition: transform 0.3s ease;
-    border-radius: 40px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* padding-: ; */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
 
+.login-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(90deg, #B691FF, #110C37, #B691FF);
+    transition: left 0.9s ease;
+    z-index: 0;
 }
 
-.botao_first:hover{
-    background: linear-gradient(to right, #ad38f1, #8826c1);
-    color: #ffffff;
-    transform: scale(1.05);
-}
+
+
+
+
+
+
+
 
 .botao_form {
+    /* background-color: red; */
+    width: 110%;
+    /* background-color: red; */
     padding-top: 10px;
     display: flex;
     justify-content: center;
+
 }
 
 
 
 
+.login-form button:hover::before {
+    transform: scale(1.08);
+    left: 0;
+}
+
 .login-form button:hover {
-    background: linear-gradient(to right, #ac6ed0, #d58dff);
     color: #ffffff;
-    transform: scale(1.05);
+    /* Muda a cor do texto quando o botão é hover */
+}
+
+.login-form .texto_button {
+
+    color: white;
+    font-weight: bolder;
+    float: left;
+    /* text-decoration: underline; */
+    transform: translate(-350%, 40%);
 
 }
 
@@ -240,11 +273,14 @@ h2 {
 }
 
 
-/* .esquece-senha{
+.esquece-senha {
 
 
-    margin: 30px;
-  } */
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    transform: translate(0%, -65%);
+}
 
 .login-form a {
     margin: 38px;
