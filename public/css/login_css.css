@@ -183,19 +183,16 @@ h2 {
 
 .login-form button {
     position: relative;
-    /* Mantém a posição relativa para o pseudo-elemento */
     padding: 10px 20px;
     font-size: 20px;
     color: #fff;
     background: transparent;
-    /* Fundo transparente para mostrar o gradiente */
     border: none;
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
     height: 50px;
     overflow: hidden;
-    /* Garante que o pseudo-elemento não transborde */
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: relative;
     transition: color 0.3s ease;
@@ -225,10 +222,9 @@ h2 {
 .botao_form {
     /* background-color: red; */
     width: 110%;
-    /* background-color: red; */
     padding-top: 10px;
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: center; */
 
 }
 
@@ -242,7 +238,6 @@ h2 {
 
 .login-form button:hover {
     color: #ffffff;
-    /* Muda a cor do texto quando o botão é hover */
 }
 
 .login-form .texto_button {
@@ -250,8 +245,7 @@ h2 {
     color: white;
     font-weight: bolder;
     float: left;
-    /* text-decoration: underline; */
-    transform: translate(-350%, 40%);
+    transform: translate(280%, -260%);
 
 }
 
