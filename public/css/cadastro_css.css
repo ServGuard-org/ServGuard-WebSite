@@ -7,6 +7,7 @@ body {
     align-items: center;
     min-height: 100vh;
     color: black;
+    background-image: url(space2.svg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -16,7 +17,11 @@ body {
     overflow-y: hidden;
 }
 
+.se-cadastre span {
+    color: white;   
+    
 
+}
 
 .header {
 
@@ -24,12 +29,12 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    background-color: #6D5799;
-    /* background: linear-gradient(to bottom, #B691FF 10%, #6D5799 90%); */
-    height: 745px;
-    border-radius: 50px;
-    box-shadow: 4px 0 12px #787575;
-    border: 2px solid #6D5799;
+    background-color: rgba(73, 72, 72, 0.2);
+    backdrop-filter: blur(3px);
+    height: 790px;
+    border-radius: 20px;
+    box-shadow: 0 0 1px 2px #ffffffb4;
+    border: 1px solid #B691FF;
 
     /* background-color: ; */
 }
@@ -93,6 +98,7 @@ body {
     float: left;
     margin-right: 100px;
     margin-top: -50px;
+    transform: translate(6%, 0%);
     /* margin-bottom: 200px; */
 
 }
@@ -129,11 +135,11 @@ h2 {
 
 
 .login-form input {
-    background-color: #6D5799;
+    background-color: rgba(73, 72, 72, 0.2);
     width: 100%;
     padding: 9px;
     margin-bottom: 20px;
-    border-bottom: 3px solid #ffffff;
+    border-bottom: 2px solid #e1e1e1;
     border-top: none;
     border-right: none;
     border-left: none;
@@ -175,7 +181,7 @@ h2 {
     width: 100%;
     height: 50px;
     transition: transform 0.3s ease;
-    border-radius: 40px;
+    border-radius: 10px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     /* padding-: ; */
     /* display: flex;
@@ -221,10 +227,12 @@ h2 {
 
 
 .login-form button:hover {
-    background: linear-gradient(to right, #2c0244, #2f0149);
+    background: linear-gradient(to right, #ad38f1, #190127);
     transform: scale(1.05);
 
 }
+
+
 
 
 
@@ -244,11 +252,11 @@ h2 {
 }
 
 
-/* .esquece-senha{
+.esquece-senha {
 
 
-    margin: 30px;
-  } */
+    color: white;
+}
 
 .login-form a {
     margin: 38px;
@@ -256,15 +264,23 @@ h2 {
 
 
 
-.tipo_usuario{
+.tipo_usuario {
 
-    background-color: #6D5799;
+    background-color: rgba(73, 72, 72, 0.2);
     /* border: white 1px groove; */
     border: none;
     border-bottom: #fff 2px groove;
 
     color: white;
-    transform: translate(70%, -150%);
+    transform: translate(65%, -140%);
     padding-bottom: 8px;
+
+}
+
+
+.tipo_usuario option{
+
+    background-color: #1e0136;
+    color: white;
 
 }
