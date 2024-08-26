@@ -1,5 +1,100 @@
-.sessao-importante{
+#sessao-importante{
     width: 100vw;
     height: 100vh;
-    background: #09000F;
+    background-color: #09000F;
+}
+
+.div-importante1{
+    display: flex;
+    justify-content: space-around;
+    background-color: #09000F;
+    height: 50%;
+    align-items: center;
+}
+
+.div-importante2{
+    display: flex;
+    justify-content: space-around;
+    background-color: #09000F;
+    height: 50%;
+}
+
+.textoImportante1{
+    position: relative;
+    padding: 30px;
+    height: 100%;
+}
+
+.textoImportante{
+    position: relative;
+    padding: 30px;
+    height: 100%;
+}
+
+.textoGradienteImportante{
+    background: linear-gradient(90deg, #FFF 17.42%, #330063 60.64%, #330063 10.92%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 400;
+}
+
+.circuitoE{
+    left: 0;
+    width: 15%;
+}
+
+.circuitoD{
+    right: 0;
+    width: 15%;
+}
+
+.luaE{
+    width: 20%;
+}
+
+.luaD{
+    width: 20%;
+}
+
+.blurImportante{
+    width: 20%;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.textoVisao{
+    font-weight: 100;
+}
+
+@media(max-width:768px){
+    .circuitoE{
+        display: none;
+    }
+    
+    .circuitoD{
+        display: none;
+
+    }
+    
+    .luaE{
+        display: none;
+    }
+    
+    .luaD{
+        display: none;
+    }
+
+    .textoImportante{
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .textoImportante1{
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+    }
 }

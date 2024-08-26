@@ -49,6 +49,10 @@
     -webkit-text-fill-color: transparent;
 }
 
+.pMissao{
+    font-weight: 400;
+}
+
 .bolaSaibaMais{
     width: 35px;
     height: 35px;
@@ -57,7 +61,7 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    z-index: 999;
+    z-index: 100;
 }
 .bolaSaibaMais:hover{
     cursor: pointer;
