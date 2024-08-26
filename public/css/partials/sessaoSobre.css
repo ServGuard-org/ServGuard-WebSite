@@ -1,0 +1,77 @@
+#sessao-conheca {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: #09000F;
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+
+.setaE {
+    position: absolute;
+    left: 0;
+    width: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.setaD {
+    position: absolute;
+    right: 0;
+    width: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sombra {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -12%;
+    width: 80%;
+}
+
+.textoConheca{
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    height: 40%;
+}
+
+.textoGradiente {
+    background: linear-gradient(90deg, #FFF 17.42%, #330063 60.64%, #330063 10.92%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bolaSaibaMais{
+    width: 35px;
+    height: 35px;
+    background-image: linear-gradient(-200deg, #FFF 7.42%, #431172fd 90.64%);
+    border-radius: 60%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    z-index: 999;
+}
+.bolaSaibaMais:hover{
+    cursor: pointer;
+}
+
+.setaBola{
+    width: 70%;
+    height: 70%;
+}
+
+/* Responsividade sombra-mobile */
+
+@media(max-width:540px) {
+    .sombra {
+        width: 100%;
+    }
+}

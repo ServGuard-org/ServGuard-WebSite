@@ -1,11 +1,15 @@
 @import url(./partials/menu.css);
 @import url(./partials/tipografia.css);
 @import url(./partials/sessaoInicio.css);
+@import url(./partials/sessaoSobre.css);
+@import url(./partials/sessao-importante.css);
 
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 

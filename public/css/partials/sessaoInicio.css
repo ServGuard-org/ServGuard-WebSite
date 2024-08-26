@@ -1,4 +1,4 @@
-.sessao-inicial{
+#sessao-inicial{
     width: 100vw;
     height: 100vh;
     background: #09000F;
@@ -40,6 +40,15 @@
     width: 9vw;
     height: 5vh;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px #4b0e74;
+}
+
+.botao-conheca:hover{
+    transition: 500ms;
+    background: #a37ed6;
 }
 
 #img-bolhas{

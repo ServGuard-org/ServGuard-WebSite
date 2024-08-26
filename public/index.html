@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <title>ServGuard</title>
 </head>
 <body>
@@ -15,8 +16,8 @@
                 <h4>ServGuard</h4>
             </div>
             <ul class="nav-menu">
-                <li class="nav-item"><a class="nav-link" href="">Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="">Quem somos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#sessao-inicial">Início</a></li>
+                <li class="nav-item"><a class="nav-link" href="#sessao-conheca">Quem somos</a></li>
                 <li class="nav-item"><a class="nav-link" href="">Equipe</a></li>
                 <li class="nav-item"><a class="nav-link" href="login.html">Conecte-se</a></li>
             </ul>
@@ -27,17 +28,33 @@
             </div>
         </nav>
     </header>
-    <section class="sessao-inicial">
+    <section id="sessao-inicial">
         <div class="pai-inicial">
             <div class="textosInicial">
                 <h2>ServeGuard</h2>
                 <p>Trazendo mais seguranças nas <br>transações via pix</p>
-                <h5 class="botao-conheca"><a id="botao-conheca" href="login.html">Conheça</a></h5>
+                <a id="botao-conheca" href="login.html"><h5 class="botao-conheca">Conheça</a></h5></a>
             </div>
             <div id="img-bolhas">
                 <img class="img-bolhas" src="assets/img/luas.svg" alt="bolhas">
             </div>
         </div>
+    </section>
+    <section id="sessao-conheca">
+            <img class="setaE" src="assets/img/setaEsquerda.svg" alt="">
+            <img class="setaD" src="assets/img/setaDireita.svg" alt="">
+            <img class="sombra" src="assets/img/sombra.svg" alt="">
+            <div class="textoConheca">
+                <h1>Mantendo a continuidade</h1>
+                <h1 class="textoGradiente">Dos servidores</h1>
+                <p>Garantindo a continuidade dos servidores de rede <br>para maior eficiência.</p>
+                <div class="bolaSaibaMais">
+                    <a href="#sessao-importante"><img class="setaBola" src="assets/img/arrowDown.png" alt=""></a>
+                </div>
+            </div>
+    </section>
+    <section id="sessao-importante">
+        
     </section>
     <script src="js/script.js"></script>
 </body>
