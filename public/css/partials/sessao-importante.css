@@ -1,10 +1,10 @@
-#sessao-importante{
+#sessao-importante {
     width: 100vw;
     height: 100vh;
     background-color: #09000F;
 }
 
-.div-importante1{
+.div-importante1 {
     display: flex;
     justify-content: space-around;
     background-color: #09000F;
@@ -12,26 +12,26 @@
     align-items: center;
 }
 
-.div-importante2{
+.div-importante2 {
     display: flex;
     justify-content: space-around;
     background-color: #09000F;
     height: 50%;
 }
 
-.textoImportante1{
+.textoImportante1 {
     position: relative;
     padding: 30px;
     height: 100%;
 }
 
-.textoImportante{
+.textoImportante {
     position: relative;
     padding: 30px;
     height: 100%;
 }
 
-.textoGradienteImportante{
+.textoGradienteImportante {
     background: linear-gradient(90deg, #FFF 17.42%, #330063 60.64%, #330063 10.92%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -39,62 +39,81 @@
     font-weight: 400;
 }
 
-.circuitoE{
+.circuitoE {
     left: 0;
     width: 15%;
 }
 
-.circuitoD{
+.circuitoD {
     right: 0;
     width: 15%;
 }
 
-.luaE{
+.luaE {
     width: 20%;
 }
 
-.luaD{
+.luaD {
     width: 20%;
 }
 
-.blurImportante{
+.blurImportante {
     width: 20%;
     position: absolute;
     top: 15px;
     left: 15px;
 }
 
-.textoVisao{
+.textoVisao {
     font-weight: 100;
 }
 
-@media(max-width:768px){
-    .circuitoE{
+@media(max-width:768px) {
+    #sessao-importante {
+        height: 90%;
+    }
+
+    .div-importante1 {
+        height: 60%;
+    }
+
+    .div-importante2 {
+        height: 60%;
+    }
+
+    .circuitoE {
         display: none;
     }
-    
-    .circuitoD{
+
+    .circuitoD {
         display: none;
 
     }
-    
-    .luaE{
-        display: none;
-    }
-    
-    .luaD{
+
+    .luaE {
         display: none;
     }
 
-    .textoImportante{
+    .luaD {
+        display: none;
+    }
+
+    .textoImportante {
         gap: 20px;
         display: flex;
         flex-direction: column;
     }
 
-    .textoImportante1{
+    .textoImportante1 {
         gap: 20px;
         display: flex;
         flex-direction: column;
+    }
+
+    .blurImportante {
+        width: 20%;
+        position: absolute;
+        top: 30px;
+        left: 13px;
     }
 }
