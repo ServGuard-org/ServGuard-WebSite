@@ -3,6 +3,7 @@
 @import url(./partials/sessaoInicio.css);
 @import url(./partials/sessaoSobre.css);
 @import url(./partials/sessao-importante.css);
+@import url(./partials/sessao-pilares.css);
 
 *{
     padding: 0;
