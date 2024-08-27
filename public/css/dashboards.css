@@ -19,6 +19,48 @@ body {
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.img_logo{
+
+  width: 30%;
+  transform: translate(-90%, -85%);
+
+
+} 
+
+
+.div_superior{
+
+  border-bottom: solid 2px white;
+  height: 80px;
+
+
+}
+
+.sino_superior{
+  width: 4%;
+  float: right;
+  padding-top: 15px;
+  padding-right:15px ;
+
+}
+
+.div_usuario{
+  margin-top: 300px;
+  border-top: 2px solid white;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
+}
+
+.img_usuario{
+  width: 17%;
+  filter: invert(100%);
+  padding-top: 15px;
+  /* padding-left: 20px; */
+  
+}
+
+
 .dash-right .avisos .container {
   display: flex;
   flex-direction: column;
@@ -120,7 +162,7 @@ body {
   position: relative;
   top: 0;
   left: 20%;
-  background-color: #161618;
+  background-color: #1e1e1e;
   height: 100vh;
   overflow: auto;
 }
@@ -337,6 +379,8 @@ canvas {
   color: white;
 }
 
+
+
 .header-left {
   position: fixed;
   top: 0;
@@ -348,8 +392,8 @@ canvas {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border-right: 3px solid #32b9cd;
-  background-color: #212124;
+  border-right: 3px solid #ffffff;
+  background: linear-gradient(to bottom, #220B43 15%, #330C57 100%);
 }
 
 .dash-right {
