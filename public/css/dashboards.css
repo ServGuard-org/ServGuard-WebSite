@@ -6,6 +6,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
 }
 
 .label-captura {
@@ -19,16 +20,105 @@ body {
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.img_logo{
+.img_logo {
 
   width: 30%;
-  transform: translate(-90%, -85%);
+  transform: translate(-90%, 9%);
 
 
-} 
+}
+
+.quadrado_principal {
+
+  width: 98%;
+  height: 320px;
+  display: flex;
+
+  justify-content: space-around;
+  padding-left: 25px;
+  padding-top: 20px;
 
 
-.div_superior{
+}
+
+.quadrado_meio {
+
+  width: 31%;
+  height: 300px;
+  border-radius: 20%;
+  /* transform: translate(-100%, 0%); */
+  /* padding-right: 10px; */
+  background: linear-gradient(#b691ff 0%, #6d5799 87%);
+
+
+}
+
+.quadrado_meio2 {
+
+  width: 33%;
+  height: 300px;
+  border-radius: 20%;
+  /* transform: translate(110%, 0%); */
+
+  /* padding-right: 100px; */
+  /* background: linear-gradient(#b691ff 0%, #6d5799 87%); */
+  background: linear-gradient(#b691ff 0%, #6d5799 87%);
+
+
+}
+
+.quadrado_baixo {
+
+  /* background-color: green; */
+  width: 98%;
+  height: 415px;
+  padding-top: 22px;
+  display: flex;
+  justify-content: space-evenly;
+
+}
+
+.div_componente {
+
+
+  width: 60%;
+  height: 380px;
+  background: linear-gradient(#b691ff 0%, #6d5799 87%);
+  border-radius: 7%;
+
+
+
+}
+
+.div_componente2 {
+
+
+  width: 30%;
+  height: 380px;
+  background: linear-gradient(#b691ff 0%, #6d5799 87%);
+  border-radius: 10%;
+
+
+
+}
+
+
+
+.quadrado_meio3 {
+
+  width: 33%;
+  height: 300px;
+  border-radius: 20%;
+  /* padding-right: 100px; */
+  /* transform: translate(110%, 0%); */
+
+  background: linear-gradient(#b691ff 0%, #6d5799 87%);
+  /* background-color: green; */
+
+}
+
+
+.div_superior {
 
   border-bottom: solid 2px white;
   height: 80px;
@@ -36,23 +126,23 @@ body {
 
 }
 
-.sino_superior{
+.sino_superior {
   width: 4%;
   float: left;
   padding-top: 15px;
-  padding-left:15px ;
+  padding-left: 15px;
 
 }
 
-.sair_superior{
+.sair_superior {
   width: 4%;
   float: right;
   padding-top: 15px;
-  padding-right:15px ;
+  padding-right: 15px;
 
 }
 
-.div_usuario{
+.div_usuario {
   margin-top: 400px;
   border-top: 2px solid white;
   display: flex;
@@ -60,12 +150,12 @@ body {
   justify-content: space-evenly;
 }
 
-.img_usuario{
+.img_usuario {
   width: 40%;
   border-radius: 11100%;
   padding-top: 12px;
   /* padding-left: 20px; */
-  
+
 }
 
 
