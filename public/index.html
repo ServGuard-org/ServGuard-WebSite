@@ -1,91 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+@import url(./partials/menu.css);
+@import url(./partials/tipografia.css);
+@import url(./partials/sessaoInicio.css);
+@import url(./partials/sessaoSobre.css);
+@import url(./partials/sessao-importante.css);
+@import url(./partials/sessao-pilares.css);
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <title>ServGuard</title>
-</head>
 
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="div-logo">
-                <img class="logo" src="assets/img/logo.png" alt="logo">
-                <div class="barraLogo"></div>
-                <h4>ServGuard</h4>
-            </div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a class="nav-link" href="#sessao-inicial">Início</a></li>
-                <li class="nav-item"><a class="nav-link" href="#sessao-conheca">Sobre</a></li>
-                <li class="nav-item"><a class="nav-link" href="#sessao-pilares">Pilares</a></li>
-                <li class="nav-item"><a class="nav-link" href="login.html">Conecte-se</a></li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
-    <section id="sessao-inicial">
-        <div class="pai-inicial">
-            <div class="textosInicial">
-                <h2>ServGuard</h2>
-                <p>Trazendo mais seguranças nas <br>transações via pix</p>
-                <a id="botao-conheca" href="login.html">
-                    <h5 class="botao-conheca">Conheça
-                </a></h5></a>
-            </div>
-            <div id="img-bolhas">
-                <img class="img-bolhas" src="assets/img/luas.svg" alt="bolhas">
-            </div>
-        </div>
-    </section>
-    <section id="sessao-conheca">
-        <img class="setaE" src="assets/img/setaEsquerda.svg" alt="">
-        <img class="setaD" src="assets/img/setaDireita.svg" alt="">
-        <img class="sombra" src="assets/img/sombra.svg" alt="">
-        <div class="textoConheca">
-            <h1>Mantendo a continuidade</h1>
-            <h1 class="textoGradiente">Dos servidores</h1>
-            <p>Garantindo a continuidade dos servidores de rede <br>para maior eficiência.</p>
-            <div class="bolaSaibaMais">
-                <a href="#sessao-importante"><img class="setaBola" src="assets/img/arrowDown.png" alt=""></a>
-            </div>
-        </div>
-    </section>
-    <section id="sessao-importante">
-        <div class="div-importante1">
-            <img class="circuitoE" src="assets/img/circuitoEsquerdo.svg" alt="">
-            <img class="luaE" src="assets/img/luaEsquerda.svg" alt="">
-            <div class="textoImportante1">
-                <p class="pVisao">Nossa missão</p>
-                <h1 class="textoGradienteImportante">O que é <br> importante</h1>
-                <p class="textoVisao">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. <br> Ullam assumenda, ex laudantium reprehenderit nisi possimus, <br> nesciunt delectus dicta mollitia sit placeat quae a praesentium eos error, <br> maxime eligendi distinctio eveniet.
-                </p>
-                <img class="blurImportante" src="assets/img/blurImportante.svg" alt="">
-            </div>
-        </div>
-        <div class="div-importante2">
-            <div class="textoImportante">
-                <p class="pMissao">Nossa visão</p>
-                <h1 class="textoGradienteImportante">O que queremos <br> alcançar</h1>
-                <p class="textoVisao">Lorem ipsum dolor sit amet consectetur adipisicing elit. <br> Ullam assumenda, ex laudantium reprehenderit nisi possimus, <br> nesciunt delectus dicta mollitia sit placeat quae a praesentium eos error, <br> maxime eligendi distinctio eveniet.</p>
-                <img class="blurImportante" src="assets/img/blurImportante.svg" alt="">
-            </div>
-            <img class="luaD" src="assets/img/luaDireita.svg" alt="">
-            <img class="circuitoD" src="assets/img/circuitoDireito.svg" alt="">
-        </div>
-    </section>
-    <section id="sessao-pilares">
-        
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
 
-    </section>
-    <script src="js/script.js"></script>
-</body>
 
-</html>
