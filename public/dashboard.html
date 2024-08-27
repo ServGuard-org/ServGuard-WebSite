@@ -68,17 +68,38 @@
                     label: 'RAM',
                     data: [12, 19, 3, 5, 2, 3],
                     borderWidth: 1,
-                    borderColor: 'rgba(128, 0, 128, 1)'
+                    borderColor: 'white',
+                    backgroundColor: 'white'
                 }]
             },
             options: {
                 scales: {
+                    x: {
+                       ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                    },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                        
                     }
                 }
             }
         });
+        
 
         const ctx2 = document.getElementById('myChart2').getContext('2d');
         new Chart(ctx2, {
@@ -89,13 +110,33 @@
                     label: 'DISCO',
                     data: [12, 19, 3, 5, 2, 3],
                     borderWidth: 1,
-                    borderColor: 'rgba(128, 0, 128, 1)'
+                    borderColor: 'white',
+                    backgroundColor: 'white'
                 }]
             },
             options: {
                 scales: {
+                    x: {
+                       ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                    },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                        
                     }
                 }
             }
@@ -110,13 +151,40 @@
                     label: 'CPU',
                     data: [12, 19, 3, 5, 2, 3],
                     borderWidth: 1,
-                    borderColor: 'rgba(128, 0, 128, 1)'
+                    borderColor: 'white',
+                    backgroundColor: 'white'
                 }]
             },
             options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'White'
+                        }
+                    }
+                },
                 scales: {
+                    x: {
+                       ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                    },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                        
                     }
                 }
             }
@@ -131,13 +199,33 @@
                     label: 'REDE',
                     data: [12, 19, 3, 5, 2, 3],
                     borderWidth: 1,
-                    borderColor: 'rgba(128, 0, 128, 1)'
+                    borderColor: 'white',
+                    backgroundColor: 'white'
                 }]
             },
             options: {
                 scales: {
+                    x: {
+                       ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                    },
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                        color: 'white',
+                        font:{
+                            size: 15,
+                            family: 'Arial',
+                            weigth: 'Bold'
+                        }
+                       }
+                        
                     }
                 }
             }

@@ -42,10 +42,10 @@ body {
 }
 
 .quadrado_meio {
-
+  overflow: hidden;
   width: 31%;
   height: 300px;
-  border-radius: 20%;
+  border-radius: 5%;
   /* transform: translate(-100%, 0%); */
   /* padding-right: 10px; */
   background: linear-gradient(#b691ff 0%, #6d5799 87%);
@@ -57,14 +57,12 @@ body {
 
   width: 33%;
   height: 300px;
-  border-radius: 20%;
+  border-radius: 5%;
   /* transform: translate(110%, 0%); */
 
   /* padding-right: 100px; */
   /* background: linear-gradient(#b691ff 0%, #6d5799 87%); */
   background: linear-gradient(#b691ff 0%, #6d5799 87%);
-
-
 }
 
 .quadrado_baixo {
@@ -84,7 +82,7 @@ body {
   width: 60%;
   height: 380px;
   background: linear-gradient(#b691ff 0%, #6d5799 87%);
-  border-radius: 7%;
+  /* border-radius: %; */
 
 
 
@@ -96,7 +94,7 @@ body {
   width: 30%;
   height: 380px;
   background: linear-gradient(#b691ff 0%, #6d5799 87%);
-  border-radius: 10%;
+  border-radius: 5%;
 
 
 
@@ -108,7 +106,7 @@ body {
 
   width: 33%;
   height: 300px;
-  border-radius: 20%;
+  border-radius: 5%;
   /* padding-right: 100px; */
   /* transform: translate(110%, 0%); */
 
