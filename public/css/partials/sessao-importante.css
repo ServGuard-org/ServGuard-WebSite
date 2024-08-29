@@ -23,12 +23,14 @@
     position: relative;
     padding: 30px;
     height: 100%;
+    gap: 10px;
 }
 
 .textoImportante {
     position: relative;
     padding: 30px;
     height: 100%;
+    gap: 10px;
 }
 
 .textoGradienteImportante {
