@@ -13,8 +13,6 @@ body {
     background-attachment: fixed;
     position: relative;
     background-color: #110C37;
-    /* background-image: ur; */
-    overflow-y: hidden;
 }
 
 .se-cadastre span {
