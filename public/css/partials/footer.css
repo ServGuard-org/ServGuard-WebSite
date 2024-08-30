@@ -1,0 +1,179 @@
+footer {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 20vh;
+    background: #09000F;
+}
+
+.conteudo-footer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background: #09000F;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-format {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.barra-footer {
+    background: #fff;
+    width: 0.1vw;
+    height: 47px;
+    color: #fff;
+}
+
+.links{
+    width: 20%;
+    margin-right: -15%;
+}
+
+.img-email {
+    width: 7%;
+}
+
+.img-git {
+    width: 7%;
+}
+
+.img-whats{
+    width: 7%;
+}
+
+.direitos {
+    justify-content: center;
+    align-items: center;
+    background-color: #09000F;
+    height: 30%;
+    display: flex;
+}
+
+.div-integrantes{
+    height: 100%;
+    width: 20%;
+}
+
+.p-integrantes{
+    font-weight: 100;
+}
+
+@media(max-width:375px) {
+    .logo-footer {
+        display: none;
+    }
+
+    .conteudo-footer{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logo-format {
+        width: 100%;
+        margin-left: 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .barra-footer{
+        display: none;
+    }
+
+    .img-email {
+        width: 10%;
+    }
+
+    .img-git {
+        width: 10%;
+    }
+    
+    .img-whats{
+        width: 10%;
+    }
+
+    .div-integrantes{
+      display: none;
+    }
+
+    .links{
+        width: 50%;
+        margin-right: -15%;
+    }
+    
+}
+
+@media (max-width: 540px) {
+    .logo-footer {
+        display: none;
+    }
+
+    .conteudo-footer{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logo-format {
+        width: 100%;
+        margin-left: 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .barra-footer{
+        display: none;
+    }
+
+    .img-email {
+        width: 7%;
+    }
+
+    .img-git {
+        width: 7%;
+    }
+    
+    .img-whats{
+        width: 7%;
+    }
+}
+
+@media (max-width: 960px){
+
+    .conteudo-footer{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .logo-format {
+        width: 40%;
+        margin-left: 10%;
+        justify-content: space-around;
+    }
+
+    .img-email {
+        width: 7%;
+    }
+
+    .img-git {
+        width: 7%;
+    }
+    
+    .img-whats{
+        width: 7%;
+    }
+
+    .links{
+        margin-left: 9%;
+    }
+}

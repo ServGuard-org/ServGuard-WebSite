@@ -4,6 +4,7 @@
 @import url(./partials/sessaoSobre.css);
 @import url(./partials/sessao-importante.css);
 @import url(./partials/sessao-pilares.css);
+@import url(./partials/footer.css);
 
 *{
     padding: 0;
