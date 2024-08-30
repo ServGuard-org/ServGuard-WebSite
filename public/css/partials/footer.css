@@ -2,8 +2,10 @@ footer {
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 20vh;
+    height: 27vh;
     background: #09000F;
+    border-top: 1px solid #410F70;
+
 }
 
 .conteudo-footer {
@@ -59,6 +61,7 @@ footer {
 .div-integrantes{
     height: 100%;
     width: 20%;
+    padding: 1%;
 }
 
 .p-integrantes{

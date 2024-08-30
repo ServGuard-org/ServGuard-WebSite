@@ -45,6 +45,63 @@ header{
     font-weight: 300;
 }
 
+.div-logo{
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background: #09000F;
+    justify-content: end;
+}
+
+.logo{
+    width: 54px;
+    height: 47px;
+}
+
+.barraLogo{
+    background: #fff;
+    width: 0.1vw;
+    height: 47px;
+    color: #fff;
+}
+
+.tituloServGuard{
+    color: #fff;
+}
+
+ul{
+    display: flex;
+    background: #09000F;
+    align-items: center;
+    width: 55%;
+    justify-content: space-around;
+}
+
+/*Hover menu*/
+
+.nav-item:hover {
+    list-style: none;
+    cursor: pointer;
+    border-bottom: 1px solid #410F70;
+    transition: 500ms;
+}
+
+/*Responsividade do menu*/
+
+@media(max-width:960px){
+    ul{
+        background: #09000F;
+        width: 70%;
+    }
+
+    .div-logo{
+        width: 30%;
+        background: #09000F;
+    }
+}
+
 @media(max-width: 768px) {
     .nav-menu {
         position: fixed;
@@ -89,52 +146,6 @@ header{
         transform: translateY(-8px) rotate(-45deg);
     }
 
-}
-
-.div-logo{
-    width: 20%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    background: #09000F;
-    justify-content: end;
-}
-
-.logo{
-    width: 54px;
-    height: 47px;
-}
-
-.barraLogo{
-    background: #fff;
-    width: 0.1vw;
-    height: 47px;
-    color: #fff;
-}
-
-.tituloServGuard{
-    color: #fff;
-}
-
-ul{
-    display: flex;
-    background: #09000F;
-    align-items: center;
-    width: 55%;
-    justify-content: space-around;
-}
-
-@media(max-width:960px){
-    ul{
-        background: #09000F;
-        width: 70%;
-    }
-
-    .div-logo{
-        width: 30%;
-        background: #09000F;
-    }
 }
 
 @media(max-width:540px){
