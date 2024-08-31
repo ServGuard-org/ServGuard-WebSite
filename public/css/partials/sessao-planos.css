@@ -1,0 +1,58 @@
+#sessao-planos{
+    width: 100vw;
+    height: 120vh;
+    background-color: #09000F;
+}
+
+.pai-planos{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1;
+}
+
+.circuitoD-planos{
+    width: 15%;
+    margin-top: -20%;
+}
+
+.plano-basico{
+    width: 25%;
+    height: 70%;
+    background-color: #09000fab;
+    border-radius: 10px;
+    border: 1px solid #7C1DD6;
+    margin-left: -10%;
+    z-index: 1;
+    margin-bottom: 3%;
+}
+
+.plano-pro{
+    width: 25%;
+    height: 70%;
+    background-color: #09000fab;
+    border-radius: 10px;
+    border: 1px solid #7C1DD6;
+    margin-bottom: 6%;
+    box-shadow: 1px 2px 20px 1px rgba(84,11,84,1);
+}
+
+.plano-intermediario{
+    width: 25%;
+    height: 70%;
+    background-color: #09000fab;
+    border-radius: 10px;
+    border: 1px solid #7C1DD6;
+    z-index: 1;
+    margin-right: -10%;
+    margin-bottom: 3%;
+}
+
+.circuitoE-planos{
+    width: 15%;
+    margin-bottom: -23%;
+
+}
