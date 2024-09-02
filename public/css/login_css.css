@@ -122,10 +122,10 @@ h2 {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     padding-bottom: 2rem;
-    position: relative; 
-    padding-left: 1rem; 
+    position: relative;
+    padding-left: 1rem;
 }
 
 .img_voltar {
@@ -275,18 +275,35 @@ h2 {
 
 
 .input-senha {
-    /* background-image: url(projeto_logo.jpg); */
     background-repeat: no-repeat;
     background-position: calc(100% - 10px) center;
     padding-right: 30px;
 }
 
+.div_link {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+}
 
-.se-cadastre {
+.se-cadastre,
+.se-cadastre2 {
     color: #B691FF;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+    font-size: 1.1rem;
+  
 }
+
+
+
+
+
+
+
 
 
 .esquece-senha {
@@ -306,7 +323,8 @@ h2 {
     .header {
         flex-direction: column;
         align-items: center;
-        padding: 20px; /* Adicione algum padding para espaçar o conteúdo */
+        padding: 20px;
+        /* Adicione algum padding para espaçar o conteúdo */
     }
 
     .imagem img {

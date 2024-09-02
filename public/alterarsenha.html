@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/alterarsenha.css">
+    <link rel="shortcut icon"
+        href="assets/img/Imagem_do_WhatsApp_de_2024-08-07_à_s__14.44.05_fedbd8fd-removebg-preview 1.svg"
+        type="image/x-icon">
+    <title>SERVGUARD - ALTERAR SENHA</title>
+</head>
+
+<body>
+
+
+    <div class="header">
+
+
+
+        <div class="login-container">
+
+            <div class="fonte">
+                <a href="index.html">
+                    <img src="assets/img/casa.png" class="img_voltar" alt="">
+                </a>
+                <h2 style="margin-bottom: 10%; ">ALTERAR SENHA</h2>
+            </div>
+
+
+
+            <form class="login-form">
+
+                <label class="e-mail" for="username">E-mail do Usuário:</label>
+                <input class="input_email" placeholder="Insira seu E-mail:" type="text" id="inp_usermail"
+                    name="usermail" required>
+
+                <label style="padding-top: 15px;" for="password">Senha:</label>
+                <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+                    required>
+                <label style="padding-top: 15px;" for="password">Confirmar senha:</label>
+                <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+                    required>
+
+                <div class="botao_form">
+
+                    <button class="botao_principal"
+                        style="width: 100%; margin-top: 5%; margin-bottom: 5%; padding-right: 2px;" type="button"
+                        onclick="verificar()">Entrar</button>
+                    <span class="texto_button">Entrar</span>
+
+
+                </div>
+                <br>
+
+
+                <a class="se-cadastre" href="login.html">
+                    <span class="esquece-senha">Faça o login!</span>
+                </a>
+
+
+
+
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script>
+
+    function verificar() {
+        var inputEmail = inp_usermail.value;
+
+        var indice_arroba = inputEmail.indexOf('@');
+        var indice_ponto = inputEmail.lastIndexOf('.');
+
+        if (indice_arroba < 0 || indice_ponto < 0 || indice_ponto < indice_arroba + 2 || indice_ponto === inputEmail.length - 1) {
+            alert("Por favor, preencha o campo de e-mail corretamente");
+            return false;
+        }
+
+    }
+
+
+
+</script>

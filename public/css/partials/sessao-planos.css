@@ -28,6 +28,13 @@
     margin-left: -10%;
     z-index: 1;
     margin-bottom: 3%;
+    transition: transform 600ms ease, background-color 600ms ease;
+}
+
+.plano-basico:hover{
+    transform: scale(1.1);
+    background-color: #cd7f32 ; 
+
 }
 
 .plano-pro{
@@ -38,6 +45,17 @@
     border: 1px solid #7C1DD6;
     margin-bottom: 6%;
     box-shadow: 1px 2px 20px 1px rgba(84,11,84,1);
+    transition: transform 600ms ease, background-color 600ms ease;
+
+}
+
+.plano-pro:hover{
+    transform: scale(1.1);
+    background-color: #daa520;
+
+
+
+
 }
 
 .plano-intermediario{
@@ -49,6 +67,14 @@
     z-index: 1;
     margin-right: -10%;
     margin-bottom: 3%;
+    transition: transform 600ms ease, background-color 600ms ease;
+
+}
+
+.plano-intermediario:hover{
+    transform: scale(1.1);
+    background-color: #e2e2e2; 
+
 }
 
 .circuitoE-planos{
