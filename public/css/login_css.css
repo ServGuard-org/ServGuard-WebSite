@@ -22,32 +22,32 @@ body {
 
 
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     background-color: rgba(73, 72, 72, 0.2);
     backdrop-filter: blur(3px);
-
-    height: 545px;
+    height: auto;
     border-radius: 20px;
     box-shadow: 0 0 1px 2px #ffffffb4;
     border: 1px solid #B691FF;
+    box-sizing: border-box;
+    padding: 10px;
 
-    /* background-color: ; */
 }
 
 .imagem h1 {
     color: white;
     text-align: center;
-    font-size: 55px;
+    font-size: 3rem;
     padding-top: 10px;
     /* font-family: INte; */
 
 }
 
 .imagem img {
-    width: 55%;
-    padding-left: 10px;
-    transform: translate(21%, -25%);
+    width: 100%;
+    height: auto;
 
 
 }
@@ -84,14 +84,14 @@ body {
 
 .login-container {
 
-    width: 300px;
+    width: 21rem;
     /* background: rgba(203, 198, 198, 0.2); */
     /* background-color: #68ec34; */
     /* border: 2px solid rgba(255, 254, 254, 0.2);
     backdrop-filter: blur(10px); */
     color: #2d2323;
     border-radius: 10px;
-    padding: 30px 40px;
+    padding: 20px;
     float: left;
     margin-right: 100px;
     margin-top: -7px;
@@ -113,13 +113,31 @@ h2 {
     justify-content: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
+
 }
+
 
 .fonte {
     font-size: 30px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    padding-bottom: 2rem;
+    position: relative; 
+    padding-left: 1rem; 
 }
+
+.img_voltar {
+    position: absolute;
+    left: -2rem;
+    bottom: 4rem;
+    height: 4rem;
+    width: 5rem;
+    filter: invert(100%);
+}
+
+
 
 .login-form label {
     display: block;
@@ -138,11 +156,10 @@ h2 {
 
 .login-form input {
     background-color: rgba(73, 72, 72, 0.2);
-    width: 100%;
-    height: 22px;
+    width: 22rem;
+    height: 45px;
     padding: 9px;
     margin-bottom: 20px;
-    /* border: 2px solid rgba(227, 209, 209, 0.532); */
     border-bottom: 2px solid #e1e1e1;
     border-top: none;
     border-right: none;
@@ -150,6 +167,7 @@ h2 {
     border-radius: 3px;
     color: #fff;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
 
 }
 
@@ -196,6 +214,7 @@ h2 {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: relative;
     transition: color 0.3s ease;
+    box-sizing: border-box;
 }
 
 
@@ -204,7 +223,7 @@ h2 {
     position: absolute;
     top: 0;
     left: -100%;
-    width: 300%;
+    width: 50rem;
     height: 100%;
     background: linear-gradient(90deg, #B691FF, #110C37, #B691FF);
     transition: left 0.9s ease;
@@ -221,12 +240,15 @@ h2 {
 
 .botao_form {
     /* background-color: red; */
-    width: 110%;
+    width: 22rem;
     padding-top: 10px;
     /* display: flex; */
     /* justify-content: center; */
 
 }
+
+
+
 
 
 
@@ -278,4 +300,52 @@ h2 {
 
 .login-form a {
     margin: 38px;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px; /* Adicione algum padding para espaçar o conteúdo */
+    }
+
+    .imagem img {
+        width: 80%;
+    }
+
+    .login-container {
+        width: 90%;
+        margin-right: 0;
+        margin-top: 20px;
+    }
+
+    .linha {
+        display: none;
+    }
+
+    .logo {
+        padding: 20px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .imagem h1 {
+        font-size: 36px;
+    }
+
+    .login-form input {
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .login-form button {
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .login-form .texto_button {
+        text-align: center;
+        transform: none;
+    }
 }
