@@ -47,7 +47,7 @@
                     <button class="botao_principal"
                         style="width: 100%; margin-top: 5%; margin-bottom: 5%; padding-right: 2px;" type="button"
                         onclick="verificar()">Entrar</button>
-                    <span class="texto_button">Entrar</span>
+                    <span class="texto_button" onclick="mudar()">Entrar</span>
 
 
                 </div>
@@ -87,6 +87,11 @@
             alert("Por favor, preencha o campo de e-mail corretamente");
             return false;
         }
+
+    }
+
+    function mudar() {
+        window.location.href = "login.html";
 
     }
 
