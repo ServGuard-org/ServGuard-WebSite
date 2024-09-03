@@ -37,9 +37,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 1px 2px #ffffffb4;
     border: 1px solid #B691FF;
-    /* padding-top: 30px; */
-
-    /* background-color: ; */
+   
 }
 
 .imagem h1 {
@@ -66,7 +64,6 @@ body {
 
 .logo {
 
-    /* margin-right: 200px; */
     padding-right: 200px;
     padding-left: 100px;
     margin-top: 40px;
@@ -87,10 +84,6 @@ body {
 
 .login-container {
     width: 32rem;
-    /* background: rgba(203, 198, 198, 0.2); */
-    /* background-color: #68ec34; */
-    /* border: 2px solid rgba(255, 254, 254, 0.2);
-    backdrop-filter: blur(10px); */
     color: #2d2323;
     border-radius: 10px;
     padding: 30px 40px;
@@ -99,7 +92,6 @@ body {
     margin-top: -50px;
     transform: translate(6%, 0%);
     box-sizing: border-box;
-    /* margin-bottom: 200px; */
 
 }
 
@@ -153,7 +145,6 @@ h2 {
 .login-form input:hover {
     transform: scale(1.08);
     transition: transform 0.4s ease;
-    /* border: 2px solid #4f16c0; */
 
 }
 
@@ -182,10 +173,7 @@ h2 {
     transition: transform 0.3s ease;
     border-radius: 10px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* padding-: ; */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+
 }
 
 .botao_first {
@@ -202,10 +190,7 @@ h2 {
     transition: transform 0.3s ease;
     border-radius: 40px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* padding-: ; */
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+
 
 }
 
@@ -237,7 +222,6 @@ h2 {
 
 
 .input-senha {
-    /* background-image: url(projeto_logo.jpg); */
     background-repeat: no-repeat;
     background-position: calc(100% - 10px) center;
     padding-right: 30px;

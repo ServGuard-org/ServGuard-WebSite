@@ -39,6 +39,7 @@
       let formHTML = '';
 
       if (tipoUsuario === 'adm') {
+        
         formHTML = `
           <form class="login-form">
             <label class="nome" for="nome">Nome:</label>
@@ -58,7 +59,9 @@
             </div>
           </form>
         `;
-      } else if (tipoUsuario === 'comum') {
+      } 
+      else if (tipoUsuario === 'comum') {
+
         formHTML = `
           <form class="login-form">
             <label class="nome" for="nome">Nome:</label>
@@ -92,7 +95,7 @@
       mudarUsuario();
     });
 
-    
+
   </script>
 </body>
 
