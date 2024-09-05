@@ -30,9 +30,11 @@ header{
 
 .nav-menu {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-right: 3%;
+    background: #09000F;
+    width: 55%;
+    justify-content: space-around;
 }
 
 .nav-item {
@@ -71,14 +73,6 @@ header{
     color: #fff;
 }
 
-ul{
-    display: flex;
-    background: #09000F;
-    align-items: center;
-    width: 55%;
-    justify-content: space-around;
-}
-
 /*Hover menu*/
 
 .nav-item:hover {
@@ -91,7 +85,7 @@ ul{
 /*Responsividade do menu*/
 
 @media(max-width:960px){
-    ul{
+    .nav-menu{
         background: #09000F;
         width: 70%;
     }
@@ -149,7 +143,7 @@ ul{
 }
 
 @media(max-width:540px){
-    ul{
+    .nav-menu{
         background: #09000F;
         width: 70%;
     }
@@ -161,7 +155,7 @@ ul{
 }
 
 @media(max-width:375px){
-    ul{
+    .nav-menu{
         background: #09000F;
         width: 70%;
     }

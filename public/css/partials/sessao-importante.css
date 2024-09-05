@@ -70,6 +70,62 @@
     font-weight: 100;
 }
 
+/*Responsividade da seção importante*/
+
+/*Largura máxima da tela = 375*/
+
+@media(max-width:375px) {
+    #sessao-importante {
+        height: 90%;
+    }
+
+    .div-importante1 {
+        height: 60%;
+    }
+
+    .div-importante2 {
+        height: 60%;
+    }
+
+    .circuitoE {
+        display: none;
+    }
+
+    .circuitoD {
+        display: none;
+
+    }
+
+    .luaE {
+        display: none;
+    }
+
+    .luaD {
+        display: none;
+    }
+
+    .textoImportante {
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .textoImportante1 {
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blurImportante {
+        width: 20%;
+        position: absolute;
+        top: 30px;
+        left: 13px;
+    }
+}
+
+/*Largura máxima da tela = 740*/
+
 @media(max-width:768px) {
     #sessao-importante {
         height: 90%;

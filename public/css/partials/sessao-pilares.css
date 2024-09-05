@@ -90,25 +90,60 @@
     margin-bottom: -23%;
 }
 
-@media (max-width: 1140px) {
-    .pai-texto{
-        width: 100%;
-    }
+/*Responsividade da seção importante*/
 
+/*Largura máxima da tela = 1140*/
+
+@media (max-width: 1140px) {
     .pai-pilar{
+        display: flex;
         width: 100%;
         height: 100%;
-        margin-top: 0;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
     }
 
     .img-pilares{
-        width: 40%;
+        display: none;
+    }
+
+    .pai-texto{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        width: 50%;
+        height: 90%;
+        margin-left: -10%;
+    }
+
+    .blur-pilar{
+        z-index: 3;
+        width: 30%;
+        position: absolute;
+        left: -130px;
+        top: -180px;
     }
 
     .filho-texto{
-        width: 50%;
-        height: 70%;
-        padding: 1%;
+        border: 1px solid #410F70;
+        border-radius: 10px;
+        padding: 2%;
+        background:#0c001483;
+        width: 80%;
+        height: 80%;
+        text-align: center;
+    }
+
+    .quadrado{
+        display: none;
+    }
+
+    .circuitoDireito, .circuitoEsquerdo{
+        display: none;
     }
 }
 

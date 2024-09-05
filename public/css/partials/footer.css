@@ -5,7 +5,6 @@ footer {
     height: 27vh;
     background: #09000F;
     border-top: 1px solid #410F70;
-
 }
 
 .conteudo-footer {
@@ -68,7 +67,11 @@ footer {
     font-weight: 100;
 }
 
-@media(max-width:375px) {
+/*Responsividade da seção footer*/
+
+/*Largura máxima da tela = 375*/
+
+@media (max-width: 375px) {
     .logo-footer {
         display: none;
     }
@@ -81,14 +84,160 @@ footer {
     }
 
     .logo-format {
-        width: 100%;
-        margin-left: 0;
-        justify-content: center;
-        align-items: center;
+        display: none;
     }
 
     .barra-footer{
         display: none;
+    }
+
+    .img-email {
+        width: 2%;
+    }
+
+    .img-git {
+        width: 2%;
+    }
+    
+    .img-whats {
+        width: 2%;
+    }
+
+    .div-integrantes{
+      display: none;
+    }
+
+    .links{
+        width: 100%;
+    }
+    
+}
+
+/*Responsividade do footer*/
+
+
+/*Largura máxima da tela = 540*/
+
+@media (max-width: 540px) {
+    .logo-footer {
+        display: none;
+    }
+
+    .conteudo-footer{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logo-format {
+        display: none;
+    }
+
+    .barra-footer{
+        display: none;
+    }
+
+    .links{
+        width: 100%;
+    }
+
+    .img-email {
+        width: 50%;
+    }
+
+    .img-git {
+        width: 50%;
+    }
+    
+    .img-whats{
+        width: 50%;
+    }
+}
+
+/*Largura máxima da tela = 960*/
+
+@media (max-width: 960px){
+
+    .conteudo-footer{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+    }
+
+    .logo-format {
+        width: 20%;
+        justify-content: space-around;
+    }
+
+    .img-email {
+        width: 20%;
+    }
+
+    .img-git {
+        width: 20%;
+    }
+    
+    .img-whats{
+        width: 20%;
+    }
+
+    .div-integrantes{
+        margin-top: 5%;
+    }
+}
+
+    /*Largura máxima da tela = 1140*/
+
+    @media (max-width: 1140px){
+
+        .conteudo-footer{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+    
+        }
+    
+        .logo-format {
+            width: 20%;
+            justify-content: space-around;
+        }
+    
+        .img-email {
+            width: 20%;
+        }
+    
+        .img-git {
+            width: 20%;
+        }
+        
+        .img-whats{
+            width: 20%;
+        }
+    
+        .div-integrantes{
+            margin-top: 5%;
+        }
+}
+
+  /*Largura mínima da tela = 1140*/
+
+  @media (min-width: 1140px){
+
+    .conteudo-footer{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+    }
+
+    .logo-format {
+        width: 15%;
+        justify-content: space-around;
     }
 
     .img-email {
@@ -104,79 +253,6 @@ footer {
     }
 
     .div-integrantes{
-      display: none;
-    }
-
-    .links{
-        width: 50%;
-        margin-right: -15%;
-    }
-    
-}
-
-@media (max-width: 540px) {
-    .logo-footer {
-        display: none;
-    }
-
-    .conteudo-footer{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .logo-format {
-        width: 100%;
-        margin-left: 0;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .barra-footer{
-        display: none;
-    }
-
-    .img-email {
-        width: 7%;
-    }
-
-    .img-git {
-        width: 7%;
-    }
-    
-    .img-whats{
-        width: 7%;
-    }
-}
-
-@media (max-width: 960px){
-
-    .conteudo-footer{
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-    }
-
-    .logo-format {
-        width: 40%;
-        margin-left: 10%;
-        justify-content: space-around;
-    }
-
-    .img-email {
-        width: 7%;
-    }
-
-    .img-git {
-        width: 7%;
-    }
-    
-    .img-whats{
-        width: 7%;
-    }
-
-    .links{
-        margin-left: 9%;
+        overflow-y: hidden;
     }
 }

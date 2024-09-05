@@ -30,8 +30,6 @@ fun main() {
             print("Digite qual componente deseja adicionar a lista: ")
             val componente = readln()
             println(servguard.adicionarComponente(componente))
-
-
         }
         5 -> {
             print("Quantos watts seu pc consome? (é possível consultar na Etiqueta de Especificação do Hardware): ")
