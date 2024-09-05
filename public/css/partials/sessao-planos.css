@@ -95,10 +95,6 @@
     margin-top: 10%;
 }
 
-.plano-basico:hover {
-    transform: scale(1.1);
-}
-
 .plano-pro {
     width: 25%;
     height: 60%;
@@ -150,10 +146,6 @@
     width: 7%;
 }
 
-.plano-pro:hover {
-    transform: scale(1.1);
-}
-
 .plano-intermediario {
     width: 25%;
     height: 60%;
@@ -172,8 +164,24 @@
     gap: 19px;
 }
 
+/*Hover dos planos*/
+
+.plano-basico:hover {
+    transform: scale(1.1);
+    box-shadow: 1px 2px 20px 1px rgb(235, 122, 16);
+    transition: transform 600ms ease, background-color 600ms ease;
+}
+
+.plano-pro:hover {
+    transform: scale(1.1);
+    box-shadow: 1px 2px 20px 1px rgb(255, 218, 8);
+    transition: transform 600ms ease, background-color 600ms ease;
+}
+
 .plano-intermediario:hover {
     transform: scale(1.1);
+    box-shadow: 1px 2px 20px 1px rgb(158, 157, 158);
+    transition: transform 600ms ease, background-color 600ms ease;
 }
 
 .circuitoE-planos {
@@ -403,7 +411,7 @@
 @media (max-width: 540px) {
     #sessao-planos {
         width: 100vw;
-        height: 170vh;
+        height: 175vh;
         background-color: #09000F;
         display: flex;
         flex-direction: column;
@@ -444,7 +452,7 @@
 
     .plano-pro {
         width: 85%;
-        height: 100%;
+        height: 130%;
         background-color: #09000fab;
         border-radius: 10px;
         border: 1px solid #7C1DD6;
