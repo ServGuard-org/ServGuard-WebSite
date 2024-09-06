@@ -13,7 +13,7 @@ body {
     background-attachment: fixed;
     position: relative;
     background-color: #110C37;
-    /* background-image: ur; */
+    
 }
 
 
@@ -133,8 +133,8 @@ h2 {
     position: absolute;
     left: -2rem;
     bottom: 3.5rem;
-    height: 4.1rem;
-    width: 4.6rem;
+    height: 4rem;
+    width: 4rem;
     filter: invert(100%);
 }
 
