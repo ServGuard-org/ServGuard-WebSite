@@ -72,8 +72,9 @@
 .filho-texto{
     border: 1px solid #410F70;
     border-radius: 10px;
-    padding: 2%;
+    padding: 1%;
     background:#0c001483;
+    width: 100%;
 }
 
 .blur-pilar{
@@ -89,6 +90,9 @@
     z-index: 1;
     margin-bottom: -23%;
 }
+
+
+
 
 /*Responsividade da seção importante*/
 
