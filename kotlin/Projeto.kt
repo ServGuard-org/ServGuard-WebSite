@@ -1,38 +1,57 @@
-class Projeto (var nomeEmpresa:String = "",var cnpj:String="",var numResgistro:Int=0,
-                var cargo: String ="",var nomeFunc:String ="",
-                var emailFunc:String ="", var senha:String="") {
+class Projeto
+    (
+            var componente: String = "",
+            var descricao: String = "",
+            var watts: Double = 0.0
+            ){
 
     val listaComponentes = mutableListOf<String>()
-    val listaEmpresa = mutableListOf<String>()
-
-
-    fun cadastrarEmpresa(){
-
-    }
-    fun adicionarFuncionario(){}
-    fun listarDados (){}
+    val listaDescricao = mutableListOf<String>()
 
     fun adicionarComponente(componente: String): String {
         listaComponentes.add(componente)
-        println("Componente para monitorar adicionado com sucesso!")
+        println("Componente ${componente} para monitorar adicionado com sucesso!")
 
         var componentes = "Componentes: "
         for (componentedaVez in listaComponentes) {
             componentes += "\n - $componentedaVez"
         }
-
         return componentes
     }
 
-    fun energiaConsumida(watts: Int): Double {
+    fun adicionarDescricao(descricao: String){
+        listaDescricao.add(descricao)
+        println("Descrição adicionada com sucesso!")
+    }
+
+    fun energiaConsumida(watts: Double): String {
         val consumo = watts * 24
         val whDia = consumo / 1000.0
 
-        return whDia
+        val texto = "Seu servidor consome ${whDia}Watts diariamente."
+        return texto
     }
 
-    fun adicionarEmpresa(nomeEmpresa: String) {
-        listaEmpresa.add(nomeEmpresa)
+    fun listarComponente():String{
+        println("Qual componente deseja listar?")
+
+        var n = 0
+        var componentes = "Componentes: "
+        for (componentedaVez in listaComponentes) {
+            n++
+            componentes += println(" $n - $componentedaVez")
+        }
+
+        print("Digite a posição que deseja visualizar a descrição: ")
+        val posicao = readln().toInt()
+        var texto = ""
+        if (listaComponentes.indices.contains(posicao - 1)){
+           texto = ("Descrição do componente selecionado:" +
+                  "${listaDescricao[posicao - 1]}")
+        } else {
+            texto = ("Posição inválida")
+        }
+    return  texto
     }
 
 }
