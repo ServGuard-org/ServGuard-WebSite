@@ -69,7 +69,7 @@ def main():
         print(f"Taxa de Envio: {mb_sent:.2f} MB/s")
         print(f"Taxa de Recepcao: {mb_recv:.2f} MB/s")
         
-        time.sleep(3)
+        time.sleep(5)
         
         count += 1
 
