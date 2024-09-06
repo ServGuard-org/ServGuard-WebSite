@@ -1,8 +1,16 @@
-class Projeto {
+class Projeto (var nomeEmpresa:String = "",var cnpj:String="",var numResgistro:Int=0,
+                var cargo: String ="",var nomeFunc:String ="",
+                var emailFunc:String ="", var senha:String="") {
 
     val listaComponentes = mutableListOf<String>()
     val listaEmpresa = mutableListOf<String>()
 
+
+    fun cadastrarEmpresa(){
+
+    }
+    fun adicionarFuncionario(){}
+    fun listarDados (){}
 
     fun adicionarComponente(componente: String): String {
         listaComponentes.add(componente)
