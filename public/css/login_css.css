@@ -282,11 +282,13 @@ h2 {
 
 .div_link {
     display: flex;
+    /* background-color: red; */
     justify-content: space-around;
     align-items: center;
-    width: 100%;
+    width: 28rem;
     max-width: 600px;
     margin: 0 auto;
+    transform: translate(-10%, 0%);
     padding: 10px;
 }
 
