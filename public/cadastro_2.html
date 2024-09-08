@@ -39,11 +39,10 @@
       let formHTML = '';
 
       if (tipoUsuario === 'adm') {
-        
         formHTML = `
-          <form class="login-form">
+          <form class="login-form" id="admin-form">
             <label class="nome" for="nome">Nome:</label>
-            <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" required>
+            <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" minlength="2" required>
 
             <label class="e-mail" for="email">E-mail do Usuário:</label>
             <input class="input_email" placeholder="Insira seu E-mail:" type="email" id="email" name="email" required>
@@ -61,11 +60,10 @@
         `;
       } 
       else if (tipoUsuario === 'comum') {
-
         formHTML = `
-          <form class="login-form">
+          <form class="login-form" id="common-form">
             <label class="nome" for="nome">Nome:</label>
-            <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" required>
+            <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" minlength="2" required>
 
             <label class="e-mail" for="rf">Registro de funcionário (RF):</label>
             <input class="input_email" placeholder="Insira seu código:" type="text" id="rf" name="rf" required>
@@ -87,15 +85,26 @@
     }
 
     function verificar() {
-      window.location.href = "login.html";
+      const form = document.querySelector('form');
+      const senha = document.getElementById('senha').value;
+      const confirmarSenha = document.getElementById('confirmar_senha').value;
+
+      if (senha !== confirmarSenha) {
+        alert('As senhas não conferem.');
+        return;
+      }
+
+      if (form.checkValidity()) {
+        window.location.href = "login.html";
+      } else {
+        alert('Por favor, preencha todos os campos corretamente.');
+      }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('tipo_usuario').value = 'adm';
       mudarUsuario();
     });
-
-
   </script>
 </body>
 
