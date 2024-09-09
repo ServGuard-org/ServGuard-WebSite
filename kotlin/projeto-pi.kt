@@ -7,7 +7,7 @@ fun main() {
         println("2 - Energia consumida diariamente do seu PC")
         println("3 - Listar descrições")
         println("4 - Sair")
-        println("--------------------")
+        println("---------------------------------")
 
         print("Escolha uma opção: ")
         val opcaoEscolha = readln().toInt()
@@ -25,6 +25,11 @@ fun main() {
         }
             3 -> {
                 println(servguard.listarComponente())
+
+                print("Digite a posição que deseja visualizar a descrição: ")
+                val posicao = readln().toInt()
+
+                println(servguard.listarDescricao(posicao))
             }
         4 -> break
             else -> println("Não é possível selecionar essa opção.")

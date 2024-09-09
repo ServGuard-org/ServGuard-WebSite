@@ -10,13 +10,7 @@ class Projeto
 
     fun adicionarComponente(componente: String): String {
         listaComponentes.add(componente)
-        println("Componente ${componente} para monitorar adicionado com sucesso!")
-
-        var componentes = "Componentes: "
-        for (componentedaVez in listaComponentes) {
-            componentes += "\n - $componentedaVez"
-        }
-        return componentes
+        return  "Componente de ${componente} para monitorar, adicionado com sucesso!"
     }
 
     fun adicionarDescricao(descricao: String){
@@ -32,26 +26,24 @@ class Projeto
         return texto
     }
 
-    fun listarComponente():String{
-        println("Qual componente deseja listar?")
-
+    fun listarComponente(): String{
         var n = 0
         var componentes = "Componentes: "
         for (componentedaVez in listaComponentes) {
             n++
-            componentes += println(" $n - $componentedaVez")
+            componentes += "\n $n - $componentedaVez"
         }
+        return componentes
+    }
 
-        print("Digite a posição que deseja visualizar a descrição: ")
-        val posicao = readln().toInt()
+    fun listarDescricao(posicao: Int):String{
         var texto = ""
         if (listaComponentes.indices.contains(posicao - 1)){
-           texto = ("Descrição do componente selecionado:" +
+           texto = ("Descrição do componente selecionado: " +
                   "${listaDescricao[posicao - 1]}")
         } else {
             texto = ("Posição inválida")
         }
     return  texto
     }
-
 }
