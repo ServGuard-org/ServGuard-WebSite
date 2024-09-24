@@ -1,62 +1,102 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
+-- Criação das Tabelas - ServGuard --
 
-/*
-comandos para mysql server
-*/
+CREATE DATABASE ServGuard;
 
-CREATE DATABASE aquatech;
+USE ServGuard;
 
-USE aquatech;
+CREATE TABLE IF NOT EXISTS ServGuard.Empresa (
+idEmpresa INT NOT NULL AUTO_INCREMENT,
+nome VARCHAR(70) NOT NULL,
+nomeResponsavel VARCHAR(70) NOT NULL,
+emailResponsavel VARCHAR(255) NOT NULL,
+CNPJ CHAR(14) NOT NULL,
 
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
+PRIMARY KEY (idEmpresa)
 );
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE IF NOT EXISTS ServGuard.Usuario (
+idUsuario INT NOT NULL AUTO_INCREMENT,
+fkEmpresa INT NOT NULL,
+nome VARCHAR(70) NOT NULL,
+email VARCHAR(255) NOT NULL,
+senha VARCHAR(45) NOT NULL,
+isAdm TINYINT NOT NULL,
+
+CONSTRAINT fkEmpresaUsuario FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
+PRIMARY KEY (idUsuario, fkEmpresa)
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE IF NOT EXISTS ServGuard.ServicoMonitorado (
+idServicoMonitorado INT NOT NULL AUTO_INCREMENT,
+fkEmpresa INT NOT NULL,
+nome VARCHAR(50) NOT NULL,
+URL VARCHAR(255) NOT NULL,
+
+CONSTRAINT fkEmpresaServicoMonitorado FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
+PRIMARY KEY (idServicoMonitorado, fkEmpresa)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE IF NOT EXISTS ServGuard.Maquina (
+idMaquina INT NOT NULL AUTO_INCREMENT,
+fkEmpresa INT NOT NULL,
+nome VARCHAR(50) NOT NULL,
+rack VARCHAR(20),
+modeloCPU VARCHAR(50),
+qtdNucleos INT NOT NULL,
+capacidadeRAM DECIMAL(8,3) NOT NULL,
+MACAddress CHAR(17),
+
+CONSTRAINT fkEmpresaMaquina FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
+PRIMARY KEY (idMaquina, fkEmpresa)
 );
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
+CREATE TABLE IF NOT EXISTS ServGuard.Volume (
+idVolume INT NOT NULL AUTO_INCREMENT,
+tipo VARCHAR(50) NOT NULL,
+capacidade DECIMAL(8,3) NOT NULL,
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
+PRIMARY KEY (idVolume)
 );
 
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+CREATE TABLE IF NOT EXISTS ServGuard.MaquinaVolume (
+idMaquinaVolume INT NOT NULL AUTO_INCREMENT,
+fkMaquina INT NOT NULL,
+fkVolume INT NOT NULL,
+
+CONSTRAINT fkMaquinaMaquinaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
+CONSTRAINT fkVolumeMaquinaVolume FOREIGN KEY (fkVolume) REFERENCES ServGuard.Volume(idVolume),
+PRIMARY KEY (idMaquinaVolume, fkMaquina, fkVolume)
+);
+
+CREATE TABLE IF NOT EXISTS ServGuard.Recurso (
+idRecurso INT NOT NULL AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+unidadeMedida VARCHAR(45) NOT NULL,
+
+PRIMARY KEY (idRecurso)
+);
+
+CREATE TABLE IF NOT EXISTS ServGuard.MaquinaRecurso (
+idMaquinaRecurso INT NOT NULL AUTO_INCREMENT,
+fkMaquina INT NOT NULL,
+fkRecurso INT NOT NULL,
+max DECIMAL(8,3),
+
+CONSTRAINT fkMaquinaMaquinaRecurso FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
+CONSTRAINT fkRecursoMaquinaRecurso FOREIGN KEY (fkRecurso) REFERENCES ServGuard.Recurso(idRecurso),
+PRIMARY KEY (idMaquinaRecurso, fkMaquina, fkRecurso)
+);
+
+CREATE TABLE IF NOT EXISTS ServGuard.Captura (
+idCaptura INT NOT NULL AUTO_INCREMENT,
+fkMaquinaRecurso INT NOT NULL,
+fkMaquina INT NOT NULL,
+fkRecurso INT NOT NULL,
+registro DECIMAL(8,3) NOT NULL,
+dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES ServGuard.MaquinaRecurso(idMaquinaRecurso),
+CONSTRAINT fkMaquinaCaptura FOREIGN KEY (fkMaquina) REFERENCES ServGuard.MaquinaRecurso(fkMaquina),
+CONSTRAINT fkRecursoCaptura FOREIGN KEY (fkRecurso) REFERENCES ServGuard.MaquinaRecurso(fkRecurso),
+PRIMARY KEY (idCaptura, fkMaquinaRecurso, fkMaquina, fkRecurso)
+);
