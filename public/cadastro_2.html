@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/cadastro_css.css">
+  <link rel="stylesheet" href="./css/pages/site-institucional/cadastro_css.css">
   <link rel="shortcut icon" href="assets/img/Imagem_do_WhatsApp_de_2024-08-07_à_s__14.44.05_fedbd8fd-removebg-preview 1.svg" type="image/x-icon">
   <title>SERVGUARD - CADASTRO</title>
 </head>
@@ -16,12 +16,35 @@
         <h2 style="margin-bottom: 10%; padding-top: 8px; color: white;">CADASTRO</h2>
       </div>
       <select onchange="mudarUsuario()" class="tipo_usuario" name="tipo_usuario" id="tipo_usuario">
-        <option value="#">Selecione o tipo de funcionário</option>
+        <!-- <option value="#">Selecione o tipo de funcionário</option>
         <option value="adm">Administrador</option>
         <option value="comum">Comum</option>
-      </select>
+      </select> -->
 
       <div id="form-container">
+        <form class="login-form" id="common-form">
+          <label class="nome" for="nome">Nome:</label>
+          <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome_usuario" name="nome_usuario" minlength="2" required>
+
+          <label class="e-mail" for="rf">Email: </label>
+          <input class="input_email" placeholder="Insira seu Email:" type="text" id="email_usuario" name="email_usuario" required>
+
+          <label for="senha">Senha:</label>
+          <input class="input_senha" placeholder="Insira sua senha:" type="password" id="senha_usuario" name="senha_usuario" required>
+
+          <label for="confirmar_senha">Confirmar senha:</label>
+          <input class="input_senha" placeholder="Confirme sua senha:" type="password" id="confirmar_senha" name="confirmar_senha" required>
+
+          <label for="confirmar_senha">Nome da Empresa:</label>
+          <input class="input_senha" placeholder="Nome da Empresa:" type="text" id="nome_empresa" name="nome_empresa" required>
+
+          <label for="confirmar_senha">CNPJ: </label>
+          <input class="input_senha" placeholder="CNPJ: " type="text" id="cnpj" name="cnpj" required>
+
+          <div class="botao_form">
+            <button style="width: 100%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;" type="button" onclick="cadastraEmpresa()">Cadastre-se</button>
+          </div>
+        </form>
       </div>
 
       <a class="se-cadastre" href="login.html">
@@ -32,56 +55,146 @@
   </div>
 
   <script>
+
+    function cadastraEmpresa() {
+
+      let tipoUsuario = 1;
+      let nomeUsuario = document.getElementById('nome_usuario').value;
+      let emailUsuario = document.getElementById('email_usuario').value;
+      let senhaUsuario = document.getElementById('senha_usuario').value;
+      let nomeEmpresa = document.getElementById('nome_empresa').value;
+      let cnpj = document.getElementById('cnpj').value;
+
+      fetch("/empresas/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeEmpresaServer: nomeEmpresa,
+        nomeResponsavelServer: nomeUsuario,
+        emailResponsavelServer: emailUsuario,
+        cnpjServer: cnpj
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+
+            console.log(`Empresa cadastrada com sucesso! ${resposta}`)
+
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+console.log('PASSOU AQUI')
+      cadastraUsuario()
+      // return false;
+
+      //  switch (document.getElementById('tipo_usuario')) {
+      //   case "adm": 
+      //   tipoUsuario = 1;
+      //   break;
+      //   case "comum": 
+      //   tipoUsuario = 0;
+      //   break;
+      //   default: 
+      //   tipoUsuario = 0;
+      // }
+
+    }
+
+    function cadastraUsuario() {
+      console.log("AINSIANDNASDIANDAIDI")
+      let tipoUsuario = 1;
+      let nomeUsuario = document.getElementById('nome_usuario').value;
+      let emailUsuario = document.getElementById('email_usuario').value;
+      let senhaUsuario = document.getElementById('senha_usuario').value;
+      let nomeEmpresa = document.getElementById('nome_empresa').value;
+      let cnpj = document.getElementById('cnpj').value;
+
+      fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tipoUsuarioServer: tipoUsuario,
+        nomeUsuarioServer: nomeUsuario,
+        emailUsuarioServer: emailUsuario,
+        senhaUsuarioServer: senhaUsuario,
+        cnpjServer: cnpj
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Usuário cadastrado com sucesso: ", resposta)
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    }
+
     function mudarUsuario() {
       const tipoUsuario = document.getElementById('tipo_usuario').value;
       const formContainer = document.getElementById('form-container');
 
       let formHTML = '';
 
-      if (tipoUsuario === 'adm') {
-        formHTML = `
-          <form class="login-form" id="admin-form">
-            <label class="nome" for="nome">Nome:</label>
-            <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" minlength="2" required>
+      // if (tipoUsuario === 'adm') {
+      //   formHTML = `
+      //     <form class="login-form" id="admin-form">
+      //       <label class="nome" for="nome">Nome:</label>
+      //       <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" minlength="2" required>
 
-            <label class="e-mail" for="email">E-mail do Usuário:</label>
-            <input class="input_email" placeholder="Insira seu E-mail:" type="email" id="email" name="email" required>
+      //       <label class="e-mail" for="email">E-mail do Usuário:</label>
+      //       <input class="input_email" placeholder="Insira seu E-mail:" type="email" id="email" name="email" required>
 
-            <label for="senha">Senha:</label>
-            <input class="input_senha" placeholder="Insira sua senha:" type="password" id="senha" name="senha" required>
+      //       <label for="senha">Senha:</label>
+      //       <input class="input_senha" placeholder="Insira sua senha:" type="password" id="senha" name="senha" required>
 
-            <label for="confirmar_senha">Confirmar senha:</label>
-            <input class="input_senha" placeholder="Confirme sua senha:" type="password" id="confirmar_senha" name="confirmar_senha" required>
+      //       <label for="confirmar_senha">Confirmar senha:</label>
+      //       <input class="input_senha" placeholder="Confirme sua senha:" type="password" id="confirmar_senha" name="confirmar_senha" required>
 
-            <div class="botao_form">
-              <button style="width: 100%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;" type="button" onclick="verificar()">Cadastre-se</button>
-            </div>
-          </form>
-        `;
-      } 
-      else if (tipoUsuario === 'comum') {
-        formHTML = `
-          <form class="login-form" id="common-form">
-            <label class="nome" for="nome">Nome:</label>
-            <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" minlength="2" required>
+      //       <div class="botao_form">
+      //         <button style="width: 100%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;" type="button" onclick="verificar()">Cadastre-se</button>
+      //       </div>
+      //     </form>
+      //   `;
+      // } 
+      // else if (tipoUsuario === 'comum') {
+      //   formHTML = `
+      //     <form class="login-form" id="common-form">
+      //       <label class="nome" for="nome">Nome:</label>
+      //       <input class="input_nome" placeholder="Insira seu nome:" type="text" id="nome" name="nome" minlength="2" required>
 
-            <label class="e-mail" for="rf">Registro de funcionário (RF):</label>
-            <input class="input_email" placeholder="Insira seu código:" type="text" id="rf" name="rf" required>
+      //       <label class="e-mail" for="rf">Registro de funcionário (RF):</label>
+      //       <input class="input_email" placeholder="Insira seu código:" type="text" id="rf" name="rf" required>
 
-            <label for="senha">Senha:</label>
-            <input class="input_senha" placeholder="Insira sua senha:" type="password" id="senha" name="senha" required>
+      //       <label for="senha">Senha:</label>
+      //       <input class="input_senha" placeholder="Insira sua senha:" type="password" id="senha" name="senha" required>
 
-            <label for="confirmar_senha">Confirmar senha:</label>
-            <input class="input_senha" placeholder="Confirme sua senha:" type="password" id="confirmar_senha" name="confirmar_senha" required>
+      //       <label for="confirmar_senha">Confirmar senha:</label>
+      //       <input class="input_senha" placeholder="Confirme sua senha:" type="password" id="confirmar_senha" name="confirmar_senha" required>
 
-            <div class="botao_form">
-              <button style="width: 100%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;" type="button" onclick="verificar()">Cadastre-se</button>
-            </div>
-          </form>
-        `;
-      }
+      //       <div class="botao_form">
+      //         <button style="width: 100%; margin-top: 5%; margin-bottom: 5%; background-color: white; color: #B691FF;" type="button" onclick="verificar()">Cadastre-se</button>
+      //       </div>
+      //     </form>
+      //   `;
+      // }
 
-      formContainer.innerHTML = formHTML;
+      // formContainer.innerHTML = formHTML;
     }
 
     function verificar() {

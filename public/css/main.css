@@ -1,0 +1,34 @@
+/* --- IMPORTANDO PADRÕES DO SITE --- */
+@import url(./partials/typography.css);
+@import url(./partials/colors.css);
+@import url(./partials/layout.css);
+@import url(./partials/spacing.css);
+@import url(./partials/menu.css);
+@import url(./partials/buttons.css);
+
+/* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
+@import url(./pages/site-institucional/sessaoInicio.css);
+@import url(./pages/site-institucional/sessaoSobre.css);
+@import url(./pages/site-institucional/sessao-importante.css);
+@import url(./pages/site-institucional/sessao-pilares.css);
+@import url(./pages/site-institucional/sessao-planos.css);
+
+/* --- NÃO PODE SER IMPORTADO OS ARQUIVOS DE LOGIN - CADASTRO - ALTERARSENHA --- */
+/* @import url(./pages/site-institucional/login_css.css);
+@import url(./pages/site-institucional/cadastro_css.css);
+@import url(./pages/site-institucional/alterarsenha.css); */
+
+/* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
+
+*,
+*::after,
+*::before{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+html{
+    scroll-behavior: smooth;
+}
