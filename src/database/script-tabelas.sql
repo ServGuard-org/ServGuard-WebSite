@@ -1,5 +1,7 @@
--- Criação das Tabelas - ServGuard --
+-- Criação das Tabelas - ServGuard -- 
+		-- (MODELAGEM V3) -- 
 
+-- Criação das Tabelas - ServGuard --
 CREATE DATABASE ServGuard;
 
 USE ServGuard;
@@ -9,7 +11,7 @@ idEmpresa INT NOT NULL AUTO_INCREMENT,
 nome VARCHAR(70) NOT NULL,
 nomeResponsavel VARCHAR(70) NOT NULL,
 emailResponsavel VARCHAR(255) NOT NULL,
-CNPJ CHAR(14) NOT NULL,
+CNPJ CHAR(14) UNIQUE NOT NULL,
 
 PRIMARY KEY (idEmpresa)
 );
