@@ -6,6 +6,24 @@ function cadastrarVolume(tipo, capacidade) {
     return database.executar(instrucaoSql);
 }
 
+function associarVolume(idMaquinaVolume, idVolume) {
+    var instrucaoSql = `
+        INSERT INTO MaquinaVolume (fkMaquina, fkVolume) VALUES (${idMaquinaVolume}, ${idVolume});
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function desassociarVolume(idMaquinaVolume, idVolume) {
+    var instrucaoSql = `
+        DELETE FROM MaquinaVolume WHERE fkMaquina = ${idMaquinaVolume} AND fkVolume = ${idVolume};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    cadastrarVolume
+    cadastrarVolume,
+    associarVolume,
+    desassociarVolume
 }
