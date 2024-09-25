@@ -83,7 +83,8 @@
           if (resposta.ok) {
 
             console.log(`Empresa cadastrada com sucesso! ${resposta}`)
-
+            cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj);
+            
           } else {
             throw "Houve um erro ao tentar realizar o cadastro!";
           }
@@ -91,8 +92,6 @@
         .catch(function (resposta) {
           console.log(`#ERRO: ${resposta}`);
         });
-
-      cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj)
 
     }
 
