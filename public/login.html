@@ -19,7 +19,7 @@
         <div class="login-container">
 
             <div class="fonte">
-                <a href="index.html"> 
+                <a href="index.html">
                     <img src="./img/casa.png" class="img_voltar" alt="">
                 </a>
                 <h2 style="margin-bottom: 12%;">LOGIN</h2>
@@ -29,8 +29,8 @@
 
             <form class="login-form">
 
-                <label class="e-mail" for="username">E-mail/Identificação:</label>
-                <input class="input_email" placeholder="Insira seu e-mail/Identificação:" type="text" id="inp_usermail"
+                <label class="e-mail" for="username">E-mail:</label>
+                <input class="input_email" placeholder="Insira seu e-mail:" type="text" id="inp_usermail"
                     name="usermail" required>
 
                 <label style="padding-top: 15px;" for="password">Senha:</label>
@@ -41,7 +41,7 @@
 
                     <button class="botao_principal"
                         style="width: 100%; margin-top: 5%; margin-bottom: 5%; padding-right: 2px;" type="button"
-                        onclick="verificar()">Entrar</button>
+                        onclick="logar()">Entrar</button>
                     <span class="texto_button">Entrar</span>
 
 
@@ -56,7 +56,7 @@
                         <span class="esquece-senha">Alterar senha!</span>
                     </a>
                 </div>
-              
+
 
 
 
@@ -87,6 +87,47 @@
             alert("Por favor, preencha o campo de e-mail corretamente");
             return false;
         }
+
+    }
+
+    function logar() {
+
+        let emailUsuario = document.getElementById('inp_usermail').value
+        let senhaUsuario = document.getElementById('password').value
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                emailServer: emailUsuario,
+                senhaServer: senhaUsuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("Resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log("Usuário logado com sucesso: ", resposta);
+
+                    resposta.json().then(resposta => {
+
+                        sessionStorage.setItem('ID_USUARIO', resposta.idUsuario);
+                        sessionStorage.setItem('NOME_USUARIO', resposta.nome);
+                        sessionStorage.setItem('EMAIL_USUARIO', resposta.email);
+                        sessionStorage.setItem('ID_EMPRESA_USUARIO', resposta.fkEmpresa);
+                        sessionStorage.setItem('IS_ADM_USUARIO', resposta.isAdm);
+
+                    })
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o login!";
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
 
     }
 
