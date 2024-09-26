@@ -47,6 +47,7 @@ modeloCPU VARCHAR(50),
 qtdNucleos INT,
 capacidadeRAM DECIMAL(8,3),
 MACAddress CHAR(17),
+isAtiva TINYINT DEFAULT 1 NOT NULL,
 
 CONSTRAINT fkEmpresaMaquina FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
 PRIMARY KEY (idMaquina, fkEmpresa)
