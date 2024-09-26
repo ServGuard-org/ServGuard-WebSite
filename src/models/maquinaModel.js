@@ -6,8 +6,14 @@ function cadastrar(fkEmpresa, nome, rack) {
     return database.executar(instrucaoSql);
 }
 
-function deletarPorId(idMaquina) {
-    let instrucaoSql = `DELETE FROM Maquina WHERE idMaquina = ${idMaquina};`;
+function inativarPorId(idMaquina) {
+    let instrucaoSql = `UPDATE Maquina SET isAtiva = 0 WHERE idMaquina = ${idMaquina};`;
+
+    return database.executar(instrucaoSql);
+}
+
+function ativarPorId(idMaquina) {
+    let instrucaoSql = `UPDATE Maquina SET isAtiva = 1 WHERE idMaquina = ${idMaquina};`;
 
     return database.executar(instrucaoSql);
 }
@@ -25,9 +31,9 @@ function atualizarRackPorId(idMaquina, rack) {
 }
 
 function listarPorEmpresa(fkEmpresa) {
-    let instrucaoSql = `SELECT idMaquina, fkEmpresa, nome, rack, modeloCPU, qtdNucleosCPU, capacidadeRAM, MACAddress FROM Maquina WHERE fkEmpresa = ${fkEmpresa}`;
+    let instrucaoSql = `SELECT idMaquina, fkEmpresa, nome, rack, modeloCPU, qtdNucleos, capacidadeRAM, MACAddress FROM Maquina WHERE fkEmpresa = ${fkEmpresa} AND isAtiva = 1`;
 
     return database.executar(instrucaoSql)
 }
 
-module.exports = { cadastrar, deletarPorId, atualizarNomePorId, atualizarRackPorId, listarPorEmpresa}
+module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarNomePorId, atualizarRackPorId, listarPorEmpresa}
