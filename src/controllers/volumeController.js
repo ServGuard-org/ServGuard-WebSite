@@ -11,7 +11,6 @@ function cadastrar(req, res) {
                 console.log("Resultados cadastrando Volume:", JSON.stringify(resposta));
 
                 res.json(resposta);
-                // aqui dentro, chamar o relacionarVolumeMaquina na model
 
             }
         ).catch(
@@ -37,7 +36,7 @@ function associarVolume(req, res){
     if (idMaquinaVolume == undefined || idVolume == undefined){
         res.status(400).send("O ID da máquina ou do volume está indefinido!")
     } else {
-        associarModel.associarVolume(idMaquinaVolume, idVolume)
+        volumeModel.associarVolume(idMaquinaVolume, idVolume)
         .then(
             function(resposta) {
                 res.json(resposta);
