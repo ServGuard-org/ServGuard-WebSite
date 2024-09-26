@@ -1,12 +1,11 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap'); */
 
 *,
 *:after,
 *:before {
-    /* font-family: "Poppins", sans-serif; */
-    font-family: "Josefin Sans", sans-serif;
-    color: #fff;
+    font-family: "Poppins", sans-serif;
+    /* font-family: "Josefin Sans", sans-serif; */
 }
 
 @media (min-width: 1440px) {
@@ -197,4 +196,73 @@
         font-weight: 300;
         text-decoration: none;        
     }
+}
+
+.color-white{
+    color: white;
+}
+
+.color-black{
+    color: black;
+}
+
+.color-gray{
+    color: var(--normal-gray);
+}
+
+/* Texto em negrito */
+.bold {
+    font-weight: bold;
+}
+
+/* Texto com letras finas */
+.thin {
+    font-weight: 300;
+}
+
+/* Links */
+.link {
+    color: var(--dark-purple);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Texto sublinhado */
+.underline {
+    text-decoration: underline;
+}
+
+/* Texto em itálico */
+.italic {
+    font-style: italic;
+}
+
+/* Texto centralizado */
+.center {
+    text-align: center;
+}
+
+/* Texto com espaçamento entre letras */
+.letter-spacing {
+    letter-spacing: 2px;
+}
+
+/* Texto com espaçamento entre palavras */
+.word-spacing {
+    word-spacing: 4px;
+}
+
+/* Texto em maiúsculas */
+.uppercase {
+    text-transform: uppercase;
+}
+
+/* Texto em minúsculas */
+.lowercase {
+    text-transform: lowercase;
+}
+
+/* Texto capitalizado (primeira letra de cada palavra em maiúscula) */
+.capitalize {
+    text-transform: capitalize;
 }

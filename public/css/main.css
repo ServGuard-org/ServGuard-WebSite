@@ -7,18 +7,10 @@
 @import url(./partials/buttons.css);
 
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
-@import url(./pages/site-institucional/sessaoInicio.css);
-@import url(./pages/site-institucional/sessaoSobre.css);
-@import url(./pages/site-institucional/sessao-importante.css);
-@import url(./pages/site-institucional/sessao-pilares.css);
-@import url(./pages/site-institucional/sessao-planos.css);
 
-/* --- NÃO PODE SER IMPORTADO OS ARQUIVOS DE LOGIN - CADASTRO - ALTERARSENHA --- */
-/* @import url(./pages/site-institucional/login_css.css);
-@import url(./pages/site-institucional/cadastro_css.css);
-@import url(./pages/site-institucional/alterarsenha.css); */
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
+@import url(./pages/site-institucional/cadastro.css);
 
 *,
 *::after,
@@ -26,9 +18,27 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
 }
 
 html{
     scroll-behavior: smooth;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+section{
+    width: 100%;
+    height: 100%;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
 }

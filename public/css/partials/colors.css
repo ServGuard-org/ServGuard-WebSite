@@ -1,7 +1,11 @@
 :root{
+    --light-black: #141414;
+    
     --darkness-purple: #0C0015;
-    --darked-purple: #20033b;
-    --dark-purple: #410F70;
+    --darked-purple: #4E2E9E;
+    --dark-purple: #6D4BC7;
     --normal-purple: #B691FF;
-    --light-purple: #DBC8FF;
+    --light-purple: #FFFFFD;
+
+    --normal-gray: #9A9A9A;
 }
