@@ -3,11 +3,11 @@
 @import url(./partials/colors.css);
 @import url(./partials/layout.css);
 @import url(./partials/spacing.css);
-@import url(./partials/menu.css);
+/* @import url(./partials/menu.css); */
 @import url(./partials/buttons.css);
 
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
-
+@import url(./pages/dashboard/dashboard-adm.css);
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
 @import url(./pages/site-institucional/cadastro.css);
