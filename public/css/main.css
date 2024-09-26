@@ -20,6 +20,27 @@
     box-sizing: border-box;
 }
 
+/* LARGURA DA BARRA DE ROLAGEM */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* FUNDA DA BARRA DE ROLAGEM */
+::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+/* COR DA BARRA DE MEDIDA */
+::-webkit-scrollbar-thumb {
+    background: var(--normal-black);
+    border-radius: 3px;
+}
+
+/* HOVER DA BARRA DE MEDIDA */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--normal-black);
+}
+
 html{
     scroll-behavior: smooth;
 }

@@ -42,7 +42,7 @@
 }
 
 .formContainer label {
-    font-size: 15px;
+    font-size: 13px;
     text-align: start;
     align-self: flex-start;
     transition: all 0.4s ease;
@@ -54,7 +54,7 @@
     border-radius: 8px;
     background-color: transparent;
     color: white;
-    border: 1px solid rgb(85, 85, 85);
+    border: 1px solid var(--dark-gray);
     font-size: 15px;
     padding-left: 10px;
     transition: all 0.4s ease;

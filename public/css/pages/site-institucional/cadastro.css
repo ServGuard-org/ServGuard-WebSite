@@ -1,19 +1,20 @@
-#page-cadastro{
+#page-cadastro {
     background: var(--light-black);
     display: flex;
     justify-content: center;
     overflow-y: auto;
 }
 
-.father-cadastro{
+.father-cadastro {
     max-width: 1250px;
     width: 100%;
     height: 100%;
 
     display: flex;
+    justify-content: center;
 }
 
-.child-card-form-cadastro{
+.child-card-form-cadastro {
     max-width: 500px;
     width: 100%;
     height: 100%;
@@ -23,16 +24,16 @@
     flex-direction: column;
 }
 
-.card-form-cadastro{
+.card-form-cadastro {
     width: 100%;
     height: 100%;
     padding: 0px 10px 0px 10px;
-    
+
     display: flex;
     flex-direction: column;
     gap: var(--gap-2);
 
-    & form{
+    & form {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -40,27 +41,66 @@
     }
 }
 
-.logo-cadastro{
-    display: block;
-
-
+.logo-cadastro {
     display: flex;
     gap: var(--gap-2);
 }
 
-.child-card-image-cadastro{
+.child-card-image-cadastro {
     max-width: 750px;
     width: 100%;
     height: 100%;
     padding: 20px;
 
-    & figure{
+    & figure {
         width: 100%;
         height: 100%;
         border-radius: 13px;
         background: url(../../../assets/img/download.png) no-repeat center;
         background-size: cover;
         padding: 45px;
+        border: 1px solid var(--dark-gray);
     }
 }
 
+.form-card-line-border {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2);
+    
+}
+
+/* ESPONSIVIDADE DAS TELAS */
+@media (min-width: 960px){
+    
+}
+
+@media (max-width: 960px) {
+    .form-card-line-border{
+        padding: 40px;
+        border-radius: 10px;
+        background: var(--darkness-gray);
+        border: 1px solid var(--dark-gray);
+    }
+    .child-card-image-cadastro {
+        display: none;
+    }
+
+    .child-card-form-cadastro {
+        max-width: 600px;
+    }
+    .logo-cadastro {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 540px) {
+    .child-card-form-cadastro{
+        padding: 0;
+    }
+    .logo-cadastro{
+        margin-top: var(--gap-2);
+    }
+}

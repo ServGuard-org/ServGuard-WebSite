@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/pages/site-institucional/login_css.css">
+    <link rel="shortcut icon"
+        href="assets/img/Imagem_do_WhatsApp_de_2024-08-07_à_s__14.44.05_fedbd8fd-removebg-preview 1.svg"
+        type="image/x-icon">
+    <title>SERVGUARD - LOGIN</title>
+</head>
+
+<body>
+
+
+    <div class="header">
+
+        <div class="login-container">
+
+            <div class="fonte">
+                <a href="index.html">
+                    <img src="./img/casa.png" class="img_voltar" alt="">
+                </a>
+                <h2 style="margin-bottom: 12%;">LOGIN</h2>
+            </div>
+
+
+
+            <form class="login-form">
+
+                <label class="e-mail" for="username">E-mail:</label>
+                <input class="input_email" placeholder="Insira seu e-mail:" type="text" id="inp_usermail"
+                    name="usermail" required>
+
+                <label style="padding-top: 15px;" for="password">Senha:</label>
+                <input class="input_senha" placeholder="Insira sua senha:" type="password" id="password" name="password"
+                    required>
+
+                <div class="botao_form">
+
+                    <button class="botao_principal"
+                        style="width: 100%; margin-top: 5%; margin-bottom: 5%; padding-right: 2px;" type="button"
+                        onclick="logar()">Entrar</button>
+                    <span class="texto_button">Entrar</span>
+
+
+                </div>
+                <br>
+
+                <div class="div_link">
+                    <a class="se-cadastre" href="cadastro_2.html">
+                        <span class="esquece-senha">Se cadastre aqui!</span>
+                    </a>
+                    <a class="se-cadastre2" href="alterarsenha.html">
+                        <span class="esquece-senha">Alterar senha!</span>
+                    </a>
+                </div>
+
+
+
+
+
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script>
+
+    function verificar() {
+        var inputEmail = inp_usermail.value;
+
+        var indice_arroba = inputEmail.indexOf('@');
+        var indice_ponto = inputEmail.lastIndexOf('.');
+
+        if (indice_arroba < 0 || indice_ponto < 0 || indice_ponto < indice_arroba + 2 || indice_ponto === inputEmail.length - 1) {
+            alert("Por favor, preencha o campo de e-mail corretamente");
+            return false;
+        }
+
+    }
+
+    function logar() {
+
+        let emailUsuario = document.getElementById('inp_usermail').value
+        let senhaUsuario = document.getElementById('password').value
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                emailServer: emailUsuario,
+                senhaServer: senhaUsuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("Resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log("Usuário logado com sucesso: ", resposta);
+
+                    resposta.json().then(resposta => {
+
+                        sessionStorage.setItem('ID_USUARIO', resposta.idUsuario);
+                        sessionStorage.setItem('NOME_USUARIO', resposta.nome);
+                        sessionStorage.setItem('EMAIL_USUARIO', resposta.email);
+                        sessionStorage.setItem('ID_EMPRESA_USUARIO', resposta.fkEmpresa);
+                        sessionStorage.setItem('IS_ADM_USUARIO', resposta.isAdm);
+
+                    })
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o login!";
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+
+    }
+
+
+
+</script>

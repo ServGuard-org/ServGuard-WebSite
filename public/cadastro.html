@@ -1,142 +1,187 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/main.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/main.css" />
     <title>ServGuard | Cadastro</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <section id="page-cadastro">
-        <main class="father-cadastro">
-            <div class="child-card-form-cadastro">
+      <main class="father-cadastro">
+        <div class="child-card-form-cadastro">
+          <div class="card-form-cadastro">
+            <a class="logo-cadastro color-white" href="./index.html">
+              <img src="./assets/img/logo.png" alt="" />
+              <h3 class="bold">ServGuard</h3>
+            </a>
 
-                <div class="card-form-cadastro">
-                    <a class="logo-cadastro color-white" href="./index.html">
-                        <img src="./assets/img/logo.png" alt="">
-                        <h3 class="bold">ServGuard</h3>
-                    </a>
+            
 
-                    <div class="form-titulo-cadastro my-2">
-                        <h3 class="color-white"> Comece a usar a ServGuard</h3>
-                        <p class="color-gray">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                    </div>
-
-                    <form action="">
-                        <div class="formContainer">
-                            <input placeholder="Digite seu nome" type="text" id="nome_usuario" name="nome_usuario" required autocomplete="off"/>
-                            <label class="color-white" for="nome">Nome</label>
-                        </div>
-                        <div class="formContainer">
-                            <input placeholder="example@email.com" type="text" id="email_usuario" name="email_usuario" required autocomplete="off"/>
-                            <label class="color-white" for="email">Email</label>
-                        </div>
-                        <div class="formContainer">
-                            <input placeholder="Digite o nome da empresa" type="text" id="nome_empresa" name="nome_empresa" required autocomplete="off"/>
-                            <label class="color-white" for="nome_empresa">Nome Empresa</label>
-                        </div>
-                        <div class="formContainer">
-                            <input placeholder="Digite o CNPJ da empresa" type="number" id="cnpj" name="cnpj" required autocomplete="off"/>
-                            <label class="color-white" for="cnpj">CNPJ</label>
-                        </div>
-                        <div class="formContainer">
-                            <input placeholder="Digite sua senha" type="password" id="senha_usuario" name="senha_usuario" required autocomplete="off"/>
-                            <label class="color-white" for="senha">Senha</label>
-                        </div>
-                        <div class="formContainer">
-                            <input placeholder="Digite sua senha" type="password" id="confirmar_senha" name="confirmar_senha" required autocomplete="off"/>
-                            <label class="color-white" for="confirmar_senha">Confirmar Senha</label>
-                        </div>
-
-                        <button class="btnServGuard">Register</button>
-                    </form>
+            <form action="">
+              <div class="form-card-line-border mb-1">
+                <div class="form-titulo-cadastro my-1">
+                  <h3 class="color-white mb-1">Comece a usar a ServGuard</h3>
+                  <p class="color-gray">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  </p>
                 </div>
-                
-            </div>
-            <div class="child-card-image-cadastro">
-                <figure>
-                    <h3 class="color-white mb-1">Lorem ipsum dolor</h3>
-                    <p class="color-gray">Lorem ipsum dolor sit amet consectetur?</p>
-                </figure>
-            </div>
-        </main>
+  
+                <div class="formContainer">
+                  <input
+                    placeholder="Digite seu nome"
+                    type="text"
+                    id="nome_usuario"
+                    name="nome_usuario"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="color-white" for="nome">Nome</label>
+                </div>
+                <div class="formContainer">
+                  <input
+                    placeholder="example@email.com"
+                    type="text"
+                    id="email_usuario"
+                    name="email_usuario"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="color-white" for="email">Email</label>
+                </div>
+                <div class="formContainer">
+                  <input
+                    placeholder="Digite o nome da empresa"
+                    type="text"
+                    id="nome_empresa"
+                    name="nome_empresa"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="color-white" for="nome_empresa"
+                    >Nome Empresa</label
+                  >
+                </div>
+                <div class="formContainer">
+                  <input
+                    placeholder="Digite o CNPJ da empresa"
+                    type="number"
+                    id="cnpj"
+                    name="cnpj"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="color-white" for="cnpj">CNPJ</label>
+                </div>
+                <div class="formContainer">
+                  <input
+                    placeholder="Digite sua senha"
+                    type="password"
+                    id="senha_usuario"
+                    name="senha_usuario"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="color-white" for="senha">Senha</label>
+                </div>
+                <div class="formContainer">
+                  <input
+                    placeholder="Digite sua senha"
+                    type="password"
+                    id="confirmar_senha"
+                    name="confirmar_senha"
+                    required
+                    autocomplete="off"
+                  />
+                  <label class="color-white" for="confirmar_senha"
+                    >Confirmar Senha</label
+                  >
+                </div>
+  
+                <button class="btnServGuard mt-2">Cadastre-se</button>
+  
+                <p class="color-gray little-text center">
+                  Já tem uma conta?
+                  <a class="color-purple little-text" href="./login.html"> Entrar </a>
+                </p>
+              </div>              
+            </form>
+          </div>
+        </div>
+        <div class="child-card-image-cadastro">
+          <figure>
+            <h3 class="color-white mb-1">Lorem ipsum dolor</h3>
+            <p class="color-gray">Lorem ipsum dolor sit amet consectetur?</p>
+          </figure>
+        </div>
+      </main>
     </section>
-    
-</body>
+  </body>
 </html>
 
 <script>
+  function cadastraEmpresa() {
+    let nomeUsuario = document.getElementById("nome_usuario").value;
+    let emailUsuario = document.getElementById("email_usuario").value;
+    let senhaUsuario = document.getElementById("senha_usuario").value;
+    let nomeEmpresa = document.getElementById("nome_empresa").value;
+    let cnpj = document.getElementById("cnpj").value;
 
-    function cadastraEmpresa() {
+    fetch("/empresas/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeEmpresaServer: nomeEmpresa,
+        nomeResponsavelServer: nomeUsuario,
+        emailResponsavelServer: emailUsuario,
+        cnpjServer: cnpj,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
 
-      let nomeUsuario = document.getElementById('nome_usuario').value;
-      let emailUsuario = document.getElementById('email_usuario').value;
-      let senhaUsuario = document.getElementById('senha_usuario').value;
-      let nomeEmpresa = document.getElementById('nome_empresa').value;
-      let cnpj = document.getElementById('cnpj').value;
-
-      fetch("/empresas/cadastrar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nomeEmpresaServer: nomeEmpresa,
-          nomeResponsavelServer: nomeUsuario,
-          emailResponsavelServer: emailUsuario,
-          cnpjServer: cnpj
-        }),
+        if (resposta.ok) {
+          console.log(`Empresa cadastrada com sucesso! ${resposta}`);
+          cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj);
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
       })
-        .then(function (resposta) {
-          console.log("resposta: ", resposta);
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
 
-          if (resposta.ok) {
+  function cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj) {
+    // Primeiro usuário cadastrado da empresa sempre é ADM, por isso, é 1.
+    let tipoUsuario = 1;
 
-            console.log(`Empresa cadastrada com sucesso! ${resposta}`);
-            cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj);
-            
-          } else {
-            throw "Houve um erro ao tentar realizar o cadastro!";
-          }
-        })
-        .catch(function (resposta) {
-          console.log(`#ERRO: ${resposta}`);
-        });
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tipoUsuarioServer: tipoUsuario,
+        nomeServer: nomeUsuario,
+        emailServer: emailUsuario,
+        senhaServer: senhaUsuario,
+        cnpjServer: cnpj,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("Resposta: ", resposta);
 
-    }
-
-    function cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj) {
-
-      // Primeiro usuário cadastrado da empresa sempre é ADM, por isso, é 1.
-      let tipoUsuario = 1;
-
-      fetch("/usuarios/cadastrar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tipoUsuarioServer: tipoUsuario,
-          nomeServer: nomeUsuario,
-          emailServer: emailUsuario,
-          senhaServer: senhaUsuario,
-          cnpjServer: cnpj,
-        }),
+        if (resposta.ok) {
+          console.log("Usuário cadastrado com sucesso: ", resposta);
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
       })
-        .then(function (resposta) {
-          console.log("Resposta: ", resposta);
-
-          if (resposta.ok) {
-            console.log("Usuário cadastrado com sucesso: ", resposta);
-          } else {
-            throw "Houve um erro ao tentar realizar o cadastro!";
-          }
-        })
-        .catch(function (erro) {
-          console.log(`#ERRO: ${erro}`);
-        });
-
-    }
-
+      .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+      });
+  }
 </script>

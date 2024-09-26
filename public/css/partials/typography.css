@@ -210,6 +210,14 @@
     color: var(--normal-gray);
 }
 
+.color-gray-dark{
+    color: var(--dark-gray);
+}
+
+.color-purple{
+    color: var(--normal-purple);
+}
+
 /* Texto em negrito */
 .bold {
     font-weight: bold;
@@ -218,6 +226,10 @@
 /* Texto com letras finas */
 .thin {
     font-weight: 300;
+}
+
+.little-text{
+    font-size: 13px;
 }
 
 /* Links */
