@@ -60,6 +60,10 @@
         background-size: cover;
         padding: 45px;
         border: 1px solid var(--dark-gray);
+
+        & p{
+            width: 80%;
+        }
     }
 }
 
