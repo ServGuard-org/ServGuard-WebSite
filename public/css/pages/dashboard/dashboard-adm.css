@@ -1,18 +1,22 @@
 #page-dashboard-adm{
     display: flex;
-    background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.20) 100%), var(--Grays-White, #FFF);
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
     padding: 3%;
+    overflow-y: auto;
 
     & header{
         min-width: 100px;
-        width: 12%;
-        height: 100%;
-        background: red;
+        width: 9%;
+        height: calc(100vh - 12.7%);
+        position: fixed;
     }
 
     & main{
-        width: 85%;
+        margin-left: calc(100% - 90.4%);
+        width: 91%;
         height: 100%;
+        background: #794ED4;
     }
 }
 
@@ -59,6 +63,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
 
             & img{
                 width: 45px;
@@ -72,3 +77,5 @@
 .active{
     background: var(--normal-purple);
 }
+
+/* ESTILIZANDO CONTEUDO PRINCIPAL */
