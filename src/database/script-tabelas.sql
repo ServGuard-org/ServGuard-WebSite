@@ -23,6 +23,7 @@ nome VARCHAR(70) NOT NULL,
 email VARCHAR(255) UNIQUE NOT NULL,
 senha VARCHAR(45) NOT NULL,
 isAdm TINYINT NOT NULL,
+isAtivo TINYINT NOT NULL DEFAULT 1,
 
 CONSTRAINT fkEmpresaUsuario FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
 PRIMARY KEY (idUsuario, fkEmpresa)

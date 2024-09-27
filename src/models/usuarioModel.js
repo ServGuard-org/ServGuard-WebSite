@@ -1,4 +1,4 @@
-var database = require("../database/config")
+var database = require("../database/config");
 
 function autenticar(email, senha) {
     var instrucaoSql = `
@@ -20,7 +20,35 @@ function cadastrar(nome, email, senha, isAdm, cnpj) {
     return database.executar(instrucaoSql);
 }
 
+function alterar(nome, email, isAdm, idUsuario) {
+    let instrucaoSql = `UPDATE usuario SET nome = '${nome}', email = '${email}', isAdm = ${isAdm} WHERE idUsuario = ${idUsuario};`;
+
+    return database.executar(instrucaoSql);
+}
+
+function ativar(idUsuario) {
+    let instrucaoSql = `UPDATE usuario SET isAtivo = 1 WHERE idUsuario = ${idUsuario};`;
+
+    return database.executar(instrucaoSql);
+}
+
+function inativar(idUsuario) {
+    let instrucaoSql = `UPDATE usuario SET isAtivo = 0 WHERE idUsuario = ${idUsuario};`;
+
+    return database.executar(instrucaoSql);
+}
+
+function listarPorEmpresa(fkEmpresa) {
+    let instrucaoSql = `SELECT idUsuario, fkEmpresa, nome, email, isAdm, isAtivo FROM Usuario WHERE fkEmpresa = ${fkEmpresa} ORDER BY isAtivo DESC;`;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    alterar,
+    ativar,
+    inativar,
+    listarPorEmpresa
 };

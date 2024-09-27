@@ -1,4 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
+const { listar } = require("./avisoController");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -79,7 +80,103 @@ function cadastrar(req, res) {
     }
 }
 
+function alterar(req, res) {
+
+    let nome = req.body.nome;
+    let email = req.body.email;
+    let isAdm = req.body.isAdm;
+    let idUsuario = req.body.isAdm;
+
+    usuarioModel.alterar(nome, email, isAdm, idUsuario)
+    .then(
+        function (resultado) {
+            res.json(resultado);
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao atualizar os dados de usuário! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+
+}
+
+function ativar(req, res) {
+    idUsuario = req.params.idUsuario;
+
+    usuarioModel.ativar(idUsuario)
+    .then(
+        function (resultado) {
+            res.json(resultado);
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao ativar o usuário! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
+function inativar(req, res) {
+    idUsuario = req.params.idUsuario;
+
+    usuarioModel.inativar(idUsuario)
+    .then(
+        function (resultado) {
+            res.json(resultado);
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao inativar o usuário! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
+function listarPorEmpresa(req, res) {
+
+    idEmpresa = req.params.idEmpresa;
+
+    usuarioModel.listarPorEmpresa(idEmpresa)
+    .then(
+        function (resultado) {
+
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send(`Não foi encontrado nenhum usuário para a empresa de id = ${idEmpresa}`);
+            }
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao inativar o usuário! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    alterar,
+    ativar,
+    inativar,
+    listarPorEmpresa
 }
