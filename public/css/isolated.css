@@ -53,3 +53,7 @@ html{
 ::-webkit-scrollbar-thumb:hover {
     background: transparent;
 }
+
+body{
+    background: var(--darkness-purple);
+}
