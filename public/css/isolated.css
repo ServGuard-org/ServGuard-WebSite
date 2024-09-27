@@ -32,3 +32,24 @@
 html{
     scroll-behavior: smooth;
 }
+
+/* LARGURA DA BARRA DE ROLAGEM */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* FUNDA DA BARRA DE ROLAGEM */
+::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+/* COR DA BARRA DE MEDIDA */
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 3px;
+}
+
+/* HOVER DA BARRA DE MEDIDA */
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}
