@@ -21,7 +21,7 @@ idUsuario INT NOT NULL AUTO_INCREMENT,
 fkEmpresa INT NOT NULL,
 nome VARCHAR(70) NOT NULL,
 email VARCHAR(255) UNIQUE NOT NULL,
-senha VARCHAR(45) NOT NULL,
+senha VARCHAR(255) NOT NULL,
 isAdm TINYINT NOT NULL,
 isAtivo TINYINT NOT NULL DEFAULT 1,
 
@@ -47,7 +47,6 @@ rack VARCHAR(20),
 modeloCPU VARCHAR(50),
 qtdNucleos INT,
 capacidadeRAM DECIMAL(8,3),
-MACAddress CHAR(17),
 isAtiva TINYINT DEFAULT 1 NOT NULL,
 
 CONSTRAINT fkEmpresaMaquina FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
@@ -94,13 +93,15 @@ PRIMARY KEY (idMaquinaRecurso, fkMaquina, fkRecurso)
 CREATE TABLE IF NOT EXISTS ServGuard.Captura (
 idCaptura INT NOT NULL AUTO_INCREMENT,
 fkMaquinaRecurso INT NOT NULL,
-fkMaquina INT NOT NULL,
-fkRecurso INT NOT NULL,
 registro DECIMAL(8,3) NOT NULL,
 dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
 CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES ServGuard.MaquinaRecurso(idMaquinaRecurso),
-CONSTRAINT fkMaquinaCaptura FOREIGN KEY (fkMaquina) REFERENCES ServGuard.MaquinaRecurso(fkMaquina),
-CONSTRAINT fkRecursoCaptura FOREIGN KEY (fkRecurso) REFERENCES ServGuard.MaquinaRecurso(fkRecurso),
-PRIMARY KEY (idCaptura, fkMaquinaRecurso, fkMaquina, fkRecurso)
+PRIMARY KEY (idCaptura, fkMaquinaRecurso)
 );
+
+INSERT INTO Recurso (nome, unidadeMedida) VALUES
+	('usoCPU', '%'),
+	('usoRAM', '%'),
+	('totalDisco', 'GB'),
+	('usadoDisco', 'GB')
