@@ -2,7 +2,7 @@
 		-- (MODELAGEM V3) -- 
 
 -- Criação das Tabelas - ServGuard --
-CREATE DATABASE ServGuard;
+CREATE DATABASE IF NOT EXISTS ServGuard;
 
 USE ServGuard;
 
@@ -42,11 +42,13 @@ PRIMARY KEY (idServicoMonitorado, fkEmpresa)
 CREATE TABLE IF NOT EXISTS ServGuard.Maquina (
 idMaquina INT NOT NULL AUTO_INCREMENT,
 fkEmpresa INT NOT NULL,
-nome VARCHAR(50) NOT NULL,
+nome VARCHAR(50),
 rack VARCHAR(20),
 modeloCPU VARCHAR(50),
-qtdNucleos INT,
+qtdNucleosFisicos INT,
+qtdNucleosLogicos INT,
 capacidadeRAM DECIMAL(8,3),
+MACAddress CHAR(17) UNIQUE NOT NULL,
 isAtiva TINYINT DEFAULT 1 NOT NULL,
 
 CONSTRAINT fkEmpresaMaquina FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
@@ -97,11 +99,11 @@ registro DECIMAL(8,3) NOT NULL,
 dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
 CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES ServGuard.MaquinaRecurso(idMaquinaRecurso),
-PRIMARY KEY (idCaptura, fkMaquinaRecurso)
+PRIMARY KEY (idCaptura)
 );
 
 INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
-	('totalDisco', 'GB'),
-	('usadoDisco', 'GB')
+	('usadoDisco', 'GB'),
+	('livreDisco', 'GB');
