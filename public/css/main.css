@@ -8,6 +8,7 @@
 
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
 @import url(./pages/dashboard/dashboard-adm.css);
+@import url(./pages/dashboard/gerenciamento-funcionario.css);
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
 @import url(./pages/site-institucional/cadastro.css);

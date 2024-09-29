@@ -1,0 +1,38 @@
+#page-gerenciamento-funcionario {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
+    padding: 3%;
+    overflow-y: auto;
+
+    & header {
+        min-width: 100px;
+        width: 9%;
+        height: calc(100vh - 12.7%);
+        position: fixed;
+    }
+
+    & main {
+        margin-left: calc(100% - 90.4%);
+        width: 91%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        /* background: #794ED4; */
+    }
+}
+
+.father-funcionario-pai {
+    width: 95%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.50);
+    background: rgba(255, 255, 255, 0.11);
+    box-shadow: 0px 0px 82.7px -41px #794ED4;
+    backdrop-filter: blur(3.5999999046325684px);
+
+}
