@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServGuard | Ger. Funcionário</title>
     <link rel="stylesheet" href="../css/main.css">
 </head>
+
 <body>
 
     <section id="page-gerenciamento-funcionario">
@@ -44,13 +46,76 @@
             </div>
         </header>
 
-        <main>
-            <div class="father-funcionario-pai">
+        <!-- //// FIM NAVBAR //// -->
 
+        <main>
+            <!--queria deixar os textos aqui em italic+bold-->
+            <div class="father-funcionario-card">
+                <div class="child-funcionario-card">
+                    <p class="bold italic">Total: X</p>
+                </div>
+                <div class="child-funcionario-card">
+                    <p class="bold italic">Analísta: X</p>
+                </div>
+                <div class="child-funcionario-card" style="background-color: #794ED4;">
+                    <p class="bold color-white italic">ADM: X</p>
+                </div>
+            </div>
+            <div class="father-funcionario-lista">
+                <div class="child-funcionario-colunas">
+                    <!-- apenas para alinhar -->
+                    <a href="#" class="child-elemento-editar"></a>
+                </a>
+                    <div class="child-funcionario-elemento-father-colunas">
+                        
+                        <div class="child-funcionario-elemento-coluna-area-id">
+                            <p class="bold">ID</p>
+                        </div>
+                        <div class="child-funcionario-elemento-coluna-area-nome">
+                            <p class="bold">Nome</p>
+                        </div>
+                        <div class="child-funcionario-elemento-coluna-area-email">
+                            <p class="bold">E-mail</p>
+                        </div>
+                        <div class="child-funcionario-elemento-coluna-area-cargo">
+                            <p class="bold">Cargo</p>
+                        </div>
+                        <div class="child-funcionario-elemento-coluna-area-acao">
+                            <p class="bold">Ação</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="child-funcionario-father-elemento">
+                    <div class="child-funcionario-elemento">
+                        <a href="#" class="child-elemento-editar">
+                            <!--coloquei um svg aleatorio por enquanto-->
+                            <img src="../assets/svg/edit.svg" alt="#icone-">
+                        </a>
+                        <div class="child-funcionario-elemento-infos">
+                            <!-- minha ideia e dar uma porcentagem para cada elemento exibido  -->
+                            <div class="child-funcionario-elemento-info-area-id">
+                                <p>13</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-nome">
+                                <p>Claudio Alvez</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-email">
+                                <p>claudio.alvez@gmail.com</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-cargo">
+                                <p>Analísta</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-acao">
+                                <p class="bold underline italic">Ativar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
 
     </section>
-    
+
 </body>
+
 </html>
