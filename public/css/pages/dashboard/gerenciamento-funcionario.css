@@ -231,7 +231,7 @@
     /* background-color: yellow; */
 }
 
-button{
+/* button{
     width: 10%;
     height: 80%;
     color: white;
@@ -241,7 +241,7 @@ button{
     background-color: var(--darked-purple);
     border: none;
     border-radius: 50px;
-}
+} */
 
 select{
     width: 12%;
