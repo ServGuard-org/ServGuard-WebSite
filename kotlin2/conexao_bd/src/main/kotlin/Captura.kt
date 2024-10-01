@@ -36,7 +36,7 @@ class Captura {
     }
 
     fun setRegistro(novoRegistro:Double){
-        this.registro
+        this.registro = novoRegistro
     }
 
     fun setDTHCriacao(novoDTH:LocalDateTime){
