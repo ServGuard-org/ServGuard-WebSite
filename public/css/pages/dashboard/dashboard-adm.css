@@ -4,31 +4,31 @@
     background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
     padding: 3%;
     overflow-y: auto;
-}
 
-header {
-    min-width: 100px;
-    width: 9%;
-    height: calc(100vh - 12.7%);
-    position: fixed;
-}
-
-main {
-    position: relative;
-    margin-left: calc(100% - 90.4%);
-    width: 91%;
-    height: 100%;
+    & header {
+        min-width: 100px;
+        width: 9%;
+        height: calc(100vh - 12.7%);
+        position: fixed;
+    }
+    
+    & main {
+        position: relative;
+        margin-left: calc(100% - 90.4%);
+        width: 91%;
+        height: 100%;
+    }
 }
 
 .titulo-usuario-dash{
     position: absolute;
-    top: -20px;
-    left: -20px;
+    top: -30px;
+    left: -80px;
 
     color: rgba(121, 78, 212, 0.28);
 
     font-family: Poppins;
-    font-size: 128px;
+    font-size: 100px;
     font-weight: 700;
 
 }
@@ -46,8 +46,10 @@ main {
     border: 2px solid rgba(255, 255, 255, 0.50);
     background: rgba(251, 251, 251, 0.11);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
-    backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(10px); /* Adicione esta linha */
+    -webkit-backdrop-filter: blur(10px); /* Adicione esta linha para compatibilidade com WebKit */
 }
+
 
 .navbar-navlink-dash-adm {
     height: 45%;
