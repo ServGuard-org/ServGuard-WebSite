@@ -63,7 +63,7 @@ class RecursoRepositorio {
 
     fun atualizarPorId(id:Int, recursoParaAtualizar:Recurso):Boolean{
         return jdbcTemplate.update(
-            """ UPDATE Recurso SET nome = ?, unidadeMedida
+            """ UPDATE Recurso SET nome = ?, unidadeMedida = ?
             """,
             recursoParaAtualizar.getNomeRecurso(),
             recursoParaAtualizar.getUnidadeMedida(),
