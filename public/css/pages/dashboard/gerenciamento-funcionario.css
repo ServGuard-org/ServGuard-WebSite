@@ -315,15 +315,57 @@
     background: rgba(255, 255, 255, 0.88);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(5.5px);
+
+    & h3{
+        width: 80%;
+        padding-bottom: 10px;
+    }
 }
 
-.titulo-cadastrar-funcionario-campos {
-    padding-bottom: 10px;
+.father-editar-funcionario {
+    width: 35%;
+    height: 60%;
+    /* position: absolute; */
+    padding-left: 4%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+
+    border-radius: 20px;
+    border: 2px solid var(--Grays-White, #FFF);
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0px 0px 82.7px -41px #794ED4;
+    backdrop-filter: blur(5.5px);
+
+    & h3{
+        width: 80%;
+        padding-bottom: 10px;
+        /* padding-top: 40px; */
+    }
 }
+
+/* .titulo-cadastrar-funcionario-campos {
+    padding-bottom: 10px;
+} */
 
 .child-cadastrar-funcionario-campos {
     width: 85%;
     height: 60%;
+    padding: 20px;
+    gap: var(--gap-2);
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+
+    /* background-color: aquamarine; */
+}
+.child-editar-funcionario-campos {
+    width: 85%;
+    height: 50%;
     padding: 20px;
     gap: var(--gap-2);
 

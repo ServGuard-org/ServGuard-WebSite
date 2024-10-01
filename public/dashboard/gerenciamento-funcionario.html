@@ -94,7 +94,7 @@
                 </div>
                 <div class="child-funcionario-father-elemento">
                     <div class="child-funcionario-elemento">
-                        <a href="#" class="child-elemento-editar">
+                        <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
                             <!--coloquei um svg aleatorio por enquanto-->
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
@@ -132,7 +132,7 @@
     <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
     <section class="sessao-popup-cadastrar-funcionario" id="popupCadastrar" style="display: none;">
         <div class="father-cadastrar-funcionario">
-            <h3 class="bold titulo-cadastrar-funcionario-campos">Complete os campos:</h3>
+            <h3 class="bold">Complete os campos:</h3>
             <div class="child-cadastrar-funcionario-campos">
                 <select name="cargo" id="cargo" class="select-cargo">
                     <option><b>Selecione o cargo</b></option>
@@ -176,10 +176,37 @@
                   </div>     
             </div>
             <div class="father-cadastrar-botao">
-                <button class="botao-cadastrar-executar-funcionario"
-                    onclick="exibirCadastrar()"><b>Cadastrar</b></button>
+                <button class="botao-cadastrar-executar-funcionario" onclick="Cadastrar()"><b>Cadastrar</b></button>
                 <p onclick="sairCadastrar()" class="botao-cadastrar-cancelar-funcionario italic underline bold">Cancelar
                 </p>
+            </div>
+        </div>
+    </section>
+    <!-- ----- FIM - POPUP DE CADASTRO FUNCIONARIO ----- -->
+    <!-- ----- POPUP DE EDITAR FUNCIONARIO ----- -->
+    <section class="sessao-popup-cadastrar-funcionario" id="popupEditar" style="display: none;">
+        <div class="father-editar-funcionario">
+            <h3 class="bold">Altere o campo que quiser e clique em "<span style="color: var(--darked-purple);">atualizar</span>"</h3>
+            <div class="child-editar-funcionario-campos">
+                <select name="cargo" id="cargo" class="select-cargo">
+                    <option><b>Selecione o cargo</b></option>
+                </select>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="Nome Completo">
+                </div>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="E-mail">
+                </div>   
+            </div>
+            <div class="father-cadastrar-botao">
+                <button class="botao-cadastrar-executar-funcionario" onclick="Atualizar()"><b>Atualizar</b></button>
+                <p onclick="sairEditar()" class="botao-cadastrar-cancelar-funcionario italic underline bold">Sair</p>
             </div>
         </div>
     </section>
@@ -191,6 +218,12 @@
     }
     function sairCadastrar() {
         document.getElementById('popupCadastrar').style.display = 'none'; // Exibe o popup corretamente
+    }
+    function exibirEditar() {
+        document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
+    }
+    function sairEditar() {
+        document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
 </script>
