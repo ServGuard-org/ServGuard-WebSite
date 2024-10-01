@@ -118,6 +118,9 @@
 
 <script>
   function cadastraEmpresa() {
+
+    event.preventDefault()
+
     let nomeUsuario = document.getElementById("nome_usuario").value;
     let emailUsuario = document.getElementById("email_usuario").value;
     let senhaUsuario = document.getElementById("senha_usuario").value;
