@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+    <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-gerenciamento-funcionario">
         <header>
             <div class="child-navbar-card-dash-adm">
@@ -26,7 +26,7 @@
                             <p class="little-text mt-1">Início</p>
                         </li>
                         <li>
-                            <a href="#" class="link-dash-adm active">
+                            <a href="./gerenciamento-funcionario.html" class="link-dash-adm active">
                                 <img src="../assets/svg/func-icon-white.svg" alt="#icone-funcionario">
                             </a>
                             <p class="little-text mt-1">Funcionário</p>
@@ -71,9 +71,9 @@
                 <div class="child-funcionario-colunas">
                     <!-- apenas para alinhar -->
                     <a href="#" class="child-elemento-editar"></a>
-                </a>
+                    </a>
                     <div class="child-funcionario-elemento-father-colunas">
-                        
+
                         <div class="child-funcionario-elemento-coluna-area-id">
                             <p class="bold">ID</p>
                         </div>
@@ -119,16 +119,48 @@
                 </div>
             </div>
             <div class="father-funcionario-botao">
-                <button><b>Cadastrar</b></button>
-                <select name="ordenar" id="ordenar">
+                <button class="botao-cadastrar-funcionario" onclick="exibirCadastrar()"><b>Cadastrar</b></button>
+                <select name="ordenar" id="ordenar" class="select-filtro-funcionario">
                     <option><b>Ordenar por</b></option>
                 </select>
-                
+
             </div>
         </main>
-
+    </section>
+    <!-- ----- FIM - TELA PRINCIPAL ----- -->
+    <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
+    <section class="sessao-popup-cadastrar-funcionario" id="popupCadastrar" style="display: none;">
+        <div class="father-cadastrar-funcionario">
+            <h2 class="bold titulo-cadastrar-funcionario-campos">Complete os campos</h2>
+            <div class="child-cadastrar-funcionario-campos">
+                <select name="cargo" id="cargo" class="select-cargo">
+                    <option><b>Selecione o cargo</b></option>
+                </select>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/perfil-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="Nome Completo">
+                </div>
+            </div>
+            <div class="father-cadastrar-botao">
+                <button class="botao-cadastrar-executar-funcionario"
+                    onclick="exibirCadastrar()"><b>Cadastrar</b></button>
+                <p onclick="sairCadastrar()" class="botao-cadastrar-cancelar-funcionario italic underline bold">Cancelar
+                </p>
+            </div>
+        </div>
     </section>
 
 </body>
+<script>
+    function exibirCadastrar() {
+        document.getElementById('popupCadastrar').style.display = 'flex'; // Exibe o popup corretamente
+    }
+    function sairCadastrar() {
+        document.getElementById('popupCadastrar').style.display = 'none'; // Exibe o popup corretamente
+    }
+
+</script>
 
 </html>
