@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>servguard</artifactId>
+    <artifactId>conexao_bd</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -102,11 +102,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
             <!-- ou versão que já existir na .m2 local -->
-        </dependency>
-        <dependency>
-            <groupId>com.github.britooo</groupId>
-            <artifactId>looca-api</artifactId>
-            <version>2.2.0</version>
         </dependency>
     </dependencies>
 
