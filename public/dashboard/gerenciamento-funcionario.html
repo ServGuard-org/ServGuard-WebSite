@@ -55,6 +55,7 @@
         <!-- //// FIM NAVBAR //// -->
 
         <main>
+            <!-- <h1 class="titulo-usuario-dash bold">Olá de novo Fernanda!</h1> -->
             <!--queria deixar os textos aqui em italic+bold-->
             <div class="father-funcionario-card">
                 <div class="child-funcionario-card">
@@ -131,17 +132,48 @@
     <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
     <section class="sessao-popup-cadastrar-funcionario" id="popupCadastrar" style="display: none;">
         <div class="father-cadastrar-funcionario">
-            <h2 class="bold titulo-cadastrar-funcionario-campos">Complete os campos</h2>
+            <h3 class="bold titulo-cadastrar-funcionario-campos">Complete os campos:</h3>
             <div class="child-cadastrar-funcionario-campos">
                 <select name="cargo" id="cargo" class="select-cargo">
                     <option><b>Selecione o cargo</b></option>
                 </select>
                 <div class="child-cadastrar-funcionario-input">
                     <a class="icone-input">
-                        <img src="../assets/svg/perfil-icon.svg" alt="iconeNome">
+                        <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
                     </a>
                     <input type="text" class="input-cadastrar-funcionario" placeholder="Nome Completo">
                 </div>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="E-mail">
+                </div>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="Senha">
+                </div>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="Confirmar senha">
+                </div>
+                <div class="checkbox-wrapper">
+                    <input id="terms-checkbox-37" name="checkbox" type="checkbox">
+                    <label class="terms-label" for="terms-checkbox-37">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" class="checkbox-svg">
+                        <mask fill="white" id="path-1-inside-1_476_5-37">
+                          <rect height="200" width="200"></rect>
+                        </mask>
+                        <rect mask="url(#path-1-inside-1_476_5-37)" stroke-width="40" class="checkbox-box" height="200" width="200"></rect>
+                        <path stroke-width="15" d="M52 111.018L76.9867 136L149 64" class="checkbox-tick"></path>
+                      </svg>
+                      <span class="label-text">Tem certeza que deseja cadastrar este usuário?</span>
+                    </label>
+                  </div>     
             </div>
             <div class="father-cadastrar-botao">
                 <button class="botao-cadastrar-executar-funcionario"
