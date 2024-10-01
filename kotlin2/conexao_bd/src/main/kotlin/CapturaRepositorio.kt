@@ -3,10 +3,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.queryForObject
 
-
 class CapturaRepositorio {
 
-    lateinit var  jdbcTemplate: JdbcTemplate
+    lateinit var jdbcTemplate: JdbcTemplate
 
     fun configurar(){
         val datasource = BasicDataSource()
@@ -52,7 +51,7 @@ class CapturaRepositorio {
 
     }
 
-    fun buscarPorid(id: Int): Captura?{
+    fun buscarPorid(id: Int): Captura? {
         return jdbcTemplate.queryForObject("SELECT * FROM Captura WHERE id = ?",
             BeanPropertyRowMapper(Captura::class.java),
             id

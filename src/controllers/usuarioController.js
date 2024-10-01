@@ -62,6 +62,7 @@ function cadastrar(req, res) {
         res.status(400).send("Seu cnpj está undefined!");
     } else {
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        console.log("Chamando o método da model")
         usuarioModel.cadastrar(nome, email, senha, isAdm, cnpj)
             .then(
                 function (resultado) {

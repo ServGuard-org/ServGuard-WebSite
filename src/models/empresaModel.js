@@ -20,7 +20,7 @@ function buscarPorCnpj(cnpj) {
 
 function cadastrar(nomeEmpresa, nomeResponsavel, emailResponsavel, cnpj) {
   var instrucaoSql = `INSERT INTO Empresa (idEmpresa, nome, nomeResponsavel, emailResponsavel, CNPJ) VALUES (DEFAULT, '${nomeEmpresa}', '${nomeResponsavel}', '${emailResponsavel}', '${cnpj}')`;
-
+  console.log('Executando: ',instrucaoSql)
   return database.executar(instrucaoSql);
 }
 
