@@ -1,12 +1,12 @@
 class Maquina {
     private var idMaquina: Int = 0
     private var fkEmpresa: Int = 0
-    private var nome: String = ""
+    private var nome: String? = null
     private var rack: String? = null
-    private var modeloCPU: String = ""
-    private var qtdNucleosFisicos: Int = 0
-    private var qtdNucleosLogicos: Int = 0
-    private var capacidadeRAM: Double = 0.0
+    private var modeloCPU: String? = null
+    private var qtdNucleosFisicos: Int? = null
+    private var qtdNucleosLogicos: Int? = null
+    private var capacidadeRAM: Double? = null
     private var MACAddress: String = ""
     private var isAtiva: Boolean = true
 
@@ -21,7 +21,7 @@ class Maquina {
         return fkEmpresa
     }
 
-    fun getNome():String{
+    fun getNomeMaquina(): String? {
         return nome
     }
 
@@ -29,19 +29,19 @@ class Maquina {
         return rack
     }
 
-    fun getModeloCPU():String{
+    fun getModeloCPU():String?{
         return modeloCPU
     }
 
-    fun getNucleosFisicos():Int{
+    fun getNucleosFisicos():Int?{
         return qtdNucleosFisicos
     }
 
-    fun getNucleosLogicos():Int{
+    fun getNucleosLogicos():Int?{
         return qtdNucleosLogicos
     }
 
-    fun getCapacidadeRAM():Double{
+    fun getCapacidadeRAM():Double?{
         return capacidadeRAM
     }
 
@@ -63,7 +63,7 @@ class Maquina {
         this.fkEmpresa = novafkEmpresa
     }
 
-    fun setNome(novoNome: String){
+    fun setNomeMaquina(novoNome: String){
         this.nome = novoNome
     }
 

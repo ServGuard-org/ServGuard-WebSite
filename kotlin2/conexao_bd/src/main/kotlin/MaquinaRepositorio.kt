@@ -40,8 +40,8 @@ class MaquinaRepositorio{
             INSERT INTO Maquina (fkEmpresa, nome, rack, modeloCPU, qtdNucleosFisicos, qtdNucleosLogicos, capacidadeRAM, MACAddres, isAtiva) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
-            novoValor.getIdMaquina(),
-            novoValor.getNome(),
+            novoValor.getfkEmpresa(),
+            novoValor.getNomeMaquina(),
             novoValor.getRack(),
             novoValor.getModeloCPU(),
             novoValor.getNucleosFisicos(),
@@ -84,7 +84,7 @@ class MaquinaRepositorio{
                 MACAddress = ?, isAtiva = ?
             """,
             maquinaParaAtualizar.getfkEmpresa(),
-            maquinaParaAtualizar.getNome(),
+            maquinaParaAtualizar.getNomeMaquina(),
             maquinaParaAtualizar.getRack(),
             maquinaParaAtualizar.getModeloCPU(),
             maquinaParaAtualizar.getNucleosFisicos(),
