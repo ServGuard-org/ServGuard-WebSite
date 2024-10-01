@@ -279,3 +279,8 @@
 .capitalize {
     text-transform: capitalize;
 }
+
+/* Font para parametros da dashboard */
+.font-big{
+    font-size: 96px;
+}

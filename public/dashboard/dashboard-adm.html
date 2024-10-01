@@ -7,16 +7,13 @@
     <link rel="stylesheet" href="../css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-
     <section id="page-dashboard-adm">
         <header>
             <div class="child-navbar-card-dash-adm">
                 <div class="navbar-logo-dash-adm">
                     <img src="../assets/img/logo.png" alt="#logo">
                 </div>
-
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
                         <li>
@@ -45,101 +42,122 @@
                         </li>
                     </ul>
                 </div>
-
                 <a href="#" class="navbar-exit-dash-adm">
                     <img src="../assets/svg/exit-icon.svg" alt="">
                 </a>
             </div>
         </header>
-
         <main class="pt-4">
             <div class="child-dash-adm-info">
                 <div class="dash-adm-parameter-stability">
-                    
+                    <p class="bold mb-2">Escala de instabilidade:</p>
+                    <h1 class="font-big color-gray bold">0</h1>
                 </div>
                 <div class="dash-adm-parameter-server">
-
+                    <h4 class="bold center">Serviços utilizados:</h4>
+                    <div class="parameter-server-cards">
+                        <div class="server-card">
+                            <p class="color-white thin">Receita Federal</p>
+                            <p class="color-white bold">3h de Inatividade</p>
+                        </div>
+                        <div class="server-card">
+                            <p class="color-white">Banco Central</p>
+                            <p class="color-white bold">3h de Inatividade</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="dash-adm-parameter-recommendations">
-
+                    <div class="parameter-recommendations-title mb-1">
+                        <img src="../assets/svg/alert-icon-white.svg" alt="">
+                        <p class="pl-1 color-white bold ">Recomendações</p>
+                    </div>
+                    <div class="parameter-recommendations-text">
+                        <p class="color-white">
+                            Observar um pico de uso de CPU no final do mês. É fundamental realizar uma análise preditiva para identificar 
+                            padrões e prevenir possíveis problemas no futuro.
+                        </p>
+                    </div>
                 </div>
             </div>
-
             <div class="child-dash-adm-parameters pt-4">
                 <div class="dash-adm-general-vision">
-
+                    <h3 class="bold center mb-1">Visão <span class="color-purple">Geral</span></h3>
+                    <div class="general-vision-info">
+                        <p class="general-vision-info-text center">Total de máquinas: 62</p>
+                        <p> | </p>
+                        <p class="general-vision-info-text center">Em funcionamento: <span class="color-purple">40</span></p>
+                    </div>
+                    <div class="general-vision-card-irregular">
+                        <div class="card-irregular">
+                            <h4 class="bold">Irregularidades:</h4>
+                            <h4 class="bold center">CPU: <span>1</span></h4>
+                            <h4 class="bold center">RAM: <span>0</span></h4>
+                            <h4 class="bold center">Disco: <span>2</span></h4>
+                        </div>
+                        <div class="card-rede-conect">
+                            <h4 class="bold center">Estado da rede: </p>
+                            <h3 class="bold center">Estável</h3>
+                            <p>Maquinas Conectadas</p>
+                            <p>39</p>
+                        </div>
+                    </div>
+                    <button class="btnServGuard">oi</button>
                 </div>
                 <div class="dash-adm-graphic">
-                    <div class="chart-container">
-                        <h1 class="chart-title">HISTOGRAMA <span>N/A</span></h1>
+                    <div class="graphic-space">
+                        <h3 class="bold center">HISTOGRAMA <span class="color-purple">N/A</span></h3>
                         <canvas id="myHistogram"></canvas>
                     </div>
                 </div>
             </div>
         </main>
-
     </section>
-
-
     <script>
-        const ctx = document.getElementById('myHistogram').getContext('2d');
-        const myHistogram = new Chart(ctx, {
+        const data = {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Dez', 'Dez', 'Dez', 'Dez'],
+            datasets: [{
+                label: 'Percentual de Uso (%)',
+                data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 80, 80, 80, 80],
+                backgroundColor: '#8a4dfb',
+                borderColor: '#8a4dfb',
+                borderWidth: 1,
+                barThickness: 10, // Ajuste da largura das barras em pixels
+                borderRadius: 30, // Ajuste do border-radius
+                borderSkipped: false
+            }]
+        };
+
+        const config = {
             type: 'bar',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
-                datasets: [{
-                    label: 'Frequência',
-                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 10, 20, 30, 40, 50, 60, 70, 80, 90, 10, 20, 30, 40, 50, 60, 70, 80, 90, 10, 20, 30],
-                    backgroundColor: 'rgba(138, 77, 251, 0.8)',
-                    borderColor: '#8a4dfb',
-                    borderWidth: 1
-                }]
-            },
+            data: data,
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Frequência',
-                            color: '#8a4dfb',
-                            font: {
-                                size: 16,
-                                weight: 'bold',
-                                family: 'Arial'
-                            }
-                        },
-                        grid: {
-                            display: false
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Faixas de uso (N/A)',
-                            color: '#8a4dfb',
-                            font: {
-                                size: 16,
-                                weight: 'bold',
-                                family: 'Arial'
-                            }
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
-                },
                 plugins: {
                     legend: {
                         display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
                     },
-                    tooltip: {
-                        enabled: false
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
-        });
+        };
+
+        const myHistogram = new Chart(
+            document.getElementById('myHistogram'),
+            config
+        );
+
     </script>
-    
 </body>
 </html>
