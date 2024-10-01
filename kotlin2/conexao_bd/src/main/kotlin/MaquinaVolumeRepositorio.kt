@@ -29,7 +29,7 @@ class MaquinaVolumeRepositorio {
 
     fun inserir(novoValor:MaquinaVolume):Boolean{
         return jdbcTemplate.update("""
-            INSERT INTO MaquinaVolume (fkMaquina, fkVolume,) VALUES (?,?)
+            INSERT INTO MaquinaVolume (fkMaquina, fkVolume) VALUES (?,?)
         """,
             novoValor.getfkMaquina(),
             novoValor.getfkVolume()
