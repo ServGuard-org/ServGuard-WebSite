@@ -76,6 +76,6 @@ class EmpresaRepositorio {
             empresaParaAtualizar.getCNPJ()
             ) > 0
     }
-    
 
+    
 }
