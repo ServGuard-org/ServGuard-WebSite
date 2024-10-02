@@ -23,7 +23,11 @@ class MaquinaRecursoRepositorio {
             IdMaquinaRecurso INT NOT NULL AUTO_INCREMENT,
             fkMaquina INT NOT NULL,
             fkRecurso INT NOT NULL,
-            max DECIMAL(8,3)
+            max DECIMAL(8,3),
+            
+            CONSTRAINT fkMaquinaMaquinaRecurso FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
+            CONSTRAINT fkRecursoMaquinaRecurso FOREIGN KEY (fkRecurso) REFERENCES ServGuard.Recurso(idRecurso),
+            PRIMARY KEY (idMaquinaRecurso, fkMaquina, fkRecurso)
             )
         """.trimIndent())
     }
