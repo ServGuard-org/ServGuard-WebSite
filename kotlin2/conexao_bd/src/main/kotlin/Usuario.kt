@@ -35,7 +35,7 @@ class Usuario {
         return isAdm
     }
 
-    fun isAtivo():Int{
+    fun getIsAtivo():Int{
         return isAtivo
     }
 
@@ -73,5 +73,5 @@ class Usuario {
         }
     }
 
-    
+
 }
