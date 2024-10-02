@@ -27,11 +27,17 @@
 .father-details-machine{
     width: 100%;
     height: 90%;
-    padding: var(--gap-2);
+    padding: var(--gap-3);
 
     border-radius: 25px;
     border: 2px solid rgba(255, 255, 255, 0.50);
     background: rgba(255, 255, 255, 0.11);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(3.5999999046325684px);
+}
+
+.child-details-machine-info{
+    width: 60%;
+    height: 100%;
+    background: blue;
 }
