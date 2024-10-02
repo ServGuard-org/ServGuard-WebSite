@@ -22,7 +22,9 @@ class RecursoRepositorio {
             CREATE TABLE IF NOT EXISTS Recurso(
             idRecurso INT NOT NULL AUTO_INCREMENT,
             nome VARCHAR(45) NOT NULL,
-            unidadeMedida VARCHAR(45) NOT NULL
+            unidadeMedida VARCHAR(45) NOT NULL,
+            
+            PRIMARY KEY (idRecurso)
             ) 
         """.trimIndent())
     }

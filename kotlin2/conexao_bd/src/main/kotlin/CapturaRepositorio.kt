@@ -23,7 +23,10 @@ class CapturaRepositorio {
             IdCaptura INT NOT NULL AUTO_INCREMENT,
             fkMaquinaRecurso INT NOT NULL,
             registro DECIMAL(8,3) NOT NULL,
-            dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+            dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            
+            CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES ServGuard.MaquinaRecurso(idMaquinaRecurso),
+            PRIMARY KEY (idCaptura)
             )
         """.trimIndent())
 
