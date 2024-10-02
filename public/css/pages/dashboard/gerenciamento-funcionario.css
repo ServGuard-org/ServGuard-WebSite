@@ -240,7 +240,7 @@
 /* BOTOES CADASTRAR + FILTRO */
 .botao-cadastrar-funcionario {
     min-width: 13%;
-    height: 70%;
+    height: 50px;
     color: white;
     font-size: 20px;
     font-style: inherit;
@@ -253,7 +253,7 @@
 }
 
 .botao-cadastrar-funcionario:hover {
-    height: 80%;
+    height: 60px;
     cursor: pointer;
     color: var(--darked-purple);
     background-color: #FFF;
@@ -261,7 +261,7 @@
 
 .select-filtro-funcionario {
     min-width: 10.4%;
-    height: 70%;
+    height: 50px;
     padding: 5px;
 
     color: black;
@@ -276,7 +276,7 @@
 }
 
 .select-filtro-funcionario:hover {
-    height: 80%;
+    height: 60px;
     cursor: pointer;
 }
 
@@ -340,7 +340,7 @@
     backdrop-filter: blur(5.5px);
 
     & h3{
-        width: 80%;
+        width: 83%;
         padding-bottom: 10px;
         /* padding-top: 40px; */
     }
@@ -379,7 +379,7 @@
 
 .select-cargo {
     min-width: 40%;
-    height: 12%;
+    height: 40px;
     border: 2px;
     font-size: 22px;
     color: var(--normal-grey);
@@ -445,7 +445,7 @@
 
 .botao-cadastrar-executar-funcionario{
     min-width: 23%;
-    height: 70%;
+    height: 40px;
     color: white;
     font-size: 20px;
     font-style: inherit;
@@ -457,7 +457,7 @@
     transition: 200ms;
 }
 .botao-cadastrar-executar-funcionario:hover {
-    height: 80%;
+    height: 50px;
     cursor: pointer;
     color: var(--darked-purple);
     background-color: #FFF;
