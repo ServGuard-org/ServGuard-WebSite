@@ -22,7 +22,9 @@ class VolumeRepositorio {
             CREATE TABLE IF NOT EXISTS Volume(
             idVolume INT NOT NULL AUTO_INCREMENT,
             tipo VARCHAR(50) NOT NULL,
-            capacidade VARCHAR(50) NOT NULL
+            capacidade VARCHAR(50) NOT NULL,
+            
+            PRIMARY KEY (idVolume)
             )
         """.trimIndent())
     }

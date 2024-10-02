@@ -22,7 +22,11 @@ class MaquinaVolumeRepositorio {
             CREATE TABLE IF NOT EXISTS MaquinaVolume (
             idMaquinaVolume INT NOT NULL AUTO_INCREMENT,
             fkMaquina INT NOT NULL,
-            fkVolume INT NOT NULL
+            fkVolume INT NOT NULL,
+            
+            CONSTRAINT fkMaquinaMaquinaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
+            CONSTRAINT fkVolumeMaquinaVolume FOREIGN KEY (fkVolume) REFERENCES ServGuard.Volume(idVolume),
+            PRIMARY KEY (idMaquinaVolume, fkMaquina, fkVolume)
             )
         """.trimIndent())
     }

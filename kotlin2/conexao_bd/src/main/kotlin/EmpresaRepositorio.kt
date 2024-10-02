@@ -24,7 +24,9 @@ class EmpresaRepositorio {
             nome VARCHAR(70) NOT NULL,
             nomeResponsavel VARCHAR(70) NOT NULL,
             emailResponsavel VARCHAR(70) NOT NULL,
-            CNPJ CHAR(14) UNIQUE NOT NULL
+            CNPJ CHAR(14) UNIQUE NOT NULL,
+
+            PRIMARY KEY (idEmpresa)
             )
         """.trimIndent())
     }
