@@ -1,20 +1,16 @@
 /* RESPONSIVIDADE */
-
-@media (min-width: 1440px) {
-    
-}
-@media (max-width: 1440px) {
-    
+.flex-1{
+    flex: 1;
 }
 
-@media (max-width: 1140px) {
-    
+.flex-2{
+    flex: 2;
 }
 
-@media (max-width: 960px) {
-    
+.flex-3{
+    flex: 3;
 }
 
-@media (max-width: 540px) {
-    
+.flex-4{
+    flex: 4;
 }
