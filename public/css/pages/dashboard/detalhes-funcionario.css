@@ -1,0 +1,27 @@
+#page-detalhes-funcionario {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
+    padding: 3%;
+    overflow-y: auto;
+
+    & header {
+        min-width: 100px;
+        width: 9%;
+        height: calc(100vh - 12.7%);
+        position: fixed;
+    }
+
+    & main {
+        margin-left: calc(100% - 90.4%);
+        width: 91%;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        /* background: #794ED4; */
+    }
+}
+
+

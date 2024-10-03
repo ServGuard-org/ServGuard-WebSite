@@ -6,12 +6,13 @@
 /* @import url(./partials/menu.css); */
 @import url(./partials/buttons.css);
 
-/* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
+/* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
 @import url(./pages/dashboard/dashboard-adm.css);
 @import url(./pages/dashboard/gerenciamento-funcionario.css);
 @import url(./pages/dashboard/details-machine.css);
+@import url(./pages/dashboard/detalhes-funcionario.css);
 
-/* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
+/* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
 @import url(./pages/site-institucional/cadastro.css);
 
 *,
