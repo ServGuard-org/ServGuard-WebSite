@@ -19,7 +19,7 @@ class RecursoRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS Recurso(
+            CREATE TABLE IF NOT EXISTS ServGuard.Recurso(
             idRecurso INT NOT NULL AUTO_INCREMENT,
             nome VARCHAR(45) NOT NULL,
             unidadeMedida VARCHAR(45) NOT NULL,

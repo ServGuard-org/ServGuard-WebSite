@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>ServGuard | Máquina</title>
 </head>
 <body>
@@ -17,7 +18,7 @@
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
                         <li>
-                            <a href="#" class="link-dash-adm">
+                            <a href="./dashboard-adm.html" class="link-dash-adm">
                                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
                             </a>
                             <p class="little-text mt-1">Início</p>
@@ -29,7 +30,7 @@
                             <p class="little-text mt-1">Funcionário</p>
                         </li>
                         <li>
-                            <a href="./detalhes-maquina.html" class="link-dash-adm active">
+                            <a href="./details-machine.html" class="link-dash-adm active">
                                 <img src="../assets/svg/server-icon-white.svg" alt="#icone-servidor">
                             </a>
                             <p class="little-text mt-1">Máquina</p>
@@ -52,9 +53,9 @@
             <h1 class="bold">Detalhes da máquina de ID: <span class="color-purple bold">X</span></h1>
             <div class="father-details-machine">
                 <div class="child-details-machine-info">
-                    <h3 class="italic thin">Dados da Máquina: </h3>
-                    <div class="details-machine-info-card">
-                        <div class="info-card-machine-group">
+                    <h3 class="italic thin mb-1">Dados da Máquina: </h3>
+                    <div class="details-machine-info-card mb-2">
+                        <div class="info-card-machine-group mb-1">
                             <div class="info-card-machine">
                                 <p class="bold">ID:</p>
                                 <p>23</p>
@@ -83,14 +84,94 @@
                             </div>
                         </div>
                     </div>
+                    <div class="details-machine-graphic">
+                        <div class="details-machine-graphic-space">
+                            <h3 class="bold mb-2">Componente: <span class="color-purple">N/A</span></h3>
+                            <canvas class="graphic-machine" id="myHistogram"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="child-details-machine-volumes">
 
+                <div class="child-details-machine-volumes">
+                    <div class="details-machine-volume-list mb-1">
+                        <h3 class="italic center">Volumes:</h3>
+                        <div class="machine-volume-list">
+                            <div class="machine-volume-colum">
+                                <div class="volume-colum">
+                                    <p class="center flex-1">ID</p>
+                                </div>
+                                <div class="volume-colum">
+                                    <p class="center flex-2">Tipo</p>
+                                </div>
+                                <div class="volume-colum">
+                                    <p class="center flex-3">Capacidade</p>
+                                </div>
+                                <div class="volume-colum">
+                                    <p class="center flex-2">Ação</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="machine-active-deactivate">
+                        <h3>Gerenciamento da Máquina:</h3>
+                        <div class="active-deactive-options">
+                            <button>Ativar Máquina</button>
+                            <button>Desativar Máquina</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
 
     </section>
+
+    <script>
+        const data = {
+            labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+            datasets: [{
+                label: 'Percentual de Uso (%)',
+                data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 80, 80, 80, 80],
+                backgroundColor: '#8a4dfb',
+                borderColor: '#8a4dfb',
+                borderWidth: 1,
+                barThickness: 11, // Ajuste da largura das barras em pixels
+                borderRadius: 20, // Ajuste do border-radius
+                borderSkipped: false
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        };
+
+        const myHistogram = new Chart(
+            document.getElementById('myHistogram'),
+            config
+        );
+
+    </script>
 
 </body>
 </html>

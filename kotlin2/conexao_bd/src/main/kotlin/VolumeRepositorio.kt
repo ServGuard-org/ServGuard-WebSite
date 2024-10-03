@@ -19,10 +19,10 @@ class VolumeRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS Volume(
+            CREATE TABLE IF NOT EXISTS ServGuard.Volume(
             idVolume INT NOT NULL AUTO_INCREMENT,
             tipo VARCHAR(50) NOT NULL,
-            capacidade VARCHAR(50) NOT NULL,
+            capacidade DECIMAL(8,3) NOT NULL,
             
             PRIMARY KEY (idVolume)
             )
@@ -31,7 +31,7 @@ class VolumeRepositorio {
 
     fun inserir(novoValor:Volume):Boolean{
         return jdbcTemplate.update("""
-            INSERT INTO Volume (idVolume, tipo, capacidade) VALUES (?,?)
+            INSERT INTO Volume (tipo, capacidade) VALUES (?,?)
         """,
             novoValor.getTipo(),
             novoValor.getCapacidade()

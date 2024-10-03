@@ -19,7 +19,7 @@ class MaquinaRecursoRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS MaquinaRecurso(
+            CREATE TABLE IF NOT EXISTS ServGuard.MaquinaRecurso(
             IdMaquinaRecurso INT NOT NULL AUTO_INCREMENT,
             fkMaquina INT NOT NULL,
             fkRecurso INT NOT NULL,

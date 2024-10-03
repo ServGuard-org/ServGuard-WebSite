@@ -19,6 +19,7 @@ class UsuarioRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
+            CREATE TABLE IF NOT EXISTS ServGuard.Usuario(
             idUsuario INT NOT NULL AUTO_INCREMENT,
             fkEmpresa INT NOT NULL,
             nome VARCHAR(70) NOT NULL,
@@ -29,6 +30,7 @@ class UsuarioRepositorio {
 
             CONSTRAINT fkEmpresaUsuario FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
             PRIMARY KEY (idUsuario, fkEmpresa)
+            )
         """.trimIndent())
     }
 

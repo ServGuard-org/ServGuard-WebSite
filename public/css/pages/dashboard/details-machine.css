@@ -27,11 +27,116 @@
 .father-details-machine{
     width: 100%;
     height: 90%;
-    padding: var(--gap-2);
+    padding: var(--gap-3);
+    display: flex;
+    gap: var(--gap-2);
 
     border-radius: 25px;
     border: 2px solid rgba(255, 255, 255, 0.50);
     background: rgba(255, 255, 255, 0.11);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(3.5999999046325684px);
+}
+
+.child-details-machine-info{
+    width: 60%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.details-machine-info-card{
+    padding: var(--gap-2);
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border-radius: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.50);
+    background: rgba(255, 255, 255, 0.11);
+    box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+    backdrop-filter: blur(2px);
+}
+
+.info-card-machine-group{
+    display: flex;
+    background: rebeccapurple;
+}
+
+.info-card-machine{
+    flex: 1;
+}
+
+.details-machine-graphic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    max-width: 938px;
+    padding: var(--gap-2);
+    border-radius: 30px;
+
+    background: var(--light-purple);
+}
+
+.details-machine-graphic-space{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.graphic-machine{
+    width: 100%;
+    max-width: 900px;
+    max-height: 300px;
+}
+
+.child-details-machine-volumes{
+    background: rebeccapurple;
+    width: 40%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.details-machine-volume-list{
+    width: 100%;
+    height: 70%;
+}
+
+.machine-volume-list{
+    width: 100%;
+    height: 100%;
+    background: var(--light-purple);
+
+    border-radius: 30px;
+}
+
+.machine-active-deactivate{
+    width: 100%;
+    height: 20%;
+}
+
+.machine-volume-list{
+    padding: var(--gap-2);
+}
+
+.machine-volume-colum{
+    display: flex;
+    gap: var(--gap-1);
+    padding-left: 5%;
+    background: red;
+    justify-content: space-between;
+}
+
+.volume-colum{
+    background: green;
 }

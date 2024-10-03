@@ -19,11 +19,11 @@ class EmpresaRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS Empresa(
+            CREATE TABLE IF NOT EXISTS ServGuard.Empresa(
             idEmpresa INT NOT NULL AUTO_INCREMENT,
             nome VARCHAR(70) NOT NULL,
             nomeResponsavel VARCHAR(70) NOT NULL,
-            emailResponsavel VARCHAR(70) NOT NULL,
+            emailResponsavel VARCHAR(70) UNIQUE NOT NULL,
             CNPJ CHAR(14) UNIQUE NOT NULL,
 
             PRIMARY KEY (idEmpresa)

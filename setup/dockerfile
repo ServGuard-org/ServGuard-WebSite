@@ -1,0 +1,11 @@
+FROM node:latest
+
+WORKDIR /container-node
+
+COPY ./ServGuard /container-node
+
+RUN npm install
+
+EXPOSE 8080
+
+CMD ["npm", "start"]

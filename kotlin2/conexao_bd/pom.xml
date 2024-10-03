@@ -103,6 +103,13 @@
             <version>8.0.16</version>
             <!-- ou versão que já existir na .m2 local -->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.britooo/looca-api -->
+
+        <dependency>
+            <groupId>com.github.britooo</groupId>
+            <artifactId>looca-api</artifactId>
+            <version>2.2.0</version>
+        </dependency>
     </dependencies>
 
 </project>
