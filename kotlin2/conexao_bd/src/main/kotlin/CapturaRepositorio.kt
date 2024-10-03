@@ -19,7 +19,7 @@ class CapturaRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS Captura(
+            CREATE TABLE IF NOT EXISTS ServGuard.Captura(
             IdCaptura INT NOT NULL AUTO_INCREMENT,
             fkMaquinaRecurso INT NOT NULL,
             registro DECIMAL(8,3) NOT NULL,

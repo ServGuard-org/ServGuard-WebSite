@@ -19,7 +19,7 @@ class MaquinaVolumeRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS MaquinaVolume (
+            CREATE TABLE IF NOT EXISTS ServGuard.MaquinaVolume (
             idMaquinaVolume INT NOT NULL AUTO_INCREMENT,
             fkMaquina INT NOT NULL,
             fkVolume INT NOT NULL,

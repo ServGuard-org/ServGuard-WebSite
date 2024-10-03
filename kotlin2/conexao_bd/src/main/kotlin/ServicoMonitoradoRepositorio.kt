@@ -19,7 +19,7 @@ class ServicoMonitoradoRepositorio {
 
     fun criarTabela(){
         jdbcTemplate.execute("""
-            CREATE TABLE IF NOT EXISTS ServicoMonitorado(
+            CREATE TABLE IF NOT EXISTS ServGuard.ServicoMonitorado(
             idServicoMonitorado INT NOT NULL AUTO_INCREMENT,
             fkEmpresa INT NOT NULL,
             nome VARCHAR(50) NOT NULL,
