@@ -42,6 +42,7 @@ PRIMARY KEY (idServicoMonitorado, fkEmpresa)
 CREATE TABLE IF NOT EXISTS ServGuard.Maquina (
 idMaquina INT NOT NULL AUTO_INCREMENT,
 fkEmpresa INT NOT NULL,
+apelido VARCHAR(50),
 nome VARCHAR(50),
 rack VARCHAR(20),
 modeloCPU VARCHAR(50),
@@ -57,6 +58,8 @@ PRIMARY KEY (idMaquina, fkEmpresa)
 
 CREATE TABLE IF NOT EXISTS ServGuard.Volume (
 idVolume INT NOT NULL AUTO_INCREMENT,
+apelido VARCHAR(50),
+pontoMontagem VARCHAR(50) NOT NULL,
 tipo VARCHAR(50) NOT NULL,
 capacidade DECIMAL(8,3) NOT NULL,
 
