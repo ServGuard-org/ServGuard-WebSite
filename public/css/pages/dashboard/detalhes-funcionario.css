@@ -31,9 +31,9 @@
 
 .father-informacoes-da-conta {
     width: 80%;
-    height: 80%;
+    height: 75%;
     padding: 10px;
-    gap: var(--gap2);
+    gap: var(--gap-2);
 
     display: flex;
     align-items: center;
@@ -70,6 +70,7 @@
     height: 100%;
     padding: 10px;
     padding-left: 30px;
+    gap: var(--gap-2);
 
     display: flex;
     align-items: start;
@@ -83,8 +84,19 @@
 
 }
 
+
+.alinhamento-botao{
+    width: 90%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    /* background-color: #794ED4; */
+
+}
+
 .botao-alterar{
-    width: 50%;
+    width: 59%;
     height: 40px;
     font-size: 20px;
 

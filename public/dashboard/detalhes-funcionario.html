@@ -55,7 +55,7 @@
         <!-- //// FIM NAVBAR //// -->
 
         <main>
-            <h1 class="bold">Informações da Conta:</h1>
+            <h1 class="bold m-2">Informações da Conta:</h1>
             <div class="father-informacoes-da-conta">
                 <div class="child-informacoes-da-conta">
                     <div class="dados-perfil">
@@ -65,18 +65,54 @@
                         <h4 class="bold">Empresa:</h4>
                         <h4 class="bold">Cargo:</h4>
                     </div>
-                    <h4>Caso ainda esteja utilizando a senha feita pelo administrador, por questões de segurança é de grande importância alterá-la clicando no botão de “<span class="bold" style="color: var(--darked-purple);">alterar meus dados</span>”.</h4>
+                    <h4>Caso ainda esteja utilizando a senha feita pelo administrador, por questões de segurança é de
+                        grande importância alterá-la clicando no botão de “<span class="bold"
+                            style="color: var(--darked-purple);">alterar meus dados</span>”.</h4>
                 </div>
-                <button class="botao-alterar bold">Alterar Meus Dados</button>
+                <div class="alinhamento-botao">
+                    <button class="botao-alterar bold" onclick="exibirEditar()">Alterar Meus Dados</button>
+                </div>
             </div>
         </main>
     </section>
     <!-- ----- FIM - TELA PRINCIPAL ----- -->
- 
- 
+    <!-- ----- POPUP DE EDITAR FUNCIONARIO ----- -->
+    <section class="sessao-popup-cadastrar-funcionario" id="popupEditar" style="display: none;">
+        <div class="father-editar-funcionario">
+            <h3 class="bold">Altere o campo que quiser e clique em "<span
+                    style="color: var(--darked-purple);">atualizar</span>"</h3>
+            <div class="child-editar-funcionario-campos">
+                <select name="cargo" id="cargo" class="select-cargo">
+                    <option><b>Selecione o cargo</b></option>
+                </select>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="Nome Completo">
+                </div>
+                <div class="child-cadastrar-funcionario-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-cadastrar-funcionario" placeholder="E-mail">
+                </div>
+            </div>
+            <div class="father-cadastrar-botao">
+                <button class="botao-cadastrar-executar-funcionario" onclick="Atualizar()"><b>Atualizar</b></button>
+                <p onclick="sairEditar()" class="botao-cadastrar-cancelar-funcionario italic underline bold">Sair</p>
+            </div>
+        </div>
+    </section>
+
 </body>
 <script>
-
+function exibirEditar() {
+        document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
+    }
+    function sairEditar() {
+        document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
+    }
 </script>
 
 </html>

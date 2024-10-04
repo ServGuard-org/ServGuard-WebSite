@@ -11,6 +11,7 @@
 @import url(./pages/dashboard/gerenciamento-funcionario.css);
 @import url(./pages/dashboard/details-machine.css);
 @import url(./pages/dashboard/detalhes-funcionario.css);
+@import url(./pages/dashboard/popups.css);
 
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
 @import url(./pages/site-institucional/cadastro.css);

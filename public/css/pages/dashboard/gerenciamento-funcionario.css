@@ -222,6 +222,18 @@
     cursor: pointer;
 }
 
+.botao-acao{
+    border: none;
+    background-color: #FFF;
+    color: var(--darked-purple);
+    /* transition: 400ms; */
+}
+.botao-acao:hover{
+    /* border-radius: 50px; */
+    border: 2px solid var(--darked-purple);
+
+}
+
 .father-funcionario-botao {
     width: 95%;
     height: 12%;
@@ -281,197 +293,3 @@
 }
 
 
-/* POPUP CADASTRAR FUNCIONARIO  */
-
-.sessao-popup-cadastrar-funcionario {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.39);
-    backdrop-filter: blur(1.25px);
-}
-
-.father-cadastrar-funcionario {
-    width: 35%;
-    height: 80%;
-    /* position: absolute; */
-    padding-left: 4%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-
-    border-radius: 20px;
-    border: 2px solid var(--Grays-White, #FFF);
-    background: rgba(255, 255, 255, 0.88);
-    box-shadow: 0px 0px 82.7px -41px #794ED4;
-    backdrop-filter: blur(5.5px);
-
-    & h3{
-        width: 80%;
-        padding-bottom: 10px;
-    }
-}
-
-.father-editar-funcionario {
-    width: 35%;
-    height: 60%;
-    /* position: absolute; */
-    padding-left: 4%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-
-    border-radius: 20px;
-    border: 2px solid var(--Grays-White, #FFF);
-    background: rgba(255, 255, 255, 0.88);
-    box-shadow: 0px 0px 82.7px -41px #794ED4;
-    backdrop-filter: blur(5.5px);
-
-    & h3{
-        width: 83%;
-        padding-bottom: 10px;
-        /* padding-top: 40px; */
-    }
-}
-
-/* .titulo-cadastrar-funcionario-campos {
-    padding-bottom: 10px;
-} */
-
-.child-cadastrar-funcionario-campos {
-    width: 85%;
-    height: 60%;
-    padding: 20px;
-    gap: var(--gap-2);
-
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
-
-    /* background-color: aquamarine; */
-}
-.child-editar-funcionario-campos {
-    width: 85%;
-    height: 50%;
-    padding: 20px;
-    gap: var(--gap-2);
-
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
-
-    /* background-color: aquamarine; */
-}
-
-.select-cargo {
-    min-width: 40%;
-    height: 40px;
-    border: 2px;
-    font-size: 22px;
-    color: var(--normal-grey);
-    border-bottom: 3px solid rgb(95, 95, 95);
-    background: none;
-}
-
-.child-cadastrar-funcionario-input {
-    width: 70%;
-    height: 15%;
-    /* padding-top: 3%; */
-
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content: start;
-
-    /* background-color: chocolate; */
-    border-bottom: 3px solid rgb(95, 95, 95);
-}
-
-.icone-input {
-    width: 8%;
-    height: 100%;
-
-    /* background-color: blue; */
-    & img {
-        width: 100%;
-        height: 100%;
-    }
-}
-
-.input-cadastrar-funcionario {
-    all: unset;
-    /* Reseta a maioria dos estilos nativos */
-    box-sizing: border-box;
-    /* Mantém o modelo de caixa consistente */
-    appearance: none;
-    /* Remove estilos de elementos de formulário */
-    -webkit-appearance: none;
-    /* Remove estilos no Safari/Chrome */
-    -moz-appearance: none;
-    /* Remove estilos no Firefox */
-
-    width: 90%;
-    height: 100%;
-    border: none;
-    padding-left: 5px;
-    padding-bottom: 0px;
-    font-size: 22px;
-    background: none;
-}
-
-.father-cadastrar-botao{
-    width: 95%;
-    height: 10%;
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    padding-top: 10px;
-}
-
-.botao-cadastrar-executar-funcionario{
-    min-width: 23%;
-    height: 40px;
-    color: white;
-    font-size: 20px;
-    font-style: inherit;
-
-    background-color: var(--darked-purple);
-    border: none;
-    border-radius: 50px;
-
-    transition: 200ms;
-}
-.botao-cadastrar-executar-funcionario:hover {
-    height: 50px;
-    cursor: pointer;
-    color: var(--darked-purple);
-    background-color: #FFF;
-} 
-
-.botao-cadastrar-cancelar-funcionario{
-    height: 70%;
-    font-size: 20px;
-    padding-left: 15px;
-    color: var(--darked-purple);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.botao-cadastrar-cancelar-funcionario:hover {
-    cursor: pointer;
-} 
