@@ -2,10 +2,10 @@ FROM node:latest
 
 WORKDIR /container-node
 
-COPY ./ServGuard /container-node
+RUN git clone https://github.com/EduardoAAzevedo/ServGuard.git
 
 RUN npm install
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["sh", "-c", "git pull && npm start"]

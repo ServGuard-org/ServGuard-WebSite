@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# "Iniciando script de automação" 
+echo 'Iniciando script de automação' 
 
 sudo apt upgrade && sudo apt update -y
 
@@ -28,10 +28,10 @@ sudo systemctl enable docker
 
 git clone https://github.com/EduardoAAzevedo/ServGuard.git
 
-cd home/ubuntu/ServGuard/setup/
+cd /home/ubuntu/ServGuard/setup/
 
-sudo docker build -f ./dockerfile-node -t servguard-server-image .
-sudo docker build -f ./dockerfile-mysql -t servguard-database-image .
+sudo docker build -f /home/ubuntu/ServGuard/setup/dockerfile-node -t servguard-server-image .
+sudo docker build -f /home/ubuntu/ServGuard/setup/dockerfile-mysql -t servguard-database-image .
 
 echo '====================='
 echo 'Verificando se as imagens foram criadas'
