@@ -47,7 +47,7 @@
                   <label class="color-white" for="senha">Senha</label>
                 </div>
 
-                <button class="btnServGuard mt-3">Entrar</button>
+                <button class="btnServGuard mt-3" onclick="logar()">Entrar</button>
 
                 <p class="color-gray little-text center">
                   Não tem uma conta?
@@ -69,3 +69,74 @@
     </section>
   </body>
 </html>
+<script>
+
+function verificar() {
+  // funcao inutilizada
+        var inputEmail = inp_usermail.value;
+
+        var indice_arroba = inputEmail.indexOf('@');
+        var indice_ponto = inputEmail.lastIndexOf('.');
+
+        if (indice_arroba < 0 || indice_ponto < 0 || indice_ponto < indice_arroba + 2 || indice_ponto === inputEmail.length - 1) {
+            alert("Por favor, preencha o campo de e-mail corretamente");
+            return false;
+        }
+
+    }
+
+    function logar() {
+
+        event.preventDefault()
+
+        let emailUsuario = document.getElementById('email_usuario').value
+        let senhaUsuario = document.getElementById('senha_usuario').value
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                emailServer: emailUsuario,
+                senhaServer: senhaUsuario
+            }),
+        })
+            .then(function (resposta) {
+                console.log("Resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log("Usuário logado com sucesso: ", resposta);
+
+                    resposta.json().then(resposta => {
+
+                        sessionStorage.setItem('ID_USUARIO', resposta.idUsuario);
+                        sessionStorage.setItem('NOME_USUARIO', resposta.nome);
+                        sessionStorage.setItem('EMAIL_USUARIO', resposta.email);
+                        sessionStorage.setItem('ID_EMPRESA_USUARIO', resposta.fkEmpresa);
+                        sessionStorage.setItem('IS_ADM_USUARIO', resposta.isAdm);
+
+                    if (resposta.isAdm == 1) {
+                        setTimeout(() => {
+                        window.location = "./dashboard-adm";
+                    }, "1000");
+
+                    } else if (resposta.isAdm == 0) {
+                        setTimeout(() => {
+                        window.location = "./dashboard-analista";
+                    }, "1000");
+                    }
+
+                });
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o login!";
+                }
+            })
+            .catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+
+    }
+
+</script>

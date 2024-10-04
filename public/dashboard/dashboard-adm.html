@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body onload="carregarPagina()">
     <section id="page-dashboard-adm">
         <header>
             <div class="child-navbar-card-dash-adm">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="dash-adm-parameter-stability">
                     <p class="bold mb-2">Escala de instabilidade:</p>
-                    <h1 class="font-big color-gray bold">0</h1>
+                    <h1 class="font-big color-gray bold" id="escala-instabilidade"></h1>
                 </div>
                 <div class="dash-adm-parameter-server">
                     <h4 class="bold center">Serviços utilizados:</h4>
@@ -160,6 +160,33 @@
             document.getElementById('myHistogram'),
             config
         );
+
+        function carregarPagina() {
+
+            let escalaInstabilidade = 0;
+
+            const elementoInstabilidade = document.getElementById('escala-instabilidade')
+
+            elementoInstabilidade.innerHTML = "";
+            elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+            
+            switch (escalaInstabilidade) {
+                case 0:
+                    // verde
+                break;
+                case 1:
+                    // amarelo
+                break;
+                case 2: 
+                    // laranja
+                break;
+                case 3:
+                    // vermelho
+                break;                    
+            }
+
+        }
 
     </script>
 </body>

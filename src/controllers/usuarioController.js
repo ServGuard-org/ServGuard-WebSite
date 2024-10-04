@@ -1,5 +1,4 @@
 var usuarioModel = require("../models/usuarioModel");
-const { listar } = require("./avisoController");
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
