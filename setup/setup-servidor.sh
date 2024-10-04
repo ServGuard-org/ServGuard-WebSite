@@ -31,14 +31,15 @@ git clone https://github.com/EduardoAAzevedo/ServGuard.git
 cd /ServGuard/setup/
 
 sudo docker build -f ./dockerfile-node -t servguard-server-image .
+sudo docker build -f ./dockerfile-mysql -t servguard-database-image .
 
 echo '====================='
-echo 'Verificando se a imagem foi criada'
+echo 'Verificando se as imagens foram criadas'
 sudo docker images
 echo '====================='
 
 sudo docker run -d --name servguard-server -p 8080:8080 servguard-server-image
 
-sudo docker 
+sudo docker run -d --name servguard-database -p 3306:3306 servguard-database-image
 
 
