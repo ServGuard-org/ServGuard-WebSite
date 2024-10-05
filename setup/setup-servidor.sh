@@ -44,3 +44,8 @@ echo '==========================================================================
 sudo docker run -d --name servguard-server -p 8080:8080 servguard-server-image
 
 sudo docker run -d --name servguard-database -p 3306:3306 servguard-database-image
+
+echo '========================================================================================================='
+echo 'Verificando se os containers foram criados'
+sudo docker ps -a
+echo '========================================================================================================='
