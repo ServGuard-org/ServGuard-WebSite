@@ -76,34 +76,47 @@
         </main>
     </section>
     <!-- ----- FIM - TELA PRINCIPAL ----- -->
-    <!-- ----- POPUP DE EDITAR FUNCIONARIO ----- -->
-    <section class="sessao-popup-cadastrar-funcionario" id="popupEditar" style="display: none;">
-        <div class="father-editar-funcionario">
-            <h3 class="bold">Altere o campo que quiser e clique em "<span
-                    style="color: var(--darked-purple);">atualizar</span>"</h3>
-            <div class="child-editar-funcionario-campos">
+    <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
+    <section class="sessao-popup" id="popupEditar" style="display: none;">
+        <div class="father-cadastrar-funcionario">
+            <h3 class="bold">Altere o campo que quiser alterar e clique em “atualizar”</h3>
+            <div class="child-campos">
                 <select name="cargo" id="cargo" class="select-cargo">
                     <option><b>Selecione o cargo</b></option>
                 </select>
-                <div class="child-cadastrar-funcionario-input">
+                <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-cadastrar-funcionario" placeholder="Nome Completo">
+                    <input type="text" class="input-popup" placeholder="Nome Completo">
                 </div>
-                <div class="child-cadastrar-funcionario-input">
+                <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-cadastrar-funcionario" placeholder="E-mail">
+                    <input type="text" class="input-popup" placeholder="E-mail">
                 </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-popup" placeholder="Senha">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-popup" placeholder="Confirmar senha">
+                </div>    
             </div>
-            <div class="father-cadastrar-botao">
-                <button class="botao-cadastrar-executar-funcionario" onclick="Atualizar()"><b>Atualizar</b></button>
-                <p onclick="sairEditar()" class="botao-cadastrar-cancelar-funcionario italic underline bold">Sair</p>
+            <div class="father-popup-botao">
+                <button class="botao-cadastrar-executar" onclick="Atualizar()"><b>Atualizar</b></button>
+                <p onclick="sairEditar()" class="botao-cadastrar-cancelar italic underline bold">Cancelar
+                </p>
             </div>
         </div>
     </section>
+    <!-- ----- FIM - POPUP DE CADASTRO FUNCIONARIO ----- -->
 
 </body>
 <script>

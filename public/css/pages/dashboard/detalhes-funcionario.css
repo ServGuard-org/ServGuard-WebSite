@@ -24,7 +24,9 @@
 
         /* background: #794ED4; */
         & h1 {
-            text-align: start;
+            width: 80%;
+            text-justify: start;
+            padding-left: 3%;
         }
     }
 }
