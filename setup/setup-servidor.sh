@@ -1,6 +1,8 @@
 #!/bin/bash
 
+echo '========================================================================================================='
 echo 'Iniciando script de automação' 
+echo '========================================================================================================='
 
 sudo apt upgrade && sudo apt update -y
 
@@ -11,17 +13,18 @@ echo 'Root:urubu100' | sudo chpasswd
 
 sudo apt install git 
 
-echo '====================='
+echo '========================================================================================================='
 echo 'Verificando versão do Git'
 git --version
-echo '====================='
+echo '========================================================================================================='
 
 sudo apt install docker.io -y
 
-echo '====================='
+echo '========================================================================================================='
 echo 'Verificando versão do Docker'
 docker --version
-echo '====================='
+echo '========================================================================================================='
+
 sudo systemctl start docker
 
 sudo systemctl enable docker
@@ -33,13 +36,11 @@ cd /home/ubuntu/ServGuard/setup/
 sudo docker build -f /home/ubuntu/ServGuard/setup/dockerfile-node -t servguard-server-image .
 sudo docker build -f /home/ubuntu/ServGuard/setup/dockerfile-mysql -t servguard-database-image .
 
-echo '====================='
+echo '========================================================================================================='
 echo 'Verificando se as imagens foram criadas'
 sudo docker images
-echo '====================='
+echo '========================================================================================================='
 
 sudo docker run -d --name servguard-server -p 8080:8080 servguard-server-image
 
 sudo docker run -d --name servguard-database -p 3306:3306 servguard-database-image
-
-
