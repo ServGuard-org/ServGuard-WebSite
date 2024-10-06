@@ -222,8 +222,23 @@
     height: 100%;
     padding: var(--gap-1);
     display: flex;
+}
 
-    background: red;
+.card-irregular{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex: 1;
+    gap: var(--gap-1);
+}
+
+.card-rede-conect{
+    flex: 1;
+    padding: var(--gap-1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .general-vision-info{
@@ -245,28 +260,14 @@
     max-width: 250px;
 }
 
-.card-irregular{
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-1);
-    flex: 1;
-}
-
-.card-rede-conect{
-    flex: 1;
-    padding: var(--gap-1);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .card-rede-conect-content{
     display: flex;
     flex-direction: column;
-
-    width: 70%;
+    justify-content: space-around;
+    width: 80%;
+    height: 100%;
     gap: var(--gap-1);
+
     border-radius: 10px;
     padding: var(--gap-1);
     background: var(--white-normal);
