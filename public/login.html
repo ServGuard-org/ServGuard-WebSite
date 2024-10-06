@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/main.css" />
     <title>ServGuard | Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <section id="page-cadastro">
@@ -47,7 +48,9 @@
                   <label class="color-white" for="senha">Senha</label>
                 </div>
 
-                <button class="btnServGuard mt-3" onclick="logar()">Entrar</button>
+                <button class="btnServGuard mt-3" onclick="logar()">
+                  Entrar
+                </button>
 
                 <p class="color-gray little-text center">
                   Não tem uma conta?
@@ -62,7 +65,9 @@
         <div class="child-card-image-cadastro">
           <figure>
             <h3 class="color-white mb-1">Sua Central de Controle</h3>
-            <p class="color-gray">Monitore e gerencie suas operações com eficiência em um só lugar.</p>
+            <p class="color-gray">
+              Monitore e gerencie suas operações com eficiência em um só lugar.
+            </p>
           </figure>
         </div>
       </main>
@@ -70,73 +75,77 @@
   </body>
 </html>
 <script>
+  function verificar() {
+    // funcao inutilizada
+    var inputEmail = inp_usermail.value;
 
-function verificar() {
-  // funcao inutilizada
-        var inputEmail = inp_usermail.value;
+    var indice_arroba = inputEmail.indexOf("@");
+    var indice_ponto = inputEmail.lastIndexOf(".");
 
-        var indice_arroba = inputEmail.indexOf('@');
-        var indice_ponto = inputEmail.lastIndexOf('.');
-
-        if (indice_arroba < 0 || indice_ponto < 0 || indice_ponto < indice_arroba + 2 || indice_ponto === inputEmail.length - 1) {
-            alert("Por favor, preencha o campo de e-mail corretamente");
-            return false;
-        }
-
+    if (
+      indice_arroba < 0 ||
+      indice_ponto < 0 ||
+      indice_ponto < indice_arroba + 2 ||
+      indice_ponto === inputEmail.length - 1
+    ) {
+      alert("Por favor, preencha o campo de e-mail corretamente");
+      return false;
     }
+  }
 
-    function logar() {
+  function logar() {
+    event.preventDefault();
 
-        event.preventDefault()
+    let emailUsuario = document.getElementById("email_usuario").value;
+    let senhaUsuario = document.getElementById("senha_usuario").value;
 
-        let emailUsuario = document.getElementById('email_usuario').value
-        let senhaUsuario = document.getElementById('senha_usuario').value
+    fetch("/usuarios/autenticar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        emailServer: emailUsuario,
+        senhaServer: senhaUsuario,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("Resposta: ", resposta);
 
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                emailServer: emailUsuario,
-                senhaServer: senhaUsuario
-            }),
-        })
-            .then(function (resposta) {
-                console.log("Resposta: ", resposta);
+        if (resposta.ok) {
+          console.log("Usuário logado com sucesso: ", resposta);
 
-                if (resposta.ok) {
-                    console.log("Usuário logado com sucesso: ", resposta);
+          resposta.json().then((resposta) => {
+            sessionStorage.setItem("ID_USUARIO", resposta.idUsuario);
+            sessionStorage.setItem("NOME_USUARIO", resposta.nome);
+            sessionStorage.setItem("EMAIL_USUARIO", resposta.email);
+            sessionStorage.setItem("ID_EMPRESA_USUARIO", resposta.fkEmpresa);
+            sessionStorage.setItem("IS_ADM_USUARIO", resposta.isAdm);
 
-                    resposta.json().then(resposta => {
-
-                        sessionStorage.setItem('ID_USUARIO', resposta.idUsuario);
-                        sessionStorage.setItem('NOME_USUARIO', resposta.nome);
-                        sessionStorage.setItem('EMAIL_USUARIO', resposta.email);
-                        sessionStorage.setItem('ID_EMPRESA_USUARIO', resposta.fkEmpresa);
-                        sessionStorage.setItem('IS_ADM_USUARIO', resposta.isAdm);
-
-                    if (resposta.isAdm == 1) {
-                        setTimeout(() => {
-                        window.location = "./dashboard-adm";
-                    }, "1000");
-
-                    } else if (resposta.isAdm == 0) {
-                        setTimeout(() => {
-                        window.location = "./dashboard-analista";
-                    }, "1000");
-                    }
-
-                });
-
-                } else {
-                    throw "Houve um erro ao tentar realizar o login!";
-                }
-            })
-            .catch(function (erro) {
-                console.log(`#ERRO: ${erro}`);
+            Swal.fire({
+              icon: "success",
+              title: "Login Realizado com sucesso!",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(() => {
+              if (resposta.isAdm == 1) {
+                  window.location.href = "./dashboard/dashboard-adm.html";
+              } else if (resposta.isAdm == 0) {
+                  window.location.href = "./dashboard/dashboard-analista.html";
+              }
             });
-
-    }
-
+          });
+        } else {
+          throw "Houve um erro ao tentar realizar o login!";
+        }
+      })
+      .catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Houve um erro ao tentar realizar o login!",
+        });
+      });
+  }
 </script>

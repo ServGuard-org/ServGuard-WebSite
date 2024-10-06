@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/main.css" />
     <title>ServGuard | Cadastro</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <section id="page-cadastro">
@@ -19,11 +20,12 @@
               <div class="form-card-line-border mb-1">
                 <div class="form-titulo-cadastro my-3">
                   <h3 class="color-white mb-1">Comece a usar a ServGuard</h3>
-                  <p class="color-gray"> 
-                    Cadastre-se agora e acesse nossa plataforma completa de monitoramento e gestão para sua empresa.
+                  <p class="color-gray">
+                    Cadastre-se agora e acesse nossa plataforma completa de
+                    monitoramento e gestão para sua empresa.
                   </p>
                 </div>
-  
+
                 <div class="formContainer">
                   <input
                     placeholder="Digite seu nome"
@@ -94,21 +96,27 @@
                     >Confirme a Senha</label
                   >
                 </div>
-  
-                <button class="btnServGuard mt-2" onclick="cadastraEmpresa()">Cadastre-se</button>
-  
+
+                <button class="btnServGuard mt-2" onclick="cadastraEmpresa()">
+                  Cadastre-se
+                </button>
+
                 <p class="color-gray little-text center">
                   Já tem uma conta?
-                  <a class="color-purple little-text" href="./login.html"> Entrar </a>
+                  <a class="color-purple little-text" href="./login.html">
+                    Entrar
+                  </a>
                 </p>
-              </div>              
+              </div>
             </form>
           </div>
         </div>
         <div class="child-card-image-cadastro">
           <figure>
             <h3 class="color-white mb-1">Sua Central de Controle</h3>
-            <p class="color-gray">Monitore e gerencie suas operações com eficiência em um só lugar.</p>
+            <p class="color-gray">
+              Monitore e gerencie suas operações com eficiência em um só lugar.
+            </p>
           </figure>
         </div>
       </main>
@@ -118,8 +126,7 @@
 
 <script>
   function cadastraEmpresa() {
-
-    event.preventDefault()
+    event.preventDefault();
 
     let nomeUsuario = document.getElementById("nome_usuario").value;
     let emailUsuario = document.getElementById("email_usuario").value;
@@ -144,13 +151,28 @@
 
         if (resposta.ok) {
           console.log(`Empresa cadastrada com sucesso! ${resposta}`);
-          cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj);
+
+          Swal.fire({
+            icon: "success",
+            title: "Cadastro realizado com Sucesso!",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj);
+
+            window.location.href = "./login.html";
+          });
         } else {
           throw "Houve um erro ao tentar realizar o cadastro!";
         }
       })
       .catch(function (resposta) {
         console.log(`#ERRO: ${resposta}`);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Houve um erro ao tentar realizar o cadastro!",
+        });
       });
   }
 
@@ -182,6 +204,11 @@
       })
       .catch(function (erro) {
         console.log(`#ERRO: ${erro}`);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Houve um erro ao tentar realizar o cadastro!",
+        });
       });
   }
 </script>
