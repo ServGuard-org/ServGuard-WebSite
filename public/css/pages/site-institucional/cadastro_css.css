@@ -1,0 +1,329 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: black;
+    background-image: url(../../../svg/space2.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    background-color: #110C37;
+    overflow-y: hidden;
+}
+
+.se-cadastre span {
+    color: white;
+}
+
+
+
+.header {
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: rgba(73, 72, 72, 0.2);
+    backdrop-filter: blur(3px);
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 0 1px 2px #ffffffb4;
+    border: 1px solid #B691FF;
+   
+}
+
+.imagem h1 {
+    color: #B691FF;
+    transform: translate(0%, -20%);
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 10px;
+
+}
+
+.imagem img {
+    width: 55%;
+    padding-left: 10px;
+    transform: translate(21%, -25%);
+
+
+}
+
+.imagem a {
+    color: white;
+    transform: translate(0%, -120%);
+}
+
+.logo {
+
+    padding-right: 200px;
+    padding-left: 100px;
+    margin-top: 40px;
+
+}
+
+
+.linha {
+
+    display: none;
+
+
+}
+
+
+
+
+
+.login-container {
+    width: 32rem;
+    color: #2d2323;
+    border-radius: 10px;
+    padding: 30px 40px;
+    float: left;
+    margin-right: 100px;
+    margin-top: -50px;
+    transform: translate(6%, 0%);
+    box-sizing: border-box;
+
+}
+
+h2 {
+
+    margin-bottom: 3%;
+    color: #B691FF;
+    display: flex;
+    justify-content: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.fonte {
+    font-size: 2rem;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+
+}
+
+
+
+.login-form input {
+    background-color: rgba(73, 72, 72, 0.2);
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e1e1e1;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-radius: 3px;
+    color: #fff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+
+
+.login-form input:hover {
+    transform: scale(1.08);
+    transition: transform 0.4s ease;
+
+}
+
+.login-form input::placeholder {
+    color: #fff;
+    font-weight: bold;
+
+}
+
+
+
+
+
+
+.login-form button {
+    background-color: #B691FF;
+    color: #fff;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+    height: 50px;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.botao_first {
+    background-color: #B691FF;
+    color: white;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+    height: 50px;
+    transition: transform 0.3s ease;
+    border-radius: 40px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+
+}
+
+.botao_first:hover {
+    background: linear-gradient(to right, #ad38f1, #8826c1);
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.botao_form {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
+.login-form button:hover {
+    background: linear-gradient(to right, #ad38f1, #190127);
+    transform: scale(1.05);
+
+}
+
+
+
+
+
+
+.input-senha {
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    padding-right: 30px;
+}
+
+
+.se-cadastre {
+    color: #B691FF;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+
+.esquece-senha {
+
+
+    color: white;
+}
+
+.login-form a {
+    margin: 38px;
+}
+
+
+
+.tipo_usuario {
+
+    background-color: rgba(73, 72, 72, 0.2);
+    border: none;
+    border-bottom: #fff 2px groove;
+
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 3%;
+    box-sizing: border-box;
+
+}
+
+
+.tipo_usuario option {
+
+    background-color: #1e0136;
+    color: white;
+
+}
+
+
+@media (max-width: 768px) {
+    .header {
+        height: auto;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .imagem img {
+        width: 80%;
+        transform: none;
+    }
+
+    .login-container {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .linha {
+        display: none;
+    }
+
+    .logo {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .tipo_usuario {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .imagem h1 {
+        font-size: 2rem;
+    }
+
+    .login-form input {
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .login-form button {
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .login-form .texto_button {
+        text-align: center;
+        transform: none;
+    }
+
+    .tipo_usuario {
+        padding: 6px;
+        font-size: 0.8rem;
+    }
+}

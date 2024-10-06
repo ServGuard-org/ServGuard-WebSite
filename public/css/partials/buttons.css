@@ -54,7 +54,7 @@
     border-radius: 8px;
     background-color: transparent;
     color: white;
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--gray-0);
     font-size: 15px;
     padding-left: 10px;
     transition: all 0.4s ease;
