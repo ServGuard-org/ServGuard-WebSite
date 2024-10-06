@@ -111,4 +111,8 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
 	('usadoDisco', 'GB'),
-	('livreDisco', 'GB');
+	('livreDisco', 'GB'),
+	('perdaPacotesEntrada', 'Pacotes'),
+	('perdaPacotesSaida', 'Pacotes'),
+	('descartePacotesEntrada', 'Pacotes'),
+	('descartePacotesSaida', 'Pacotes');
