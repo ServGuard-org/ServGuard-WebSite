@@ -107,6 +107,35 @@
     backdrop-filter: blur(2px);
 }
 
+.perda-pacotes-dados{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-1);
+}
+
+.perda-pacotes-organizar{
+    width: 90%;
+    height: 60%;
+    /* background-color: aqua; */
+
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-2);
+    align-items: center;
+    justify-content: space-around;
+}
+
+.perda-pacotes-divisao{
+    height: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
+    background-color: #FFF;
+    display: flex;
+    border-radius: 20px;
+}
+
 .div-servico-utilizado {
     width: 37%;
     height: 100%;
