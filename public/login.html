@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/main.css" />
     <title>ServGuard | Login</title>
+    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- IMPORTANDO A ESTILIZAÇÃO DO SWEETALERT - THEME DARK -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
   </head>
   <body>
     <section id="page-cadastro">
@@ -127,6 +132,8 @@
               title: "Login Realizado com sucesso!",
               showConfirmButton: false,
               timer: 1500,
+              color: '#fff',
+              background: '#1d1d1d',
             }).then(() => {
               if (resposta.isAdm == 1) {
                   window.location.href = "./dashboard/dashboard-adm.html";
@@ -145,6 +152,9 @@
           icon: "error",
           title: "Oops...",
           text: "Houve um erro ao tentar realizar o login!",
+          color: '#fff',
+          background: '#1d1d1d',
+          confirmButtonColor: '#4E2E9E',
         });
       });
   }

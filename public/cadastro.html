@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/main.css" />
     <title>ServGuard | Cadastro</title>
+    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- IMPORTANDO A ESTILIZAÇÃO DO SWEETALERT - THEME DARK -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
   </head>
   <body>
     <section id="page-cadastro">
@@ -155,8 +160,10 @@
           Swal.fire({
             icon: "success",
             title: "Cadastro realizado com Sucesso!",
+            color: '#fff',
             showConfirmButton: false,
             timer: 1500,
+            background: '#1d1d1d',
           }).then(() => {
             cadastraUsuario(nomeUsuario, emailUsuario, senhaUsuario, cnpj);
 
@@ -171,7 +178,10 @@
         Swal.fire({
           icon: "error",
           title: "Oops...",
+          color: '#fff',
           text: "Houve um erro ao tentar realizar o cadastro!",
+          background: '#1d1d1d',
+          confirmButtonColor: '#4E2E9E',
         });
       });
   }
