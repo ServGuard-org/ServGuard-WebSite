@@ -72,12 +72,13 @@
 }
 
 .graphic-space-analista {
-    background-color: yellow;
+    /* background-color: yellow; */
     width: 95%;
     height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    /* align-items: center; */
 }
 
 .coluna1-cards-row {
@@ -152,6 +153,22 @@
     backdrop-filter: blur(2px);
 }
 
+.servico{
+    width: 70%;
+    height: 60%;
+    gap: var(--gap-2);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 30px;
+    background: #794ED4;
+  
+}
+
+
 .coluna2-dash-analista {
     width: 33%;
     height: 100%;
@@ -164,12 +181,14 @@
 
 .div-componente-problematico {
     width: 100%;
-    height: 40%;
+    height: 35%;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    align-items: start;
+    justify-content: center;
+    padding-left: 7%;
+    gap: var(--gap-1);
 
 
     border-radius: 50px;
@@ -181,12 +200,14 @@
 
 .div-mapa-estabilidade {
     width: 100%;
-    height: 55%;
+    height: 60%;
+    padding-top: 5%;
+    gap: var(--gap-2);
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: start;
 
 
     border-radius: 50px;
@@ -194,4 +215,32 @@
     background: rgba(255, 255, 255, 0.11);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(2px);
+}
+
+.mapa-colunas{
+    width: 90%;
+    height: 8%;
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--gap-1);
+}
+
+.mapa-espacamento{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-1);
+}
+
+.mapa-espacamento-objeto{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--red-light);
+    border-radius: 50px;
+    
 }
