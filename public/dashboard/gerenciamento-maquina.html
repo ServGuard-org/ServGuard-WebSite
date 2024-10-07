@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServGuard | Ger. Máquina</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <!-- ----- TELA PRINCIPAL ----- -->
+    <section id="page-gerenciamento-maquina">
+        <header>
+            <div class="child-navbar-card-dash-adm">
+                <div class="navbar-logo-dash-adm">
+                    <img src="../assets/img/logo.png" alt="#logo">
+                </div>
+
+                <div class="navbar-navlink-dash-adm">
+                    <ul class="list-navlink-dash-adm">
+                        <li>
+                            <a href="./dashboard-adm.html" class="link-dash-adm">
+                                <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
+                            </a>
+                            <p class="little-text mt-1">Início</p>
+                        </li>
+                        <li>
+                            <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
+                                <img src="../assets/svg/func-icon.svg" alt="#icone-func">
+                            </a>
+                            <p class="little-text mt-1">Funcionário</p>
+                        </li>
+                        <li>
+                            <a href="./gerenciamento-maquina.html" class="link-dash-adm active">
+                                <img src="../assets/svg/server-icon-white.svg" alt="#icone-">
+                            </a>
+                            <p class="little-text mt-1">Máquina</p>
+                        </li>
+                        <li>
+                            <a href="detalhes-funcionario.html" class="link-dash-adm">
+                                <img src="../assets/svg/perfil-icon.svg" alt="#icone-">
+                            </a>
+                            <p class="little-text mt-1">Perfil</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <a href="#" class="navbar-exit-dash-adm">
+                    <img src="../assets/svg/exit-icon.svg" alt="">
+                </a>
+            </div>
+        </header>
+
+        <!-- //// FIM NAVBAR //// -->
+
+        <main>
+            <div class="father-maquina-lista">
+                <div class="child-maquina-colunas">
+                    <!-- apenas para alinhar -->
+                    <a href="#" class="child-elemento-editar"></a>
+                    </a>
+                    <div class="child-maquina-elemento-father-colunas">
+
+                        <div class="child-maquina-elemento-coluna-area-id">
+                            <p class="bold">ID</p>
+                        </div>
+                        <div class="child-maquina-elemento-coluna-area-apelido">
+                            <p class="bold">Apelido</p>
+                        </div>
+                        <div class="child-maquina-elemento-coluna-area-cpu">
+                            <p class="bold">CPU</p>
+                        </div>
+                        <div class="child-maquina-elemento-coluna-area-ram">
+                            <p class="bold">RAM</p>
+                        </div>
+                        <div class="child-maquina-elemento-coluna-area-armazenamento">
+                            <p class="bold">Armazenamento</p>
+                        </div>
+                        <div class="child-maquina-elemento-coluna-area-acao"></div>
+                    </div>
+                </div>
+                <div class="child-maquina-father-elemento">
+                    <div class="child-maquina-elemento">
+                        <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
+                            <img src="../assets/svg/edit.svg" alt="#icone-">
+                        </a>
+                        <div class="child-maquina-elemento-infos">
+                            <!-- minha ideia e dar uma porcentagem para cada elemento exibido  -->
+                            <div class="child-maquina-elemento-info-area-id">
+                                <p>13</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-apelido">
+                                <p>Controle 1</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-cpu">
+                                <p>Intell Core i5 12th gen</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-ram">
+                                <p>32GB</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-armazenamento">
+                                <p>500Gb de 1000Gb</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-acao">
+                                <button class="bold underline italic botao-acao" onclick="DetalhesMaquina()">Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="father-maquina-botao">
+                <select name="ordenar" id="ordenar" class="select-filtro-maquina" style="background-color: var(--darked-purple); color: white;">
+                    <option><b>Ordenar por</b></option>
+                </select>
+
+            </div>
+        </main>
+    </section>
+    <!-- ----- FIM - TELA PRINCIPAL ----- -->
+    
+    <!-- ----- POPUP DE EDITAR maquina ----- -->
+    <section class="sessao-popup" id="popupEditar" style="display: none;">
+        <div class="father-editar-maquina">
+            <h3 class="bold">Altere o campo que quiser e clique em "<span
+                    style="color: var(--darked-purple);">atualizar</span>"</h3>
+            <div class="child-campos">
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/computer-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-popup" placeholder="Apelido da Máquina">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="text" class="input-popup" placeholder="Rack pertencente">
+                </div>
+            </div>
+            <div class="father-popup-botao">
+                <button class="botao-cadastrar-executar" onclick="Atualizar()"><b>Atualizar</b></button>
+                <p onclick="sairEditar()" class="botao-cadastrar-cancelar italic underline bold">Sair</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+<script>
+    function DetalhesMaquina() {
+        window.location.href = "details-machine.html";
+    }
+
+    function exibirEditar() {
+        document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
+    }
+    function sairEditar() {
+        document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
+    }
+</script>
+
+</html>
