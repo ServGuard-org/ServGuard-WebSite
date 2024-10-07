@@ -23,6 +23,31 @@
   color: var(--dark-purple);
 }
 
+/* ESTILIZANDO BOTÃO DA DASHBOARD */
+.btn-dashboard {
+  background-color: var(--dark-purple);
+  color: var(--white-dark);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-dashboard:hover {
+  background-color: var(--white-dark);
+  color: var(--dark-purple);
+  transition: 0.5s ease;
+}
+
+.btn-dashboard:active {
+  background-color: var(--white-darke);
+  color: var(--dark-purple);
+}
+
 /* ESTILIZAÇÃO DE INPUT */
 .formContainer {
   width: 100%;
