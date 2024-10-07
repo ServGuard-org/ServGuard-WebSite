@@ -1,0 +1,14 @@
+FROM node:latest
+
+WORKDIR /container-node
+
+# Copia o conteúdo do repositório já clonado
+COPY ./ServGuard /container-node/ServGuard
+
+WORKDIR /container-node/ServGuard
+
+RUN npm install
+
+EXPOSE 8080
+
+CMD ["npm", "start"]
