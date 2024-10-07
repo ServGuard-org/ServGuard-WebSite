@@ -50,7 +50,7 @@
         </header>
 
         <main>
-            <h1 class="bold">Detalhes da máquina de ID: <span class="color-purple bold">X</span></h1>
+            <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold">X</span></h1>
             <div class="father-details-machine">
                 <div class="child-details-machine-info">
                     <h3 class="italic thin mb-1">Dados da Máquina: </h3>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="details-machine-graphic">
                         <div class="details-machine-graphic-space">
-                            <h3 class="bold mb-2">Componente: <span class="color-purple">N/A</span></h3>
+                            <h3 class="bold mb-2">Componente: <span class="text-purple">N/A</span></h3>
                             <canvas class="graphic-machine" id="myHistogram"></canvas>
                         </div>
                     </div>
@@ -94,29 +94,46 @@
 
                 <div class="child-details-machine-volumes">
                     <div class="details-machine-volume-list mb-1">
-                        <h3 class="italic center">Volumes:</h3>
+                        <h3 class="italic center mb-1">Volumes:</h3>
                         <div class="machine-volume-list">
-                            <div class="machine-volume-colum">
-                                <div class="volume-colum">
-                                    <p class="center flex-1">ID</p>
+                            <div class="machine-volume-list-content pr-1">
+                                <div class="machine-volume-coluns">
+                                    <div class="volume-coluns-item"></div>
+                                    <div class="volume-coluns-item bold">ID</div>
+                                    <div class="volume-coluns-item bold">Tipo</div>
+                                    <div class="volume-coluns-item bold">Capacidade</div>
+                                    <div class="volume-coluns-item bold">Ação</div>
                                 </div>
-                                <div class="volume-colum">
-                                    <p class="center flex-2">Tipo</p>
+
+                                <!-- ITEM UM DO VOLUME -->
+                                <div class="machine-volume-rows">
+                                    <div class="volume-item-rows-lixo">
+                                        <img src="../assets/svg/delete-icon.svg" alt="">
+                                    </div>
+                                    <div class="volume-item-rows-content">
+                                        <div class="volume-item-rows">
+                                            <p class="">01</p>
+                                        </div>
+                                        <div class="volume-item-rows">
+                                            <p class="">SSD</p>
+                                        </div>
+                                        <div class="volume-item-rows">
+                                            <p class="">256Gb</p>
+                                        </div>
+                                        <div class="volume-item-rows">
+                                            <a href="#">Desassociar</a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="volume-colum">
-                                    <p class="center flex-3">Capacidade</p>
-                                </div>
-                                <div class="volume-colum">
-                                    <p class="center flex-2">Ação</p>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="machine-active-deactivate">
-                        <h3>Gerenciamento da Máquina:</h3>
+                        <h3 class="bold">Gerenciamento da Máquina:</h3>
                         <div class="active-deactive-options">
-                            <button>Ativar Máquina</button>
-                            <button>Desativar Máquina</button>
+                            <button class="btn-dashboard">Ativar Máquina</button>
+                            <button class="btn-dashboard">Desativar Máquina</button>
                         </div>
                     </div>
                 </div>

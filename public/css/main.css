@@ -8,7 +8,9 @@
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
 @import url(./pages/dashboard/dashboard-adm.css);
+@import url(./pages/dashboard/dashboard-analista.css);
 @import url(./pages/dashboard/gerenciamento-funcionario.css);
+@import url(./pages/dashboard/gerenciamento-maquina.css);
 @import url(./pages/dashboard/details-machine.css);
 @import url(./pages/dashboard/detalhes-funcionario.css);
 @import url(./pages/dashboard/popups.css);
@@ -53,11 +55,13 @@ body {
     width: 100vw;
     height: 100vh;
     overflow-x: hidden;
+    position: relative;
 }
 
 section{
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 
 ul{

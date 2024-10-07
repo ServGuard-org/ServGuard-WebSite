@@ -59,7 +59,7 @@
         background: url(../../../assets/img/download.png) no-repeat center;
         background-size: cover;
         padding: 45px;
-        border: 1px solid var(--dark-gray);
+        border: 1px solid var(--gray-0);
 
         & p{
             width: 80%;
@@ -84,8 +84,8 @@
     .form-card-line-border{
         padding: 40px;
         border-radius: 10px;
-        background: var(--darkness-gray);
-        border: 1px solid var(--dark-gray);
+        background: var(--extra-light-black);
+        border: 1px solid var(--gray-0);
     }
     .child-card-image-cadastro {
         display: none;

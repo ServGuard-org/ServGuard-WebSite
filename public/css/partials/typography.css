@@ -198,26 +198,43 @@
     }
 }
 
-.color-white{
-    color: white;
+/* Cores principais para texto */
+
+.text-white{
+    color: var(--white-normal);
 }
 
-.color-black{
-    color: black;
+.text-black{
+    color: var(--normal-black);
 }
 
-.color-gray{
-    color: var(--normal-gray);
+/* Cores auxiliares para texto */
+
+.text-gray{
+    color: var(--gray-5);
 }
 
-.color-gray-dark{
-    color: var(--dark-gray);
+.text-gray-dark{
+    color: var(--gray-0);
 }
 
-.color-purple{
+.text-green{
+    color: var(--green-dark);
+}
+
+.text-red{
+    color: var(--red-dark);
+}
+
+.text-yellow{
+    color: var(--yellow-dark);
+}
+
+/* Cores para destaque de texto */
+
+.text-purple{
     color: var(--normal-purple);
 }
-
 
 
 /* Texto em negrito */
@@ -229,7 +246,6 @@
 .thin {
     font-weight: 300;
 }
-
 
 .little-text{
     font-size: 13px;
