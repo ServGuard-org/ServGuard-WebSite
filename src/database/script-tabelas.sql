@@ -66,16 +66,6 @@ capacidade DECIMAL(8,3) NOT NULL,
 PRIMARY KEY (idVolume)
 );
 
-CREATE TABLE IF NOT EXISTS ServGuard.MaquinaVolume (
-idMaquinaVolume INT NOT NULL AUTO_INCREMENT,
-fkMaquina INT NOT NULL,
-fkVolume INT NOT NULL,
-
-CONSTRAINT fkMaquinaMaquinaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
-CONSTRAINT fkVolumeMaquinaVolume FOREIGN KEY (fkVolume) REFERENCES ServGuard.Volume(idVolume),
-PRIMARY KEY (idMaquinaVolume, fkMaquina, fkVolume)
-);
-
 CREATE TABLE IF NOT EXISTS ServGuard.Recurso (
 idRecurso INT NOT NULL AUTO_INCREMENT,
 nome VARCHAR(45) NOT NULL,
