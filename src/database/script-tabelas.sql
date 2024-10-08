@@ -48,7 +48,7 @@ rack VARCHAR(20),
 modeloCPU VARCHAR(50),
 qtdNucleosFisicos INT,
 qtdNucleosLogicos INT,
-capacidadeRAM DECIMAL(8,3),
+capacidadeRAM DECIMAL(12,3),
 MACAddress CHAR(17) UNIQUE NOT NULL,
 isAtiva TINYINT DEFAULT 1 NOT NULL,
 
@@ -62,7 +62,7 @@ fkMaquina INT NOT NULL,
 apelido VARCHAR(50),
 pontoMontagem VARCHAR(50) NOT NULL,
 tipo VARCHAR(50) NOT NULL,
-capacidade DECIMAL(8,3) NOT NULL,
+capacidade DECIMAL(12,3) NOT NULL,
 
 CONSTRAINT fkMaquinaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
 PRIMARY KEY (idVolume)
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS ServGuard.MaquinaRecurso (
 idMaquinaRecurso INT NOT NULL AUTO_INCREMENT,
 fkMaquina INT NOT NULL,
 fkRecurso INT NOT NULL,
-max DECIMAL(8,3),
+max DECIMAL(12,3),
 
 CONSTRAINT fkMaquinaMaquinaRecurso FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
 CONSTRAINT fkRecursoMaquinaRecurso FOREIGN KEY (fkRecurso) REFERENCES ServGuard.Recurso(idRecurso),
@@ -90,7 +90,7 @@ PRIMARY KEY (idMaquinaRecurso, fkMaquina, fkRecurso)
 CREATE TABLE IF NOT EXISTS ServGuard.Captura (
 idCaptura INT NOT NULL AUTO_INCREMENT,
 fkMaquinaRecurso INT NOT NULL,
-registro DECIMAL(8,3) NOT NULL,
+registro DECIMAL(12,3) NOT NULL,
 dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
 CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES ServGuard.MaquinaRecurso(idMaquinaRecurso),
