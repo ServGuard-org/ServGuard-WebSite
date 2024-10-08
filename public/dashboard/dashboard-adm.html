@@ -333,12 +333,12 @@
     function isAtivoBACEN(url) {
         fetch(`/externos/check/${url}`)
         .then((resposta) => {
-          elemeto_servico.innerHTML = resposta.json.status
+          elemento_servico.innerHTML = resposta.json.status
         })
       .catch( (error) => {
         // vermelho
         console.log(error)
-        elemento_servico.innerHTML = "Erro ao Obter Dados";
+        elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
       });
 
     }
