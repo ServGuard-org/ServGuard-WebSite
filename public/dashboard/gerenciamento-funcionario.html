@@ -10,9 +10,6 @@
     <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- IMPORTANDO A ESTILIZAÇÃO DO SWEETALERT - THEME DARK -->
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
 <body onload="consultarFuncionarios()">
@@ -66,13 +63,13 @@
             <!--queria deixar os textos aqui em italic+bold-->
             <div class="father-funcionario-card">
                 <div class="child-funcionario-card">
-                    <p class="bold italic">Total: X</p>
+                    <p class="bold italic">Total: <span id="num_total">X</span></p>
                 </div>
                 <div class="child-funcionario-card">
-                    <p class="bold italic">Analista: X</p>
+                    <p class="bold italic">Analista: <span id="num_ana">X</span></p>
                 </div>
                 <div class="child-funcionario-card" style="background-color: var(--darked-purple);">
-                    <p class="bold text-white italic">ADM: X</p>
+                    <p class="bold text-white italic">ADM: <span id="num_adms">X</span></p>
                 </div>
             </div>
             <div class="father-funcionario-lista">
@@ -235,11 +232,27 @@
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
+    var qtdAna = 0;
+    var qtdAdm = 0;
     function adicionarFuncionario(idUsuario, nome, email, isAdm, isAtivo) {
-
+        
         const elementoPai = document.getElementById("elemento_funcionario_pai")
-
+        
+        const elementoNumAdms = document.getElementById("num_adms");
+        
+        const elementoNumAna = document.getElementById("num_ana");
+        
+        const elementoNumTotal = document.getElementById("num_total");
+        
+        elementoNumAdms.innerHTML = ""
+        elementoNumAna.innerHTML = ""
+        elementoNumTotal.innerHTML = ""
+        elementoPai.innerHTML = ""
+        
         const cargo = isAdm ? "Administrador" : "Analista";
+        
+        isAdm ? qtdAdm ++ : qtdAna ++;
+        let totalFuncionarios = qtdAdm + qtdAna;
 
         const acao = isAtivo ? `<button class="bold underline italic botao-acao" onclick="inativarFuncionario(${idUsuario})">Inativar</button>` : `<button class="bold underline italic botao-acao" onclick="ativarFuncionario(${idUsuario})">Ativar</button>`
 
@@ -266,12 +279,15 @@
                         </div>
                     </div>`;
 
-        elementoPai.innerHTML += novoElemento
+        elementoPai.innerHTML += novoElemento;
+        elementoNumTotal.innerHTML = totalFuncionarios;
+        elementoNumAdms.innerHTML = qtdAdm;
+        elementoNumAna.innerHTML = qtdAna;
     }
 
     function consultarFuncionarios() {
 
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO")
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
         fetch(`/usuarios/listarPorEmpresa/${idEmpresa}`, {
             method: "GET",
@@ -282,7 +298,6 @@
             console.log("Resposta: ", resposta);
 
             if (resposta.ok) {
-                console.log("Ok.");
                 resposta.json().then(jsonResposta => {
                     jsonResposta.forEach(elemento => {
                         adicionarFuncionario(elemento.idUsuario, elemento.nome, elemento.email, elemento.isAdm, elemento.isAtivo)
@@ -293,16 +308,85 @@
             }
         }).catch((erro) => {
             console.log(`#ERRO: ${erro}`);
+            // alerta branco
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Houve um erro ao tentar listar funcionários!",
-                color: '#fff',
-                background: '#1d1d1d',
+                color: '#1D1D1F',
+                background: '#EEE9FA',
                 confirmButtonColor: '#4E2E9E',
             });
         });
 
+    }
+
+    function ativarFuncionario(idUsuario) {
+        fetch(`/usuarios/ativar/${idUsuario}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(resposta => {
+            if (resposta.ok) {
+                Swal.fire({
+                    position: "bottom-end",
+                    icon: "success",
+                    title: "Funcionário Ativado com Sucesso!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+                consultarFuncionarios();
+            } else {
+                throw 'Falha ao ativar funcionario';
+            }
+        }).catch(err => {
+            Swal.fire({
+                    position: "bottom-end",
+                    icon: "error",
+                    title: "Falha ao Ativar funcionário!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+        })
+    }
+
+    function inativarFuncionario(idUsuario) {
+        fetch(`/usuarios/inativar/${idUsuario}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(resposta => {
+            if (resposta.ok) {
+                Swal.fire({
+                    position: "bottom-end",
+                    icon: "success",
+                    title: "Funcionário Inativado com Sucesso!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+                consultarFuncionarios();
+            } else {
+                throw 'Falha ao inativar funcionario';
+            }
+        }).catch(err => {
+            Swal.fire({
+                    position: "bottom-end",
+                    icon: "error",
+                    title: "Falha ao inativar funcionário!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+        })
     }
 
 </script>
