@@ -74,7 +74,7 @@ fkVolume INT NOT NULL,
 registro DECIMAL(12,3) NOT NULL,
 dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
-CONSTRAINT fkMaquinaCapturaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
+CONSTRAINT fkVolumeCapturaVolume FOREIGN KEY (fkVolume) REFERENCES ServGuard.Volume(idVolume),
 PRIMARY KEY (idCapturaVolume)
 );
 
@@ -115,4 +115,7 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('perdaPacotesEntrada', 'Pacotes'),
 	('perdaPacotesSaida', 'Pacotes'),
 	('descartePacotesEntrada', 'Pacotes'),
-	('descartePacotesSaida', 'Pacotes');
+	('descartePacotesSaida', 'Pacotes'),
+	('MBsRecebidos', 'MB'),
+	('MBsEnviados', 'MB');
+
