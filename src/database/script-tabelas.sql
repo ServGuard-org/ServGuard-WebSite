@@ -68,6 +68,16 @@ CONSTRAINT fkMaquinaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(
 PRIMARY KEY (idVolume)
 );
 
+CREATE TABLE IF NOT EXISTS ServGuard.CapturaVolume (
+idCapturaVolume INT NOT NULL AUTO_INCREMENT,
+fkVolume INT NOT NULL,
+registro DECIMAL(12,3) NOT NULL,
+dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+CONSTRAINT fkMaquinaCapturaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
+PRIMARY KEY (idCapturaVolume)
+);
+
 CREATE TABLE IF NOT EXISTS ServGuard.Recurso (
 idRecurso INT NOT NULL AUTO_INCREMENT,
 nome VARCHAR(45) NOT NULL,
