@@ -511,6 +511,10 @@
                     const iptEmail = document.getElementById("ipt_email_editar");
                     const editarCargo = document.getElementById("cargo_editar");  
                     
+                    editarCargo.innerHTML = "";
+                    iptEmail.value = "";
+                    iptNome.value = "";
+
                     if (resposta.isAdm == 1) {
                         editarCargo.innerHTML += `<option value="0">Analista</option>`;
                         editarCargo.innerHTML += `<option selected value="1">Administrador</option>`;
