@@ -171,11 +171,41 @@ function listarPorEmpresa(req, res) {
 
 }
 
+function consultarPorId(req, res) {
+    const idUsuario = req.params.idUsuario;
+
+    usuarioModel.consultarPorId(idUsuario)
+    .then( resposta => {
+        if (resposta.length == 1) {
+
+            res.json({
+                idUsuario: resposta[0].idUsuario,
+                email: resposta[0].email,
+                nome: resposta[0].nome,
+                senha: resposta[0].senha,
+                isAdm: resposta[0].isAdm,
+                fkEmpresa: resposta[0].idEmpresa
+            });
+        } else if (resposta.length == 0) {
+            res.status(403).send("Id Invalido");
+        } else {
+            res.status(403).send("Mais de um usuário com o mesmo id!");
+        }
+    }).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar a consulta por id! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     alterar,
     ativar,
     inativar,
-    listarPorEmpresa
+    listarPorEmpresa,
+    consultarPorId
 }

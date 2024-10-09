@@ -43,11 +43,18 @@ function listarPorEmpresa(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function consultarPorId(idUsuario) {
+    let instrucaoSql = `SELECT * FROM Usuario WHERE idUsuario = ${idUsuario}`;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     alterar,
     ativar,
     inativar,
-    listarPorEmpresa
+    listarPorEmpresa,
+    consultarPorId
 };

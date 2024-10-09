@@ -196,20 +196,20 @@
             <h3 class="bold">Altere o campo que quiser e clique em "<span
                     style="color: var(--darked-purple);">atualizar</span>"</h3>
             <div class="child-campos">
-                <select name="cargo" id="cargo" class="select-cargo">
-                    <option><b>Selecione o cargo</b></option>
+                <select name="cargo" id="cargo_editar" class="select-cargo">
+                    <option selected disabled><b>Selecione o cargo</b></option>
                 </select>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Nome Completo">
+                    <input type="text" class="input-popup" placeholder="Nome Completo" id="ipt_nome_editar">
                 </div>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="E-mail">
+                    <input type="text" class="input-popup" placeholder="E-mail" id="ipt_email_editar">
                 </div>
             </div>
             <div class="father-popup-botao">
@@ -243,7 +243,7 @@
         const acao = isAtivo ? `<button class="bold underline italic botao-acao" onclick="inativarFuncionario(${idUsuario})">Inativar</button>` : `<button class="bold underline italic botao-acao" onclick="ativarFuncionario(${idUsuario})">Ativar</button>`
 
         const novoElemento = `<div class="child-funcionario-elemento">
-                        <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
+                        <a href="#" class="child-elemento-editar" onclick="exibirEditar(), editarFuncionario(${idUsuario})">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
                         <div class="child-funcionario-elemento-infos">
@@ -291,9 +291,9 @@
                         adicionarFuncionario(elemento.idUsuario, elemento.nome, elemento.email, elemento.isAdm, elemento.isAtivo)
 
                         if (elemento.isAdm) {
-                            contAdm ++;
+                            contAdm++;
                         } else {
-                            contAna ++;
+                            contAna++;
                         }
 
                     });
@@ -307,7 +307,7 @@
                     elementoNumAdms.innerHTML = contAdm;
                     elementoNumAna.innerHTML = contAna;
                     elementoNumTotal.innerHTML = totalFunc;
-                    
+
                 })
             } else {
                 throw "Houve um erro ao tentar listar funcionários!";
@@ -491,6 +491,37 @@
                 document.getElementById("elemento_funcionario_pai").innerHTML = ""
                 consultarFuncionarios();
                 sairCadastrar();
+            }
+        })
+
+    }
+
+    function editarFuncionario(idUsuario) {
+
+        fetch(`/usuarios/consultarPorId/${idUsuario}`, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(respostaBruta => {
+            if (respostaBruta.ok) {
+
+                respostaBruta.json().then(resposta => {
+
+                    const iptNome = document.getElementById("ipt_nome_editar");
+                    const iptEmail = document.getElementById("ipt_email_editar");
+                    const editarCargo = document.getElementById("cargo_editar");  
+                    
+                    if (resposta.isAdm == 1) {
+                        editarCargo.innerHTML += `<option value="0">Analista</option>`;
+                        editarCargo.innerHTML += `<option selected value="1">Administrador</option>`;
+                    } else {
+                        editarCargo.innerHTML += `<option selected value="0">Analista</option>`
+                        editarCargo.innerHTML += `<option value="1">Administrador</option>`
+                    }
+    
+                    iptEmail.value = resposta.email;
+                    iptNome.value = resposta.nome;
+                })
             }
         })
 
