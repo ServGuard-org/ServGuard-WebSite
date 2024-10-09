@@ -230,6 +230,10 @@
     color: var(--yellow-dark);
 }
 
+.text-orange{
+    color: var(--orange-normal);
+}
+
 /* Cores para destaque de texto */
 
 .text-purple{
