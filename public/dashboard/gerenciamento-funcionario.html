@@ -538,14 +538,23 @@
 
 
                 })
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Falha ao Acessar Menu de Edição!",
+                    color: '#1D1D1F',
+                    background: '#EEE9FA',
+                    confirmButtonColor: '#4E2E9E',
+                });
             }
-        }) //FALTA O CATCH
+        }).catch(error => {
+            console.log("Erro! ", error)
+        })
+
 
     }
 
     function atualizarFuncionario() {
-
-        alert(idUsuarioEditar)
 
         const iptNome = document.getElementById("ipt_nome_editar");
         const iptEmail = document.getElementById("ipt_email_editar");
@@ -581,8 +590,18 @@
                     confirmButtonColor: '#4E2E9E',
                 });
                 sairEditar();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Falha ao Alterar Dados!",
+                    color: '#1D1D1F',
+                    background: '#EEE9FA',
+                    confirmButtonColor: '#4E2E9E',
+                });
             }
-        }) //FALTA O CATCH
+        }).catch(error => {
+            console.log("Erro! ", error)
+        })
 
     }
 
