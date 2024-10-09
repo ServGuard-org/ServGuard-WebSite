@@ -49,6 +49,7 @@ function cadastrar(req, res) {
     var senha = req.body.senhaServer;
     var isAdm = req.body.tipoUsuarioServer;
     var cnpj = req.body.cnpjServer;
+    var idEmpresa = req.body.idEmpresaServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -57,12 +58,10 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (cnpj == undefined) {
-        res.status(400).send("Seu cnpj está undefined!");
     } else {
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
         console.log("Chamando o método da model")
-        usuarioModel.cadastrar(nome, email, senha, isAdm, cnpj)
+        usuarioModel.cadastrar(nome, email, senha, isAdm, cnpj, idEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -172,11 +171,41 @@ function listarPorEmpresa(req, res) {
 
 }
 
+function consultarPorId(req, res) {
+    const idUsuario = req.params.idUsuario;
+
+    usuarioModel.consultarPorId(idUsuario)
+    .then( resposta => {
+        if (resposta.length == 1) {
+
+            res.json({
+                idUsuario: resposta[0].idUsuario,
+                email: resposta[0].email,
+                nome: resposta[0].nome,
+                senha: resposta[0].senha,
+                isAdm: resposta[0].isAdm,
+                fkEmpresa: resposta[0].idEmpresa
+            });
+        } else if (resposta.length == 0) {
+            res.status(403).send("Id Invalido");
+        } else {
+            res.status(403).send("Mais de um usuário com o mesmo id!");
+        }
+    }).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar a consulta por id! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     alterar,
     ativar,
     inativar,
-    listarPorEmpresa
+    listarPorEmpresa,
+    consultarPorId
 }

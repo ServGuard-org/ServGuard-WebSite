@@ -7,14 +7,13 @@ function autenticar(email, senha) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
-
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
-function cadastrar(nome, email, senha, isAdm, cnpj) {
-    
+function cadastrar(nome, email, senha, isAdm, cnpj, idEmpresa) {
+    const condicao = cnpj ? `cnpj = ${cnpj}` : `idEmpresa = ${idEmpresa}`;
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO usuario (idUsuario, fkEmpresa, nome, email, senha, isAdm) VALUES (DEFAULT, (SELECT idEmpresa FROM empresa WHERE cnpj = ${cnpj}), '${nome}', '${email}', '${senha}', ${isAdm});
+        INSERT INTO usuario (idUsuario, fkEmpresa, nome, email, senha, isAdm) VALUES (DEFAULT, (SELECT idEmpresa FROM empresa WHERE ${condicao}), '${nome}', '${email}', '${senha}', ${isAdm});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -44,11 +43,18 @@ function listarPorEmpresa(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function consultarPorId(idUsuario) {
+    let instrucaoSql = `SELECT * FROM Usuario WHERE idUsuario = ${idUsuario}`;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     alterar,
     ativar,
     inativar,
-    listarPorEmpresa
+    listarPorEmpresa,
+    consultarPorId
 };

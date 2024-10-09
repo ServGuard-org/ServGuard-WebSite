@@ -269,30 +269,50 @@
 
       switch (escalaInstabilidade) {
         case 0:
+
           // verde
+          elementoInstabilidade.classList.remove('text-green', 'text-red', 'text-orange', 'text-yellow', 'text-gray');
+          elementoInstabilidade.classList.add('text-green');
           elementoInstabilidade.innerHTML = escalaInstabilidade;
+
           break;
         case 1:
+
           // amarelo
+          elementoInstabilidade.classList.remove('text-green', 'text-red', 'text-orange', 'text-yellow', 'text-gray');
+          elementoInstabilidade.classList.add('text-yellow');
           elementoInstabilidade.innerHTML = escalaInstabilidade;
+          
           break;
         case 2:
+
           // laranja
+          elementoInstabilidade.classList.remove('text-green', 'text-red', 'text-orange', 'text-yellow', 'text-gray');
+          elementoInstabilidade.classList.add('text-orange');
           elementoInstabilidade.innerHTML = escalaInstabilidade;
+
           break;
         case 3:
+
           // vermelho
+          elementoInstabilidade.classList.remove('text-green', 'text-red', 'text-orange', 'text-yellow', 'text-gray');
+          elementoInstabilidade.classList.add('text-red');
           elementoInstabilidade.innerHTML = escalaInstabilidade;
+
           break;
         default:
+
           // sem cor (teoricamente aqui é impossível)
+          elementoInstabilidade.classList.remove('text-green', 'text-red', 'text-orange', 'text-yellow', 'text-gray');
+          elementoInstabilidade.classList.add('text-gray');
           elementoInstabilidade.innerHTML = escalaInstabilidade;
+
           break;
       }
     }
 
     function obterEscalaInstabilidade() {
-      return 0;
+      return 2;
     }
 
     function obterNomeEmpresa() {
