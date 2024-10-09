@@ -139,31 +139,33 @@
             <h3 class="bold">Complete os campos:</h3>
             <div class="child-campos">
                 <select name="cargo" id="cargo" class="select-cargo">
-                    <option><b>Selecione o cargo</b></option>
+                    <option selected disabled value="#"><b>Selecione o cargo</b></option>
+                    <option value="0">Analista</option>
+                    <option value="1">Administrador</option>
                 </select>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Nome Completo">
+                    <input type="text" class="input-popup" placeholder="Nome Completo" id="ipt_nome">
                 </div>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="E-mail">
+                    <input type="text" class="input-popup" placeholder="E-mail" id="ipt_email">
                 </div>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Senha">
+                    <input type="text" class="input-popup" placeholder="Senha" id="ipt_senha">
                 </div>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Confirmar senha">
+                    <input type="text" class="input-popup" placeholder="Confirmar senha" id="ipt_confirmar_senha">
                 </div>
                 <div class="checkbox-wrapper">
                     <input id="terms-checkbox-37" name="checkbox" type="checkbox">
@@ -181,7 +183,7 @@
                 </div>
             </div>
             <div class="father-popup-botao">
-                <button class="botao-cadastrar-executar" onclick="Cadastrar()"><b>Cadastrar</b></button>
+                <button class="botao-cadastrar-executar" onclick="cadastrar()"><b>Cadastrar</b></button>
                 <p onclick="sairCadastrar()" class="botao-cadastrar-cancelar italic underline bold">Cancelar
                 </p>
             </div>
@@ -232,27 +234,11 @@
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
-    var qtdAna = 0;
-    var qtdAdm = 0;
     function adicionarFuncionario(idUsuario, nome, email, isAdm, isAtivo) {
-        
-        const elementoPai = document.getElementById("elemento_funcionario_pai")
-        
-        const elementoNumAdms = document.getElementById("num_adms");
-        
-        const elementoNumAna = document.getElementById("num_ana");
-        
-        const elementoNumTotal = document.getElementById("num_total");
-        
-        elementoNumAdms.innerHTML = ""
-        elementoNumAna.innerHTML = ""
-        elementoNumTotal.innerHTML = ""
-        elementoPai.innerHTML = ""
-        
+
+        const elementoPai = document.getElementById("elemento_funcionario_pai");
+
         const cargo = isAdm ? "Administrador" : "Analista";
-        
-        isAdm ? qtdAdm ++ : qtdAna ++;
-        let totalFuncionarios = qtdAdm + qtdAna;
 
         const acao = isAtivo ? `<button class="bold underline italic botao-acao" onclick="inativarFuncionario(${idUsuario})">Inativar</button>` : `<button class="bold underline italic botao-acao" onclick="ativarFuncionario(${idUsuario})">Ativar</button>`
 
@@ -280,9 +266,6 @@
                     </div>`;
 
         elementoPai.innerHTML += novoElemento;
-        elementoNumTotal.innerHTML = totalFuncionarios;
-        elementoNumAdms.innerHTML = qtdAdm;
-        elementoNumAna.innerHTML = qtdAna;
     }
 
     function consultarFuncionarios() {
@@ -299,9 +282,32 @@
 
             if (resposta.ok) {
                 resposta.json().then(jsonResposta => {
+
+                    let contAdm = 0;
+                    let contAna = 0;
+                    let totalFunc = 0;
+
                     jsonResposta.forEach(elemento => {
                         adicionarFuncionario(elemento.idUsuario, elemento.nome, elemento.email, elemento.isAdm, elemento.isAtivo)
+
+                        if (elemento.isAdm) {
+                            contAdm ++;
+                        } else {
+                            contAna ++;
+                        }
+
                     });
+
+                    const elementoNumAdms = document.getElementById("num_adms");
+                    const elementoNumAna = document.getElementById("num_ana");
+                    const elementoNumTotal = document.getElementById("num_total");
+
+                    totalFunc = contAdm + contAna;
+
+                    elementoNumAdms.innerHTML = contAdm;
+                    elementoNumAna.innerHTML = contAna;
+                    elementoNumTotal.innerHTML = totalFunc;
+                    
                 })
             } else {
                 throw "Houve um erro ao tentar listar funcionários!";
@@ -332,26 +338,27 @@
                 Swal.fire({
                     position: "bottom-end",
                     icon: "success",
-                    title: "Funcionário Ativado com Sucesso!",
+                    title: `Funcionário de id: ${idUsuario} Ativado com Sucesso!`,
                     showConfirmButton: false,
                     timer: 1100,
                     backdrop: false,
                     background: '#EEE9FA'
                 });
+                document.getElementById("elemento_funcionario_pai").innerHTML = ""
                 consultarFuncionarios();
             } else {
                 throw 'Falha ao ativar funcionario';
             }
         }).catch(err => {
             Swal.fire({
-                    position: "bottom-end",
-                    icon: "error",
-                    title: "Falha ao Ativar funcionário!",
-                    showConfirmButton: false,
-                    timer: 1100,
-                    backdrop: false,
-                    background: '#EEE9FA'
-                });
+                position: "bottom-end",
+                icon: "error",
+                title: `Falha ao Ativar funcionário de id: ${idUsuario}!`,
+                showConfirmButton: false,
+                timer: 1100,
+                backdrop: false,
+                background: '#EEE9FA'
+            });
         })
     }
 
@@ -366,27 +373,127 @@
                 Swal.fire({
                     position: "bottom-end",
                     icon: "success",
-                    title: "Funcionário Inativado com Sucesso!",
+                    title: `Funcionário de id: ${idUsuario} Inativado com Sucesso!`,
                     showConfirmButton: false,
                     timer: 1100,
                     backdrop: false,
                     background: '#EEE9FA'
                 });
+                document.getElementById("elemento_funcionario_pai").innerHTML = ""
                 consultarFuncionarios();
             } else {
                 throw 'Falha ao inativar funcionario';
             }
         }).catch(err => {
             Swal.fire({
-                    position: "bottom-end",
-                    icon: "error",
-                    title: "Falha ao inativar funcionário!",
-                    showConfirmButton: false,
-                    timer: 1100,
-                    backdrop: false,
-                    background: '#EEE9FA'
-                });
+                position: "bottom-end",
+                icon: "error",
+                title: `Falha ao inativar funcionário de id: ${idUsuario}!`,
+                showConfirmButton: false,
+                timer: 1100,
+                backdrop: false,
+                background: '#EEE9FA'
+            });
         })
+    }
+
+    function cadastrar() {
+        const checkConfirma = document.getElementById("terms-checkbox-37").checked;
+
+        if (checkConfirma) {
+            const senha = document.getElementById("ipt_senha").value;
+            const confirmarSenha = document.getElementById("ipt_confirmar_senha").value;
+            if (senha == confirmarSenha) {
+                const nome = document.getElementById("ipt_nome").value;
+                const email = document.getElementById("ipt_email").value;
+                const cargo = document.getElementById("cargo").value;
+
+                if (cargo != '#') {
+
+                    const isAdm = Number(cargo);
+
+                    if (nome && email) {
+
+                        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO")
+
+                        cadastrarUsuario(nome, email, senha, isAdm, idEmpresa)
+
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Campos Faltantes",
+                            text: "Verifique se todos os campos estão preenchidos",
+                            color: '#1D1D1F',
+                            background: '#EEE9FA',
+                            confirmButtonColor: '#4E2E9E',
+                        });
+                    }
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Cargo Não selecionado",
+                        text: "Selecione um cargo para o novo usuário",
+                        color: '#1D1D1F',
+                        background: '#EEE9FA',
+                        confirmButtonColor: '#4E2E9E',
+                    });
+                }
+
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Senhas Diferentes",
+                    text: "Verifique se os campos contém a mesma senha",
+                    color: '#1D1D1F',
+                    background: '#EEE9FA',
+                    confirmButtonColor: '#4E2E9E',
+                });
+            }
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: "Verifique a Caixa de Marcação",
+                color: '#1D1D1F',
+                background: '#EEE9FA',
+                confirmButtonColor: '#4E2E9E',
+            });
+        }
+
+    }
+
+    function cadastrarUsuario(nome, email, senha, isAdm, idEmpresa) {
+
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                tipoUsuarioServer: isAdm,
+                nomeServer: nome,
+                emailServer: email,
+                senhaServer: senha,
+                cnpjServer: undefined,
+                idEmpresaServer: idEmpresa
+            }),
+        }).then(resposta => {
+            console.log("Resposta: ", resposta);
+
+            if (resposta.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Cadastro Realizado com Sucesso!",
+                    color: '#1D1D1F',
+                    background: '#EEE9FA',
+                });
+                document.getElementById("elemento_funcionario_pai").innerHTML = ""
+                consultarFuncionarios();
+                sairCadastrar();
+            }
+        })
+
     }
 
 </script>
