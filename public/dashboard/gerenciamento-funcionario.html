@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServGuard | Ger. Funcionário</title>
     <link rel="stylesheet" href="../css/main.css">
+
+    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
-<body>
+<body onload="consultarFuncionarios()">
     <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-gerenciamento-funcionario">
         <header>
@@ -59,13 +63,13 @@
             <!--queria deixar os textos aqui em italic+bold-->
             <div class="father-funcionario-card">
                 <div class="child-funcionario-card">
-                    <p class="bold italic">Total: X</p>
+                    <p class="bold italic">Total: <span id="num_total">X</span></p>
                 </div>
                 <div class="child-funcionario-card">
-                    <p class="bold italic">Analísta: X</p>
+                    <p class="bold italic">Analista: <span id="num_ana">X</span></p>
                 </div>
                 <div class="child-funcionario-card" style="background-color: var(--darked-purple);">
-                    <p class="bold text-white italic">ADM: X</p>
+                    <p class="bold text-white italic">ADM: <span id="num_adms">X</span></p>
                 </div>
             </div>
             <div class="father-funcionario-lista">
@@ -92,9 +96,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="child-funcionario-father-elemento">
+                <div class="child-funcionario-father-elemento" id="elemento_funcionario_pai">
                     <!-- INICIO ELEMENTO -->
-                    <div class="child-funcionario-elemento">
+                    <!-- <div class="child-funcionario-elemento">
                         <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
@@ -109,16 +113,15 @@
                                 <p>claudio.alvez@gmail.com</p>
                             </div>
                             <div class="child-funcionario-elemento-info-area-cargo">
-                                <p>Analísta</p>
+                                <p>Analista</p>
                             </div>
                             <div class="child-funcionario-elemento-info-area-acao">
                                 <button class="bold underline italic botao-acao">Ativar</button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- FIM ELEMENTO -->
-                     
-                </div> 
+                </div>
             </div>
             <div class="father-funcionario-botao">
                 <button class="botao-cadastrar-funcionario" onclick="exibirCadastrar()"><b>Cadastrar</b></button>
@@ -165,16 +168,17 @@
                 <div class="checkbox-wrapper">
                     <input id="terms-checkbox-37" name="checkbox" type="checkbox">
                     <label class="terms-label" for="terms-checkbox-37">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" class="checkbox-svg">
-                        <mask fill="white" id="path-1-inside-1_476_5-37">
-                          <rect height="200" width="200"></rect>
-                        </mask>
-                        <rect mask="url(#path-1-inside-1_476_5-37)" stroke-width="40" class="checkbox-box" height="200" width="200"></rect>
-                        <path stroke-width="15" d="M52 111.018L76.9867 136L149 64" class="checkbox-tick"></path>
-                      </svg>
-                      <span class="label-text">Tem certeza que deseja cadastrar este usuário?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 200 200" class="checkbox-svg">
+                            <mask fill="white" id="path-1-inside-1_476_5-37">
+                                <rect height="200" width="200"></rect>
+                            </mask>
+                            <rect mask="url(#path-1-inside-1_476_5-37)" stroke-width="40" class="checkbox-box"
+                                height="200" width="200"></rect>
+                            <path stroke-width="15" d="M52 111.018L76.9867 136L149 64" class="checkbox-tick"></path>
+                        </svg>
+                        <span class="label-text">Tem certeza que deseja cadastrar este usuário?</span>
                     </label>
-                  </div>     
+                </div>
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar" onclick="Cadastrar()"><b>Cadastrar</b></button>
@@ -187,7 +191,8 @@
     <!-- ----- POPUP DE EDITAR FUNCIONARIO ----- -->
     <section class="sessao-popup" id="popupEditar" style="display: none;">
         <div class="father-editar-funcionario">
-            <h3 class="bold">Altere o campo que quiser e clique em "<span style="color: var(--darked-purple);">atualizar</span>"</h3>
+            <h3 class="bold">Altere o campo que quiser e clique em "<span
+                    style="color: var(--darked-purple);">atualizar</span>"</h3>
             <div class="child-campos">
                 <select name="cargo" id="cargo" class="select-cargo">
                     <option><b>Selecione o cargo</b></option>
@@ -203,7 +208,7 @@
                         <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
                     </a>
                     <input type="text" class="input-popup" placeholder="E-mail">
-                </div>   
+                </div>
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar" onclick="Atualizar()"><b>Atualizar</b></button>
@@ -226,6 +231,164 @@
     function sairEditar() {
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
+
+    var qtdAna = 0;
+    var qtdAdm = 0;
+    function adicionarFuncionario(idUsuario, nome, email, isAdm, isAtivo) {
+        
+        const elementoPai = document.getElementById("elemento_funcionario_pai")
+        
+        const elementoNumAdms = document.getElementById("num_adms");
+        
+        const elementoNumAna = document.getElementById("num_ana");
+        
+        const elementoNumTotal = document.getElementById("num_total");
+        
+        elementoNumAdms.innerHTML = ""
+        elementoNumAna.innerHTML = ""
+        elementoNumTotal.innerHTML = ""
+        elementoPai.innerHTML = ""
+        
+        const cargo = isAdm ? "Administrador" : "Analista";
+        
+        isAdm ? qtdAdm ++ : qtdAna ++;
+        let totalFuncionarios = qtdAdm + qtdAna;
+
+        const acao = isAtivo ? `<button class="bold underline italic botao-acao" onclick="inativarFuncionario(${idUsuario})">Inativar</button>` : `<button class="bold underline italic botao-acao" onclick="ativarFuncionario(${idUsuario})">Ativar</button>`
+
+        const novoElemento = `<div class="child-funcionario-elemento">
+                        <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
+                            <img src="../assets/svg/edit.svg" alt="#icone-">
+                        </a>
+                        <div class="child-funcionario-elemento-infos">
+                            <div class="child-funcionario-elemento-info-area-id">
+                                <p>${idUsuario}</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-nome">
+                                <p>${nome}</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-email">
+                                <p>${email}</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-cargo">
+                                <p>${cargo}</p>
+                            </div>
+                            <div class="child-funcionario-elemento-info-area-acao">
+                                ${acao}
+                            </div>
+                        </div>
+                    </div>`;
+
+        elementoPai.innerHTML += novoElemento;
+        elementoNumTotal.innerHTML = totalFuncionarios;
+        elementoNumAdms.innerHTML = qtdAdm;
+        elementoNumAna.innerHTML = qtdAna;
+    }
+
+    function consultarFuncionarios() {
+
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/usuarios/listarPorEmpresa/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then((resposta) => {
+            console.log("Resposta: ", resposta);
+
+            if (resposta.ok) {
+                resposta.json().then(jsonResposta => {
+                    jsonResposta.forEach(elemento => {
+                        adicionarFuncionario(elemento.idUsuario, elemento.nome, elemento.email, elemento.isAdm, elemento.isAtivo)
+                    });
+                })
+            } else {
+                throw "Houve um erro ao tentar listar funcionários!";
+            }
+        }).catch((erro) => {
+            console.log(`#ERRO: ${erro}`);
+            // alerta branco
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Houve um erro ao tentar listar funcionários!",
+                color: '#1D1D1F',
+                background: '#EEE9FA',
+                confirmButtonColor: '#4E2E9E',
+            });
+        });
+
+    }
+
+    function ativarFuncionario(idUsuario) {
+        fetch(`/usuarios/ativar/${idUsuario}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(resposta => {
+            if (resposta.ok) {
+                Swal.fire({
+                    position: "bottom-end",
+                    icon: "success",
+                    title: "Funcionário Ativado com Sucesso!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+                consultarFuncionarios();
+            } else {
+                throw 'Falha ao ativar funcionario';
+            }
+        }).catch(err => {
+            Swal.fire({
+                    position: "bottom-end",
+                    icon: "error",
+                    title: "Falha ao Ativar funcionário!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+        })
+    }
+
+    function inativarFuncionario(idUsuario) {
+        fetch(`/usuarios/inativar/${idUsuario}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(resposta => {
+            if (resposta.ok) {
+                Swal.fire({
+                    position: "bottom-end",
+                    icon: "success",
+                    title: "Funcionário Inativado com Sucesso!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+                consultarFuncionarios();
+            } else {
+                throw 'Falha ao inativar funcionario';
+            }
+        }).catch(err => {
+            Swal.fire({
+                    position: "bottom-end",
+                    icon: "error",
+                    title: "Falha ao inativar funcionário!",
+                    showConfirmButton: false,
+                    timer: 1100,
+                    backdrop: false,
+                    background: '#EEE9FA'
+                });
+        })
+    }
+
 </script>
 
 </html>

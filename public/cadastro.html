@@ -170,7 +170,14 @@
             window.location.href = "./login.html";
           });
         } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+          Swal.fire({
+            icon: "error",
+          title: "Oops...",
+          color: '#fff',
+          text: "Houve um erro ao tentar realizar o cadastro, verifique o CNPJ!",
+          background: '#1d1d1d',
+          confirmButtonColor: '#4E2E9E',
+          });
         }
       })
       .catch(function (resposta) {

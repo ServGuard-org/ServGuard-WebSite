@@ -104,13 +104,13 @@
             <div class="card-irregular">
               <h3 class="center italic">Irregularidades:</h3>
               <h4 class="bold center">
-                CPU: <span class="text-yellow">1</span>
+                CPU: <span class="text-yellow" id="irr_cpu">indefinido</span>
               </h4>
               <h4 class="bold center">
-                RAM: <span class="text-green">0</span>
+                RAM: <span class="text-green" id="irr_ram">indefinido</span>
               </h4>
               <h4 class="bold center">
-                Disco: <span class="text-red">2</span>
+                Disco: <span class="text-red" id="irr_disco">indefinido</span>
               </h4>
             </div>
             <div class="card-rede-conect">
@@ -206,7 +206,7 @@
     );
 
     function carregarPagina() {
-      isAtivoBACEN()
+      isAtivoBACEN('https://jsonplaceholder.typicode.com/todos/1')
 
       const data = obterData()
       let escalaInstabilidade = obterEscalaInstabilidade();
@@ -214,7 +214,9 @@
       let nomeUsuario = obterNomeUsuario();
       let totalMaquinas = obterTotalMaquinas();
       let maquinasFuncionamento = obterMaquinasFuncionamento();
-
+      let irregularidadesCPU = obterIrrCPU();
+      let irregularidadesRAM = obterIrrRAM();
+      let irregularidadesDisco = obterIrrDisco();
       
       const elementoInstabilidade = document.getElementById(
         "escala-instabilidade"
@@ -244,6 +246,21 @@
         "funcionamento_maquinas"
       )
 
+      const elementoIrrCPU = document.getElementById(
+        "irr_cpu"
+      )
+
+      const elementoIrrRAM = document.getElementById(
+        "irr_ram"
+      )
+
+      const elementoIrrDisco = document.getElementById(
+        "irr_disco"
+      )
+
+      elementoIrrCPU.innerHTML = irregularidadesCPU;
+      elementoIrrRAM.innerHTML = irregularidadesRAM;
+      elementoIrrDisco.innerHTML = irregularidadesDisco;
       elementoMaquinasFuncionamento.innerHTML = maquinasFuncionamento;
       elementoTotalMaquinas.innerHTML = totalMaquinas;
       elementoNomeUsuario.innerHTML = nomeUsuario;
@@ -290,6 +307,18 @@
       return 40;
     }
 
+    function obterIrrCPU() {
+      return 1;
+    }
+
+    function obterIrrRAM() {
+      return 0;
+    }
+
+    function obterIrrDisco() {
+      return 2;
+    }
+
     function obterNomeUsuario() {
       let nomeUsuario = sessionStorage.getItem('NOME_USUARIO');
 
@@ -301,19 +330,15 @@
     }
 
     // revisar
-    function isAtivoBACEN() {
-        fetch('https://www.bcb.gov.br/').then((resposta) => {
-          if (resposta.status >= 200 && resposta.status < 300) {  // Verifica se o status está entre 200 e 299 (família do OK)
-          // verde
-        elemento_servico.innerHTML = "Ativo";
-        } else {
-          // vermelho
-          elemento_servico.innerHTML = "Inativo";
-        }
+    function isAtivoBACEN(url) {
+        fetch(`/externos/check/${url}`)
+        .then((resposta) => {
+          elemento_servico.innerHTML = resposta.json.status
         })
       .catch( (error) => {
         // vermelho
-        elemento_servico.innerHTML = error;
+        console.log(error)
+        elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
       });
 
     }

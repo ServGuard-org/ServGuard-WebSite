@@ -20,7 +20,7 @@ router.get("/ativar/:idUsuario", function (req, res) {
     usuarioController.ativar(req, res);
 });
 
-router.get("/inativar/idUsuario", function (req, res) {
+router.get("/inativar/:idUsuario", function (req, res) {
     usuarioController.inativar(req, res);
 });
 
