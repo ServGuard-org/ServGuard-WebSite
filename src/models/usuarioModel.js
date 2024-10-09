@@ -21,7 +21,7 @@ function cadastrar(nome, email, senha, isAdm, cnpj, idEmpresa) {
 
 function alterar(nome, email, isAdm, idUsuario) {
     let instrucaoSql = `UPDATE usuario SET nome = '${nome}', email = '${email}', isAdm = ${isAdm} WHERE idUsuario = ${idUsuario};`;
-
+    console.log(`executando: ${instrucaoSql}`)
     return database.executar(instrucaoSql);
 }
 

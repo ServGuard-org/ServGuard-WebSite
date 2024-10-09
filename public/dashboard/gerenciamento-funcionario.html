@@ -213,7 +213,7 @@
                 </div>
             </div>
             <div class="father-popup-botao">
-                <button class="botao-cadastrar-executar" onclick="Atualizar()"><b>Atualizar</b></button>
+                <button class="botao-cadastrar-executar" onclick="atualizarFuncionario()"><b>Atualizar</b></button>
                 <p onclick="sairEditar()" class="botao-cadastrar-cancelar italic underline bold">Sair</p>
             </div>
         </div>
@@ -231,6 +231,12 @@
         document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
     }
     function sairEditar() {
+        const iptNome = document.getElementById("ipt_nome_editar");
+        const iptEmail = document.getElementById("ipt_email_editar");
+        const editarCargo = document.getElementById("cargo_editar");
+        editarCargo.innerHTML = "";
+        iptEmail.value = "";
+        iptNome.value = "";
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
@@ -496,7 +502,11 @@
 
     }
 
+    var idUsuarioEditar;
+
     function editarFuncionario(idUsuario) {
+
+        idUsuarioEditar = idUsuario;
 
         fetch(`/usuarios/consultarPorId/${idUsuario}`, {
             headers: {
@@ -509,8 +519,8 @@
 
                     const iptNome = document.getElementById("ipt_nome_editar");
                     const iptEmail = document.getElementById("ipt_email_editar");
-                    const editarCargo = document.getElementById("cargo_editar");  
-                    
+                    const editarCargo = document.getElementById("cargo_editar");
+
                     editarCargo.innerHTML = "";
                     iptEmail.value = "";
                     iptNome.value = "";
@@ -522,12 +532,57 @@
                         editarCargo.innerHTML += `<option selected value="0">Analista</option>`
                         editarCargo.innerHTML += `<option value="1">Administrador</option>`
                     }
-    
+
                     iptEmail.value = resposta.email;
                     iptNome.value = resposta.nome;
+
+
                 })
             }
-        })
+        }) //FALTA O CATCH
+
+    }
+
+    function atualizarFuncionario() {
+
+        alert(idUsuarioEditar)
+
+        const iptNome = document.getElementById("ipt_nome_editar");
+        const iptEmail = document.getElementById("ipt_email_editar");
+        const editarCargo = document.getElementById("cargo_editar");
+
+        const nome = iptNome.value;
+        const email = iptEmail.value;
+        const cargo = editarCargo.value;
+
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch("/usuarios/alterar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nome: nome,
+                email: email,
+                isAdm: cargo,
+                idUsuario: idUsuarioEditar,
+            })
+        }).then(resposta => {
+
+            if (resposta.ok) {
+                document.getElementById("elemento_funcionario_pai").innerHTML = ""
+                consultarFuncionarios();
+                Swal.fire({
+                    icon: "success",
+                    title: "Dados Alterados Com Sucesso!",
+                    color: '#1D1D1F',
+                    background: '#EEE9FA',
+                    confirmButtonColor: '#4E2E9E',
+                });
+                sairEditar();
+            }
+        }) //FALTA O CATCH
 
     }
 

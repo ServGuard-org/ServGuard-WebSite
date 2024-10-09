@@ -84,7 +84,7 @@ function alterar(req, res) {
     let nome = req.body.nome;
     let email = req.body.email;
     let isAdm = req.body.isAdm;
-    let idUsuario = req.body.isAdm;
+    let idUsuario = req.body.idUsuario;
 
     usuarioModel.alterar(nome, email, isAdm, idUsuario)
     .then(
