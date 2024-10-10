@@ -44,9 +44,9 @@
             </li>
           </ul>
         </div>
-        <a href="#" class="navbar-exit-dash-adm">
-          <img src="../assets/svg/exit-icon.svg" alt="" />
-        </a>
+        <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+          <img src="../assets/svg/exit-icon.svg" alt="">
+      </a>
       </div>
     </header>
     <main>
@@ -142,6 +142,12 @@
     </main>
   </section>
   <script>
+    function sairNavbar() {
+      event.preventDefault();
+      sessionStorage.clear();
+      window.location.href = "../index.html";
+    }
+
     function DashboardAnalista() {
       window.location.href = "dashboard-analista.html";
     }
@@ -217,27 +223,27 @@
       let irregularidadesCPU = obterIrrCPU();
       let irregularidadesRAM = obterIrrRAM();
       let irregularidadesDisco = obterIrrDisco();
-      
+
       const elementoInstabilidade = document.getElementById(
         "escala-instabilidade"
       );
-      
+
       const elementoData = document.getElementById(
         "data_tempo_real"
       );
-      
+
       const elementoEmpresa = document.getElementById(
         "empresa_usuario"
       )
-      
+
       const elementoNomeUsuario = document.getElementById(
         "nome_usuario"
       )
-      
+
       const elementoServico = document.getElementById(
         "elemento_servico"
       )
-      
+
       const elementoTotalMaquinas = document.getElementById(
         "total_maquinas"
       )
@@ -282,7 +288,7 @@
           elementoInstabilidade.classList.remove('text-green', 'text-red', 'text-orange', 'text-yellow', 'text-gray');
           elementoInstabilidade.classList.add('text-yellow');
           elementoInstabilidade.innerHTML = escalaInstabilidade;
-          
+
           break;
         case 2:
 
@@ -323,7 +329,7 @@
       return 62;
     }
 
-    function obterMaquinasFuncionamento () {
+    function obterMaquinasFuncionamento() {
       return 40;
     }
 
@@ -351,15 +357,15 @@
 
     // revisar
     function isAtivoBACEN(url) {
-        fetch(`/externos/check/${url}`)
+      fetch(`/externos/check/${url}`)
         .then((resposta) => {
           elemento_servico.innerHTML = resposta.json.status
         })
-      .catch( (error) => {
-        // vermelho
-        console.log(error)
-        elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
-      });
+        .catch((error) => {
+          // vermelho
+          console.log(error)
+          elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
+        });
 
     }
 

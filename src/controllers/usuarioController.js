@@ -106,7 +106,7 @@ function alterar(req, res) {
 
 function ativar(req, res) {
     idUsuario = req.params.idUsuario;
-
+ 
     usuarioModel.ativar(idUsuario)
     .then(
         function (resultado) {

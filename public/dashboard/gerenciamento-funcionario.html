@@ -50,7 +50,7 @@
                     </ul>
                 </div>
 
-                <a href="#" class="navbar-exit-dash-adm">
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
                     <img src="../assets/svg/exit-icon.svg" alt="">
                 </a>
             </div>
@@ -221,6 +221,12 @@
 
 </body>
 <script>
+    function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../index.html";
+    }
+
     function exibirCadastrar() {
         document.getElementById('popupCadastrar').style.display = 'flex'; // Exibe o popup corretamente
     }
@@ -585,6 +591,7 @@
                 Swal.fire({
                     icon: "success",
                     title: "Dados Alterados Com Sucesso!",
+                    text: `Id de funcionário editado: ${idUsuarioEditar}`,
                     color: '#1D1D1F',
                     background: '#EEE9FA',
                     confirmButtonColor: '#4E2E9E',
@@ -594,6 +601,7 @@
                 Swal.fire({
                     icon: "error",
                     title: "Falha ao Alterar Dados!",
+                    text: `Id de funcionário editado: ${idUsuarioEditar}`,
                     color: '#1D1D1F',
                     background: '#EEE9FA',
                     confirmButtonColor: '#4E2E9E',

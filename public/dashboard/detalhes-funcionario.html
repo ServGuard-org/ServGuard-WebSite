@@ -46,7 +46,7 @@
                     </ul>
                 </div>
 
-                <a href="#" class="navbar-exit-dash-adm">
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
                     <img src="../assets/svg/exit-icon.svg" alt="">
                 </a>
             </div>
@@ -79,7 +79,8 @@
     <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
     <section class="sessao-popup" id="popupEditar" style="display: none;">
         <div class="father-detalhes-funcionario">
-            <h3 class="bold">Altere o campo que quiser alterar e clique em “<span style="color: var(--darked-purple);">atualizar</span>”</h3>
+            <h3 class="bold">Altere o campo que quiser alterar e clique em “<span
+                    style="color: var(--darked-purple);">atualizar</span>”</h3>
             <div class="child-campos">
                 <div class="child-input">
                     <a class="icone-input">
@@ -104,7 +105,7 @@
                         <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
                     </a>
                     <input type="text" class="input-popup" placeholder="Confirmar senha">
-                </div>    
+                </div>
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar" onclick="Atualizar()"><b>Atualizar</b></button>
@@ -117,7 +118,13 @@
 
 </body>
 <script>
-function exibirEditar() {
+    function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../index.html";
+    }
+
+    function exibirEditar() {
         document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
     }
     function sairEditar() {

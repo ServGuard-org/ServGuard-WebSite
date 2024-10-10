@@ -46,7 +46,7 @@
                     </ul>
                 </div>
 
-                <a href="#" class="navbar-exit-dash-adm">
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
                     <img src="../assets/svg/exit-icon.svg" alt="">
                 </a>
             </div>
@@ -103,14 +103,16 @@
                                 <p>500Gb de 1000Gb</p>
                             </div>
                             <div class="child-maquina-elemento-info-area-acao">
-                                <button class="bold underline italic botao-acao" onclick="DetalhesMaquina()">Detalhes</button>
+                                <button class="bold underline italic botao-acao"
+                                    onclick="DetalhesMaquina()">Detalhes</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="father-maquina-botao">
-                <select name="ordenar" id="ordenar" class="select-filtro-maquina" style="background-color: var(--darked-purple); color: white;">
+                <select name="ordenar" id="ordenar" class="select-filtro-maquina"
+                    style="background-color: var(--darked-purple); color: white;">
                     <option><b>Ordenar por</b></option>
                 </select>
 
@@ -118,11 +120,12 @@
         </main>
     </section>
     <!-- ----- FIM - TELA PRINCIPAL ----- -->
-    
+
     <!-- ----- POPUP DE EDITAR MAQUINA ----- -->
     <section class="sessao-popup" id="popupEditar" style="display: none;">
         <div class="father-editar-maquina">
-            <h3 class="bold">Altere o campo que quiser e clique em "<span style="color: var(--darked-purple);">atualizar</span>"</h3>
+            <h3 class="bold">Altere o campo que quiser e clique em "<span
+                    style="color: var(--darked-purple);">atualizar</span>"</h3>
             <div class="child-campos">
                 <div class="child-input">
                     <a class="icone-input">
@@ -165,6 +168,12 @@
 
 </body>
 <script>
+    function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../index.html";
+    }
+
     function DetalhesMaquina() {
         window.location.href = "details-machine.html";
     }

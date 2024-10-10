@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>ServGuard | Máquina</title>
 </head>
+
 <body>
     <section id="page-details-machine">
         <header>
@@ -43,7 +45,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="navbar-exit-dash-adm">
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
                     <img src="../assets/svg/exit-icon.svg" alt="">
                 </a>
             </div>
@@ -143,6 +145,12 @@
     </section>
 
     <script>
+        function sairNavbar() {
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.href = "../index.html";
+        }
+
         const data = {
             labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
             datasets: [{
@@ -191,4 +199,5 @@
     </script>
 
 </body>
+
 </html>

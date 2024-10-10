@@ -44,7 +44,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="navbar-exit-dash-adm">
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
                     <img src="../assets/svg/exit-icon.svg" alt="">
                 </a>
             </div>
@@ -124,13 +124,19 @@
                     </div>
                 </div>
             </div>
-                
+
         </main>
     </section>
     <script>
+        function sairNavbar() {
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.href = "../index.html";
+        }
+
         const data = {
             //aqui precisa ser a listagem de máquinas por ID
-            labels: ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
+            labels: ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'],
             datasets: [{
                 label: 'Percentual de Uso (%)',
                 data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 80, 80, 80, 80],
@@ -154,7 +160,7 @@
                 },
                 scales: {
                     x: {
-                        title:{
+                        title: {
                             display: true,
                             text: 'Máquinas por ID',
                             beginAtZero: true
@@ -166,7 +172,7 @@
                         }
                     },
                     y: {
-                        title:{
+                        title: {
                             display: true,
                             text: 'Uso em %',
                             beginAtZero: true
