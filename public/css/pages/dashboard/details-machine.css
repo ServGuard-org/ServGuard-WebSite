@@ -127,7 +127,6 @@
 .machine-volume-list-content{
     width: 100%;
     height: 100%;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
@@ -141,7 +140,8 @@
     display: grid;
     column-gap: var(--gap-1);
     row-gap: var(--gap-2);
-    grid-template-columns: 1fr 1fr 2fr 2fr 3fr;
+    grid-template-columns: 1fr 2fr 3fr;
+    padding-right: var(--gap-2);
 
     & .volume-coluns-item{
         display: flex;
@@ -150,35 +150,33 @@
     }
 }
 
+.machine-volume-area-content{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: var(--gap-1);
+}
+
 .machine-volume-rows{
     width: 100%;
     max-height: 60px;
     min-height: 60px;
     height: 100%;
-    padding: var(--gap-1) 0px;
+    padding: 0px;
     
     display: grid;
-    column-gap: var(--gap-1);
-    row-gap: var(--gap-2);
-    grid-template-columns: 1fr 8.5fr;
-
-    & .volume-item-rows-lixo{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        max-height: 50px;
-    }
+    grid-template-columns: 1fr;
 
     & .volume-item-rows-content{
         background: var(--gray-8);
         max-height: 50px;
+        min-height: 50px;
         border-radius: 25px;
 
         display: grid;
         column-gap: var(--gap-1);
         row-gap: var(--gap-2);
-        grid-template-columns: 1fr 2fr 2fr 3fr;
+        grid-template-columns: 1fr 2fr 3fr;
 
         & .volume-item-rows{
             display: flex;
