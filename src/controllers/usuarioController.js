@@ -87,61 +87,61 @@ function alterar(req, res) {
     let idUsuario = req.body.idUsuario;
 
     usuarioModel.alterar(nome, email, isAdm, idUsuario)
-    .then(
-        function (resultado) {
-            res.json(resultado);
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log(
-                "\nHouve um erro ao atualizar os dados de usuário! Erro: ",
-                erro.sqlMessage
-            );
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao atualizar os dados de usuário! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 
 }
 
 function ativar(req, res) {
     idUsuario = req.params.idUsuario;
- 
+
     usuarioModel.ativar(idUsuario)
-    .then(
-        function (resultado) {
-            res.json(resultado);
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log(
-                "\nHouve um erro ao ativar o usuário! Erro: ",
-                erro.sqlMessage
-            );
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao ativar o usuário! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 }
 
 function inativar(req, res) {
     idUsuario = req.params.idUsuario;
 
     usuarioModel.inativar(idUsuario)
-    .then(
-        function (resultado) {
-            res.json(resultado);
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log(
-                "\nHouve um erro ao inativar o usuário! Erro: ",
-                erro.sqlMessage
-            );
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao inativar o usuário! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 }
 
 function listarPorEmpresa(req, res) {
@@ -149,25 +149,25 @@ function listarPorEmpresa(req, res) {
     idEmpresa = req.params.idEmpresa;
 
     usuarioModel.listarPorEmpresa(idEmpresa)
-    .then(
-        function (resultado) {
+        .then(
+            function (resultado) {
 
-            if (resultado.length > 0) {
-                res.status(200).json(resultado);
-            } else {
-                res.status(204).send(`Não foi encontrado nenhum usuário para a empresa de id = ${idEmpresa}`);
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send(`Não foi encontrado nenhum usuário para a empresa de id = ${idEmpresa}`);
+                }
             }
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log(
-                "\nHouve um erro ao inativar o usuário! Erro: ",
-                erro.sqlMessage
-            );
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao inativar o usuário! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 
 }
 
@@ -175,29 +175,52 @@ function consultarPorId(req, res) {
     const idUsuario = req.params.idUsuario;
 
     usuarioModel.consultarPorId(idUsuario)
-    .then( resposta => {
-        if (resposta.length == 1) {
+        .then(resposta => {
+            if (resposta.length == 1) {
 
-            res.json({
-                idUsuario: resposta[0].idUsuario,
-                email: resposta[0].email,
-                nome: resposta[0].nome,
-                senha: resposta[0].senha,
-                isAdm: resposta[0].isAdm,
-                fkEmpresa: resposta[0].idEmpresa
-            });
-        } else if (resposta.length == 0) {
-            res.status(403).send("Id Invalido");
-        } else {
-            res.status(403).send("Mais de um usuário com o mesmo id!");
-        }
-    }).catch(
-        function (erro) {
-            console.log(erro);
-            console.log("\nHouve um erro ao realizar a consulta por id! Erro: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+                res.json({
+                    idUsuario: resposta[0].idUsuario,
+                    email: resposta[0].email,
+                    nome: resposta[0].nome,
+                    senha: resposta[0].senha,
+                    isAdm: resposta[0].isAdm,
+                    fkEmpresa: resposta[0].idEmpresa
+                });
+            } else if (resposta.length == 0) {
+                res.status(403).send("Id Invalido");
+            } else {
+                res.status(403).send("Mais de um usuário com o mesmo id!");
+            }
+        }).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar a consulta por id! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function alterarSenha(req, res) {
+    let nome = req.body.nome;
+    let email = req.body.email;
+    let senha = req.body.senha;
+    let idUsuario = req.body.idUsuario;
+
+    usuarioModel.alterarSenha(nome, email, senha, idUsuario)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao atualizar os dados de usuário e senha! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 }
 
 module.exports = {
@@ -207,5 +230,6 @@ module.exports = {
     ativar,
     inativar,
     listarPorEmpresa,
-    consultarPorId
+    consultarPorId,
+    alterarSenha
 }

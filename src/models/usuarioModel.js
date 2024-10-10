@@ -49,6 +49,17 @@ function consultarPorId(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function alterarSenha(nome, email, senha, idUsuario) {
+
+    const mudaSenha = senha ? `, senha = '${senha}'` : ``;
+
+    const instrucaoSql = `UPDATE usuario SET nome = '${nome}', email = '${email}'${mudaSenha} WHERE idUsuario = ${idUsuario};`;
+
+    console.log("Executando UPDATE: ", instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -56,5 +67,6 @@ module.exports = {
     ativar,
     inativar,
     listarPorEmpresa,
-    consultarPorId
+    consultarPorId,
+    alterarSenha
 };

@@ -31,4 +31,8 @@ router.get("/listarPorEmpresa/:idEmpresa", function (req, res) {
     usuarioController.listarPorEmpresa(req, res);
 });
 
+router.post("/alterar/senha", function(req, res) {
+    usuarioController.alterarSenha(req, res);
+})
+
 module.exports = router;
