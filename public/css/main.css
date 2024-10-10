@@ -38,13 +38,13 @@
 
 /* COR DA BARRA DE MEDIDA */
 ::-webkit-scrollbar-thumb {
-    background: var(--normal-black);
+    background: var(--normal-purple);
     border-radius: 3px;
 }
 
 /* HOVER DA BARRA DE MEDIDA */
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--normal-black);
+    background: var(--normal-purple);
 }
 
 html{
