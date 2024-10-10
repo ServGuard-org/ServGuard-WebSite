@@ -72,6 +72,8 @@ echo '==========================================================================
 echo 'Criando os dois containers, a partir das imagens'
 echo '========================================================================================================='
 
+sudo docker network create servguard-network
+
 sudo docker run -d --name servguard-server -p 8080:8080 servguard-server-image
 
 sudo docker run -d --name servguard-database -p 3306:3306 servguard-database-image
