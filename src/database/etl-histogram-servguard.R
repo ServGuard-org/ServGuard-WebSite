@@ -52,11 +52,13 @@ histograma <- hist(usoCPU, #Dados utilizados
                    xlim = c(0,100))#Fixa o valor de 0 a 100 na exibição 
 
 #Capturando o valor da frequencia de cada faixa do histograma:
-frequencias <- histograma$counts]
+frequencias <- histograma$counts
+colunas <- histograma$breaks
 
-#utilizando duas tabelas basta pegar os breaks apenas
-faixas_inicio <- histograma$breaks[-length(histograma$breaks)]
-faixas_fim <- histograma$breaks[-1]
+#ignorar essas duas variaveis, eram utilizadas apenas no contexto de apenas
+#uma tabela para o histograma
+#faixas_inicio <- histograma$breaks[-length(histograma$breaks)]
+#faixas_fim <- histograma$breaks[-1]
 #-------------------------------------------------------------------------------
 #Definição das faixas e plotagem do histograma - Fim
 
@@ -72,12 +74,21 @@ if (escolhaBaseDeDados == "SQL") {
   ano_atual <- as.numeric(format(Sys.Date(), "%Y"))
   mes_atual <- as.numeric(format(Sys.Date(), "%m"))
   
-  #Será necessário fazer um "insert" para cada coluna, por isso o "for"
+  #Criando novo histograma no banco de dados
+  insertHist <- sprintf(
+    "INSERT INTO cpu_histogram (year, month, bars, frequency) 
+      VALUES (%d, %d, %f, %f, %d);",
+    ano_atual, mes_atual, frequencias[i], colunas[i]
+  )
+  #exectuar o insert
+  dbExecute(conexao, insert)
+  
+  #Inserindo os valores do histograma criado no banco de dados
   for (i in 1:length(frequencias)) {
     insert <- sprintf(
-      "INSERT INTO cpu_histogram (year, month, range_start, range_end, frequency) 
+      "INSERT INTO cpu_histogram (year, month, bars, frequency) 
       VALUES (%d, %d, %f, %f, %d);",
-      ano_atual, mes_atual, faixas_inicio[i], faixas_fim[i], frequencias[i]
+      ano_atual, mes_atual, frequencias[i], colunas[i]
     )
     #exectuar o insert
     dbExecute(conexao, insert)
