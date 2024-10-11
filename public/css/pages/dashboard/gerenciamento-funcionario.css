@@ -21,12 +21,17 @@
         align-items: center;
         flex-direction: column;
         /* background: #794ED4; */
+        & h3 {
+            margin-right: 2%;
+            text-align: center;
+            padding-bottom: 3px;
+           }
     }
 }
 
 .father-funcionario-card {
     width: 95%;
-    height: 10%;
+    height: 7%;
     padding: 10px;
     gap: 10px;
     z-index: 3;
@@ -229,11 +234,7 @@
     color: var(--darked-purple);
     /* transition: 400ms; */
 }
-.botao-acao:hover{
-    /* border-radius: 50px; */
-    border: 2px solid var(--darked-purple);
 
-}
 
 .father-funcionario-botao {
     width: 95%;
@@ -270,27 +271,6 @@
     cursor: pointer;
     color: var(--darked-purple);
     background-color: #FFF;
-}
-
-.select-filtro-funcionario {
-    min-width: 10.4%;
-    height: 50px;
-    padding: 5px;
-
-    color: black;
-    font-size: 20px;
-    font-style: inherit;
-
-    border: none;
-    border-radius: 50px;
-    text-align: center;
-    text-justify: center;
-    transition: 200ms;
-}
-
-.select-filtro-funcionario:hover {
-    height: 60px;
-    cursor: pointer;
 }
 
 

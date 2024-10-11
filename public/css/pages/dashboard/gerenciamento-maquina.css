@@ -24,10 +24,42 @@
         justify-content: center;
         align-items: center;
         /* background: #794ED4; */
+       & h3 {
+        margin-right: 2%;
+        text-align: center;
+        padding-bottom: 3px;
+       }
     }
 }
 
 
+.father-maquina-card {
+    width: 100%;
+    height: 7%;
+    padding: 10px;
+    gap: 10px;
+    z-index: 3;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    /* background-color: red; */
+}
+
+.child-maquina-card {
+    width: 12%;
+    height: 100%;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: white;
+    box-shadow: 0px 0px 82.7px -41px #794ED4;
+}
 
 .father-maquina-lista {
     width: 95%;
@@ -93,11 +125,15 @@
 }
 
 .child-maquina-elemento-coluna-area-id {
-    width: 10%;
+    width: 6%;
+}
+
+.child-maquina-elemento-coluna-area-nome {
+    width: 15%;
 }
 
 .child-maquina-elemento-coluna-area-apelido {
-    width: 20%;
+    width: 15%;
 }
 
 .child-maquina-elemento-coluna-area-cpu {
@@ -105,15 +141,15 @@
 }
 
 .child-maquina-elemento-coluna-area-ram {
-    width: 15%;
+    width: 10%;
 }
 
 .child-maquina-elemento-coluna-area-armazenamento {
-    width: 20%;
+    width: 17%;
 }
 
 .child-maquina-elemento-coluna-area-acao{
-    width: 7%;
+    width: 4%;
 }
 
 /* configs da lista  */
@@ -126,7 +162,7 @@
     align-items: start;
     justify-content: start;
 
-    /* background-color: aqua; */
+    /* background-color: #794ED4; */
 }
 
 .child-maquina-elemento {
@@ -181,11 +217,15 @@
 }
 
 .child-maquina-elemento-info-area-id {
-    width: 10%;
+    width: 6%;
+}
+
+.child-maquina-elemento-info-area-nome {
+    width: 15%;
 }
 
 .child-maquina-elemento-info-area-apelido {
-    width: 20%;
+    width: 15%;
 }
 
 .child-maquina-elemento-info-area-cpu {
@@ -193,15 +233,15 @@
 }
 
 .child-maquina-elemento-info-area-ram {
-    width: 15%;
+    width: 10%;
 }
 
 .child-maquina-elemento-info-area-armazenamento {
-    width: 20%;
+    width: 17%;
 }
 
 .child-maquina-elemento-info-area-acao{
-    width: 5%;
+    width: 4%;
     color: var(--darked-purple);
 }
 .child-maquina-elemento-info-area-acao:hover {
@@ -214,11 +254,7 @@
     color: var(--darked-purple);
     /* transition: 400ms; */
 }
-.botao-acao:hover{
-    /* border-radius: 50px; */
-    border: 2px solid var(--darked-purple);
 
-}
 
 .father-maquina-botao {
     width: 95%;
@@ -233,49 +269,6 @@
     justify-content: start;
 
     /* background-color: yellow; */
-}
-
-/* BOTOES CADASTRAR + FILTRO */
-.botao-cadastrar-maquina {
-    min-width: 13%;
-    height: 50px;
-    color: white;
-    font-size: 20px;
-    font-style: inherit;
-
-    background-color: var(--darked-purple);
-    border: none;
-    border-radius: 50px;
-
-    transition: 400ms;
-}
-
-.botao-cadastrar-maquina:hover {
-    height: 60px;
-    cursor: pointer;
-    color: var(--darked-purple);
-    background-color: #FFF;
-}
-
-.select-filtro-maquina {
-    min-width: 10.4%;
-    height: 50px;
-    padding: 5px;
-
-    color: black;
-    font-size: 20px;
-    font-style: inherit;
-
-    border: none;
-    border-radius: 50px;
-    text-align: center;
-    text-justify: center;
-    transition: 200ms;
-}
-
-.select-filtro-maquina:hover {
-    height: 60px;
-    cursor: pointer;
 }
 
 
