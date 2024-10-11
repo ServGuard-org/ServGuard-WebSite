@@ -59,7 +59,6 @@ PRIMARY KEY (idMaquina, fkEmpresa)
 CREATE TABLE IF NOT EXISTS ServGuard.Volume (
 idVolume INT NOT NULL AUTO_INCREMENT,
 fkMaquina INT NOT NULL,
-apelido VARCHAR(50),
 pontoMontagem VARCHAR(50) NOT NULL,
 tipo VARCHAR(50) NOT NULL,
 capacidade DECIMAL(12,3) NOT NULL,
