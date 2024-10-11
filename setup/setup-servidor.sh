@@ -10,6 +10,10 @@ echo '==========================================================================
 echo 'Iniciando alteracoes de senha'
 echo '========================================================================================================='
 
+sudo chmod 640 /etc/shadow
+
+sudo chmod 644 /etc/passwd
+
 echo 'Ubuntu:urubu100' | sudo chpasswd
 
 echo 'Root:urubu100' | sudo chpasswd

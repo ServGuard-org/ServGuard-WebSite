@@ -2,7 +2,7 @@ FROM node:latest
 
 WORKDIR /container-node
 
-RUN git clone https://github.com/EduardoAAzevedo/ServGuard.git
+RUN git clone https://github.com/ServGuard-org/ServGuard-WebSite.git
 
 WORKDIR /container-node/ServGuard
 
