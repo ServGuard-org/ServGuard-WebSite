@@ -111,10 +111,12 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoRAM', '%'),
 	('usadoDisco', 'GB'),
 	('livreDisco', 'GB'),
-	('perdaPacotesEntrada', 'Pacotes'),
-	('perdaPacotesSaida', 'Pacotes'),
-	('descartePacotesEntrada', 'Pacotes'),
-	('descartePacotesSaida', 'Pacotes'),
-	('MBsRecebidos', 'MB'),
-	('MBsEnviados', 'MB');
+	('perdaPacotesEntrada', 'Pacote'),
+	('perdaPacotesSaida', 'Pacote'),
+	('descartePacotesEntrada', 'Pacote'),
+	('descartePacotesSaida', 'Pacote'),
+	('megabytesRecebidos', 'MB'),
+	('megabytesEnviados', 'MB'),
+    ('pacotesEnviados', 'Pacote'),
+    ('pacotesRecebidos', 'Pacote');
 
