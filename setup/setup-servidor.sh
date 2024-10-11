@@ -58,14 +58,14 @@ echo '==========================================================================
 echo 'Mudando de diretorio'
 echo '========================================================================================================='
 
-cd /home/ubuntu/ServGuard/setup/
+cd /home/ubuntu/ServGuard-WebSite/setup/
 
 echo '========================================================================================================='
 echo 'Buildando as duas imagens, a partir dos dockerfiles'
 echo '========================================================================================================='
 
-sudo docker build -f /home/ubuntu/ServGuard/setup/dockerfile-node -t servguard-server-image .
-sudo docker build -f /home/ubuntu/ServGuard/setup/dockerfile-mysql -t servguard-database-image .
+sudo docker build -f /home/ubuntu/ServGuard-WebSite/setup/dockerfile-node -t servguard-server-image .
+sudo docker build -f /home/ubuntu/ServGuard-WebSite/setup/dockerfile-mysql -t servguard-database-image .
 
 echo '========================================================================================================='
 echo 'Verificando se as imagens foram criadas'
