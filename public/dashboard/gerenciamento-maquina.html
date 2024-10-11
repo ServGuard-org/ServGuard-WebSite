@@ -55,6 +55,21 @@
         <!-- //// FIM NAVBAR //// -->
 
         <main>
+
+            <div class="father-maquina-card">
+                <h3 class="bold">Gerenciamento de máquinas:</h3>
+                <div class="child-maquina-card" style="background-color: var(--darked-purple);">
+                    <p class="bold text-white italic">Total: <span id="num_total">X</span></p>
+                </div>
+                <div class="child-maquina-card">
+                    <p class="bold italic">Ativas: <span id="num_ana">X</span></p>
+                </div>
+                <div class="child-maquina-card">
+                    <p class="bold italic">Inativas: <span id="num_adms">X</span></p>
+                </div>
+            </div>
+
+
             <div class="father-maquina-lista">
                 <div class="child-maquina-colunas">
                     <!-- apenas para alinhar -->
@@ -64,6 +79,9 @@
 
                         <div class="child-maquina-elemento-coluna-area-id">
                             <p class="bold">ID</p>
+                        </div>
+                        <div class="child-maquina-elemento-coluna-area-nome">
+                            <p class="bold">Nome</p>
                         </div>
                         <div class="child-maquina-elemento-coluna-area-apelido">
                             <p class="bold">Apelido</p>
@@ -90,6 +108,9 @@
                             <div class="child-maquina-elemento-info-area-id">
                                 <p>13</p>
                             </div>
+                            <div class="child-maquina-elemento-info-area-nome">
+                                <p>Desktop-03</p>
+                            </div>
                             <div class="child-maquina-elemento-info-area-apelido">
                                 <p>Controle 1</p>
                             </div>
@@ -109,13 +130,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="father-maquina-botao">
-                <select name="ordenar" id="ordenar" class="select-filtro-maquina"
-                    style="background-color: var(--darked-purple); color: white;">
-                    <option><b>Ordenar por</b></option>
-                </select>
-
             </div>
         </main>
     </section>
