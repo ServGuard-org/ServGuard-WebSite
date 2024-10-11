@@ -69,12 +69,14 @@ sudo docker images
 echo '========================================================================================================='
 
 echo '========================================================================================================='
-echo 'Criando os dois containers, a partir das imagens'
+echo 'Criando os dois containers e a rede interna, a partir das imagens'
 echo '========================================================================================================='
 
-sudo docker run -d --name servguard-server -p 8080:8080 servguard-server-image
+sudo docker network create servguard-network
 
-sudo docker run -d --name servguard-database -p 3306:3306 servguard-database-image
+sudo docker run -d --name servguard-database --network servguard-network -p 3306:3306 servguard-database-image
+
+sudo docker run -d --name servguard-server --network servguard-network -p 8080:8080 servguard-server-image
 
 echo '========================================================================================================='
 echo 'Verificando se os containers foram criados'

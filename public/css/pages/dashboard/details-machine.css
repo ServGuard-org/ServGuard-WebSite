@@ -37,6 +37,12 @@
     backdrop-filter: blur(3.5999999046325684px);
 }
 
+.father-details-machine-father{
+    display: flex;
+    justify-content: space-between;
+    padding-right: var(--gap-3);
+}
+
 .child-details-machine-info{
     width: 60%;
     height: 100%;
