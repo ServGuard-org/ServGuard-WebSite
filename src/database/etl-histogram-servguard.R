@@ -30,8 +30,10 @@ if (escolhaBaseDeDados == "SQL") {
   captura <- read.csv("C:/Users/cacay/Downloads/dados-pc.csv", sep=",")
   str(captura)
   
-  usoCPU <- as.numeric(gsub("%", "", captura$CPU))  # Remove o "%" caso exista na coluna
-  usoCPU <- c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100,100)  # Teste com valores fictícios
+  #Remove o "%" caso exista na coluna
+  usoCPU <- as.numeric(gsub("%", "", captura$CPU))  
+  #Teste com valores fictícios
+  usoCPU <- c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100,100)  
 }
 #-------------------------------------------------------------------------------
 #Captura de dados para o histograma - Fim
@@ -43,10 +45,16 @@ if (escolhaBaseDeDados == "SQL") {
 #Definição das faixas e plotagem do histograma:
 #-------------------------------------------------------------------------------
 faixas <- seq(0, 100, by=10)
-histograma <- hist(usoCPU, breaks=faixas, freq=TRUE, right = FALSE)
+histograma <- hist(usoCPU, #Dados utilizados
+                   breaks=faixas, #Faixas de 10 em 10 %
+                   freq=TRUE, 
+                   right = FALSE, #Extende o y a maior frequencia histograma
+                   xlim = c(0,100))#Fixa o valor de 0 a 100 na exibição 
 
 #Capturando o valor da frequencia de cada faixa do histograma:
-frequencias <- histograma$counts
+frequencias <- histograma$counts]
+
+#utilizando duas tabelas basta pegar os breaks apenas
 faixas_inicio <- histograma$breaks[-length(histograma$breaks)]
 faixas_fim <- histograma$breaks[-1]
 #-------------------------------------------------------------------------------
@@ -70,8 +78,6 @@ if (escolhaBaseDeDados == "SQL") {
       "INSERT INTO cpu_histogram (year, month, range_start, range_end, frequency) 
       VALUES (%d, %d, %f, %f, %d);",
       ano_atual, mes_atual, faixas_inicio[i], faixas_fim[i], frequencias[i]
-    
-      #A ESTUDAR: Saber se tem uma funcao de auto_increment no mes e ano
     )
     #exectuar o insert
     dbExecute(conexao, insert)
@@ -90,7 +96,6 @@ if (escolhaBaseDeDados == "SQL") {
 #  id INT AUTO_INCREMENT PRIMARY KEY,
 
   #precisa de uma identificacao do componente!
-  #aqui o ano e mes sao capturados da outra tabela
 #  year INT NOT NULL,
 #  month INT NOT NULL,
 
