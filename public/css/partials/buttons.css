@@ -137,3 +137,31 @@
 .checkbox-wrapper input[type="checkbox"]:checked + .terms-label .checkbox-tick {
   stroke-dashoffset: 0;
 }
+
+/* ESTILIZANDO O LINK DE VOLTAR TELA */
+.link-back-seta {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  & a {
+    padding: var(--gap-1) var(--gap-2);
+    display: flex;
+    align-items: center;
+    gap: var(--gap-2);
+
+    & .icon-trian {
+      width: 0px;
+      height: 0px;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 14px solid var(--gray-0); /* Cor do triângulo */
+      transition: all 0.4s ease;
+    }
+  }
+}
+
+.link-back-seta:hover .icon-trian {
+  margin-right: var(--gap-1);
+  transition: all 0.4s ease;
+}
