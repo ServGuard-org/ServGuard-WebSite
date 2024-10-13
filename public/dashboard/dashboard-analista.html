@@ -1,225 +1,255 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ServGuard | Dashboard Analísta</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/main.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+  </head>
 
-<body onload="carregarPagina()">
+  <body onload="carregarPagina()">
     <section id="page-dashboard-analista">
-        <header>
-            <div class="child-navbar-card-dash-adm">
-                <div class="navbar-logo-dash-adm">
-                    <img src="../assets/img/logo.png" alt="#logo">
-                </div>
-                <div class="navbar-navlink-dash-adm">
-                    <ul class="list-navlink-dash-adm">
-                        <li>
-                            <a href="dashboard-adm.html" class="link-dash-adm active">
-                                <img src="../assets/svg/layout-icon-white.svg" alt="#icone-layout">
-                            </a>
-                            <p class="little-text mt-1">Início</p>
-                        </li>
-                        <li>
-                            <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
-                                <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario">
-                            </a>
-                            <p class="little-text mt-1">Funcionário</p>
-                        </li>
-                        <li>
-                            <a href="./gerenciamento-maquina.html" class="link-dash-adm">
-                                <img src="../assets/svg/server-icon.svg" alt="#icone-">
-                            </a>
-                            <p class="little-text mt-1">Máquina</p>
-                        </li>
-                        <li>
-                            <a href="detalhes-funcionario.html" class="link-dash-adm">
-                                <img src="../assets/svg/perfil-icon.svg" alt="#icone-">
-                            </a>
-                            <p class="little-text mt-1">Perfil</p>
-                        </li>
-                    </ul>
-                </div>
-                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-                    <img src="../assets/svg/exit-icon.svg" alt="">
+      <header>
+        <div class="child-navbar-card-dash-adm">
+          <div class="navbar-logo-dash-adm">
+            <img src="../assets/img/logo.png" alt="#logo" />
+          </div>
+          <div class="navbar-navlink-dash-adm">
+            <ul class="list-navlink-dash-adm">
+              <li>
+                <a href="dashboard-adm.html" class="link-dash-adm active">
+                  <img
+                    src="../assets/svg/layout-icon-white.svg"
+                    alt="#icone-layout"
+                  />
                 </a>
+                <p class="little-text mt-1">Início</p>
+              </li>
+              <li>
+                <a
+                  href="./gerenciamento-funcionario.html"
+                  class="link-dash-adm"
+                >
+                  <img
+                    src="../assets/svg/func-icon.svg"
+                    alt="#icone-funcionario"
+                  />
+                </a>
+                <p class="little-text mt-1">Funcionário</p>
+              </li>
+              <li>
+                <a href="./gerenciamento-maquina.html" class="link-dash-adm">
+                  <img src="../assets/svg/server-icon.svg" alt="#icone-" />
+                </a>
+                <p class="little-text mt-1">Máquina</p>
+              </li>
+              <li>
+                <a href="detalhes-funcionario.html" class="link-dash-adm">
+                  <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
+                </a>
+                <p class="little-text mt-1">Perfil</p>
+              </li>
+            </ul>
+          </div>
+          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+            <img src="../assets/svg/exit-icon.svg" alt="" />
+          </a>
+        </div>
+      </header>
+      <main>
+        <div class="coluna1-dash-analista">
+          <div class="dash-analista-graphic">
+            <div class="title-graphic">
+              <h3 class="bold center">Componente:</h3>
+              <select id="select-componente" class="select-componente bold">
+                <option value="cpu">CPU</option>
+                <option value="ram">RAM</option>
+                <option value="disco">DISCO</option>
+              </select>
             </div>
-        </header>
-        <main>
-            <div class="coluna1-dash-analista">
-                <div class="dash-analista-graphic">
-                    <div class="title-graphic">
-                        <h3 class="bold center">Componente:</h3>
-                        <select id="select-componente" class="select-componente bold">
-                            <option value="cpu">CPU</option>
-                            <option value="ram">RAM</option>
-                            <option value="disco">DISCO</option>
-                        </select>
-                    </div>
-                    <div class="graphic-space-analista">
-                        <canvas id="myHistogram"></canvas>
-                    </div>
-                </div>
+            <div class="graphic-space-analista">
+              <canvas id="myHistogram"></canvas>
+            </div>
+          </div>
 
-                <div class="coluna1-cards-row">
-                    <div class="div-perda-pacotes text-white">
-                        <h4 class="italic">PERDA DE PACOTES:</h4>
-                        <div class="perda-pacotes-organizar">
-                            <div class="perda-pacotes-dados">
-                                <h3 class="bold">Entrada</h3>
-                                <h1 class="bold">10</h1>
-                            </div>
-                            <div class="perda-pacotes-divisao"></div>
-                            <div class="perda-pacotes-dados">
-                                <h3 class="bold">Saída</h3>
-                                <h1 class="bold">3</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="div-servico-utilizado">
-                        <h4 class="bold">Serviços utilizados:</h4>
-                        <div class="servico">
-                            <h5 class="bold text-white">Banco central</h5>
-                            <h2 class="bold text-white">Ativo</h2>
-                        </div>
-                    </div>
+          <div class="coluna1-cards-row">
+            <div class="div-perda-pacotes text-white">
+              <h4 class="italic">PERDA DE PACOTES:</h4>
+              <div class="perda-pacotes-organizar">
+                <div class="perda-pacotes-dados">
+                  <h3 class="bold">Entrada</h3>
+                  <h1 class="bold">10</h1>
                 </div>
+                <div class="perda-pacotes-divisao"></div>
+                <div class="perda-pacotes-dados">
+                  <h3 class="bold">Saída</h3>
+                  <h1 class="bold">3</h1>
+                </div>
+              </div>
+            </div>
+            <div class="div-servico-utilizado">
+              <h4 class="bold">Serviços utilizados:</h4>
+              <div class="servico">
+                <h5 class="bold text-white">Banco central</h5>
+                <h2 class="bold text-white">Ativo</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="coluna2-dash-analista">
+          <div class="div-componente-problematico">
+            <h4 class="bold">Componente mais problemático:</h4>
+            <h2 class="bold italic">DISCO</h2>
+            <h4 class="bold">Possível ameaça:</h4>
+            <h2 class="bold italic">RAM</h2>
+          </div>
+          <div class="div-mapa-estabilidade">
+            <h4 class="italic">Mapa de estabilidade</h4>
+            <div class="mapa-colunas">
+              <div style="width: 15%" class="mapa-espacamento">
+                <h4 class="bold italic">ID</h4>
+              </div>
+              <div style="width: 37%" class="mapa-espacamento">
+                <h4 class="bold italic">CPU</h4>
+              </div>
+              <div style="width: 37%" class="mapa-espacamento">
+                <h4 class="bold italic">RAM</h4>
+              </div>
             </div>
 
-            <div class="coluna2-dash-analista">
-                <div class="div-componente-problematico">
-                    <h4 class="bold">Componente mais problemático:</h4>
-                    <h2 class="bold italic">DISCO</h2>
-                    <h4 class="bold">Possível ameaça:</h4>
-                    <h2 class="bold italic">RAM</h2>
+            <div class="map-row-itens">
+                
+              <!-- OBJETOS DA LISTA -->
+              <div class="mapa-colunas">
+                <div class="mapa-espacamento" style="width: 15%">
+                  <h4 class="bold">12</h4>
                 </div>
-                <div class="div-mapa-estabilidade">
-                    <h4 class="italic">Mapa de estabilidade</h4>
-                    <div class="mapa-colunas">
-                        <div style="width:15%" class="mapa-espacamento">
-                            <h4 class="bold italic">ID</h4>
-                        </div>
-                        <div style="width:37%" class="mapa-espacamento">
-                            <h4 class="bold italic">CPU</h4>
-                        </div>
-                        <div style="width:37%" class="mapa-espacamento">
-                            <h4 class="bold italic">RAM</h4>
-                        </div>
-                    </div>
-                    <!-- OBJETOS DA LISTA -->
-                    <div class="mapa-colunas">
-                        <div class="mapa-espacamento" style="width:15%">
-                            <h4 class="bold">12</h4>
-                        </div>
-                        <div class="mapa-espacamento-objeto" style="width:37%">
-                            <h4 class="bold">Crítico!</h4>
-                        </div>
-                        <div class="mapa-espacamento-objeto" style="width:37%">
-                            <h4 class="bold">Crítico!</h4>
-                        </div>
-                    </div>
+                <div class="mapa-espacamento-objeto" style="width: 37%">
+                  <h4 class="bold">Crítico!</h4>
                 </div>
-            </div>
+                <div class="mapa-espacamento-objeto" style="width: 37%">
+                  <h4 class="bold">Crítico!</h4>
+                </div>
+              </div>
 
-        </main>
+            </div>
+          </div>
+        </div>
+      </main>
     </section>
     <script>
-        function sairNavbar() {
-            event.preventDefault();
-            sessionStorage.clear();
-            window.location.href = "../index.html";
-        }
+      function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../index.html";
+      }
 
-        const data = {
-            //aqui precisa ser a listagem de máquinas por ID
-            labels: ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'],
-            datasets: [{
-                label: 'Percentual de Uso (%)',
-                data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 80, 80, 80, 80],
-                backgroundColor: '#8a4dfb',
-                borderColor: '#8a4dfb',
-                borderWidth: 1,
-                barThickness: 11, // Ajuste da largura das barras em pixels
-                borderRadius: 20, // Ajuste do border-radius
-                borderSkipped: false
-            }]
-        };
+      const data = {
+        //aqui precisa ser a listagem de máquinas por ID
+        labels: [
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+          "1",
+        ],
+        datasets: [
+          {
+            label: "Percentual de Uso (%)",
+            data: [
+              10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 70, 60, 80, 90,
+            ],
+            backgroundColor: "#8a4dfb",
+            borderColor: "#4E2E9E",
+            borderWidth: 2,
+            barThickness: 58, // Ajuste da largura das barras em pixels
+            borderRadius: 5, // Ajuste do border-radius
+            borderSkipped: false,
+          },
+        ],
+      };
 
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Máquinas por ID',
-                            beginAtZero: true
+      const config = {
+        type: "bar",
+        data: data,
+        options: {
+          responsive: true, // Para tornar o gráfico responsivo
+          maintainAspectRatio: false, // Define se a proporção deve ser mantida
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Máquinas por ID",
+                beginAtZero: true,
+              },
+              beginAtZero: true,
+              grid: {
+                display: false,
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: "Uso em %",
+                beginAtZero: true,
+              },
+              beginAtZero: true,
+              grid: {
+                display: false,
+              },
+            },
+          },
+        },
+      };
 
-                        },
-                        beginAtZero: true,
-                        grid: {
-                            display: false
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Uso em %',
-                            beginAtZero: true
+      const myHistogram = new Chart(
+        document.getElementById("myHistogram"),
+        config
+      );
 
-                        },
-                        beginAtZero: true,
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        };
+      function carregarPagina() {
+        let escalaInstabilidade = 0;
 
-        const myHistogram = new Chart(
-            document.getElementById('myHistogram'),
-            config
+        const elementoInstabilidade = document.getElementById(
+          "escala-instabilidade"
         );
 
-        function carregarPagina() {
+        elementoInstabilidade.innerHTML = "";
+        elementoInstabilidade.innerHTML = escalaInstabilidade;
 
-            let escalaInstabilidade = 0;
-
-            const elementoInstabilidade = document.getElementById('escala-instabilidade')
-
-            elementoInstabilidade.innerHTML = "";
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-
-            switch (escalaInstabilidade) {
-                case 0:
-                    // verde
-                    break;
-                case 1:
-                    // amarelo
-                    break;
-                case 2:
-                    // laranja
-                    break;
-                case 3:
-                    // vermelho
-                    break;
-            }
-
+        switch (escalaInstabilidade) {
+          case 0:
+            // verde
+            break;
+          case 1:
+            // amarelo
+            break;
+          case 2:
+            // laranja
+            break;
+          case 3:
+            // vermelho
+            break;
         }
-
+      }
     </script>
-</body>
-
+  </body>
 </html>
