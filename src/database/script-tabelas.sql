@@ -108,8 +108,8 @@ PRIMARY KEY (idCaptura)
 INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
-	('perdaPacotesEntrada', 'Pacote'),
-	('perdaPacotesSaida', 'Pacote'),
+	('erroPacotesEntrada', 'Pacote'),
+	('erroPacotesSaida', 'Pacote'),
 	('descartePacotesEntrada', 'Pacote'),
 	('descartePacotesSaida', 'Pacote'),
 	('megabytesRecebidos', 'MB'),
