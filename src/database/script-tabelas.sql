@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS ServGuard.Volume (
 idVolume INT NOT NULL AUTO_INCREMENT,
 fkMaquina INT NOT NULL,
 pontoMontagem VARCHAR(50) NOT NULL,
-tipo VARCHAR(50) NOT NULL,
 capacidade DECIMAL(12,3) NOT NULL,
 
 CONSTRAINT fkMaquinaVolume FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
@@ -109,8 +108,6 @@ PRIMARY KEY (idCaptura)
 INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
-	('usadoDisco', 'GB'),
-	('livreDisco', 'GB'),
 	('perdaPacotesEntrada', 'Pacote'),
 	('perdaPacotesSaida', 'Pacote'),
 	('descartePacotesEntrada', 'Pacote'),
@@ -119,4 +116,3 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('megabytesEnviados', 'MB'),
     ('pacotesEnviados', 'Pacote'),
     ('pacotesRecebidos', 'Pacote');
-
