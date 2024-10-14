@@ -69,7 +69,7 @@ PRIMARY KEY (idVolume)
 CREATE TABLE IF NOT EXISTS ServGuard.CapturaVolume (
 idCapturaVolume INT NOT NULL AUTO_INCREMENT,
 fkVolume INT NOT NULL,
-registro DECIMAL(12,3) NOT NULL,
+usado DECIMAL(12,3) NOT NULL,
 dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
 CONSTRAINT fkVolumeCapturaVolume FOREIGN KEY (fkVolume) REFERENCES ServGuard.Volume(idVolume),
