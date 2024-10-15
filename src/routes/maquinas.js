@@ -21,14 +21,18 @@ router.post("/atualizarApelidoPorId", function (req, res) {
 
 router.get("/listarPorEmpresa/:idEmpresa", function (req, res) {
     maquinaController.listarPorEmpresa(req, res);
-})
+});
 
 router.get("/listarPorId/:idMaquina", function (req, res) {
     maquinaController.listarPorId(req, res);
-})
+});
 
 router.get("/listarAlertaPorId/:idMaquina", function (req, res) {
     maquinaController.listarAlertaPorId(req, res);
-})
+});
+
+router.get("/listarVolumesPorMaquina/:idMaquina", function (req, res) {
+    maquinaController.listarVolumesPorMaquina(req, res);
+});
 
 module.exports = router;

@@ -44,4 +44,10 @@ function listarAlertaPorId(idMaquina) {
     return database.executar(instrucaoSql);
 }
 
-module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId }
+function listarVolumesPorMaquina(idMaquina) {
+    let instrucaoSql = `SELECT * FROM vista_volumes_atuais WHERE fkMaquina = ${idMaquina};`;
+
+    return database.executar(instrucaoSql);
+}
+
+module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId, listarVolumesPorMaquina }

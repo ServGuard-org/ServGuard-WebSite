@@ -10,7 +10,7 @@
     <title>ServGuard | Máquina</title>
 </head>
 
-<body>
+<body onload="consultarMaquina(), listarVolumes()">
     <section id="page-details-machine">
         <header>
             <div class="child-navbar-card-dash-adm">
@@ -53,10 +53,10 @@
 
         <main>
             <div class="father-details-machine-father">
-                <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold">X</span></h1>
+                <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold" id="id_maquina">Indefinido</span></h1>
                 <div class="link-back-seta">
                     
-                    <a class="bold text-gray-dark" href="./gerenciamento-maquina.html"><div class="icon-trian"></div> Voltar </a>
+                    <a class="bold text-gray-dark" onclick="voltar()"><div class="icon-trian"></div> Voltar </a>
                 </div>
             </div>
             
@@ -66,30 +66,30 @@
                     <div class="details-machine-info-card mb-2">
                         <div class="info-card-machine-group mb-1">
                             <div class="info-card-machine">
-                                <p class="bold">ID:</p>
-                                <p>23</p>
+                                <p class="bold">Hostname:</p>
+                                <p id="hostname">indefinido</p>
                             </div>
                             <div class="info-card-machine">
-                                <p class="bold">CPU:</p>
-                                <p>Intell Core i5 12th gen</p>
+                                <p class="bold">Modelo CPU:</p>
+                                <p id="cpu">indefinido</p>
                             </div>
                             <div class="info-card-machine">
-                                <p class="bold">RAM:</p>
-                                <p>32GB</p>
+                                <p class="bold">Capacidade RAM:</p>
+                                <p><span id="ram">Indefinido</span> GB</p>
                             </div>
                         </div>
                         <div class="info-card-machine-group">
                             <div class="info-card-machine">
-                                <p class="bold">Rack:</p>
-                                <p>Controle 1</p>
+                                <p class="bold">Apelido:</p>
+                                <p id="apelido">indefinido</p>
                             </div>
                             <div class="info-card-machine">
-                                <p class="bold">Núcleos:</p>
-                                <p>16</p>
+                                <p class="bold">Núcleos (Totais):</p>
+                                <p id="nucleos">indefinido</p>
                             </div>
                             <div class="info-card-machine">
-                                <p class="bold">Armazenamento:</p>
-                                <p><span>500</span>Gb de <span>1000</span>Gb</p>
+                                <p class="bold">Armaz. Usado / Total:</p>
+                                <p><span id="usado">indef.</span> GB de <span id="total">indef.</span> GB</p>
                             </div>
                         </div>
                     </div>
@@ -108,199 +108,11 @@
                             <div class="machine-volume-list-content pr-1">
                                 <div class="machine-volume-coluns">
                                     <div class="volume-coluns-item bold">ID</div>
-                                    <div class="volume-coluns-item bold">Tipo</div>
-                                    <div class="volume-coluns-item bold">Capacidade</div>
+                                    <div class="volume-coluns-item bold">Ponto de Montagem</div>
+                                    <div class="volume-coluns-item bold">Capacidade (Usado / Total)</div>
                                 </div>
 
-                                <div class="machine-volume-area-content">
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- ITEM UM DO VOLUME -->
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
-                                            <div class="volume-item-rows">
-                                                <p class="">01</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">SSD</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">256Gb</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                <div class="machine-volume-area-content" id="pai_volumes">
                                 </div>
                             </div>
                         </div>
@@ -308,8 +120,8 @@
                     <div class="machine-active-deactivate">
                         <h3 class="bold">Gerenciamento da Máquina:</h3>
                         <div class="active-deactive-options">
-                            <button class="btn-dashboard">Ativar Máquina</button>
-                            <button class="btn-dashboard">Desativar Máquina</button>
+                            <button class="btn-dashboard" id="ativar_maquina">Ativar Máquina</button>
+                            <button class="btn-dashboard" id="desativar_maquina">Desativar Máquina</button>
                         </div>
                     </div>
                 </div>
@@ -319,10 +131,18 @@
     </section>
 
     <script>
+
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
         function sairNavbar() {
             event.preventDefault();
             sessionStorage.clear();
             window.location.href = "../index.html";
+        }
+
+        function voltar() {
+            sessionStorage.removeItem("ID_MAQUINA");
+            window.location.href = "./gerenciamento-maquina.html";
         }
 
         const ctx = document.getElementById('myLineChart').getContext('2d');
@@ -406,6 +226,64 @@
             }
         };
         const myLineChart = new Chart(ctx, config);
+
+        function consultarMaquina() {
+            
+            fetch(`/maquinas/listarPorId/${idMaquina}`, {
+                dataType: 'json',
+                contentType: 'application/json',
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data[0]);
+
+                    document.getElementById("id_maquina").innerHTML = data[0].idMaquina;
+                    document.getElementById("hostname").innerHTML = data[0].nome;
+                    document.getElementById("cpu").innerHTML = data[0].modeloCPU;
+                    document.getElementById("ram").innerHTML = Math.ceil(data[0].capacidadeRAM);
+                    document.getElementById("apelido").innerHTML = data[0].apelido;
+                    document.getElementById("nucleos").innerHTML = data[0].qtdNucleosLogicos;
+                    document.getElementById("usado").innerHTML = parseFloat(data[0].discoUsado).toFixed(2);
+                    document.getElementById("total").innerHTML = parseFloat(data[0].discoTotal).toFixed(2);
+                })
+                .catch(error => console.error(error));
+        }
+
+        function listarVolumes() {
+            fetch(`/maquinas/listarVolumesPorMaquina/${idMaquina}`, {
+                dataType: 'json',
+                contentType: 'application/json',
+            }) .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    data.forEach(element => {
+                        adicionarVolume(element.idVolume, element.pontoMontagem, element.capacidadeTotal, element.capacidadeUsada);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+        function adicionarVolume(idVolume, pontoMontagem, capacidade, usado) {
+            const novoVolume = `                                    
+                                    <div class="machine-volume-rows">
+                                        <div class="volume-item-rows-lixo">
+                                        </div>
+                                        <div class="volume-item-rows-content">
+                                            <div class="volume-item-rows">
+                                                <p class="">${idVolume}</p>
+                                            </div>
+                                            <div class="volume-item-rows">
+                                                <p class="">${pontoMontagem}</p>
+                                            </div>
+                                            <div class="volume-item-rows">
+                                                <p class="">${parseFloat(usado).toFixed(2)} / ${parseFloat(capacidade).toFixed(2)} GB</p>
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+            document.getElementById("pai_volumes").innerHTML += novoVolume;
+        }
 
     </script>
 

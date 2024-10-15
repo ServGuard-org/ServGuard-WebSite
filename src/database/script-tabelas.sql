@@ -119,7 +119,7 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 
 -- VIEWS
 
-CREATE VIEW vista_maquinas_com_disco AS
+CREATE OR REPLACE VIEW vista_maquinas_com_disco AS
 SELECT 
     m.idMaquina,
     m.fkEmpresa,
@@ -162,7 +162,7 @@ GROUP BY
 ORDER BY 
     m.isAtiva DESC;
 
-CREATE VIEW vista_alertas_maquinas AS
+CREATE OR REPLACE VIEW vista_alertas_maquinas AS
 SELECT 
     m.idMaquina, -- ID da máquina
     m.nome AS nomeMaquina, -- Nome da máquina
@@ -183,3 +183,26 @@ GROUP BY
     m.idMaquina, m.nome, r.nome, mr.max -- Inclui mr.max no GROUP BY
 ORDER BY 
     r.nome;
+
+CREATE OR REPLACE VIEW vista_volumes_atuais AS
+SELECT 
+    v.idVolume,
+    v.fkMaquina,
+    v.pontoMontagem,
+    v.capacidade AS capacidadeTotal,
+    cv.usado AS capacidadeUsada,
+    cv.dthCriacao AS dataUltimaCaptura
+FROM 
+    ServGuard.Volume v
+JOIN 
+    ServGuard.CapturaVolume cv ON v.idVolume = cv.fkVolume
+JOIN (
+    -- Subquery para obter a última captura por volume
+    SELECT 
+        fkVolume, 
+        MAX(dthCriacao) AS dataUltimaCaptura
+    FROM 
+        ServGuard.CapturaVolume
+    GROUP BY 
+        fkVolume
+) cv2 ON cv.fkVolume = cv2.fkVolume AND cv.dthCriacao = cv2.dataUltimaCaptura;

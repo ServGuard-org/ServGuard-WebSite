@@ -179,7 +179,8 @@ consultarMaquinas()">
         window.location.href = "../index.html";
     }
 
-    function DetalhesMaquina() {
+    function DetalhesMaquina(idMaquina) {
+        sessionStorage.setItem("ID_MAQUINA", idMaquina);
         window.location.href = "details-machine.html";
     }
 
