@@ -116,3 +116,39 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('megabytesEnviados', 'MB'),
     ('pacotesEnviados', 'Pacote'),
     ('pacotesRecebidos', 'Pacote');
+
+-- VIEWS
+
+CREATE VIEW vista_maquinas_com_disco AS
+SELECT 
+    m.idMaquina,
+    m.fkEmpresa,
+    IFNULL(m.apelido, 'indefinido') AS apelido,
+    m.nome,
+    m.modeloCPU,
+    m.qtdNucleosFisicos,
+    m.qtdNucleosLogicos,
+    m.capacidadeRAM,
+    m.MACAddress,
+    m.isAtiva,
+    SUM(cv.usado) AS discoUsado,
+    SUM(v.capacidade) AS discoTotal
+FROM 
+    ServGuard.Maquina m
+LEFT JOIN 
+    ServGuard.Volume v ON v.fkMaquina = m.idMaquina
+LEFT JOIN 
+    ServGuard.CapturaVolume cv ON v.idVolume = cv.fkVolume
+GROUP BY 
+    m.idMaquina,
+    m.fkEmpresa,
+    m.apelido,
+    m.nome,
+    m.modeloCPU,
+    m.qtdNucleosFisicos,
+    m.qtdNucleosLogicos,
+    m.capacidadeRAM,
+    m.MACAddress,
+    m.isAtiva
+ORDER BY 
+    m.isAtiva DESC;

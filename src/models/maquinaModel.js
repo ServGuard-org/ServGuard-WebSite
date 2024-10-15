@@ -31,8 +31,10 @@ function atualizarRackPorId(idMaquina, rack) {
 }
 
 function listarPorEmpresa(fkEmpresa) {
-    let instrucaoSql = `SELECT idMaquina, fkEmpresa, nome, rack, modeloCPU, qtdNucleos, capacidadeRAM, MACAddress FROM Maquina WHERE fkEmpresa = ${fkEmpresa} ORDER BY isAtiva DESC;`;
-
+    let instrucaoSql = `SELECT *
+FROM vista_maquinas_com_disco
+WHERE fkEmpresa = ${fkEmpresa}
+ORDER BY isAtiva DESC;`;
     return database.executar(instrucaoSql)
 }
 

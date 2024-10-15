@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/main.css">
 </head>
 
-<body>
+<body onload="consultarMaquinas()">
     <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-gerenciamento-maquina">
         <header>
@@ -59,13 +59,13 @@
             <div class="father-maquina-card">
                 <h3 class="bold">Gerenciamento de máquinas:</h3>
                 <div class="child-maquina-card" style="background-color: var(--darked-purple);">
-                    <p class="bold text-white italic">Total: <span id="num_total">X</span></p>
+                    <p class="bold text-white italic">Total: <span id="num_total"></span></p>
                 </div>
                 <div class="child-maquina-card">
-                    <p class="bold italic">Ativas: <span id="num_ana">X</span></p>
+                    <p class="bold italic">Ativas: <span id="num_ana"></span></p>
                 </div>
                 <div class="child-maquina-card">
-                    <p class="bold italic">Inativas: <span id="num_adms">X</span></p>
+                    <p class="bold italic">Inativas: <span id="num_adms"></span></p>
                 </div>
             </div>
 
@@ -98,13 +98,13 @@
                         <div class="child-maquina-elemento-coluna-area-acao"></div>
                     </div>
                 </div>
-                <div class="child-maquina-father-elemento">
-                    <div class="child-maquina-elemento">
+                <div class="child-maquina-father-elemento" id="pai-maquinas">
+                    <!-- <div class="child-maquina-elemento">
                         <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
                         <div class="child-maquina-elemento-infos">
-                            <!-- minha ideia e dar uma porcentagem para cada elemento exibido  -->
+                            
                             <div class="child-maquina-elemento-info-area-id">
                                 <p>13</p>
                             </div>
@@ -128,8 +128,7 @@
                                     onclick="DetalhesMaquina()">Detalhes</button>
                             </div>
                         </div>
-                    </div>
-                    
+                    </div> -->
                 </div>
             </div>
         </main>
@@ -199,6 +198,73 @@
     function sairEditar() {
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
+
+    function adicionarMaquina(idMaquina, nome, apelido, cpu, ram, armazenamentoUsado, armazenamentoTotal) {
+
+        const elementoPai = document.getElementById("pai-maquinas");
+
+        const novoElemento = `<div class="child-maquina-elemento">
+                        <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
+                            <img src="../assets/svg/edit.svg" alt="#icone-">
+                        </a>
+                        <div class="child-maquina-elemento-infos">
+                            <!-- minha ideia e dar uma porcentagem para cada elemento exibido  -->
+                            <div class="child-maquina-elemento-info-area-id">
+                                <p>${idMaquina}</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-nome">
+                                <p>${nome}</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-apelido">
+                                <p>${apelido}</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-cpu">
+                                <p>${cpu}</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-ram">
+                                <p>${ram}GB</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-armazenamento">
+                                <p>${armazenamentoUsado}GB de ${armazenamentoTotal}GB</p>
+                            </div>
+                            <div class="child-maquina-elemento-info-area-acao">
+                                <button class="bold underline italic botao-acao"
+                                    onclick="DetalhesMaquina(${idMaquina})">Detalhes</button>
+                            </div>
+                        </div>
+                    </div>`;
+
+        elementoPai.innerHTML += novoElemento;
+    }
+
+    function consultarMaquinas() {
+
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("num_total").innerText = data.length;
+
+                const maquinasAtivas = data.filter(maquina => maquina.isAtiva === 1);
+                document.getElementById("num_ana").innerText = maquinasAtivas.length;
+
+                const maquinasInativas = data.filter(maquina => maquina.isAtiva === 0);
+                document.getElementById("num_adms").innerText = maquinasInativas.length;
+
+                data.forEach(maquina => {
+                    adicionarMaquina(maquina.idMaquina, maquina.nome, maquina.apelido, maquina.modeloCPU, Math.ceil(maquina.capacidadeRAM), parseInt(maquina.discoUsado), parseInt(maquina.discoTotal));
+                });
+            });
+
+    }
+
+
 </script>
 
 </html>
