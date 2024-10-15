@@ -35,6 +35,14 @@
 
 }
 
+.navbar-logo-dash-adm{
+    display: flex;
+    height: 7%;
+    & img {
+        height: 100%;
+    }
+}
+
 .child-navbar-card-dash-adm {
     max-width: 120px;
     width: 100%;
