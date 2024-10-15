@@ -260,7 +260,11 @@ footer {
     }
 
     .logo-footer {
-        display: none;
+        display: flex;
+        height: 10%;
+        & img {
+            height: 100%;
+        }
     }
 
     .logo-format {
@@ -327,7 +331,11 @@ footer {
     }
 
     .logo-footer {
-        display: none;
+        display: flex;
+        height: 10%;
+        & img {
+            height: 100%;
+        }
     }
 
     .logo-format {

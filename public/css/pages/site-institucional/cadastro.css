@@ -43,7 +43,13 @@
 
 .logo-cadastro {
     display: flex;
+    align-items: center;
     gap: var(--gap-2);
+    height: 5%;
+
+    & img {
+        height: 100%;
+    }
 }
 
 .child-card-image-cadastro {
@@ -61,7 +67,7 @@
         padding: 45px;
         border: 1px solid var(--gray-0);
 
-        & p{
+        & p {
             width: 80%;
         }
     }
@@ -72,21 +78,20 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-2);
-    
+
 }
 
 /* ESPONSIVIDADE DAS TELAS */
-@media (min-width: 960px){
-    
-}
+@media (min-width: 960px) {}
 
 @media (max-width: 960px) {
-    .form-card-line-border{
+    .form-card-line-border {
         padding: 40px;
         border-radius: 10px;
         background: var(--extra-light-black);
         border: 1px solid var(--gray-0);
     }
+
     .child-card-image-cadastro {
         display: none;
     }
@@ -94,17 +99,30 @@
     .child-card-form-cadastro {
         max-width: 600px;
     }
+
     .logo-cadastro {
         justify-content: center;
         align-items: center;
+        height: 5%;
+
+        & img {
+            height: 100%;
+        }
     }
 }
 
 @media (max-width: 540px) {
-    .child-card-form-cadastro{
+    .child-card-form-cadastro {
         padding: 0;
     }
-    .logo-cadastro{
+
+    .logo-cadastro {
         margin-top: var(--gap-2);
+        align-items: center;
+        height: 5%;
+
+        & img {
+            height: 100%;
+        }
     }
 }
