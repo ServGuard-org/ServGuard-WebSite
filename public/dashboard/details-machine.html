@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>ServGuard | Máquina</title>
 </head>
 
@@ -53,13 +57,16 @@
 
         <main>
             <div class="father-details-machine-father">
-                <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold" id="id_maquina">Indefinido</span></h1>
+                <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold"
+                        id="id_maquina">...</span></h1>
                 <div class="link-back-seta">
-                    
-                    <a class="bold text-gray-dark" onclick="voltar()"><div class="icon-trian"></div> Voltar </a>
+
+                    <a class="bold text-gray-dark" onclick="voltar()">
+                        <div class="icon-trian"></div> Voltar
+                    </a>
                 </div>
             </div>
-            
+
             <div class="father-details-machine">
                 <div class="child-details-machine-info">
                     <h3 class="italic thin mb-1">Dados da Máquina: </h3>
@@ -67,29 +74,29 @@
                         <div class="info-card-machine-group mb-1">
                             <div class="info-card-machine">
                                 <p class="bold">Hostname:</p>
-                                <p id="hostname">indefinido</p>
+                                <p id="hostname">...</p>
                             </div>
                             <div class="info-card-machine">
                                 <p class="bold">Modelo CPU:</p>
-                                <p id="cpu">indefinido</p>
+                                <p id="cpu">...</p>
                             </div>
                             <div class="info-card-machine">
                                 <p class="bold">Capacidade RAM:</p>
-                                <p><span id="ram">Indefinido</span> GB</p>
+                                <p><span id="ram">...</span> GB</p>
                             </div>
                         </div>
                         <div class="info-card-machine-group">
                             <div class="info-card-machine">
                                 <p class="bold">Apelido:</p>
-                                <p id="apelido">indefinido</p>
+                                <p id="apelido">...</p>
                             </div>
                             <div class="info-card-machine">
                                 <p class="bold">Núcleos (Totais):</p>
-                                <p id="nucleos">indefinido</p>
+                                <p id="nucleos">...</p>
                             </div>
                             <div class="info-card-machine">
                                 <p class="bold">Armaz. Usado / Total:</p>
-                                <p><span id="usado">indef.</span> GB de <span id="total">indef.</span> GB</p>
+                                <p><span id="usado">...</span> GB de <span id="total">...</span> GB</p>
                             </div>
                         </div>
                     </div>
@@ -120,8 +127,10 @@
                     <div class="machine-active-deactivate">
                         <h3 class="bold">Gerenciamento da Máquina:</h3>
                         <div class="active-deactive-options">
-                            <button class="btn-dashboard" id="ativar_maquina">Ativar Máquina</button>
-                            <button class="btn-dashboard" id="desativar_maquina">Desativar Máquina</button>
+                            <button class="btn-dashboard" id="ativar_maquina" onclick="ativarMaquina()"
+                                style="display: none;">Ativar Máquina</button>
+                            <button class="btn-dashboard" id="desativar_maquina" onclick="desativarMaquina()"
+                                style="display: none;">Desativar Máquina</button>
                         </div>
                     </div>
                 </div>
@@ -228,7 +237,7 @@
         const myLineChart = new Chart(ctx, config);
 
         function consultarMaquina() {
-            
+
             fetch(`/maquinas/listarPorId/${idMaquina}`, {
                 dataType: 'json',
                 contentType: 'application/json',
@@ -246,6 +255,15 @@
                     document.getElementById("nucleos").innerHTML = data[0].qtdNucleosLogicos;
                     document.getElementById("usado").innerHTML = parseFloat(data[0].discoUsado).toFixed(2);
                     document.getElementById("total").innerHTML = parseFloat(data[0].discoTotal).toFixed(2);
+
+                    if (data[0].isAtiva === 1) {
+                        document.getElementById("ativar_maquina").style.display = "none";
+                        document.getElementById("desativar_maquina").style.display = "block";
+                    } else {
+                        document.getElementById("ativar_maquina").style.display = "block";
+                        document.getElementById("desativar_maquina").style.display = "none";
+                    }
+
                 })
                 .catch(error => console.error(error));
         }
@@ -254,7 +272,7 @@
             fetch(`/maquinas/listarVolumesPorMaquina/${idMaquina}`, {
                 dataType: 'json',
                 contentType: 'application/json',
-            }) .then(response => response.json())
+            }).then(response => response.json())
                 .then(data => {
                     console.log(data);
                     data.forEach(element => {
@@ -283,6 +301,54 @@
                                     </div>`;
 
             document.getElementById("pai_volumes").innerHTML += novoVolume;
+        }
+
+        function ativarMaquina() {
+            fetch(`/maquinas/ativarPorId/${idMaquina}`, {
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    Swal.fire({
+                        position: "bottom-end",
+                        icon: "success",
+                        title: `Máquina de id: ${idMaquina} Ativada com Sucesso!`,
+                        showConfirmButton: false,
+                        timer: 1100,
+                        backdrop: false,
+                        background: '#EEE9FA'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+        function desativarMaquina() {
+            fetch(`/maquinas/inativarPorId/${idMaquina}`, {
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    Swal.fire({
+                        position: "bottom-end",
+                        icon: "success",
+                        title: `Máquina de id: ${idMaquina} Desativada com Sucesso!`,
+                        showConfirmButton: false,
+                        timer: 1100,
+                        backdrop: false,
+                        background: '#EEE9FA'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                })
+                .catch(error => console.error(error));
         }
 
     </script>
