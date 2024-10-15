@@ -245,17 +245,22 @@
 
     function adicionarFuncionario(idUsuario, nome, email, isAdm, isAtivo) {
 
+        const idLogado = sessionStorage.getItem("ID_USUARIO");
+
         const elementoPai = document.getElementById("elemento_funcionario_pai");
 
         const cargo = isAdm ? "Administrador" : "Analista";
 
         const acao = isAtivo ? `<button class="bold underline italic botao-acao" onclick="inativarFuncionario(${idUsuario})">Inativar</button>` : `<button class="bold underline italic botao-acao" onclick="ativarFuncionario(${idUsuario})">Ativar</button>`
 
-        const novoElemento = `<div class="child-funcionario-elemento">
+        let novoElemento;
+
+        if (idUsuario == idLogado) {
+            novoElemento = `<div class="child-funcionario-elemento" style="color: white">
                         <a href="#" class="child-elemento-editar" onclick="exibirEditar(), editarFuncionario(${idUsuario})">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
-                        <div class="child-funcionario-elemento-infos">
+                        <div class="child-funcionario-elemento-infos" style="background-color: var(--dark-purple)">
                             <div class="child-funcionario-elemento-info-area-id">
                                 <p>${idUsuario}</p>
                             </div>
@@ -268,11 +273,35 @@
                             <div class="child-funcionario-elemento-info-area-cargo">
                                 <p>${cargo}</p>
                             </div>
-                            <div class="child-funcionario-elemento-info-area-acao">
-                                ${acao}
+                            <div class="child-funcionario-elemento-info-area-acao" style="color: white">
+                                Indisponível
                             </div>
                         </div>
                     </div>`;
+        } else if (idUsuario != idLogado) {
+            novoElemento = `<div class="child-funcionario-elemento">
+                            <a href="#" class="child-elemento-editar" onclick="exibirEditar(), editarFuncionario(${idUsuario})">
+                                <img src="../assets/svg/edit.svg" alt="#icone-">
+                            </a>
+                            <div class="child-funcionario-elemento-infos">
+                                <div class="child-funcionario-elemento-info-area-id">
+                                    <p>${idUsuario}</p>
+                                </div>
+                                <div class="child-funcionario-elemento-info-area-nome">
+                                    <p>${nome}</p>
+                                </div>
+                                <div class="child-funcionario-elemento-info-area-email">
+                                    <p>${email}</p>
+                                </div>
+                                <div class="child-funcionario-elemento-info-area-cargo">
+                                    <p>${cargo}</p>
+                                </div>
+                                <div class="child-funcionario-elemento-info-area-acao">
+                                    ${acao}
+                                </div>
+                            </div>
+                        </div>`;
+        }
 
         elementoPai.innerHTML += novoElemento;
     }
