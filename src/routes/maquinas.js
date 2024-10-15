@@ -15,16 +15,20 @@ router.get("/ativarPorId/:idMaquina", function (req, res) {
     maquinaController.ativarPorId(req, res);
 });
 
-router.post("/atualizarNomePorId", function (req, res) {
-    maquinaController.atualizarNomePorId(req, res);
-});
-
-router.post("/atualizarRackPorId", function (req, res) {
-    maquinaController.atualizarRackPorId(req, res);
+router.post("/atualizarApelidoPorId", function (req, res) {
+    maquinaController.atualizarApelidoPorId(req, res);
 });
 
 router.get("/listarPorEmpresa/:idEmpresa", function (req, res) {
     maquinaController.listarPorEmpresa(req, res);
+})
+
+router.get("/listarPorId/:idMaquina", function (req, res) {
+    maquinaController.listarPorId(req, res);
+})
+
+router.get("/listarAlertaPorId/:idMaquina", function (req, res) {
+    maquinaController.listarAlertaPorId(req, res);
 })
 
 module.exports = router;

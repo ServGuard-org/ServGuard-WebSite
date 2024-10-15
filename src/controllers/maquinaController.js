@@ -65,32 +65,11 @@ function ativarPorId(req, res) {
         )
 }
 
-function atualizarNomePorId(req, res) {
+function atualizarApelidoPorId(req, res) {
     let idMaquina = req.body.idMaquina;
-    let nome = req.body.nome;
+    let apelido = req.body.apelido;
 
-    maquinaModel.atualizarNomePorId(idMaquina, nome)
-        .then(
-            function (resposta) {
-                res.json(resposta)
-            }
-        ).catch(
-            function (erro) {
-                console.log(erro);
-                console.log(
-                    "\nHouve um erro ao realizar o cadastro! Erro: ",
-                    erro.sqlMessage
-                );
-                res.status(500).json(erro.sqlMessage);
-            }
-        )
-}
-
-function atualizarRackPorId(req, res) {
-    let idMaquina = req.body.idMaquina;
-    let rack = req.body.rack;
-
-    maquinaModel.atualizarRackPorId(idMaquina, rack)
+    maquinaModel.atualizarApelidoPorId(idMaquina, apelido)
         .then(
             function (resposta) {
                 res.json(resposta)
@@ -126,6 +105,44 @@ function listarPorEmpresa(req, res) {
         });
 }
 
+function listarPorId(req, res) {
+    let idMaquina = req.params.idMaquina;
+
+    maquinaModel.listarPorId(idMaquina)
+        .then(
+            resposta => {
+                if (resposta.length > 0) {
+                    res.status(200).json(resposta)
+                } else {
+                    res.status(204).send(`Não foi encontrada nenhuma máquina para esta empresa! idMaquina: ${idMaquina} `);
+                }
+            }
+        ).catch(erro => {
+            console.log(erro);
+            console.log("Houve um erro ao buscar as máquinas por empresa: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function listarAlertaPorId(req, res) {
+    let idMaquina = req.params.idMaquina;
+
+    maquinaModel.listarAlertaPorId(idMaquina)
+        .then(
+            resposta => {
+                if (resposta.length > 0) {
+                    res.status(200).json(resposta)
+                } else {
+                    res.status(204).send(`Não foi encontrada nenhuma máquina para esta empresa! idMaquina: ${idMaquina} `);
+                }
+            }
+        ).catch(erro => {
+            console.log(erro);
+            console.log("Houve um erro ao buscar as máquinas por empresa: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
-    cadastrar, inativarPorId, ativarPorId, atualizarNomePorId, atualizarRackPorId, listarPorEmpresa
+    cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId
 }

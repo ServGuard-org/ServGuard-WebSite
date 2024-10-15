@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
 
-router.get("/ultimas/:idAquario", function (req, res) {
-    medidaController.buscarUltimasMedidas(req, res);
+const alertaController = require("../controllers/alertaController");
+
+router.post("/atualizarPorMaquina/:idMaquina", function (req, res) {
+    alertaController.atualizarPorMaquina(req, res);
 });
 
 module.exports = router;

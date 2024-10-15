@@ -18,24 +18,30 @@ function ativarPorId(idMaquina) {
     return database.executar(instrucaoSql);
 }
 
-function atualizarNomePorId(idMaquina, nome) {
-    let instrucaoSql = `UPDATE Maquina SET nome = '${nome}' WHERE idMaquina = ${idMaquina};`;
-
-    return database.executar(instrucaoSql);
-}
-
-function atualizarRackPorId(idMaquina, rack) {
-    let instrucaoSql = `UPDATE Maquina SET rack = '${rack}' WHERE idMaquina = ${idMaquina};`;
+function atualizarApelidoPorId(idMaquina, apelido) {
+    let instrucaoSql = `UPDATE Maquina SET apelido = '${apelido}' WHERE idMaquina = ${idMaquina};`;
 
     return database.executar(instrucaoSql);
 }
 
 function listarPorEmpresa(fkEmpresa) {
     let instrucaoSql = `SELECT *
-FROM vista_maquinas_com_disco
-WHERE fkEmpresa = ${fkEmpresa}
-ORDER BY isAtiva DESC;`;
+        FROM vista_maquinas_com_disco
+        WHERE fkEmpresa = ${fkEmpresa}
+        ORDER BY isAtiva DESC;`;
     return database.executar(instrucaoSql)
 }
 
-module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarNomePorId, atualizarRackPorId, listarPorEmpresa}
+function listarPorId(idMaquina) {
+    let instrucaoSql = `SELECT * FROM vista_maquinas_com_disco WHERE idMaquina = ${idMaquina};`;
+
+    return database.executar(instrucaoSql);
+}
+
+function listarAlertaPorId(idMaquina) {
+    let instrucaoSql = `SELECT * FROM vista_alertas_maquinas WHERE idMaquina = ${idMaquina};`;
+
+    return database.executar(instrucaoSql);
+}
+
+module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId }

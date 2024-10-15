@@ -131,14 +131,23 @@ SELECT
     m.capacidadeRAM,
     m.MACAddress,
     m.isAtiva,
-    SUM(cv.usado) AS discoUsado,
-    SUM(v.capacidade) AS discoTotal
+    -- Captura o último valor de usado
+    (SELECT SUM(cv.usado)
+     FROM ServGuard.CapturaVolume cv
+     JOIN ServGuard.Volume v2 ON v2.idVolume = cv.fkVolume
+     WHERE v2.fkMaquina = m.idMaquina 
+     AND cv.dthCriacao = (
+         SELECT MAX(cv2.dthCriacao)
+         FROM ServGuard.CapturaVolume cv2
+         WHERE cv2.fkVolume = v2.idVolume
+     )
+    ) AS discoUsado,
+    -- Soma a capacidade total dos volumes
+    SUM(DISTINCT v.capacidade) AS discoTotal
 FROM 
     ServGuard.Maquina m
 LEFT JOIN 
     ServGuard.Volume v ON v.fkMaquina = m.idMaquina
-LEFT JOIN 
-    ServGuard.CapturaVolume cv ON v.idVolume = cv.fkVolume
 GROUP BY 
     m.idMaquina,
     m.fkEmpresa,
@@ -152,3 +161,25 @@ GROUP BY
     m.isAtiva
 ORDER BY 
     m.isAtiva DESC;
+
+CREATE VIEW vista_alertas_maquinas AS
+SELECT 
+    m.idMaquina, -- ID da máquina
+    m.nome AS nomeMaquina, -- Nome da máquina
+    r.nome AS recursoNome, -- Nome do recurso
+    mr.max AS maxRecurso, -- Valor máximo do recurso da tabela MaquinaRecurso
+    MAX(cr.dthCriacao) AS dataMaximaCaptura -- Data da captura mais recente
+FROM 
+    ServGuard.Maquina m
+JOIN 
+    ServGuard.MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
+JOIN 
+    ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN 
+    ServGuard.Captura cr ON mr.idMaquinaRecurso = cr.fkMaquinaRecurso
+WHERE 
+    r.nome IN ('usoCPU', 'usoRAM')
+GROUP BY 
+    m.idMaquina, m.nome, r.nome, mr.max -- Inclui mr.max no GROUP BY
+ORDER BY 
+    r.nome;

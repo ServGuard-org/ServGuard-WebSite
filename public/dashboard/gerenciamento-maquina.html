@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServGuard | Ger. Máquina</title>
     <link rel="stylesheet" href="../css/main.css">
+    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body onload="consultarMaquinas()">
+<body onload="document.getElementById('pai-maquinas').innerHTML = '';
+consultarMaquinas()">
     <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-gerenciamento-maquina">
         <header>
@@ -145,30 +148,24 @@
                     <a class="icone-input">
                         <img src="../assets/svg/computer-icon.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Apelido da Máquina">
+                    <input type="text" class="input-popup" placeholder="Apelido da Máquina" id="input_apelido">
                 </div>
                 <h5 class="bold">Parâmetros para Disparo de Alertas:</h5>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/cpu-icon.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Uso de CPU(%)">
+                    <input type="number" class="input-popup" placeholder="Uso de CPU(%)" id="input_cpu">
                 </div>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/ram-icon.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Uso de RAM(%)">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="text" class="input-popup" placeholder="Perda de Pacotes">
+                    <input type="number" class="input-popup" placeholder="Uso de RAM(%)" id="input_ram">
                 </div>
             </div>
             <div class="father-popup-botao">
-                <button class="botao-cadastrar-executar" onclick="Atualizar()"><b>Atualizar</b></button>
+                <button class="botao-cadastrar-executar" id="botao_atualizar"><b>Atualizar</b></button>
                 <p onclick="sairEditar()" class="botao-cadastrar-cancelar italic underline bold">Sair</p>
             </div>
         </div>
@@ -186,19 +183,25 @@
         window.location.href = "details-machine.html";
     }
 
-    function exibirEditar() {
+    function exibirEditar(idMaquina) {
+        listarPorId(idMaquina);
         document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
     }
     function sairEditar() {
+        document.getElementById("input_apelido").value = "";
+        document.getElementById("input_ram").value = "";
+        document.getElementById("input_cpu").value = "";
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
     function adicionarMaquina(idMaquina, nome, apelido, cpu, ram, armazenamentoUsado, armazenamentoTotal) {
 
+        console.log("chamou adicionarMaquina()!!!!!!!!!!!!!!!!")
+
         const elementoPai = document.getElementById("pai-maquinas");
 
         const novoElemento = `<div class="child-maquina-elemento">
-                        <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
+                        <a href="#" class="child-elemento-editar" onclick="exibirEditar(${idMaquina})">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
                         <div class="child-maquina-elemento-infos">
@@ -232,7 +235,7 @@
     }
 
     function consultarMaquinas() {
-
+        document.getElementById("pai-maquinas").innerHTML = "";
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
         fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
@@ -258,6 +261,114 @@
 
     }
 
+    function listarPorId(idMaquina) {
+        fetch(`/maquinas/listarPorId/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("input_apelido").value = data[0].apelido;
+            }).catch(error => {
+                console.error("Erro ao listar por id: ", error);
+            });
+
+
+        fetch(`/maquinas/listarAlertaPorId/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(alerta => {
+                    if (alerta.recursoNome === "usoCPU") {
+                        document.getElementById("input_cpu").value = alerta.maxRecurso;
+                    } else if (alerta.recursoNome === "usoRAM") {
+                        document.getElementById("input_ram").value = alerta.maxRecurso;
+                    }
+                });
+
+                botao = document.getElementById("botao_atualizar");
+
+                botao.setAttribute('onclick', `atualizarDados(${data[0].idMaquina})`);
+
+            }).catch(error => {
+                console.error("Erro ao listar parametros por maquina: ", error);
+            });
+    }
+
+    function atualizarDados(idMaquina) {
+        const apelido = document.getElementById("input_apelido").value;
+        const cpu = document.getElementById("input_cpu").value;
+        const ram = document.getElementById("input_ram").value;
+
+        if (apelido !== "indefinido") {
+            fetch(`/maquinas/atualizarApelidoPorId`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idMaquina: idMaquina,
+                    apelido: apelido
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Dados atualizados com sucesso!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+
+                    response.json()
+                })
+                .then(data => {
+                    console.log("Atualizado com sucesso: ", data);
+                }).catch(error => {
+                    console.error("Erro ao atualizar: ", error);
+                });
+        }
+        const body = {
+            usoCPU: cpu || null,  // Se cpu estiver definido, usa seu valor; caso contrário, usa null
+            usoRAM: ram || null   // Se ram estiver definido, usa seu valor; caso contrário, usa null
+        };
+
+        fetch(`/alertas/atualizarPorMaquina/${idMaquina}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Dados atualizados com sucesso!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+                response.json()
+                    .then(data => {
+                        document.getElementById("pai-maquinas").innerHTML = "";
+                        consultarMaquinas();
+                        console.log("Atualizado com sucesso: ", data);
+                    });
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar: ", error);
+            });
+
+        sairEditar();
+    }
 
 </script>
 
