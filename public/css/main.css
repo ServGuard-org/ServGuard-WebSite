@@ -17,6 +17,7 @@
 
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
 @import url(./pages/site-institucional/cadastro.css);
+@import url(./pages/site-institucional/welcome.css);
 
 *,
 *::after,
