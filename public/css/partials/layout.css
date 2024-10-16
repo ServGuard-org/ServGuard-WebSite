@@ -1,4 +1,9 @@
 /* RESPONSIVIDADE */
+/* @media (min-width: 1440px) */
+/* @media (max-width: 1440px) */
+/* @media (max-width: 1140px) */
+/* @media (max-width: 960px) */
+/* @media (max-width: 540px) */
 .flex-1{
     flex: 1;
 }

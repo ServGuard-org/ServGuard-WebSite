@@ -221,7 +221,7 @@
 
 .child-funcionario-elemento-info-area-acao {
     width: 10%;
-    color: var(--darked-purple);
+    color: var(--dark-purple);
 }
 
 .child-funcionario-elemento-info-area-acao:hover {
@@ -231,7 +231,9 @@
 .botao-acao{
     border: none;
     background-color: #FFF;
-    color: var(--darked-purple);
+    color: var(--dark-purple);
+    cursor: pointer;
+    padding: 5px 10px;
     /* transition: 400ms; */
 }
 
@@ -259,7 +261,7 @@
     font-size: 20px;
     font-style: inherit;
 
-    background-color: var(--darked-purple);
+    background-color: var(--dark-purple);
     border: none;
     border-radius: 50px;
 
@@ -269,7 +271,7 @@
 .botao-cadastrar-funcionario:hover {
     height: 60px;
     cursor: pointer;
-    color: var(--darked-purple);
+    color: var(--dark-purple);
     background-color: #FFF;
 }
 

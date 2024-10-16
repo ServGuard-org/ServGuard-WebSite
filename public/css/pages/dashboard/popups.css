@@ -194,7 +194,7 @@
     font-size: 20px;
     font-style: inherit;
 
-    background-color: var(--darked-purple);
+    background-color: var(--dark-purple);
     border: none;
     border-radius: 50px;
 
@@ -203,7 +203,7 @@
 .botao-cadastrar-executar:hover {
     height: 50px;
     cursor: pointer;
-    color: var(--darked-purple);
+    color: var(--dark-purple);
     background-color: #FFF;
 } 
 
@@ -211,7 +211,7 @@
     height: 70%;
     font-size: 20px;
     padding-left: 15px;
-    color: var(--darked-purple);
+    color: var(--dark-purple);
     display: flex;
     justify-content: center;
     align-items: center;

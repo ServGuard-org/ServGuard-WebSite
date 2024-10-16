@@ -243,19 +243,8 @@
 
 .child-maquina-elemento-info-area-acao{
     width: 4%;
-    color: var(--darked-purple);
+    color: var(--dark-purple);
 }
-.child-maquina-elemento-info-area-acao:hover {
-    cursor: pointer;
-}
-
-.botao-acao{
-    border: none;
-    background-color: #FFF;
-    color: var(--darked-purple);
-    /* transition: 400ms; */
-}
-
 
 .father-maquina-botao {
     width: 95%;
