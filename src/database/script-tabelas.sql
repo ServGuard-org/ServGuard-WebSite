@@ -29,16 +29,6 @@ CONSTRAINT fkEmpresaUsuario FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa
 PRIMARY KEY (idUsuario, fkEmpresa)
 );
 
-CREATE TABLE IF NOT EXISTS ServGuard.ServicoMonitorado (
-idServicoMonitorado INT NOT NULL AUTO_INCREMENT,
-fkEmpresa INT NOT NULL,
-nome VARCHAR(50) NOT NULL,
-URL VARCHAR(255) NOT NULL,
-
-CONSTRAINT fkEmpresaServicoMonitorado FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
-PRIMARY KEY (idServicoMonitorado, fkEmpresa)
-);
-
 CREATE TABLE IF NOT EXISTS ServGuard.Maquina (
 idMaquina INT NOT NULL AUTO_INCREMENT,
 fkEmpresa INT NOT NULL,
