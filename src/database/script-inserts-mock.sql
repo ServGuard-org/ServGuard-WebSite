@@ -6,7 +6,10 @@ INSERT INTO ServGuard.Empresa (nome, nomeResponsavel, emailResponsavel, CNPJ) VA
 SET @empresaId = LAST_INSERT_ID();
 
 INSERT INTO ServGuard.Usuario (fkEmpresa, nome, email, senha, isAdm) VALUES
-    (@empresaId, 'Cláudio Fernandes', 'claudio.fernandes@bcenter.com', '123', 1);
+    (@empresaId, 'Cláudio Fernandes', 'claudio.fernandes@bcenter.com', '123', 1),
+    (@empresaId, 'João Silva', 'joao.silva@bcenter.com', '123', 0),
+    (@empresaId, 'Maria Santos', 'maria.santos@bcenter.com', '123', 1),
+    (@empresaId, 'José Oliveira', 'jose.oliveira@bcenter.com', '123', 0);
 
 INSERT INTO ServGuard.Maquina (fkEmpresa, apelido, nome, modeloCPU, qtdNucleosFisicos, qtdNucleosLogicos, capacidadeRAM, MACAddress) VALUES
     (@empresaId, 'indefinido', 'pix-srv-01', 'Intel(R) Xeon(TM) Gold 6258R @ 2.70 GHz', 28, 56, 128.000, '00:00:00:00:00:00');
