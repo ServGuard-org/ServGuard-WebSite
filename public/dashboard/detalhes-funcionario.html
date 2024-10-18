@@ -73,7 +73,7 @@
                         <h4 class="bold">E-mail: <span id="email" class="thin"></span></h4>
                         <h4 class="bold">Cargo: <span id="cargo" class="thin"></span></h4>
                     </div>
-                    <h4>Caso ainda esteja utilizando a senha feita pelo administrador, por questões de segurança é de
+                    <h4>Caso ainda esteja utilizando a senha criada pelo administrador, por questões de segurança é de
                         grande importância alterá-la clicando no botão de “<span class="bold"
                             style="color: var(--dark-purple);">alterar meus dados</span>”.</h4>
                 </div>
@@ -108,13 +108,13 @@
                     <a class="icone-input">
                         <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Senha" id="ipt_senha_editar">
+                    <input type="password" class="input-popup" placeholder="Senha" id="ipt_senha_editar">
                 </div>
                 <div class="child-input">
                     <a class="icone-input">
                         <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
                     </a>
-                    <input type="text" class="input-popup" placeholder="Confirmar senha"
+                    <input type="password" class="input-popup" placeholder="Confirmar senha"
                         id="ipt_confirmar_senha_editar">
                 </div>
             </div>
@@ -183,6 +183,8 @@
                     campoEmail.innerHTML = resposta.email;
                     campoNome.innerHTML = resposta.nome;
 
+                    sessionStorage.setItem("NOME_USUARIO", resposta.nome);
+                    sessionStorage.setItem("EMAIL_USUARIO", resposta.email);
 
                 })
             } else {
