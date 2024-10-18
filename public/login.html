@@ -1,88 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/main.css" />
-    <link rel="shortcut icon" href="assets/svg/logo-white.svg" type="image/x-icon" />
-    <title>ServGuard | Login</title>
-    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- IMPORTANDO A ESTILIZAÇÃO DO SWEETALERT - THEME DARK -->
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-  </head>
-  <body>
-    <section id="page-cadastro">
-      <main class="father-cadastro">
-        <div class="child-card-form-cadastro">
-          <div class="card-form-cadastro">
-            <a class="logo-cadastro text-white mt-2" href="./index.html">
-              <img src="./assets/svg/logo-white.svg" alt="" />
-              <h3 class="bold">ServGuard</h3>
-            </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/main.css" />
+  <link rel="shortcut icon" href="assets/svg/logo-white.svg" type="image/x-icon" />
+  <title>ServGuard | Login</title>
+  <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            <form action="">
-              <div class="form-card-line-border mb-1">
-                <div class="form-titulo-cadastro my-3">
-                  <h3 class="text-white mb-1">Bem vindo de volta!</h3>
-                  <p class="text-gray">
-                    Faça login abaixo para continuar acessando a dashboard.
-                  </p>
-                </div>
-                <div class="formContainer mb-2">
-                  <input
-                    placeholder="example@email.com"
-                    type="text"
-                    id="email_usuario"
-                    name="email_usuario"
-                    required
-                    autocomplete="off"
-                  />
-                  <label class="text-white" for="email">Email</label>
-                </div>
-                <div class="formContainer">
-                  <input
-                    placeholder="Digite sua senha"
-                    type="password"
-                    id="senha_usuario"
-                    name="senha_usuario"
-                    required
-                    autocomplete="off"
-                  />
-                  <label class="text-white" for="senha">Senha</label>
-                </div>
+  <!-- IMPORTANDO A ESTILIZAÇÃO DO SWEETALERT - THEME DARK -->
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+</head>
 
-                <button class="btnServGuard mt-3" onclick="logar()">
-                  Entrar
-                </button>
+<body>
+  <section id="page-cadastro">
+    <main class="father-cadastro">
+      <div class="child-card-form-cadastro">
+        <div class="card-form-cadastro">
+          <a class="logo-cadastro text-white mt-2" href="./index.html">
+            <img src="./assets/svg/logo-white.svg" alt="" />
+            <h3 class="bold">ServGuard</h3>
+          </a>
 
-                <p class="text-gray little-text center">
-                  Não tem uma conta?
-                  <a class="text-purple little-text" href="./cadastro.html">
-                    Inscreva-se
-                  </a>
+          <form action="">
+            <div class="form-card-line-border mb-1">
+              <div class="form-titulo-cadastro my-3">
+                <h3 class="text-white mb-1">Bem vindo de volta!</h3>
+                <p class="text-gray">
+                  Faça login abaixo para continuar acessando a dashboard.
                 </p>
               </div>
-            </form>
-          </div>
+              <div class="formContainer mb-2">
+                <input placeholder="example@email.com" type="text" id="email_usuario" name="email_usuario" required
+                  autocomplete="off" />
+                <label class="text-white" for="email">Email</label>
+              </div>
+              <div class="formContainer">
+                <input placeholder="Digite sua senha" type="password" id="senha_usuario" name="senha_usuario" required
+                  autocomplete="off" />
+                <label class="text-white" for="senha">Senha</label>
+              </div>
+
+              <button class="btnServGuard mt-3" onclick="logar()">
+                Entrar
+              </button>
+
+              <p class="text-gray little-text center">
+                Não tem uma conta?
+                <a class="text-purple little-text" href="./cadastro.html">
+                  Inscreva-se
+                </a>
+              </p>
+            </div>
+          </form>
         </div>
-        <div class="child-card-image-cadastro">
-          <figure>
-            <h3 class="text-white mb-1">Sua Central de Controle</h3>
-            <p class="text-gray">
-              Monitore e gerencie suas operações com eficiência em um só lugar.
-            </p>
-          </figure>
-        </div>
-      </main>
-    </section>
-  </body>
+      </div>
+      <div class="child-card-image-cadastro">
+        <figure>
+          <h3 class="text-white mb-1">Sua Central de Controle</h3>
+          <p class="text-gray">
+            Monitore e gerencie suas operações com eficiência em um só lugar.
+          </p>
+        </figure>
+      </div>
+    </main>
+  </section>
+</body>
+
 </html>
 <script>
   function verificar() {
-    // funcao inutilizada
+    // funcao inutilizada -- pode reaproveitar
     var inputEmail = inp_usermail.value;
 
     var indice_arroba = inputEmail.indexOf("@");
@@ -119,30 +110,56 @@
         console.log("Resposta: ", resposta);
 
         if (resposta.ok) {
-          console.log("Usuário logado com sucesso: ", resposta);
-
           resposta.json().then((resposta) => {
-            sessionStorage.setItem("ID_USUARIO", resposta.idUsuario);
-            sessionStorage.setItem("NOME_USUARIO", resposta.nome);
-            sessionStorage.setItem("EMAIL_USUARIO", resposta.email);
-            sessionStorage.setItem("ID_EMPRESA_USUARIO", resposta.fkEmpresa);
-            sessionStorage.setItem("IS_ADM_USUARIO", resposta.isAdm);
+            if (resposta.isAtivo !== 1) {
+              Swal.fire({
+                icon: "error",
+                title: "Usuário Inativo!",
+                text: "Se você acredita que foi um erro, contate o administrador da sua organização.",
+                color: '#fff',
+                confirmButtonColor: '#4E2E9E',
+                background: '#1d1d1d',
+              }).then(() => {
+                window.location.reload();
+              });
+            } else {
 
-            Swal.fire({
-              icon: "success",
-              title: "Login Realizado com sucesso!",
-              showConfirmButton: false,
-              timer: 1500,
-              color: '#fff',
-              background: '#1d1d1d',
-            }).then(() => {
-              if (resposta.isAdm == 1) {
+              sessionStorage.setItem("ID_USUARIO", resposta.idUsuario);
+              sessionStorage.setItem("NOME_USUARIO", resposta.nome);
+              sessionStorage.setItem("EMAIL_USUARIO", resposta.email);
+              sessionStorage.setItem("ID_EMPRESA_USUARIO", resposta.fkEmpresa);
+              sessionStorage.setItem("IS_ADM_USUARIO", resposta.isAdm);
+              sessionStorage.setItem("IS_ATIVO_USUARIO", resposta.isAtivo);
+
+
+              Swal.fire({
+                icon: "success",
+                title: "Login Realizado com sucesso!",
+                showConfirmButton: false,
+                timer: 1500,
+                color: '#fff',
+                background: '#1d1d1d',
+              }).then(() => {
+                if (resposta.isAdm === 1) {
                   window.location.href = "./dashboard/dashboard-adm.html";
-              } else if (resposta.isAdm == 0) {
+                } else if (resposta.isAdm === 0) {
                   window.location.href = "./dashboard/dashboard-analista.html";
-              }
-            });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Falha ao redirecionar para a dashboard!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    color: '#fff',
+                    background: '#1d1d1d',
+                  }).then(() => {
+                    window.location.reload();
+                  })
+                }
+              });
+            }
           });
+
         } else {
           throw "Houve um erro ao tentar realizar o login!";
         }

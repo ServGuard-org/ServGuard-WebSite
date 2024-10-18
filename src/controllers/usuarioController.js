@@ -24,6 +24,7 @@ function autenticar(req, res) {
                             nome: resultadoAutenticar[0].nome,
                             senha: resultadoAutenticar[0].senha,
                             isAdm: resultadoAutenticar[0].isAdm,
+                            isAtivo: resultadoAutenticar[0].isAtivo,
                             fkEmpresa: resultadoAutenticar[0].empresaId
                         });
                     } else if (resultadoAutenticar.length == 0) {
