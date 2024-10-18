@@ -38,7 +38,7 @@
                             </a>
                             <p class="little-text mt-1">Detalhes</p>
                           </li>
-                        <li>
+                        <li id="li-funcionario"> 
                             <a href="./gerenciamento-funcionario.html" class="link-dash-adm active">
                                 <img src="../assets/svg/func-icon-white.svg" alt="#icone-funcionario">
                             </a>
@@ -231,6 +231,7 @@
       var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
       if (isADM !== null && Number(isADM) === 0) {
         document.getElementById('li-adm').style.display = 'none';
+        document.getElementById('li-funcionario').style.display = 'none';
       }
     }
     function sairNavbar() {
