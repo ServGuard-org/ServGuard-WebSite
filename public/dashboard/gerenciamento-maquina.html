@@ -22,7 +22,7 @@ consultarMaquinas(), verificarCargo()">
                 </div>
 
                 <div class="navbar-navlink-dash-adm">
-                    <ul class="list-navlink-dash-adm">
+                    <ul class="list-navlink-dash-adm" id="ul-nav" style="display: none;">
                         <li id="li-adm">
                             <a href="./dashboard-adm.html" class="link-dash-adm">
                                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
@@ -185,6 +185,11 @@ consultarMaquinas(), verificarCargo()">
         if (isADM !== null && Number(isADM) === 0) {
             document.getElementById('li-adm').style.display = 'none';
             document.getElementById('li-funcionario').style.display = 'none';
+            document.getElementById('ul-nav').style.display = 'flex';
+        } else {
+            document.getElementById('li-adm').style.display = 'flex';
+            document.getElementById('li-funcionario').style.display = 'flex';
+            document.getElementById('ul-nav').style.display = 'flex';
         }
     }
     function sairNavbar() {
