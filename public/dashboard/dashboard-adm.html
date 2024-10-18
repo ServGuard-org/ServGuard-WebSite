@@ -72,11 +72,11 @@
           <div class="dash-adm-info-user">
             <h3 class="bold">
               Olá de novo,
-              <span id="nome_usuario" class="bold">Usuário Indefinido</span>!
+              <span id="nome_usuario" class="bold">...</span>!
             </h3>
             <div class="info-user">
-              <p class="" id="data_tempo_real">Tempo Indefinido</p>
-              <p class="" id="empresa_usuario">Empresa Indefinida</p>
+              <p class="" id="data_tempo_real">...</p>
+              <p class="" id="empresa_usuario">...</p>
             </div>
           </div>
           <div class="dash-adm-parameter-stability">
@@ -114,13 +114,13 @@
             </h2>
             <div class="general-vision-info">
               <h4 class="general-vision-info-text center bold">
-                Total de máquinas: <span id="total_maquinas">indefinido</span>
+                Total de máquinas: <span id="total_maquinas">...</span>
               </h4>
               <div class="general-vision-line"></div>
               <h4 class="general-vision-info-text center bold">
                 Em funcionamento:
                 <span class="text-purple" id="funcionamento_maquinas"
-                  >indefinido</span
+                  >...</span
                 >
               </h4>
             </div>
@@ -128,13 +128,13 @@
               <div class="card-irregular">
                 <h3 class="center italic">Irregularidades:</h3>
                 <h4 class="bold center">
-                  CPU: <span class="text-yellow" id="irr_cpu">indefinido</span>
+                  CPU: <span class="text-yellow" id="irr_cpu">...</span>
                 </h4>
                 <h4 class="bold center">
-                  RAM: <span class="text-green" id="irr_ram">indefinido</span>
+                  RAM: <span class="text-green" id="irr_ram">...</span>
                 </h4>
                 <h4 class="bold center">
-                  Disco: <span class="text-red" id="irr_disco">indefinido</span>
+                  Disco: <span class="text-red" id="irr_disco">...</span>
                 </h4>
               </div>
               <div class="card-rede-conect">
@@ -367,7 +367,9 @@
       }
 
       function obterNomeEmpresa() {
-        return sessionStorage.getItem('NOME_EMPRESA');
+        const nomeEmpresa = sessionStorage.getItem('NOME_EMPRESA');
+        const idEmpresa = sessionStorage.getItem('ID_EMPRESA_USUARIO');
+        return `${nomeEmpresa} - ID: ${idEmpresa}`;	
       }
 
       function obterTotalMaquinas() {
