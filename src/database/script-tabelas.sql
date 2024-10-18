@@ -43,7 +43,7 @@ MACAddress CHAR(17) UNIQUE NOT NULL,
 isAtiva TINYINT DEFAULT 1 NOT NULL,
 
 CONSTRAINT fkEmpresaMaquina FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
-PRIMARY KEY (idMaquina, fkEmpresa)
+PRIMARY KEY (idMaquina)
 );
 
 CREATE TABLE IF NOT EXISTS ServGuard.Volume (
@@ -82,7 +82,7 @@ max DECIMAL(12,3),
 
 CONSTRAINT fkMaquinaMaquinaRecurso FOREIGN KEY (fkMaquina) REFERENCES ServGuard.Maquina(idMaquina),
 CONSTRAINT fkRecursoMaquinaRecurso FOREIGN KEY (fkRecurso) REFERENCES ServGuard.Recurso(idRecurso),
-PRIMARY KEY (idMaquinaRecurso, fkMaquina, fkRecurso)
+PRIMARY KEY (idMaquinaRecurso)
 );
 
 CREATE TABLE IF NOT EXISTS ServGuard.Captura (
