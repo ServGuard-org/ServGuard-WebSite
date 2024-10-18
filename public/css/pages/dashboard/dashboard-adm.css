@@ -61,15 +61,17 @@
 }
 
 .navbar-navlink-dash-adm {
-    height: 62%;
+    height: 80%;
+    display: flex;
+    align-items: center;
     /* background-color: yellow; */
 }
 
 .list-navlink-dash-adm {
-    height: 100%;
+    height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     /* background-color: red; */
 }
 
