@@ -143,6 +143,10 @@
         document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
     }
     function sairEditar() {
+        document.getElementById('ipt_nome_editar').value = "";
+        document.getElementById('ipt_email_editar').value = "";
+        document.getElementById('ipt_senha_editar').value = "";
+        document.getElementById('ipt_confirmar_senha_editar').value = "";
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
