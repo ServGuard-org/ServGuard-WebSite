@@ -14,7 +14,7 @@
     <title>ServGuard | Máquina</title>
 </head>
 
-<body onload="consultarMaquina(), listarVolumes(), plotarGrafico()">
+<body onload="consultarMaquina(), listarVolumes(), plotarGrafico(), verificarCargo()">
     <section id="page-details-machine">
         <header>
             <div class="child-navbar-card-dash-adm">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
-                        <li>
+                        <li id="li-adm">
                             <a href="./dashboard-adm.html" class="link-dash-adm">
                                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
                             </a>
@@ -31,13 +31,10 @@
                         </li>
                         <li>
                             <a href="dashboard-analista.html" class="link-dash-adm">
-                              <img
-                                src="../assets/svg/search.svg"
-                                alt="#icone-layout"
-                              />
+                                <img src="../assets/svg/search.svg" alt="#icone-layout" />
                             </a>
                             <p class="little-text mt-1">Detalhes</p>
-                          </li>
+                        </li>
                         <li>
                             <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
                                 <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario">
@@ -105,7 +102,8 @@
                             </div>
                             <div class="info-card-machine">
                                 <p class="bold">Armaz. Usado / Total:</p>
-                                <p class="little-text"><span class="little-text" id="usado">...</span> GB de <span id="total">...</span> GB</p>
+                                <p class="little-text"><span class="little-text" id="usado">...</span> GB de <span
+                                        id="total">...</span> GB</p>
                             </div>
                         </div>
                     </div>
@@ -162,6 +160,13 @@
         }).then(() => {
             window.location.href = "./gerenciamento-maquina.html";
         }) : null;
+
+        function verificarCargo() {
+            var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+            if (isADM !== null && Number(isADM) === 0) {
+                document.getElementById('li-adm').style.display = 'none';
+            }
+        }
 
         function sairNavbar() {
             event.preventDefault();

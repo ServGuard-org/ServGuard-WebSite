@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body onload="carregarDados(sessionStorage.getItem('ID_USUARIO'))">
+<body onload="carregarDados(sessionStorage.getItem('ID_USUARIO')), verificarCargo()">
     <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-detalhes-funcionario">
         <header>
@@ -22,7 +22,7 @@
 
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
-                        <li>
+                        <li id="li-adm">
                             <a href="./dashboard-adm.html" class="link-dash-adm">
                                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
                             </a>
@@ -30,13 +30,10 @@
                         </li>
                         <li>
                             <a href="dashboard-analista.html" class="link-dash-adm">
-                              <img
-                                src="../assets/svg/search.svg"
-                                alt="#icone-layout"
-                              />
+                                <img src="../assets/svg/search.svg" alt="#icone-layout" />
                             </a>
                             <p class="little-text mt-1">Detalhes</p>
-                          </li>
+                        </li>
                         <li>
                             <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
                                 <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario">
@@ -133,6 +130,13 @@
 
 </body>
 <script>
+    function verificarCargo() {
+        var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+        if (isADM !== null && Number(isADM) === 0) {
+            document.getElementById('li-adm').style.display = 'none';
+        }
+    }
+
     function sairNavbar() {
         event.preventDefault();
         sessionStorage.clear();
@@ -268,13 +272,13 @@
 
         if (!nome || !email) {
             Swal.fire({
-                    icon: "error",
-                    title: "Campos Faltantes",
-                    text: "Verifique se campos de nome e e-mail estão completos.",
-                    color: '#1D1D1F',
-                    background: '#EEE9FA',
-                    confirmButtonColor: '#4E2E9E',
-                });
+                icon: "error",
+                title: "Campos Faltantes",
+                text: "Verifique se campos de nome e e-mail estão completos.",
+                color: '#1D1D1F',
+                background: '#EEE9FA',
+                confirmButtonColor: '#4E2E9E',
+            });
             return
         }
 

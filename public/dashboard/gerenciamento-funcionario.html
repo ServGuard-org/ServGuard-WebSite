@@ -12,7 +12,7 @@
 
 </head>
 
-<body onload="consultarFuncionarios()">
+<body onload="consultarFuncionarios(), verificarCargo()">
     <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-gerenciamento-funcionario">
         <header>
@@ -23,7 +23,7 @@
 
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
-                        <li>
+                        <li id="li-adm">
                             <a href="./dashboard-adm.html" class="link-dash-adm">
                                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
                             </a>
@@ -227,12 +227,17 @@
 
 </body>
 <script>
+       function verificarCargo(){
+      var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+      if (isADM !== null && Number(isADM) === 0) {
+        document.getElementById('li-adm').style.display = 'none';
+      }
+    }
     function sairNavbar() {
         event.preventDefault();
         sessionStorage.clear();
         window.location.href = "../index.html";
     }
-
     function exibirCadastrar() {
         document.getElementById('popupCadastrar').style.display = 'flex'; // Exibe o popup corretamente
     }

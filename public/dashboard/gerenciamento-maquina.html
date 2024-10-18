@@ -12,7 +12,7 @@
 </head>
 
 <body onload="document.getElementById('pai-maquinas').innerHTML = '';
-consultarMaquinas()">
+consultarMaquinas(), verificarCargo()">
     <!-- ----- TELA PRINCIPAL ----- -->
     <section id="page-gerenciamento-maquina">
         <header>
@@ -23,7 +23,7 @@ consultarMaquinas()">
 
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
-                        <li>
+                        <li id="li-adm">
                             <a href="./dashboard-adm.html" class="link-dash-adm">
                                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
                             </a>
@@ -31,13 +31,10 @@ consultarMaquinas()">
                         </li>
                         <li>
                             <a href="dashboard-analista.html" class="link-dash-adm">
-                              <img
-                                src="../assets/svg/search.svg"
-                                alt="#icone-layout"
-                              />
+                                <img src="../assets/svg/search.svg" alt="#icone-layout" />
                             </a>
                             <p class="little-text mt-1">Detalhes</p>
-                          </li>
+                        </li>
                         <li>
                             <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
                                 <img src="../assets/svg/func-icon.svg" alt="#icone-func">
@@ -183,6 +180,12 @@ consultarMaquinas()">
 
 </body>
 <script>
+    function verificarCargo() {
+        var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+        if (isADM !== null && Number(isADM) === 0) {
+            document.getElementById('li-adm').style.display = 'none';
+        }
+    }
     function sairNavbar() {
         event.preventDefault();
         sessionStorage.clear();
