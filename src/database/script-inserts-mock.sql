@@ -22,7 +22,7 @@ INSERT INTO ServGuard.Volume (fkMaquina, pontoMontagem, capacidade) VALUES
 SET @volumeIdBase = LAST_INSERT_ID();
 
 INSERT INTO ServGuard.CapturaVolume (fkVolume, usado) VALUES
-    (LAST_INSERT_ID() - 3, 100.000),   -- 100 GB
-    (LAST_INSERT_ID() - 2, 200.000),   -- 200 GB
-    (LAST_INSERT_ID() - 1, 400.000),   -- 400 GB
+    ((LAST_INSERT_ID() - 3), 100.000),   -- 100 GB
+    ((LAST_INSERT_ID() - 2), 200.000),   -- 200 GB
+    ((LAST_INSERT_ID() - 1), 400.000),   -- 400 GB
     (LAST_INSERT_ID(), 1000.000);  -- 1 TB
