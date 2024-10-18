@@ -1,7 +1,7 @@
 #sessao-conheca {
     display: flex;
     width: 100vw;
-    height: 90vh;
+    height: 100vh;
     background: #09000F;
     position: relative;
     overflow: hidden;
@@ -43,7 +43,7 @@
 }
 
 .textoGradiente {
-    background: linear-gradient(90deg, #FFF 17.42%, #330063 60.64%, #330063 10.92%);
+    background: linear-gradient(90deg, #FFF 17.42%, var(--normal-purple) 60.64%, var(--normal-purple) 10.92%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

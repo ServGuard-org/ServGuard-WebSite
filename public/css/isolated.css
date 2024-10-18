@@ -26,7 +26,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
+
 }
 
 html{
@@ -45,15 +45,16 @@ html{
 
 /* COR DA BARRA DE MEDIDA */
 ::-webkit-scrollbar-thumb {
-    background: transparent;
+    background: var(--darked-purple);
     border-radius: 3px;
 }
 
 /* HOVER DA BARRA DE MEDIDA */
 ::-webkit-scrollbar-thumb:hover {
-    background: transparent;
+    background: var(--darked-purple);
 }
 
 body{
     background: var(--darkness-purple);
+    overflow-x: hidden;
 }

@@ -1,7 +1,7 @@
 #sessao-inicial{
     width: 100vw;
     height: 110vh;
-    background: #09000F;
+    background: url(../../../assets/svg/background-stars.svg) no-repeat center center;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -18,7 +18,6 @@
 .pai-inicial{
     display: flex;
     flex-direction: row;
-    background: #09000F;
     width: 100%;
     height: 100%;
 }
@@ -29,59 +28,29 @@
     display: flex;
     flex-direction: column;
     gap: 18px;
-    background: #09000F;
     justify-content: center;
     padding-left: 8%;
-}
-
-/* From Uiverse.io by Kabak */ 
-.botao-conheca {
-    height: 50px;
-    width: 120px;
-    margin: 5px;
-    background: #0d0722;
-    justify-content: center;
-    cursor: pointer;
-    align-items: center;
-    border: solid #6313ad 1px;
-    font-size: 16px;
-    color: #fff;
-    transition: 500ms;
-    border-radius: 5px;
-    box-shadow: -1px -5px 15px #1c043b, 5px 5px 15px #24033a,
-      inset 5px 5px 10px #1b0249, inset -5px -5px 10px #190453;
-  }
-  
-  .botao-conheca:hover {
-    box-shadow: 1px 1px 13px #110350, -1px -1px 13px #1e044d;
-    color: #d6d6d6;
-    transition: 500ms;
-  }
-  
-  .botao-conheca:active {
-    box-shadow: 1px 1px 13px #140246, -1px -1px 33px #13013d;
-    color: #d6d6d6;
-    transition: 100ms;
-  }
-  
+}  
 
 #img-bolhas{
-    width: 90%;
-    background: #09000F;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
 }
 
 .img-bolhas{
-    width: 80%;
+    width: 100%;
 }
 
-.img-onda{
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.btn-welcome-space{
+    min-width: 300px;
+    max-width: 300px;
+    display: flex;
+
+    & .btn-website-servguard{
+        width: 100%;
+    }
 }
 
 @media(max-width:960px){
