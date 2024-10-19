@@ -344,7 +344,9 @@ consultarMaquinas(), verificarCargo()">
                             title: 'Dados atualizados com sucesso!',
                             showConfirmButton: false,
                             timer: 1500
-                        });
+                        }).then(() => {
+                            window.location.reload();
+                        })
                     }
 
                     response.json()
