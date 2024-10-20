@@ -137,8 +137,45 @@
     let nomeUsuario = document.getElementById("nome_usuario").value;
     let emailUsuario = document.getElementById("email_usuario").value;
     let senhaUsuario = document.getElementById("senha_usuario").value;
+    let senhaConfirmar = document.getElementById("confirmar_senha").value;
     let nomeEmpresa = document.getElementById("nome_empresa").value;
     let cnpj = document.getElementById("cnpj").value;
+
+    if (nomeUsuario == "" || emailUsuario == "" || senhaUsuario == "" || nomeEmpresa == "" || cnpj == "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        color: '#fff',
+        text: "Preencha todos os campos!",
+        background: '#1d1d1d',
+        confirmButtonColor: '#4E2E9E',
+      });
+      return;
+    }
+
+    if (senhaUsuario != senhaConfirmar) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        color: '#fff',
+        text: "As senhas não coincidem!",
+        background: '#1d1d1d',
+        confirmButtonColor: '#4E2E9E',
+      });
+      return;
+    }
+
+    if (cnpj.length != 14) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        color: '#fff',
+        text: "CNPJ inválido!",
+        background: '#1d1d1d',
+        confirmButtonColor: '#4E2E9E',
+      });
+      return;
+    }
 
     fetch("/empresas/cadastrar", {
       method: "POST",

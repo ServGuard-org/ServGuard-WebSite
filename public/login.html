@@ -72,29 +72,24 @@
 
 </html>
 <script>
-  function verificar() {
-    // funcao inutilizada -- pode reaproveitar
-    var inputEmail = inp_usermail.value;
-
-    var indice_arroba = inputEmail.indexOf("@");
-    var indice_ponto = inputEmail.lastIndexOf(".");
-
-    if (
-      indice_arroba < 0 ||
-      indice_ponto < 0 ||
-      indice_ponto < indice_arroba + 2 ||
-      indice_ponto === inputEmail.length - 1
-    ) {
-      alert("Por favor, preencha o campo de e-mail corretamente");
-      return false;
-    }
-  }
 
   function logar() {
     event.preventDefault();
 
     let emailUsuario = document.getElementById("email_usuario").value;
     let senhaUsuario = document.getElementById("senha_usuario").value;
+
+    if (emailUsuario === "" || senhaUsuario === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Por favor, preencha todos os campos!",
+        color: '#fff',
+        background: '#1d1d1d',
+        confirmButtonColor: '#4E2E9E',
+      });
+      return;
+    } 
 
     fetch("/usuarios/autenticar", {
       method: "POST",
@@ -169,7 +164,7 @@
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Houve um erro ao tentar realizar o login!",
+          text: "Usuário não encontrado!",
           color: '#fff',
           background: '#1d1d1d',
           confirmButtonColor: '#4E2E9E',
