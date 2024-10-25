@@ -104,6 +104,7 @@ dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 CONSTRAINT fkEmpresaHistograma FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
 PRIMARY KEY (idHistograma)
 );
+-- INSERT INTO Histograma (fkEmpresa) VALUE (%fk);
 
 CREATE TABLE IF NOT EXISTS ServGuard.HistogramaColuna (
 idHistogramaColuna INT NOT NULL AUTO_INCREMENT,
@@ -113,6 +114,8 @@ registroColuna DECIMAL(12,3) NOT NULL,
 CONSTRAINT fkHistogramaHistogramaColuna FOREIGN KEY (fkHistograma) REFERENCES ServGuard.Histograma(idHistograma),
 PRIMARY KEY (idHistogramaColuna)
 );
+-- INSERT INTO Histograma (fkHistograma, registroColuna) VALUES 
+	-- ((SELECT MAX(idHistograma) FROM Histograma), %rc);
 
 INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
@@ -215,3 +218,4 @@ JOIN (
     GROUP BY 
         fkVolume
 ) cv2 ON cv.fkVolume = cv2.fkVolume AND cv.dthCriacao = cv2.dataUltimaCaptura;
+
