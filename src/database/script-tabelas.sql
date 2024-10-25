@@ -115,6 +115,10 @@ registroColuna DECIMAL(12,3) NOT NULL,
 CONSTRAINT fkHistogramaHistogramaColuna FOREIGN KEY (fkHistograma) REFERENCES ServGuard.Histograma(idHistograma),
 PRIMARY KEY (idHistogramaColuna)
 );
+
+
+
+
 -- INSERT INTO Histograma (fkHistograma, registroColuna) VALUES 
 	-- ((SELECT MAX(idHistograma) FROM Histograma), %rc);
 
@@ -220,8 +224,6 @@ JOIN (
         fkVolume
 ) cv2 ON cv.fkVolume = cv2.fkVolume AND cv.dthCriacao = cv2.dataUltimaCaptura;
 
-
-
 -- view para o E do ETL
 CREATE OR REPLACE VIEW vista_registro_cpu AS
 	SELECT registro FROM captura 
@@ -229,6 +231,16 @@ CREATE OR REPLACE VIEW vista_registro_cpu AS
 		JOIN Maquina ON fkMaquina = idMaquina
 		JOIN Empresa ON fkEmpresa = idEmpresa
 			 WHERE idEmpresa = 1 AND fkRecurso = 1;
+             
+             
+CREATE OR REPLACE VIEW vista_histograma_cpu AS
+	SELECT registroColuna FROM HistogramaColuna 
+		JOIN Histograma ON fkHistograma = idHistograma
+			WHERE (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND fkEmpresa = 1;      
+            
+select * from vista_histograma_cpu;
+              
+             
             
 
 
