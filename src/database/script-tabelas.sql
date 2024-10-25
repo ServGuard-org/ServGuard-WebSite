@@ -96,6 +96,7 @@ CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES Ser
 PRIMARY KEY (idCaptura)
 );
 
+
 CREATE TABLE IF NOT EXISTS ServGuard.Histograma (
 idHistograma INT NOT NULL AUTO_INCREMENT,
 fkEmpresa INT NOT NULL,
@@ -218,4 +219,18 @@ JOIN (
     GROUP BY 
         fkVolume
 ) cv2 ON cv.fkVolume = cv2.fkVolume AND cv.dthCriacao = cv2.dataUltimaCaptura;
+
+
+
+-- view para o E do ETL
+CREATE OR REPLACE VIEW vista_registro_cpu AS
+	SELECT registro FROM captura 
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+		JOIN Empresa ON fkEmpresa = idEmpresa
+			 WHERE idEmpresa = 1 AND fkRecurso = 1;
+            
+
+
+
 
