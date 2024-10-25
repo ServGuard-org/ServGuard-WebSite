@@ -96,6 +96,24 @@ CONSTRAINT fkMaquinaRecursoCaptura FOREIGN KEY (fkMaquinaRecurso) REFERENCES Ser
 PRIMARY KEY (idCaptura)
 );
 
+CREATE TABLE IF NOT EXISTS ServGuard.Histograma (
+idHistograma INT NOT NULL AUTO_INCREMENT,
+fkEmpresa INT NOT NULL,
+dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+CONSTRAINT fkEmpresaHistograma FOREIGN KEY (fkEmpresa) REFERENCES ServGuard.Empresa(idEmpresa),
+PRIMARY KEY (idHistograma)
+);
+
+CREATE TABLE IF NOT EXISTS ServGuard.HistogramaColuna (
+idHistogramaColuna INT NOT NULL AUTO_INCREMENT,
+fkHistograma INT NOT NULL,
+registroColuna DECIMAL(12,3) NOT NULL,
+
+CONSTRAINT fkHistogramaHistogramaColuna FOREIGN KEY (fkHistograma) REFERENCES ServGuard.Histograma(idHistograma),
+PRIMARY KEY (idHistogramaColuna)
+);
+
 INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
