@@ -180,9 +180,7 @@
         datasets: [
           {
             label: "Frequência da faixa",
-            data: [
-              10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 80, 80, 80, 80,
-            ],
+            data: dados,
             backgroundColor: "#8a4dfb",
             borderColor: "#4E2E9E",
             borderWidth: 2,
@@ -429,6 +427,7 @@
       return `${diaSemana} ${dia}/${mes}/${ano} - ${horas}:${minutos}`;
     }
 
+    var dados = []
     function obterDadosHistograma() {
 
       fetch("/buscar/histograma")
