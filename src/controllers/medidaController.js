@@ -1,6 +1,6 @@
 var medidaModel = require("../models/medidaModel");
 
-function buscarDadosHistograma(res) {
+function buscarDadosHistograma(req,res) {
 
     medidaModel.buscarDadosHistograma().then(function (resultado) {
         if (resultado.length > 0) {

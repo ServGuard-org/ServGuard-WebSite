@@ -3,8 +3,8 @@ var router = express.Router();
 
 var medidaController = require("../controllers/medidaController");
 
-router.get("/buscar/histograma", function (res) {
-    medidaController.buscarDadosHistograma(res);
+router.get("/histograma", function (req, res) {
+    medidaController.buscarDadosHistograma(req,res);
 });
 
 module.exports = router;

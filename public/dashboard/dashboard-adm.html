@@ -430,9 +430,9 @@
     var dados = []
     function obterDadosHistograma() {
 
-      fetch("/buscar/histograma")
+      fetch("/medidas/histograma")
         .then(function (resposta) {
-          console.log("estou buscando os dados do histograma")
+          console.log("Iniciando a busca dos dados do histograma")
 
           if (resposta.ok) {
             console.log(resposta);
@@ -440,11 +440,17 @@
             resposta.json().then(json => {
               console.log(json);
               console.log(JSON.stringify(json));
-
+              
+              dados = [];
+              console.log(`Formando a lista:`)
               for (var index = 1; index <= 10; index++) {
                 console.log(json[0][`${index}`])
                 dados.push(json[0][`${index}`])
               }
+              // json.forEach(item => {
+              //   dados.push(item.registroColuna);
+              // });
+              
               gerarGrafico()
             });
 
