@@ -1,8 +1,11 @@
 var medidaModel = require("../models/medidaModel");
 
 function buscarDadosHistograma(req,res) {
-
-    medidaModel.buscarDadosHistograma().then(function (resultado) {
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined")
+    }
+    medidaModel.buscarDadosHistograma(idEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

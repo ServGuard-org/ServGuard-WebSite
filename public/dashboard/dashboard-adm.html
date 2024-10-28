@@ -429,8 +429,14 @@
 
     var dados = []
     function obterDadosHistograma() {
-
-      fetch("/medidas/histograma")
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+      
+      fetch(`/medidas/histograma/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
         .then(function (resposta) {
           console.log("Iniciando a busca dos dados do histograma")
 
@@ -440,7 +446,7 @@
             resposta.json().then(json => {
               console.log(json);
               console.log(JSON.stringify(json));
-              
+
               dados = [];
               console.log(`Formando a lista:`)
               for (var i = 0; i < 10; i++) {
@@ -450,7 +456,7 @@
               // json.forEach(item => {
               //   dados.push(item.registroColuna);
               // });
-              
+
               gerarGrafico()
             });
 
