@@ -443,9 +443,9 @@
               
               dados = [];
               console.log(`Formando a lista:`)
-              for (var index = 1; index <= 10; index++) {
-                console.log(json[0][`${index}`])
-                dados.push(json[0][`${index}`])
+              for (var i = 0; i < 10; i++) {
+                console.log(json[i].registroColuna)
+                dados.push(json[i].registroColuna)
               }
               // json.forEach(item => {
               //   dados.push(item.registroColuna);
