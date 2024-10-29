@@ -241,7 +241,7 @@ CREATE OR REPLACE VIEW vista_histograma_cpu AS
 	SELECT registroColuna, fkEmpresa, fkHistograma FROM HistogramaColuna 
 		JOIN Histograma ON fkHistograma = idHistograma;   
         
-select registroColuna from vista_histograma_cpu 
+SELECT registroColuna FROM vista_histograma_cpu 
 		WHERE fkHistograma = (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND fkEmpresa = 1;
   
 -- Irregularidades de CPU
