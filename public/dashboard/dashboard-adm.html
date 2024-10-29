@@ -1,494 +1,521 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ServGuard | Dashboard ADM</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link
-      rel="shortcut icon"
-      href="../assets/svg/logo-white.svg"
-      type="image/x-icon"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
 
-  <body onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas()">
-    <section id="page-dashboard-adm">
-      <header>
-        <div class="child-navbar-card-dash-adm">
-          <div class="navbar-logo-dash-adm">
-            <img src="../assets/svg/logo.svg" alt="#logo" />
-          </div>
-          <div class="navbar-navlink-dash-adm">
-            <ul class="list-navlink-dash-adm">
-              <li>
-                <a href="dashboard-adm.html" class="link-dash-adm active">
-                  <img
-                    src="../assets/svg/layout-icon-white.svg"
-                    alt="#icone-layout"
-                  />
-                </a>
-                <p class="little-text mt-1">Início</p>
-              </li>
-              <li>
-                <a href="dashboard-analista.html" class="link-dash-adm">
-                  <img src="../assets/svg/search.svg" alt="#icone-layout" />
-                </a>
-                <p class="little-text mt-1">Detalhes</p>
-              </li>
-              <li>
-                <a
-                  href="./gerenciamento-funcionario.html"
-                  class="link-dash-adm"
-                >
-                  <img
-                    src="../assets/svg/func-icon.svg"
-                    alt="#icone-funcionario"
-                  />
-                </a>
-                <p class="little-text mt-1">Funcionário</p>
-              </li>
-              <li>
-                <a href="./gerenciamento-maquina.html" class="link-dash-adm">
-                  <img src="../assets/svg/server-icon.svg" alt="#icone-" />
-                </a>
-                <p class="little-text mt-1">Máquina</p>
-              </li>
-              <li>
-                <a href="detalhes-funcionario.html" class="link-dash-adm">
-                  <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
-                </a>
-                <p class="little-text mt-1">Perfil</p>
-              </li>
-            </ul>
-          </div>
-          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-            <img src="../assets/svg/exit-icon.svg" alt="" />
-          </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ServGuard | Dashboard ADM</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="shortcut icon" href="../assets/svg/logo-white.svg" type="image/x-icon" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas()">
+  <section id="page-dashboard-adm">
+    <header>
+      <div class="child-navbar-card-dash-adm">
+        <div class="navbar-logo-dash-adm">
+          <img src="../assets/svg/logo.svg" alt="#logo" />
         </div>
-      </header>
-      <main>
-        <div class="child-dash-adm-info">
-          <div class="dash-adm-info-user">
-            <h3 class="bold">
-              Olá de novo,
-              <span id="nome_usuario" class="bold">...</span>!
-            </h3>
-            <div class="info-user">
-              <p class="" id="data_tempo_real">...</p>
-              <p class="" id="empresa_usuario">...</p>
-            </div>
+        <div class="navbar-navlink-dash-adm">
+          <ul class="list-navlink-dash-adm">
+            <li>
+              <a href="dashboard-adm.html" class="link-dash-adm active">
+                <img src="../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text mt-1">Início</p>
+            </li>
+            <li>
+              <a href="dashboard-analista.html" class="link-dash-adm">
+                <img src="../assets/svg/search.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text mt-1">Detalhes</p>
+            </li>
+            <li>
+              <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+              </a>
+              <p class="little-text mt-1">Funcionário</p>
+            </li>
+            <li>
+              <a href="./gerenciamento-maquina.html" class="link-dash-adm">
+                <img src="../assets/svg/server-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text mt-1">Máquina</p>
+            </li>
+            <li>
+              <a href="detalhes-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text mt-1">Perfil</p>
+            </li>
+          </ul>
+        </div>
+        <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+          <img src="../assets/svg/exit-icon.svg" alt="" />
+        </a>
+      </div>
+    </header>
+    <main>
+      <div class="child-dash-adm-info">
+        <div class="dash-adm-info-user">
+          <h3 class="bold">
+            Olá de novo,
+            <span id="nome_usuario" class="bold">...</span>!
+          </h3>
+          <div class="info-user">
+            <p class="" id="data_tempo_real">...</p>
+            <p class="" id="empresa_usuario">...</p>
           </div>
-          <div class="dash-adm-parameter-stability">
-            <p class="bold mb-2">Escala de instabilidade:</p>
-            <h1 class="font-big text-green bold" id="escala-instabilidade">
-              0
-            </h1>
-          </div>
-          <div class="dash-adm-parameter-server">
-            <h4 class="bold center">Serviço Monitorado:</h4>
-            <div class="parameter-server-cards">
-              <div class="server-card">
-                <p class="text-white thin">Banco Central</p>
-                <p
-                  class="text-white bold"
-                  id="elemento_servico"
-                  style="color: var(--green-dark)"
-                >
-                  Ativo
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="dash-adm-parameter-recommendations">
-            <div class="parameter-recommendations-title mt-1">
-              <img src="../assets/svg/alert-icon-white.svg" alt="" />
-              <p class="pl-1 text-white bold">Recomendações</p>
-            </div>
-            <div class="parameter-recommendations-text">
-              <p class="text-white">
-                Pico de uso de CPU atingido no final do mês! Importante fazer
-                análise preditiva...
+        </div>
+        <div class="dash-adm-parameter-stability">
+          <p class="bold mb-2">Escala de instabilidade:</p>
+          <h1 class="font-big text-green bold" id="escala-instabilidade">
+            0
+          </h1>
+        </div>
+        <div class="dash-adm-parameter-server">
+          <h4 class="bold center">Serviço Monitorado:</h4>
+          <div class="parameter-server-cards">
+            <div class="server-card">
+              <p class="text-white thin">Banco Central</p>
+              <p class="text-white bold" id="elemento_servico" style="color: var(--green-dark)">
+                Ativo
               </p>
             </div>
           </div>
         </div>
-        <div class="child-dash-adm-parameters pt-4">
-          <div class="dash-adm-general-vision">
-            <h2 class="bold center mb-1">
-              Visão <span class="text-purple">Geral</span>
-            </h2>
-            <div class="general-vision-info">
-              <h4 class="general-vision-info-text center bold">
-                Total de máquinas: <span id="total_maquinas">...</span>
+        <div class="dash-adm-parameter-recommendations">
+          <div class="parameter-recommendations-title mt-1">
+            <img src="../assets/svg/alert-icon-white.svg" alt="" />
+            <p class="pl-1 text-white bold">Recomendações</p>
+          </div>
+          <div class="parameter-recommendations-text">
+            <p class="text-white">
+              Pico de uso de CPU atingido no final do mês! Importante fazer
+              análise preditiva...
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="child-dash-adm-parameters pt-4">
+        <div class="dash-adm-general-vision">
+          <h2 class="bold center mb-1">
+            Visão <span class="text-purple">Geral</span>
+          </h2>
+          <div class="general-vision-info">
+            <h4 class="general-vision-info-text center bold">
+              Total de máquinas: <span id="total_maquinas">...</span>
+            </h4>
+            <div class="general-vision-line"></div>
+            <h4 class="general-vision-info-text center bold">
+              Em funcionamento:
+              <span class="text-purple" id="funcionamento_maquinas">...</span>
+            </h4>
+          </div>
+          <div class="general-vision-card-irregular">
+            <div class="card-irregular">
+              <h3 class="center italic">Irregularidades:</h3>
+              <h4 class="bold center">
+                CPU: <span class="text-yellow" id="irr_cpu">...</span>
               </h4>
-              <div class="general-vision-line"></div>
-              <h4 class="general-vision-info-text center bold">
-                Em funcionamento:
-                <span class="text-purple" id="funcionamento_maquinas">...</span>
+              <h4 class="bold center">
+                RAM: <span class="text-green" id="irr_ram">...</span>
+              </h4>
+              <h4 class="bold center">
+                Disco: <span class="text-red" id="irr_disco">...</span>
               </h4>
             </div>
-            <div class="general-vision-card-irregular">
-              <div class="card-irregular">
-                <h3 class="center italic">Irregularidades:</h3>
-                <h4 class="bold center">
-                  CPU: <span class="text-yellow" id="irr_cpu">...</span>
-                </h4>
-                <h4 class="bold center">
-                  RAM: <span class="text-green" id="irr_ram">...</span>
-                </h4>
-                <h4 class="bold center">
-                  Disco: <span class="text-red" id="irr_disco">...</span>
-                </h4>
-              </div>
-              <div class="card-rede-conect">
-                <div class="card-rede-conect-content">
-                  <h4 class="bold center">Estado da rede:</h4>
-                  <div class="card-conect">
-                    <h3 class="bold center text-green">Estável</h3>
-                  </div>
-                  <div class="card-machines">
-                    <p class="little-text center">Máquinas Conectadas</p>
-                    <p class="center bold">39</p>
-                  </div>
+            <div class="card-rede-conect">
+              <div class="card-rede-conect-content">
+                <h4 class="bold center">Estado da rede:</h4>
+                <div class="card-conect">
+                  <h3 class="bold center text-green">Estável</h3>
+                </div>
+                <div class="card-machines">
+                  <p class="little-text center">Máquinas Conectadas</p>
+                  <p class="center bold">39</p>
                 </div>
               </div>
             </div>
-            <button class="btn-dashboard" onclick="DashboardAnalista()">
-              Acesse a dashboard de monitoramento!
-            </button>
           </div>
-          <div class="dash-adm-graphic">
-            <div class="graphic-space">
-              <h3 class="bold center">
-                HISTOGRAMA DE USO: <span class="text-purple">CPU(%)</span>
-              </h3>
-              <canvas id="myHistogram"></canvas>
-            </div>
+          <button class="btn-dashboard" onclick="DashboardAnalista()">
+            Acesse a dashboard de monitoramento!
+          </button>
+        </div>
+        <div class="dash-adm-graphic">
+          <div class="graphic-space">
+            <h3 class="bold center">
+              HISTOGRAMA DE USO: <span class="text-purple">CPU(%)</span>
+            </h3>
+            <canvas id="myHistogram"></canvas>
           </div>
         </div>
-      </main>
-    </section>
-    <script>
-      function sairNavbar() {
-        event.preventDefault();
-        sessionStorage.clear();
-        window.location.href = "../index.html";
-      }
+      </div>
+    </main>
+  </section>
+  <script>
+    function sairNavbar() {
+      event.preventDefault();
+      sessionStorage.clear();
+      window.location.href = "../index.html";
+    }
 
-      function DashboardAnalista() {
-        window.location.href = "dashboard-analista.html";
-      }
+    function DashboardAnalista() {
+      window.location.href = "dashboard-analista.html";
+    }
 
-      function gerarGrafico() {
-        const data = {
-          labels: [
-            "0-10",
-            "10-20",
-            "20-30",
-            "30-40",
-            "40-50",
-            "50-60",
-            "60-70",
-            "70-80",
-            "80-90",
-            "90-100",
-          ],
-          datasets: [
-            {
-              label: "Frequência da faixa",
-              data: dados,
-              backgroundColor: "#8a4dfb",
-              borderColor: "#4E2E9E",
-              borderWidth: 2,
-              barThickness: 80, // Ajuste da largura das barras em pixels
-              borderRadius: 5, // Ajuste do border-radius
-              borderSkipped: false,
+    function gerarGrafico() {
+      const data = {
+        labels: [
+          "0-10",
+          "10-20",
+          "20-30",
+          "30-40",
+          "40-50",
+          "50-60",
+          "60-70",
+          "70-80",
+          "80-90",
+          "90-100",
+        ],
+        datasets: [
+          {
+            label: "Frequência da faixa",
+            data: dados,
+            backgroundColor: "#8a4dfb",
+            borderColor: "#4E2E9E",
+            borderWidth: 2,
+            barThickness: 80, // Ajuste da largura das barras em pixels
+            borderRadius: 5, // Ajuste do border-radius
+            borderSkipped: false,
+          },
+        ],
+      };
+
+      const config = {
+        type: "bar",
+        data: data,
+        options: {
+          responsive: true, // Para tornar o gráfico responsivo
+          maintainAspectRatio: false, // Define se a proporção deve ser mantida
+          plugins: {
+            legend: {
+              display: false,
             },
-          ],
-        };
-
-        const config = {
-          type: "bar",
-          data: data,
-          options: {
-            responsive: true, // Para tornar o gráfico responsivo
-            maintainAspectRatio: false, // Define se a proporção deve ser mantida
-            plugins: {
-              legend: {
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Faixas de uso em %",
+                beginAtZero: true,
+              },
+              grid: {
                 display: false,
               },
             },
-            scales: {
-              x: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Frequência",
                 beginAtZero: true,
-                title: {
-                  display: true,
-                  text: "Faixas de uso em %",
-                  beginAtZero: true,
-                },
-                grid: {
-                  display: false,
-                },
               },
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: "Frequência",
-                  beginAtZero: true,
-                },
-                grid: {
-                  display: false,
-                },
+              grid: {
+                display: false,
               },
             },
           },
-        };
+        },
+      };
 
-        const myHistogram = new Chart(
-          document.getElementById("myHistogram"),
-          config
-        );
+      const myHistogram = new Chart(
+        document.getElementById("myHistogram"),
+        config
+      );
+    }
+
+    function carregarPagina() {
+      // isAtivoBACEN("https://jsonplaceholder.typicode.com/todos/1"); // INATIVADO PARA A SPRINT 2 ------------------------------
+
+      const data = obterData();
+      let escalaInstabilidade = obterEscalaInstabilidade();
+      let nomeEmpresa = obterNomeEmpresa();
+      let nomeUsuario = obterNomeUsuario();
+      // let irregularidadesCPU;
+      // obterIrrCPU().then(resposta => {irregularidadesCPU = resposta});
+      let irregularidadesCPU = obterIrrCPU();
+      console.log("VALOR FINAL DE IRRCPU:", irregularidadesCPU)
+      let irregularidadesRAM = obterIrrRAM();
+      console.log("VALOR FINAL DE IRRRAM:", irregularidadesRAM)
+      let irregularidadesDisco = obterIrrDisco();
+      console.log("VALOR FINAL DE IRRDISCO:", irregularidadesDISCO)
+
+      const elementoInstabilidade = document.getElementById(
+        "escala-instabilidade"
+      );
+
+      const elementoData = document.getElementById("data_tempo_real");
+
+      const elementoEmpresa = document.getElementById("empresa_usuario");
+
+      const elementoNomeUsuario = document.getElementById("nome_usuario");
+
+      const elementoServico = document.getElementById("elemento_servico");
+
+      const elementoIrrCPU = document.getElementById("irr_cpu");
+
+      const elementoIrrRAM = document.getElementById("irr_ram");
+
+      const elementoIrrDisco = document.getElementById("irr_disco");
+
+      elementoIrrCPU.innerHTML = irregularidadesCPU;
+      elementoIrrRAM.innerHTML = irregularidadesRAM;
+      elementoIrrDisco.innerHTML = irregularidadesDisco;
+      elementoNomeUsuario.innerHTML = nomeUsuario;
+      elementoEmpresa.innerHTML = nomeEmpresa;
+      elementoData.innerHTML = data;
+
+      switch (escalaInstabilidade) {
+        case 0:
+          // verde
+          elementoInstabilidade.classList.remove(
+            "text-green",
+            "text-red",
+            "text-orange",
+            "text-yellow",
+            "text-gray"
+          );
+          elementoInstabilidade.classList.add("text-green");
+          elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+          break;
+        case 1:
+          // amarelo
+          elementoInstabilidade.classList.remove(
+            "text-green",
+            "text-red",
+            "text-orange",
+            "text-yellow",
+            "text-gray"
+          );
+          elementoInstabilidade.classList.add("text-yellow");
+          elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+          break;
+        case 2:
+          // laranja
+          elementoInstabilidade.classList.remove(
+            "text-green",
+            "text-red",
+            "text-orange",
+            "text-yellow",
+            "text-gray"
+          );
+          elementoInstabilidade.classList.add("text-orange");
+          elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+          break;
+        case 3:
+          // vermelho
+          elementoInstabilidade.classList.remove(
+            "text-green",
+            "text-red",
+            "text-orange",
+            "text-yellow",
+            "text-gray"
+          );
+          elementoInstabilidade.classList.add("text-red");
+          elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+          break;
+        default:
+          // sem cor (teoricamente aqui é impossível)
+          elementoInstabilidade.classList.remove(
+            "text-green",
+            "text-red",
+            "text-orange",
+            "text-yellow",
+            "text-gray"
+          );
+          elementoInstabilidade.classList.add("text-gray");
+          elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+          break;
       }
+    }
 
-      function carregarPagina() {
-        // isAtivoBACEN("https://jsonplaceholder.typicode.com/todos/1"); // INATIVADO PARA A SPRINT 2 ------------------------------
+    function obterEscalaInstabilidade() {
+      return 2;
+    }
 
-        const data = obterData();
-        let escalaInstabilidade = obterEscalaInstabilidade();
-        let nomeEmpresa = obterNomeEmpresa();
-        let nomeUsuario = obterNomeUsuario();
-        let irregularidadesCPU = obterIrrCPU();
-        let irregularidadesRAM = obterIrrRAM();
-        let irregularidadesDisco = obterIrrDisco();
+    function obterNomeEmpresa() {
+      const nomeEmpresa = sessionStorage.getItem("NOME_EMPRESA");
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+      return `${nomeEmpresa} - ID: ${idEmpresa}`;
+    }
 
-        const elementoInstabilidade = document.getElementById(
-          "escala-instabilidade"
-        );
+    function consultarMaquinas() {
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-        const elementoData = document.getElementById("data_tempo_real");
+      fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("total_maquinas").innerText = data.length;
 
-        const elementoEmpresa = document.getElementById("empresa_usuario");
+          const maquinasAtivas = data.filter(maquina => maquina.isAtiva === 1);
+          document.getElementById("funcionamento_maquinas").innerText = maquinasAtivas.length;
+        });
+    }
 
-        const elementoNomeUsuario = document.getElementById("nome_usuario");
+    function obterIrrCPU() {
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-        const elementoServico = document.getElementById("elemento_servico");
+      fetch(`/medidas/irregularidade/cpu/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca das irregularidades de CPU");
 
-        const elementoIrrCPU = document.getElementById("irr_cpu");
+          if (resposta.ok) {
+            console.log(resposta);
 
-        const elementoIrrRAM = document.getElementById("irr_ram");
+            resposta.json().then((json) => {
+              console.log(json);
+              console.log(JSON.stringify(json));
 
-        const elementoIrrDisco = document.getElementById("irr_disco");
+              // var irrCPU;
+              var irrCPU = json[0].qtdCpu;
+              console.log("Valor capturado irrCPU:", irrCPU)
 
-        elementoIrrCPU.innerHTML = irregularidadesCPU;
-        elementoIrrRAM.innerHTML = irregularidadesRAM;
-        elementoIrrDisco.innerHTML = irregularidadesDisco;
-        elementoNomeUsuario.innerHTML = nomeUsuario;
-        elementoEmpresa.innerHTML = nomeEmpresa;
-        elementoData.innerHTML = data;
+              !irrCPU? 0 : irrCPU
+              alert(irrCPU)
+              return irrCPU
 
-        switch (escalaInstabilidade) {
-          case 0:
-            // verde
-            elementoInstabilidade.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
             );
-            elementoInstabilidade.classList.add("text-green");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-            break;
-          case 1:
-            // amarelo
-            elementoInstabilidade.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            elementoInstabilidade.classList.add("text-yellow");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-            break;
-          case 2:
-            // laranja
-            elementoInstabilidade.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            elementoInstabilidade.classList.add("text-orange");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-            break;
-          case 3:
-            // vermelho
-            elementoInstabilidade.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            elementoInstabilidade.classList.add("text-red");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-            break;
-          default:
-            // sem cor (teoricamente aqui é impossível)
-            elementoInstabilidade.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            elementoInstabilidade.classList.add("text-gray");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-            break;
-        }
-      }
-
-      function obterEscalaInstabilidade() {
-        return 2;
-      }
-
-      function obterNomeEmpresa() {
-        const nomeEmpresa = sessionStorage.getItem("NOME_EMPRESA");
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        return `${nomeEmpresa} - ID: ${idEmpresa}`;
-      }
-
-      function consultarMaquinas() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-        fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          }
         })
-          .then((response) => response.json())
-          .then((data) => {
-            document.getElementById("total_maquinas").innerText = data.length;
+        .catch(function (erro) {
+          console.log(erro);
+        });
+      // alert(irrCPU)
+      // return Number(irrCPU);
+    }
 
-            const maquinasAtivas = data.filter(maquina => maquina.isAtiva === 1);
-                document.getElementById("funcionamento_maquinas").innerText = maquinasAtivas.length;
-          });
+    function obterIrrRAM() {
+      return 0;
+    }
+
+    function obterIrrDisco() {
+      return 2;
+    }
+
+    function obterNomeUsuario() {
+      let nomeUsuario = sessionStorage.getItem("NOME_USUARIO");
+
+      if (nomeUsuario) {
+        return nomeUsuario;
+      } else {
+        return "indefinido";
       }
+    }
 
-      function obterIrrCPU() {
-        return 1;
-      }
-
-      function obterIrrRAM() {
-        return 0;
-      }
-
-      function obterIrrDisco() {
-        return 2;
-      }
-
-      function obterNomeUsuario() {
-        let nomeUsuario = sessionStorage.getItem("NOME_USUARIO");
-
-        if (nomeUsuario) {
-          return nomeUsuario;
-        } else {
-          return "indefinido";
-        }
-      }
-
-      // revisar
-      function isAtivoBACEN(url) {
-        fetch(`/externos/check/${url}`)
-          .then((resposta) => {
-            elemento_servico.innerHTML = resposta.json.status;
-          })
-          .catch((error) => {
-            // vermelho
-            console.log(error);
-            elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
-          });
-      }
-
-      function obterData() {
-        const data = new Date();
-
-        const diasDaSemana = [
-          "Domingo",
-          "Segunda-Feira",
-          "Terça-Feira",
-          "Quarta-Feira",
-          "Quinta-Feira",
-          "Sexta-Feira",
-          "Sábado",
-        ];
-        const diaSemana = diasDaSemana[data.getDay()];
-
-        const dia = String(data.getDate()).padStart(2, "0");
-        const mes = String(data.getMonth() + 1).padStart(2, "0"); // +1 porque janeiro é 0
-        const ano = data.getFullYear();
-
-        const horas = String(data.getHours()).padStart(2, "0");
-        const minutos = String(data.getMinutes()).padStart(2, "0");
-
-        return `${diaSemana} ${dia}/${mes}/${ano} - ${horas}:${minutos}`;
-      }
-
-      var dados = [];
-      function obterDadosHistograma() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-        fetch(`/medidas/histograma/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+    // revisar
+    function isAtivoBACEN(url) {
+      fetch(`/externos/check/${url}`)
+        .then((resposta) => {
+          elemento_servico.innerHTML = resposta.json.status;
         })
-          .then(function (resposta) {
-            console.log("Iniciando a busca dos dados do histograma");
+        .catch((error) => {
+          // vermelho
+          console.log(error);
+          elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
+        });
+    }
 
-            if (resposta.ok) {
-              console.log(resposta);
+    function obterData() {
+      const data = new Date();
 
-              resposta.json().then((json) => {
-                console.log(json);
-                console.log(JSON.stringify(json));
+      const diasDaSemana = [
+        "Domingo",
+        "Segunda-Feira",
+        "Terça-Feira",
+        "Quarta-Feira",
+        "Quinta-Feira",
+        "Sexta-Feira",
+        "Sábado",
+      ];
+      const diaSemana = diasDaSemana[data.getDay()];
 
-                dados = [];
-                console.log(`Formando a lista:`);
-                for (var i = 0; i < 10; i++) {
-                  console.log(json[i].registroColuna);
-                  dados.push(json[i].registroColuna);
-                }
-                // json.forEach(item => {
-                //   dados.push(item.registroColuna);
-                // });
+      const dia = String(data.getDate()).padStart(2, "0");
+      const mes = String(data.getMonth() + 1).padStart(2, "0"); // +1 porque janeiro é 0
+      const ano = data.getFullYear();
 
-                gerarGrafico();
-              });
-            } else {
-              console.log(
-                "Houve um erro ao tentar capturar os dados do histograma!"
-              );
-            }
-          })
-          .catch(function (erro) {
-            console.log(erro);
-          });
+      const horas = String(data.getHours()).padStart(2, "0");
+      const minutos = String(data.getMinutes()).padStart(2, "0");
 
-        return false;
-      }
-    </script>
-  </body>
+      return `${diaSemana} ${dia}/${mes}/${ano} - ${horas}:${minutos}`;
+    }
+
+    var dados = [];
+    function obterDadosHistograma() {
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+      fetch(`/medidas/histograma/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca dos dados do histograma");
+
+          if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then((json) => {
+              console.log(json);
+              console.log(JSON.stringify(json));
+
+              dados = [];
+              console.log(`Formando a lista:`);
+              for (var i = 0; i < 10; i++) {
+                console.log(json[i].registroColuna);
+                dados.push(json[i].registroColuna);
+              }
+              // json.forEach(item => {
+              //   dados.push(item.registroColuna);
+              // });
+
+              gerarGrafico();
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados do histograma!"
+            );
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+        });
+
+      return false;
+    }
+  </script>
+</body>
+
 </html>

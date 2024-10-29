@@ -251,7 +251,7 @@ CREATE OR REPLACE VIEW vista_irregularidade_cpu AS
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
             
-SELECT count(registro) FROM vista_irregularidade_cpu
+SELECT count(registro) as qtdCpu FROM vista_irregularidade_cpu
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
              
              
@@ -262,7 +262,7 @@ CREATE OR REPLACE VIEW vista_irregularidade_ram AS
 		JOIN Maquina ON fkMaquina = idMaquina
 		JOIN Empresa ON fkEmpresa = idEmpresa;
             
-SELECT count(registro) FROM vista_irregularidade_cpu
+SELECT count(registro) as qtdRam FROM vista_irregularidade_cpu
 	WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1;
 
 -- Irregularidades de DISCO
