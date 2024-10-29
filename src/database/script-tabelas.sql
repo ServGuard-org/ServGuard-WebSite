@@ -235,14 +235,32 @@ CREATE OR REPLACE VIEW vista_registro_cpu AS
              
 CREATE OR REPLACE VIEW vista_histograma_cpu AS
 	SELECT registroColuna FROM HistogramaColuna 
-		JOIN Histograma ON fkHistograma = idHistograma
-			WHERE (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND fkEmpresa = 1;      
-            
-select * from vista_histograma_cpu;
-              
+		JOIN Histograma ON fkHistograma = idHistograma;   
+        
+        select * from vista_histograma_cpu 
+			WHERE (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND Histograma.fkEmpresa = 1;
+  
+-- Irregularidades de cpu
+SELECT count(registro) FROM captura 
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+		JOIN Empresa ON fkEmpresa = idEmpresa
+			 WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
              
-            
+             
+-- Irregularidades de ram
+SELECT count(registro) FROM captura 
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+		JOIN Empresa ON fkEmpresa = idEmpresa
+			 WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1;
 
+-- Irregularidades de ram
+SELECT COUNT(DISTINCT idMaquina) AS DiscoIrregular FROM Maquina
+	JOIN Empresa ON idEmpresa = fkEmpresa
+	JOIN Volume ON idMaquina = fkMaquina
+	JOIN CapturaVolume ON idVolume = fkVolume
+		WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
 
 
 
