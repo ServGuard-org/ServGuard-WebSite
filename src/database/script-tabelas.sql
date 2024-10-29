@@ -275,6 +275,104 @@ CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_disco
 	WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
 
+-- PROCEDURES
+
+DELIMITER //
+
+CREATE PROCEDURE obter_ultimos_dados_rede(IN maquina INT)
+BEGIN
+    SELECT 
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "pacotesEnviados")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS pacotesEnviados,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "pacotesRecebidos")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS pacotesRecebidos,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "megabytesEnviados")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS megabytesEnviados,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "megabytesRecebidos")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS megabytesRecebidos,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "descartePacotesEntrada")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS descartePacotesEntrada,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "descartePacotesSaida")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS descartePacotesSaida,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "erroPacotesEntrada")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS erroPacotesEntrada,
+        
+        (SELECT registro 
+         FROM Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM MaquinaRecurso 
+             WHERE fkMaquina = maquina 
+             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "erroPacotesSaida")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS erroPacotesSaida;
+END //
+
+DELIMITER ;
+
 
 
 
