@@ -244,18 +244,12 @@
       let escalaInstabilidade = obterEscalaInstabilidade();
       let nomeEmpresa = obterNomeEmpresa();
       let nomeUsuario = obterNomeUsuario();
-      // let irregularidadesCPU;
-      // obterIrrCPU().then(resposta => {irregularidadesCPU = resposta});
       let irregularidadesCPU = obterIrrCPU();
-      console.log("VALOR FINAL DE IRRCPU:", irregularidadesCPU)
+      alert("VALOR FINAL DE IRRCPU:" + irregularidadesCPU)
       let irregularidadesRAM = obterIrrRAM();
-      // console.log("VALOR FINAL DE IRRRAM:", irregularidadesRAM)
       let irregularidadesDisco = obterIrrDisco();
-      // console.log("VALOR FINAL DE IRRDISCO:", irregularidadesDISCO)
 
-      const elementoInstabilidade = document.getElementById(
-        "escala-instabilidade"
-      );
+      const elementoInstabilidade = document.getElementById("escala-instabilidade");
 
       const elementoData = document.getElementById("data_tempo_real");
 
@@ -345,6 +339,83 @@
 
           break;
       }
+
+      function ValidacaoCores(escolhaRecurso) {
+        var idHTML; 
+        if (escolhaRecurso == irregularidadesCPU){
+          idHTML = elementoIrrCPU.innerHTML
+        }
+        switch (escolhaRecurso) {
+          case 0:
+            // verde
+            escolhaRecurso.classList.remove(
+              "text-green",
+              "text-red",
+              "text-orange",
+              "text-yellow",
+              "text-gray"
+            );
+            elementoInstabilidade.classList.add("text-green");
+            elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+            break;
+          case 10:
+            // amarelo
+            elementoInstabilidade.classList.remove(
+              "text-green",
+              "text-red",
+              "text-orange",
+              "text-yellow",
+              "text-gray"
+            );
+            elementoInstabilidade.classList.add("text-yellow");
+            elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+            break;
+          case 20:
+            // laranja
+            elementoInstabilidade.classList.remove(
+              "text-green",
+              "text-red",
+              "text-orange",
+              "text-yellow",
+              "text-gray"
+            );
+            elementoInstabilidade.classList.add("text-orange");
+            elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+            break;
+          case 50:
+            // vermelho
+            elementoInstabilidade.classList.remove(
+              "text-green",
+              "text-red",
+              "text-orange",
+              "text-yellow",
+              "text-gray"
+            );
+            elementoInstabilidade.classList.add("text-red");
+            elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+            break;
+          default:
+            // sem cor (teoricamente aqui é impossível)
+            elementoInstabilidade.classList.remove(
+              "text-green",
+              "text-red",
+              "text-orange",
+              "text-yellow",
+              "text-gray"
+            );
+            elementoInstabilidade.classList.add("text-gray");
+            elementoInstabilidade.innerHTML = escalaInstabilidade;
+
+            break;
+        }
+      }
+      ValidacaoCores(irregularidadesCPU)
+      ValidacaoCores(irregularidadesRAM)
+      ValidacaoCores(irregularidadesDisco)
     }
 
     function obterEscalaInstabilidade() {
@@ -398,7 +469,7 @@
               var irrCPU = json[0].qtdCpu;
               console.log("Valor capturado irrCPU:", irrCPU)
 
-              !irrCPU? 0 : irrCPU
+              !irrCPU ? 0 : irrCPU
               alert(irrCPU)
               return irrCPU
 
@@ -417,11 +488,84 @@
     }
 
     function obterIrrRAM() {
-      return 0;
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+      fetch(`/recursos/irregularidade/ram/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca das irregularidades de RAM");
+
+          if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then((json) => {
+              console.log(json);
+              console.log(JSON.stringify(json));
+
+              var irrRAM = json[0].qtdRam;
+              console.log("Valor capturado irrRAM:", irrRAM)
+
+              !irrRAM ? 0 : irrRAM
+              alert(irrRAM)
+              return irrRAM
+
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+            );
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+        });
+      // alert(irrRAM)
+      // return Number(irrRAM);
     }
 
     function obterIrrDisco() {
-      return 2;
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+      fetch(`/recursos/irregularidade/disco/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca das irregularidades de Disco");
+
+          if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then((json) => {
+              console.log(json);
+              console.log(JSON.stringify(json));
+
+              // var irrDISC;
+              var irrDISC = json[0].DicosIrregulares;
+              console.log("Valor capturado irrDISC:", irrDISC)
+
+              !irrDISC ? 0 : irrDISC
+              alert(irrDISC)
+              return irrDISC
+
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados de irregularidades DISC!"
+            );
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+        });
+      // alert(irrDISC)
+      // return Number(irrDISC);
     }
 
     function obterNomeUsuario() {
