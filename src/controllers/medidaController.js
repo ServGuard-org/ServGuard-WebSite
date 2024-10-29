@@ -18,7 +18,6 @@ function buscarDadosHistograma(req,res) {
     });
 }
 
-
 module.exports = {
     buscarDadosHistograma
 }
