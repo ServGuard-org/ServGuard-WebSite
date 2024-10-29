@@ -249,9 +249,9 @@
       let irregularidadesCPU = obterIrrCPU();
       console.log("VALOR FINAL DE IRRCPU:", irregularidadesCPU)
       let irregularidadesRAM = obterIrrRAM();
-      console.log("VALOR FINAL DE IRRRAM:", irregularidadesRAM)
+      // console.log("VALOR FINAL DE IRRRAM:", irregularidadesRAM)
       let irregularidadesDisco = obterIrrDisco();
-      console.log("VALOR FINAL DE IRRDISCO:", irregularidadesDISCO)
+      // console.log("VALOR FINAL DE IRRDISCO:", irregularidadesDISCO)
 
       const elementoInstabilidade = document.getElementById(
         "escala-instabilidade"
@@ -378,7 +378,7 @@
     function obterIrrCPU() {
       const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-      fetch(`/medidas/irregularidade/cpu/${idEmpresa}`, {
+      fetch(`/recursos/irregularidade/cpu/${idEmpresa}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

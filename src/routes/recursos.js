@@ -1,10 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const medidaController = require("../controllers/recursoController");
+const recursoController = require("../controllers/recursoController");
 
 
 router.get("/buscarUltimosDadosRede/:idMaquina", function (req, res) {
-    medidaController.buscarUltimosDadosRede(req, res);
+    recursoController.buscarUltimosDadosRede(req, res);
 });
 
-module.exports = {router,  buscarUltimosDadosRede};
+router.get("/irregularidade/cpu/:idEmpresa", function (req, res) {
+    recursoController.buscarIrregularidadeCpu(req,res);
+});
+
+router.get("/irregularidade/ram/:idEmpresa", function (req, res) {
+    recursoController.buscarIrregularidadeRam(req,res);
+});
+
+router.get("/irregularidade/disco/:idEmpresa", function (req, res) {
+    recursoController.buscarIrregularidadeDisco(req,res);
+});
+
+module.exports = router;
