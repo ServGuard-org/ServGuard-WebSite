@@ -25,6 +25,7 @@ var maquinasRouter = require("./src/routes/maquinas");
 var volumesRouter = require("./src/routes/volumes");
 var externosRouter = require("./src/routes/externos");
 var alertasRouter = require("./src/routes/alertas");
+var recursosRouter = require("./src/routes/recursos");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +43,7 @@ app.use("/maquinas", maquinasRouter);
 app.use("/volumes", volumesRouter);
 app.use("/externos", externosRouter);
 app.use("/alertas", alertasRouter);
+app.use("/recursos", recursosRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

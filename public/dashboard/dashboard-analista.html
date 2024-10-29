@@ -91,7 +91,7 @@
             <h4 class="bold">Serviço utilizado:</h4>
             <div class="servico">
               <h5 class="bold text-white">Banco central</h5>
-              <h2 class="bold text-white" style="color: var(--green-dark);">Ativo</h2>
+              <h2 class="bold text-white" id="elemento_servico" style="color: var(--green-dark)">...</h2>
             </div>
           </div>
         </div>
@@ -266,6 +266,13 @@
 
     function carregarPagina() {
       verificarCargo()
+
+      const apresentacao = false
+      // const apresentacao = true
+      const url = apresentacao? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
+
+      isAtivoBACEN(url);
+
       let escalaInstabilidade = 0;
 
       const elementoInstabilidade = document.getElementById(
@@ -290,6 +297,30 @@
           break;
       }
     }
+
+    function isAtivoBACEN(url) {
+      const elementoServico = document.getElementById("elemento_servico");
+      fetch(`/externos/check`, {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({
+        url:url
+      }),
+    })
+        .then((resposta) => {
+          resposta.json().then( respostaJSON => 
+          elemento_servico.innerHTML = respostaJSON.status ? respostaJSON.status : "Impossível Alcançar"
+        )
+        })
+        .catch((error) => {
+          // vermelho
+          console.log(error);
+          elemento_servico.innerHTML = "Erro ao Obter Dados: " + error;
+        });
+    }
+
   </script>
 </body>
 

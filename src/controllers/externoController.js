@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 function check(req, res) {
-    let url = req.params.url;
+    let url = req.body.url;
 
     fetch(url)
     .then( resposta => {

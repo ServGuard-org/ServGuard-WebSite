@@ -3,7 +3,7 @@ const router = express.Router();
 
 const externoController = require("../controllers/externoController")
 
-router.get("/check/:url", function (req, res) {
+router.post("/check", function (req, res) {
    externoController.check(req, res); 
 });
 
