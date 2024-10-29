@@ -1,4 +1,10 @@
-var express = require("express");
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const medidaController = require("../controllers/recursoController");
 
-module.exports = router;
+
+router.get("/buscarUltimosDadosRede/:idMaquina", function (req, res) {
+    medidaController.buscarUltimosDadosRede(req, res);
+});
+
+module.exports = {router,  buscarUltimosDadosRede};
