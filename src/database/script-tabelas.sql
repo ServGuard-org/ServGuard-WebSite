@@ -224,43 +224,57 @@ JOIN (
         fkVolume
 ) cv2 ON cv.fkVolume = cv2.fkVolume AND cv.dthCriacao = cv2.dataUltimaCaptura;
 
--- view para o E do ETL
+
+-- VIEW PARA O E DO ETL
 CREATE OR REPLACE VIEW vista_registro_cpu AS
-	SELECT registro FROM captura 
+	SELECT registro, idEmpresa, fkRecurso FROM captura 
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa
-			 WHERE idEmpresa = 1 AND fkRecurso = 1;
+		JOIN Empresa ON fkEmpresa = idEmpresa;
+        
+SELECT registro FROM vista_registro_cpu
+	 WHERE idEmpresa = 1 AND fkRecurso = 1;
              
              
+-- VIEW PARA O PLOT DO HISTOGRAMA
 CREATE OR REPLACE VIEW vista_histograma_cpu AS
-	SELECT registroColuna FROM HistogramaColuna 
+	SELECT registroColuna, fkEmpresa, fkHistograma FROM HistogramaColuna 
 		JOIN Histograma ON fkHistograma = idHistograma;   
         
-        select * from vista_histograma_cpu 
-			WHERE (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND Histograma.fkEmpresa = 1;
+select registroColuna from vista_histograma_cpu 
+		WHERE fkHistograma = (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND fkEmpresa = 1;
   
--- Irregularidades de cpu
-SELECT count(registro) FROM captura 
-		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa
-			 WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
+-- Irregularidades de CPU
+CREATE OR REPLACE VIEW vista_irregularidade_cpu AS
+	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM captura 
+			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+			JOIN Maquina ON fkMaquina = idMaquina
+			JOIN Empresa ON fkEmpresa = idEmpresa;
+            
+SELECT count(registro) FROM vista_irregularidade_cpu
+	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
              
              
--- Irregularidades de ram
-SELECT count(registro) FROM captura 
+-- Irregularidades de RAM
+CREATE OR REPLACE VIEW vista_irregularidade_ram AS
+	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM captura 
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa
-			 WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1;
+		JOIN Empresa ON fkEmpresa = idEmpresa;
+            
+SELECT count(registro) FROM vista_irregularidade_cpu
+	WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1;
 
--- Irregularidades de ram
-SELECT COUNT(DISTINCT idMaquina) AS DiscoIrregular FROM Maquina
-	JOIN Empresa ON idEmpresa = fkEmpresa
-	JOIN Volume ON idMaquina = fkMaquina
-	JOIN CapturaVolume ON idVolume = fkVolume
-		WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
+-- Irregularidades de DISCO
+CREATE OR REPLACE VIEW vista_irregularidade_disco AS
+	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
+		JOIN Empresa ON idEmpresa = fkEmpresa
+		JOIN Volume ON idMaquina = fkMaquina
+		JOIN CapturaVolume ON idVolume = fkVolume;
+
+SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_disco
+	WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
+
 
 
 
