@@ -5,3 +5,5 @@ function buscarUltimosDadosRede(idMaquina) {
 
 return database.executar(instrucaoSql)
 }
+
+module.exports = {  buscarUltimosDadosRede }
