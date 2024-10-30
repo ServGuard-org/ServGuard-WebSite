@@ -251,28 +251,7 @@
       let nomeEmpresa = obterNomeEmpresa();
       let nomeUsuario = obterNomeUsuario();
 
-      //TENTATIVA DE CAPTURAR IRREGULARIDADE DE CPU:
-      obterIrrCPU().then((irrCPU) => {
-        if (irrCPU !== null) {
-          console.log("Valor de irrCPU recebido:", irrCPU);
-          // Agora você pode usar irrCPU conforme necessário
-        } else {
-          console.log("Falha ao obter o valor de irrCPU.");
-        }
-      });
-      let irregularidadesCPU;
-      async function processarIrrCPU() {
-        irregularidadesCPU = await obterIrrCPU();
-        if (irregularidadesCPU !== null) {
-          console.log("Valor de irregularidadesCPU recebido:", irregularidadesCPU);
-          // Aqui você pode usar irregularidadesCPU conforme necessário
-        } else {
-          console.log("Falha ao obter o valor de irregularidadesCPU.");
-        }
-      }
-      processarIrrCPU();
-      //TENTATIVA DE CAPTURAR IRREGULARIDADE DE CPU: fim
-
+      obterIrrCPU();
       let irregularidadesRAM = obterIrrRAM();
       let irregularidadesDisco = obterIrrDisco();
 
@@ -292,7 +271,6 @@
 
       const elementoIrrDisco = document.getElementById("irr_disco");
 
-      elementoIrrCPU.innerHTML = irregularidadesCPU;
       elementoIrrRAM.innerHTML = irregularidadesRAM;
       elementoIrrDisco.innerHTML = irregularidadesDisco;
       elementoNomeUsuario.innerHTML = nomeUsuario;
@@ -493,14 +471,16 @@
           if (resposta.ok) {
             return resposta.json().then((json) => {
               console.log(json);
-              const irrCPU = json[0]?.qtdCpu || 10; // Definindo um valor padrão 10, caso json[0] ou json[0].qtdCpu seja undefined
+              const irrCPU = json[0].qtdCpu;
+              ValidacaoCores()
               console.log("Valor capturado irrCPU:", irrCPU);
-              return irrCPU;
+              document.getElementById("irr_cpu").innerHTML = irrCPU;
             });
           } else {
             console.log(
               "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
             );
+            document.getElementById("irr_cpu").innerHTML = "Erro ao obter";
             return null; // Retorna null em caso de erro
           }
         })
