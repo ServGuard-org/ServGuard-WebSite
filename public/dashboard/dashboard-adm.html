@@ -242,7 +242,7 @@
       const apresentacao = false
       // const apresentacao = true
 
-      const url = apresentacao? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
+      const url = apresentacao ? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
 
       isAtivoBACEN(url);
 
@@ -250,8 +250,29 @@
       let escalaInstabilidade = obterEscalaInstabilidade();
       let nomeEmpresa = obterNomeEmpresa();
       let nomeUsuario = obterNomeUsuario();
-      let irregularidadesCPU = obterIrrCPU();
-      alert("VALOR FINAL DE IRRCPU:" + irregularidadesCPU)
+
+      //TENTATIVA DE CAPTURAR IRREGULARIDADE DE CPU:
+      obterIrrCPU().then((irrCPU) => {
+        if (irrCPU !== null) {
+          console.log("Valor de irrCPU recebido:", irrCPU);
+          // Agora você pode usar irrCPU conforme necessário
+        } else {
+          console.log("Falha ao obter o valor de irrCPU.");
+        }
+      });
+      let irregularidadesCPU;
+      async function processarIrrCPU() {
+        irregularidadesCPU = await obterIrrCPU();
+        if (irregularidadesCPU !== null) {
+          console.log("Valor de irregularidadesCPU recebido:", irregularidadesCPU);
+          // Aqui você pode usar irregularidadesCPU conforme necessário
+        } else {
+          console.log("Falha ao obter o valor de irregularidadesCPU.");
+        }
+      }
+      processarIrrCPU();
+      //TENTATIVA DE CAPTURAR IRREGULARIDADE DE CPU: fim
+
       let irregularidadesRAM = obterIrrRAM();
       let irregularidadesDisco = obterIrrDisco();
 
@@ -345,12 +366,15 @@
 
           break;
       }
-    }
 
       function ValidacaoCores(escolhaRecurso) {
-        var idHTML; 
-        if (escolhaRecurso == irregularidadesCPU){
-          idHTML = elementoIrrCPU.innerHTML
+        var idHTML;
+        if (escolhaRecurso == irregularidadesCPU) {
+          idHTML = elementoIrrCPU
+        } else if (escolhaRecurso == irregularidadesRAM) {
+          idHTML = elementoIrrRAM
+        } else if (escolhaRecurso == irregularidadesDisco) {
+          idHTML = elementoIrrDisco
         }
         switch (escolhaRecurso) {
           case 0:
@@ -362,60 +386,60 @@
               "text-yellow",
               "text-gray"
             );
-            elementoInstabilidade.classList.add("text-green");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
+            escolhaRecurso.classList.add("text-green");
+            escolhaRecurso.innerHTML = idHTML;
 
             break;
           case 10:
             // amarelo
-            elementoInstabilidade.classList.remove(
+            escolhaRecurso.classList.remove(
               "text-green",
               "text-red",
               "text-orange",
               "text-yellow",
               "text-gray"
             );
-            elementoInstabilidade.classList.add("text-yellow");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
+            escolhaRecurso.classList.add("text-yellow");
+            escolhaRecurso.innerHTML = idHTML;
 
             break;
           case 20:
             // laranja
-            elementoInstabilidade.classList.remove(
+            escolhaRecurso.classList.remove(
               "text-green",
               "text-red",
               "text-orange",
               "text-yellow",
               "text-gray"
             );
-            elementoInstabilidade.classList.add("text-orange");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
+            escolhaRecurso.classList.add("text-orange");
+            escolhaRecurso.innerHTML = idHTML;
 
             break;
           case 50:
             // vermelho
-            elementoInstabilidade.classList.remove(
+            escolhaRecurso.classList.remove(
               "text-green",
               "text-red",
               "text-orange",
               "text-yellow",
               "text-gray"
             );
-            elementoInstabilidade.classList.add("text-red");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
+            escolhaRecurso.classList.add("text-red");
+            escolhaRecurso.innerHTML = idHTML;
 
             break;
           default:
             // sem cor (teoricamente aqui é impossível)
-            elementoInstabilidade.classList.remove(
+            escolhaRecurso.classList.remove(
               "text-green",
               "text-red",
               "text-orange",
               "text-yellow",
               "text-gray"
             );
-            elementoInstabilidade.classList.add("text-gray");
-            elementoInstabilidade.innerHTML = escalaInstabilidade;
+            escolhaRecurso.classList.add("text-gray");
+            escolhaRecurso.innerHTML = idHTML;
 
             break;
         }
@@ -423,7 +447,8 @@
       ValidacaoCores(irregularidadesCPU)
       ValidacaoCores(irregularidadesRAM)
       ValidacaoCores(irregularidadesDisco)
-    
+    }
+
 
     function obterEscalaInstabilidade() {
       return 2;
@@ -466,32 +491,23 @@
           console.log("Iniciando a busca das irregularidades de CPU");
 
           if (resposta.ok) {
-            console.log(resposta);
-
-            resposta.json().then((json) => {
+            return resposta.json().then((json) => {
               console.log(json);
-              console.log(JSON.stringify(json));
-
-              // var irrCPU;
-              var irrCPU = json[0].qtdCpu;
-              console.log("Valor capturado irrCPU:", irrCPU)
-
-              !irrCPU ? 0 : irrCPU
-              alert(irrCPU)
-              return irrCPU
-
+              const irrCPU = json[0]?.qtdCpu || 10; // Definindo um valor padrão 10, caso json[0] ou json[0].qtdCpu seja undefined
+              console.log("Valor capturado irrCPU:", irrCPU);
+              return irrCPU;
             });
           } else {
             console.log(
               "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
             );
+            return null; // Retorna null em caso de erro
           }
         })
         .catch(function (erro) {
           console.log(erro);
+          return null; // Retorna null em caso de erro de conexão
         });
-      // alert(irrCPU)
-      // return Number(irrCPU);
     }
 
     function obterIrrRAM() {
@@ -584,22 +600,22 @@
         return "indefinido";
       }
     }
-    
+
     function isAtivoBACEN(url) {
       const elementoServico = document.getElementById("elemento_servico");
       fetch(`/externos/check`, {
         method: "POST",
         headers: {
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        url:url
-      }),
-    })
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: url
+        }),
+      })
         .then((resposta) => {
-          resposta.json().then( respostaJSON => 
-          elemento_servico.innerHTML = respostaJSON.status ? respostaJSON.status : "Impossível Alcançar"
-        )
+          resposta.json().then(respostaJSON =>
+            elemento_servico.innerHTML = respostaJSON.status ? respostaJSON.status : "Impossível Alcançar"
+          )
         })
         .catch((error) => {
           // vermelho
