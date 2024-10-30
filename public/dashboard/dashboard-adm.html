@@ -433,7 +433,36 @@
     }
 
     function obterEscalaInstabilidade() {
-      return 2;
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+      fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca da escala de instabilidade");
+
+          if (resposta.ok) {
+            return resposta.json().then((json) => {
+              console.log(json);
+              const irrPorcentagem = json[0].qtdCpu;
+              console.log("Valor capturado irrPorcentagem:", irrPorcentagem);
+              document.getElementById("escala-instabilidade").innerHTML = irrPorcentagem;
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+            );
+            document.getElementById("irr_cpu").innerHTML = "Erro ao obter";
+            return null; // Retorna null em caso de erro
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+          return null; // Retorna null em caso de erro de conexão
+        });
     }
 
     function obterNomeEmpresa() {

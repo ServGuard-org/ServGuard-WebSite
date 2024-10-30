@@ -6,4 +6,8 @@ router.get("/histograma/:idEmpresa", function (req, res) {
     medidaController.buscarDadosHistograma(req,res);
 });
 
+router.get("/escalaInstabilidade/:idEmpresa", function (req, res) {
+    medidaController.buscarEscalaInstabilidade(req,res);
+});
+
 module.exports = router;

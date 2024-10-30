@@ -274,6 +274,18 @@ CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 
 SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_disco
 	WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
+    
+    
+    
+CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
+	SELECT COUNT(DISTINCT idMaquina) AS total_maquinas_irregulares, (COUNT(DISTINCT idMaquina) / (SELECT COUNT(*) FROM Maquina)) * 100 AS percentual_irregulares, fkEmpresa FROM Maquina
+		JOIN MaquinaRecurso ON idMaquina = fkMaquina
+		JOIN Captura c ON idMaquinaRecurso = fkMaquinaRecurso
+		JOIN Empresa ON fkEmpresa = idEmpresa
+			WHERE isAlerta = 1 AND DATE(dthCriacao) = CURDATE();
+        
+	SELECT * FROM vista_irregularidade_total_e_percentual where fkEmpresa = 1;
+			
 
 -- PROCEDURES
 
