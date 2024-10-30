@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-var recursoModel = require("../models/recursoModel");
-
-
-
-module.exports = {  }
-=======
 const recursoModel = require("../models/recursoModel");
 
 function buscarUltimosDadosRede(req, res) {
@@ -88,4 +81,3 @@ module.exports = {
     buscarIrregularidadeRam,
     buscarIrregularidadeDisco
 };
->>>>>>> 2c5ca5518c8f585ca6dc96633a6459483b14e61a
