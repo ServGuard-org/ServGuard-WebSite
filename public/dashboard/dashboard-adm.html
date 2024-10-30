@@ -252,8 +252,8 @@
       let nomeUsuario = obterNomeUsuario();
 
       obterIrrCPU();
-      let irregularidadesRAM = obterIrrRAM();
-      let irregularidadesDisco = obterIrrDisco();
+      obterIrrRAM();
+      obterIrrDISCO();
 
       const elementoInstabilidade = document.getElementById("escala-instabilidade");
 
@@ -271,11 +271,12 @@
 
       const elementoIrrDisco = document.getElementById("irr_disco");
 
-      elementoIrrRAM.innerHTML = irregularidadesRAM;
-      elementoIrrDisco.innerHTML = irregularidadesDisco;
-      elementoNomeUsuario.innerHTML = nomeUsuario;
-      elementoEmpresa.innerHTML = nomeEmpresa;
-      elementoData.innerHTML = data;
+      // elementoIrrCPU.innerHTML = irregularidadesCPU;
+      // elementoIrrRAM.innerHTML = irregularidadesRAM;
+      // elementoIrrDisco.innerHTML = irregularidadesDisco;
+      // elementoNomeUsuario.innerHTML = nomeUsuario;
+      // elementoEmpresa.innerHTML = nomeEmpresa;
+      // elementoData.innerHTML = data;
 
       switch (escalaInstabilidade) {
         case 0:
@@ -344,89 +345,92 @@
 
           break;
       }
-
-      function ValidacaoCores(escolhaRecurso) {
-        var idHTML;
-        if (escolhaRecurso == irregularidadesCPU) {
-          idHTML = elementoIrrCPU
-        } else if (escolhaRecurso == irregularidadesRAM) {
-          idHTML = elementoIrrRAM
-        } else if (escolhaRecurso == irregularidadesDisco) {
-          idHTML = elementoIrrDisco
-        }
-        switch (escolhaRecurso) {
-          case 0:
-            // verde
-            escolhaRecurso.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            escolhaRecurso.classList.add("text-green");
-            escolhaRecurso.innerHTML = idHTML;
-
-            break;
-          case 10:
-            // amarelo
-            escolhaRecurso.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            escolhaRecurso.classList.add("text-yellow");
-            escolhaRecurso.innerHTML = idHTML;
-
-            break;
-          case 20:
-            // laranja
-            escolhaRecurso.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            escolhaRecurso.classList.add("text-orange");
-            escolhaRecurso.innerHTML = idHTML;
-
-            break;
-          case 50:
-            // vermelho
-            escolhaRecurso.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            escolhaRecurso.classList.add("text-red");
-            escolhaRecurso.innerHTML = idHTML;
-
-            break;
-          default:
-            // sem cor (teoricamente aqui é impossível)
-            escolhaRecurso.classList.remove(
-              "text-green",
-              "text-red",
-              "text-orange",
-              "text-yellow",
-              "text-gray"
-            );
-            escolhaRecurso.classList.add("text-gray");
-            escolhaRecurso.innerHTML = idHTML;
-
-            break;
-        }
-      }
-      ValidacaoCores(irregularidadesCPU)
-      ValidacaoCores(irregularidadesRAM)
-      ValidacaoCores(irregularidadesDisco)
     }
 
+    function ValidacaoCores(escolhaRecurso) {
+
+      const elementoIrrCPU = document.getElementById("irr_cpu");
+      const elementoIrrRAM = document.getElementById("irr_ram");
+      const elementoIrrDisco = document.getElementById("irr_disco");
+      var idHTML;
+
+      if (escolhaRecurso == "irregularidadesCPU") {
+        idHTML = elementoIrrCPU;
+        valor = parseFloat(idHTML.innerText);
+        console.log("idHTML de CPU:", valor);
+      } else if (escolhaRecurso == "irregularidadesRAM") {
+        idHTML = elementoIrrRAM;
+        valor = parseFloat(idHTML.innerText);
+        console.log("idHTML de RAM:", valor);
+      } else if (escolhaRecurso == "irregularidadesDISCO") {
+        idHTML = elementoIrrDisco;
+        valor = parseFloat(idHTML.innerText);
+        console.log("idHTML de DISCO:", valor);
+      }
+
+      if (valor <= 0) {
+        // verde
+        idHTML.classList.remove(
+          "text-green",
+          "text-red",
+          "text-orange",
+          "text-yellow",
+          "text-gray"
+        );
+        idHTML.classList.add("text-green");
+        // idHTML.innerHTML = idHTML;
+
+      } else if (valor > 0 && valor < 15) {
+        // amarelo
+        idHTML.classList.remove(
+          "text-green",
+          "text-red",
+          "text-orange",
+          "text-yellow",
+          "text-gray"
+        );
+        idHTML.classList.add("text-yellow");
+        // idHTML.innerHTML = idHTML;
+
+      } else if (valor >= 15 && valor < 25) {
+        // laranja
+        idHTML.classList.remove(
+          "text-green",
+          "text-red",
+          "text-orange",
+          "text-yellow",
+          "text-gray"
+        );
+        idHTML.classList.add("text-orange");
+        // idHTML.innerHTML = idHTML;
+
+      } else if (valor >= 25) {
+        // vermelho
+        idHTML.classList.remove(
+          "text-green",
+          "text-red",
+          "text-orange",
+          "text-yellow",
+          "text-gray"
+        );
+        idHTML.classList.add("text-red");
+        // idHTML.innerHTML = idHTML;
+
+      } else {
+        // sem cor (teoricamente aqui é impossível)
+        idHTML.classList.remove(
+          "text-green",
+          "text-red",
+          "text-orange",
+          "text-yellow",
+          "text-gray"
+        );
+        idHTML.classList.add("text-gray");
+        // idHTML.innerHTML = idHTML;
+
+
+      }
+    }
 
     function obterEscalaInstabilidade() {
       return 2;
@@ -472,9 +476,10 @@
             return resposta.json().then((json) => {
               console.log(json);
               const irrCPU = json[0].qtdCpu;
-              ValidacaoCores()
               console.log("Valor capturado irrCPU:", irrCPU);
               document.getElementById("irr_cpu").innerHTML = irrCPU;
+              // document.getElementById("irr_cpu").innerHTML = 25;
+              ValidacaoCores("irregularidadesCPU")
             });
           } else {
             console.log(
@@ -489,7 +494,6 @@
           return null; // Retorna null em caso de erro de conexão
         });
     }
-
     function obterIrrRAM() {
       const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
@@ -503,34 +507,27 @@
           console.log("Iniciando a busca das irregularidades de RAM");
 
           if (resposta.ok) {
-            console.log(resposta);
-
-            resposta.json().then((json) => {
+            return resposta.json().then((json) => {
               console.log(json);
-              console.log(JSON.stringify(json));
-
-              var irrRAM = json[0].qtdRam;
-              console.log("Valor capturado irrRAM:", irrRAM)
-
-              !irrRAM ? 0 : irrRAM
-              alert(irrRAM)
-              return irrRAM
-
+              const irrRAM = json[0].qtdRam;
+              console.log("Valor capturado irrRAM:", irrRAM);
+              document.getElementById("irr_ram").innerHTML = irrRAM;
+              ValidacaoCores("irregularidadesRAM")
             });
           } else {
             console.log(
-              "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+              "Houve um erro ao tentar capturar os dados de irregularidades RAM!"
             );
+            document.getElementById("irr_ram").innerHTML = "Erro ao obter";
+            return null; // Retorna null em caso de erro
           }
         })
         .catch(function (erro) {
           console.log(erro);
+          return null; // Retorna null em caso de erro de conexão
         });
-      // alert(irrRAM)
-      // return Number(irrRAM);
     }
-
-    function obterIrrDisco() {
+    function obterIrrDISCO() {
       const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
       fetch(`/recursos/irregularidade/disco/${idEmpresa}`, {
@@ -540,35 +537,28 @@
         },
       })
         .then(function (resposta) {
-          console.log("Iniciando a busca das irregularidades de Disco");
+          console.log("Iniciando a busca das irregularidades de DISCO");
 
           if (resposta.ok) {
-            console.log(resposta);
-
-            resposta.json().then((json) => {
+            return resposta.json().then((json) => {
               console.log(json);
-              console.log(JSON.stringify(json));
-
-              // var irrDISC;
-              var irrDISC = json[0].DicosIrregulares;
-              console.log("Valor capturado irrDISC:", irrDISC)
-
-              !irrDISC ? 0 : irrDISC
-              alert(irrDISC)
-              return irrDISC
-
+              const irrDISCO = json[0].DicosIrregulares;
+              console.log("Valor capturado irrDISCO:", irrDISCO);
+              document.getElementById("irr_disco").innerHTML = irrDISCO;
+              ValidacaoCores("irregularidadesDISCO")
             });
           } else {
             console.log(
-              "Houve um erro ao tentar capturar os dados de irregularidades DISC!"
+              "Houve um erro ao tentar capturar os dados de irregularidades DISCO!"
             );
+            document.getElementById("irr_disco").innerHTML = "Erro ao obter";
+            return null; // Retorna null em caso de erro
           }
         })
         .catch(function (erro) {
           console.log(erro);
+          return null; // Retorna null em caso de erro de conexão
         });
-      // alert(irrDISC)
-      // return Number(irrDISC);
     }
 
     function obterNomeUsuario() {
