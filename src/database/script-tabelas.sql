@@ -186,7 +186,7 @@ SELECT
     m.nome AS nomeMaquina, -- Nome da máquina
     r.nome AS recursoNome, -- Nome do recurso
     mr.max AS maxRecurso, -- Valor máximo do recurso da tabela MaquinaRecurso
-    MAX(cr.dthCriacao) AS dataMaximaCaptura -- Data da captura mais recente
+    MAX(cr.dthCriacao) AS dataMaximaCaptura -- Data da Captura mais recente
 FROM 
     ServGuard.Maquina m
 JOIN 
@@ -215,7 +215,7 @@ FROM
 JOIN 
     ServGuard.CapturaVolume cv ON v.idVolume = cv.fkVolume
 JOIN (
-    -- Subquery para obter a última captura por volume
+    -- Subquery para obter a última Captura por volume
     SELECT 
         fkVolume, 
         MAX(dthCriacao) AS dataUltimaCaptura
@@ -228,7 +228,7 @@ JOIN (
 
 -- VIEW PARA O E DO ETL
 CREATE OR REPLACE VIEW vista_registro_cpu AS
-	SELECT registro, idEmpresa, fkRecurso FROM captura 
+	SELECT registro, idEmpresa, fkRecurso FROM Captura 
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Maquina ON fkMaquina = idMaquina
 		JOIN Empresa ON fkEmpresa = idEmpresa;
@@ -247,7 +247,7 @@ SELECT registroColuna FROM vista_histograma_cpu
   
 -- Irregularidades de CPU
 CREATE OR REPLACE VIEW vista_irregularidade_cpu AS
-	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM captura 
+	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
@@ -258,7 +258,7 @@ SELECT count(registro) as qtdCpu FROM vista_irregularidade_cpu
              
 -- Irregularidades de RAM
 CREATE OR REPLACE VIEW vista_irregularidade_ram AS
-	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM captura 
+	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Maquina ON fkMaquina = idMaquina
 		JOIN Empresa ON fkEmpresa = idEmpresa;
