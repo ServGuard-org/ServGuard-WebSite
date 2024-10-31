@@ -125,6 +125,7 @@ PRIMARY KEY (idHistogramaColuna)
 INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
+    ('usoTotal', '%'),
 	('erroPacotesEntrada', 'Pacote'),
 	('erroPacotesSaida', 'Pacote'),
 	('descartePacotesEntrada', 'Pacote'),
