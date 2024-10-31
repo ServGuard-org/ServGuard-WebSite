@@ -1,0 +1,44 @@
+version: '1'
+
+services:
+    site:
+        image: marciojuliao22/servguard_site:1.0
+        container_name: servguard_site
+        env_file:
+            - .env
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        networks:
+            - servguard-network
+
+    db:
+        image: marciorjuliao22/servguard_bd:1.0
+        container_name: servguard_bd
+        environment:
+            MYSQL_ROOT_PASSWORD: urubu100
+        ports:
+            - "3306:3306"
+        networks:
+            - servguard-network
+
+networks:
+    servguard-network:
+        driver: bridge
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
