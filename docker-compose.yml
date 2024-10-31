@@ -2,7 +2,7 @@ version: '1'
 
 services:
     site:
-        image: marciojuliao22/servguard_site:1.0
+        image: marciorjuliao22/servguard_site:1.0
         container_name: servguard_site
         env_file:
             - .env
