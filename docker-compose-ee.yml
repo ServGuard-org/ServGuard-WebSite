@@ -1,0 +1,28 @@
+version: '1'
+
+services:
+  site:
+    image: eduardoaazevedo/img-site-servguard:latest
+    container_name: servguard_site
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - servguard-network
+
+  banco:
+    image: eduardoaazevedo/img-banco-servguard:latest
+    container_name: servguard_banco
+    environment:
+        MYSQL_ROOT_PASSWORD: edukai2303
+    ports:
+        - "3306:3306"
+    networks:
+        - servguard-network
+
+networks:
+    servguard-network:
+        driver: bridge
