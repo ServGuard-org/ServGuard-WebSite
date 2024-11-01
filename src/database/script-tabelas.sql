@@ -320,89 +320,111 @@ CREATE PROCEDURE obter_ultimos_dados_rede(IN maquina INT)
 BEGIN
     SELECT 
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
+             WHERE fkMaquina = 2 
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "velocidadeDownload")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS velocidadeDownload,
+
+        (SELECT registro 
+         FROM ServGuard.Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
+             WHERE fkMaquina = 2 
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "velocidadeUpload")
+         ) 
+         ORDER BY dthCriacao DESC 
+         LIMIT 1) AS velocidadeUpload,
+
+        (SELECT registro 
+         FROM ServGuard.Captura 
+         WHERE fkMaquinaRecurso = (
+             SELECT idMaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "pacotesEnviados")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "pacotesEnviados")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS pacotesEnviados,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "pacotesRecebidos")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "pacotesRecebidos")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS pacotesRecebidos,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "megabytesEnviados")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "megabytesEnviados")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS megabytesEnviados,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "megabytesRecebidos")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "megabytesRecebidos")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS megabytesRecebidos,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "descartePacotesEntrada")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "descartePacotesEntrada")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS descartePacotesEntrada,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "descartePacotesSaida")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "descartePacotesSaida")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS descartePacotesSaida,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "erroPacotesEntrada")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "erroPacotesEntrada")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS erroPacotesEntrada,
-        
+
         (SELECT registro 
-         FROM Captura 
+         FROM ServGuard.Captura 
          WHERE fkMaquinaRecurso = (
              SELECT idMaquinaRecurso 
-             FROM MaquinaRecurso 
+             FROM ServGuard.MaquinaRecurso 
              WHERE fkMaquina = maquina 
-             AND fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = "erroPacotesSaida")
+             AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = "erroPacotesSaida")
          ) 
          ORDER BY dthCriacao DESC 
          LIMIT 1) AS erroPacotesSaida;
