@@ -172,36 +172,55 @@
       window.location.href = "../index.html";
     }
 
-    function buscarDadosGrafico(){
-      
+    function buscarDadosGrafico() {
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+      const idRecurso = 1;
+      fetch(`/graficoRecurso/${idEmpresa}/${idRecurso}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca dos dados do gráfico analísta");
+
+          if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then((json) => {
+              console.log(json);
+              console.log(JSON.stringify(json));
+
+              var listaMaquina = [];
+              var dadosUso = [];
+              console.log(`Formando a lista:`);
+              for (var i = 0; i < json.length; i++) {
+                console.log(json[i].fkMaquina);
+                listaMaquina.push(json[i].fkMaquina);
+                console.log(json[i].registro);
+                dadosUso.push(json[i].registro);
+              }
+              gerarGrafico();
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados do gráfico analista!"
+            );
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+        });
+      return false;
     }
     function gerarGrafico() {
       const data = {
         //aqui precisa ser a listagem de máquinas por ID
-        labels: [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-        ],
+        labels: listaMaquina,
         datasets: [
           {
             label: "Percentual de Uso (%)",
-            data: [
-              10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 70, 60, 80, 90,
-            ],
+            data: dadosUso,
             backgroundColor: "#8a4dfb",
             borderColor: "#4E2E9E",
             borderWidth: 2,
@@ -271,6 +290,7 @@
 
     function carregarPagina() {
       verificarCargo()
+      buscarDadosGrafico()
 
       const apresentacao = false
       // const apresentacao = true
@@ -284,8 +304,8 @@
         "escala-instabilidade"
       );
 
-      elementoInstabilidade.innerHTML = "";
-      elementoInstabilidade.innerHTML = escalaInstabilidade;
+      // elementoInstabilidade.innerHTML = "";
+      // elementoInstabilidade.innerHTML = escalaInstabilidade;
 
       switch (escalaInstabilidade) {
         case 0:

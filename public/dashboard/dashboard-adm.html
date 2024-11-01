@@ -165,25 +165,25 @@
       window.location.href = "dashboard-analista.html";
     }
 
-
-
     function carregarPagina() {
 
       const apresentacao = false
+    
       // const apresentacao = true
-
       const url = apresentacao ? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
 
       isAtivoBACEN(url);
-
-      const data = obterData();
-      let nomeEmpresa = obterNomeEmpresa();
-      let nomeUsuario = obterNomeUsuario();
-      obterEscalaInstabilidade()
+      obterEscalaInstabilidade();
       obterIrrCPU();
       obterIrrRAM();
       obterIrrDISCO();
 
+      const data = obterData();
+
+      let nomeEmpresa = obterNomeEmpresa();
+
+      let nomeUsuario = obterNomeUsuario();
+      
       const elementoData = document.getElementById("data_tempo_real");
 
       const elementoEmpresa = document.getElementById("empresa_usuario");
@@ -193,7 +193,9 @@
       const elementoServico = document.getElementById("elemento_servico");
 
       elementoNomeUsuario.innerHTML = nomeUsuario;
+
       elementoEmpresa.innerHTML = nomeEmpresa;
+
       elementoData.innerHTML = data;
 
     }
@@ -570,7 +572,6 @@
     // var dados = [];
     function obterDadosHistograma() {
       const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
       fetch(`/medidas/histograma/${idEmpresa}`, {
         method: "GET",
         headers: {
