@@ -247,15 +247,12 @@
       isAtivoBACEN(url);
 
       const data = obterData();
-      let escalaInstabilidade = obterEscalaInstabilidade();
       let nomeEmpresa = obterNomeEmpresa();
       let nomeUsuario = obterNomeUsuario();
-
+      obterEscalaInstabilidade()
       obterIrrCPU();
       obterIrrRAM();
       obterIrrDISCO();
-
-      const elementoInstabilidade = document.getElementById("escala-instabilidade");
 
       const elementoData = document.getElementById("data_tempo_real");
 
@@ -265,86 +262,10 @@
 
       const elementoServico = document.getElementById("elemento_servico");
 
-      const elementoIrrCPU = document.getElementById("irr_cpu");
-
-      const elementoIrrRAM = document.getElementById("irr_ram");
-
-      const elementoIrrDisco = document.getElementById("irr_disco");
-
-      // elementoIrrCPU.innerHTML = irregularidadesCPU;
-      // elementoIrrRAM.innerHTML = irregularidadesRAM;
-      // elementoIrrDisco.innerHTML = irregularidadesDisco;
       elementoNomeUsuario.innerHTML = nomeUsuario;
       elementoEmpresa.innerHTML = nomeEmpresa;
       elementoData.innerHTML = data;
 
-      switch (escalaInstabilidade) {
-        case 0:
-          // verde
-          elementoInstabilidade.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          elementoInstabilidade.classList.add("text-green");
-          elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-          break;
-        case 1:
-          // amarelo
-          elementoInstabilidade.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          elementoInstabilidade.classList.add("text-yellow");
-          elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-          break;
-        case 2:
-          // laranja
-          elementoInstabilidade.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          elementoInstabilidade.classList.add("text-orange");
-          elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-          break;
-        case 3:
-          // vermelho
-          elementoInstabilidade.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          elementoInstabilidade.classList.add("text-red");
-          elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-          break;
-        default:
-          // sem cor (teoricamente aqui é impossível)
-          elementoInstabilidade.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          elementoInstabilidade.classList.add("text-gray");
-          elementoInstabilidade.innerHTML = escalaInstabilidade;
-
-          break;
-      }
     }
 
     function ValidacaoCores(escolhaRecurso) {
@@ -449,14 +370,74 @@
               console.log(json);
               const irrPorcentagem = json[0].percentual_irregulares;
               console.log("Valor capturado irrPorcentagem:", irrPorcentagem);
-              if (irrPorcentagem < 1){
-                document.getElementById("escala-instabilidade").innerHTML = 0;
-              } else if (irrPorcentagem >= 1 && irrPorcentagem < 25){
-                document.getElementById("escala-instabilidade").innerHTML = 1;
-              } else if (irrPorcentagem >= 25 && irrPorcentagem < 50){
-                document.getElementById("escala-instabilidade").innerHTML = 2;
-              } else if (irrPorcentagem >= 50){
-                document.getElementById("escala-instabilidade").innerHTML = 3;
+
+              elementoInstabilidade = document.getElementById("escala-instabilidade");
+              if (irrPorcentagem < 1) {
+                elementoInstabilidade.innerHTML = 0;
+              } else if (irrPorcentagem >= 1 && irrPorcentagem < 25) {
+                elementoInstabilidade.innerHTML = 1;
+              } else if (irrPorcentagem >= 25 && irrPorcentagem < 50) {
+                elementoInstabilidade.innerHTML = 2;
+              } else if (irrPorcentagem >= 50) {
+                elementoInstabilidade.innerHTML = 3;
+              }
+
+              switch (elementoInstabilidade) {
+                case 0:
+                  // verde
+                  elementoInstabilidade.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                  );
+                  elementoInstabilidade.classList.add("text-green");
+                  break;
+                case 1:
+                  // amarelo
+                  elementoInstabilidade.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                  );
+                  elementoInstabilidade.classList.add("text-yellow");
+                  break;
+                case 2:
+                  // laranja
+                  elementoInstabilidade.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                  );
+                  elementoInstabilidade.classList.add("text-orange");
+                  break;
+                case 3:
+                  // vermelho
+                  elementoInstabilidade.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                  );
+                  elementoInstabilidade.classList.add("text-red");
+                  break;
+                default:
+                  // sem cor (teoricamente aqui é impossível)
+                  elementoInstabilidade.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                  );
+                  elementoInstabilidade.classList.add("text-gray");
+                  break;
               }
             });
           } else {
