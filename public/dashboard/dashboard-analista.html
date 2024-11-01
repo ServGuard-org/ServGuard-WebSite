@@ -175,7 +175,7 @@
     function buscarDadosGrafico() {
       const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
       const idRecurso = 1;
-      fetch(`/graficoRecurso/${idEmpresa}/${idRecurso}`, {
+      fetch(`/medidas/graficoRecurso/${idEmpresa}/${idRecurso}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -200,6 +200,67 @@
                 console.log(json[i].registro);
                 dadosUso.push(json[i].registro);
               }
+              function gerarGrafico() {
+                const data = {
+                  //aqui precisa ser a listagem de máquinas por ID
+                  labels: listaMaquina,
+                  datasets: [
+                    {
+                      label: "Percentual de Uso (%)",
+                      data: dadosUso,
+                      backgroundColor: "#8a4dfb",
+                      borderColor: "#4E2E9E",
+                      borderWidth: 2,
+                      // barThickness: 58, // Ajuste da largura das barras em pixels
+                      borderRadius: 5, // Ajuste do border-radius
+                      borderSkipped: false,
+                    },
+                  ],
+                };
+
+                const config = {
+                  type: "bar",
+                  data: data,
+                  options: {
+                    responsive: true, // Para tornar o gráfico responsivo
+                    maintainAspectRatio: false, // Define se a proporção deve ser mantida
+                    plugins: {
+                      legend: {
+                        display: false,
+                      },
+                    },
+                    scales: {
+                      x: {
+                        title: {
+                          display: true,
+                          text: "Máquinas por ID",
+                          beginAtZero: true,
+                        },
+                        beginAtZero: true,
+                        grid: {
+                          display: false,
+                        },
+                      },
+                      y: {
+                        title: {
+                          display: true,
+                          text: "Uso em %",
+                          beginAtZero: true,
+                        },
+                        beginAtZero: true,
+                        grid: {
+                          display: false,
+                        },
+                      },
+                    },
+                  },
+                };
+
+                const myGraphBar = new Chart(
+                  document.getElementById("myGraphBar"),
+                  config
+                );
+              }
               gerarGrafico();
             });
           } else {
@@ -212,67 +273,6 @@
           console.log(erro);
         });
       return false;
-    }
-    function gerarGrafico() {
-      const data = {
-        //aqui precisa ser a listagem de máquinas por ID
-        labels: listaMaquina,
-        datasets: [
-          {
-            label: "Percentual de Uso (%)",
-            data: dadosUso,
-            backgroundColor: "#8a4dfb",
-            borderColor: "#4E2E9E",
-            borderWidth: 2,
-            // barThickness: 58, // Ajuste da largura das barras em pixels
-            borderRadius: 5, // Ajuste do border-radius
-            borderSkipped: false,
-          },
-        ],
-      };
-
-      const config = {
-        type: "bar",
-        data: data,
-        options: {
-          responsive: true, // Para tornar o gráfico responsivo
-          maintainAspectRatio: false, // Define se a proporção deve ser mantida
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: "Máquinas por ID",
-                beginAtZero: true,
-              },
-              beginAtZero: true,
-              grid: {
-                display: false,
-              },
-            },
-            y: {
-              title: {
-                display: true,
-                text: "Uso em %",
-                beginAtZero: true,
-              },
-              beginAtZero: true,
-              grid: {
-                display: false,
-              },
-            },
-          },
-        },
-      };
-
-      const myGraphBar = new Chart(
-        document.getElementById("myGraphBar"),
-        config
-      );
     }
 
     function verificarCargo() {
