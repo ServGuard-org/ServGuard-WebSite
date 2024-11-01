@@ -381,8 +381,9 @@
               } else if (irrPorcentagem >= 50) {
                 elementoInstabilidade.innerHTML = 3;
               }
-
-              switch (elementoInstabilidade) {
+              
+              valor = parseFloat(elementoInstabilidade.innerText);
+              switch (valor) {
                 case 0:
                   // verde
                   elementoInstabilidade.classList.remove(
