@@ -61,10 +61,10 @@
         <div class="dash-analista-graphic">
           <div class="title-graphic">
             <h3 class="bold center">Componente:</h3>
-            <select id="select-componente" class="select-componente bold">
-              <option value="cpu">CPU</option>
-              <option value="ram">RAM</option>
-              <option value="disco">DISCO</option>
+            <select id="select-componente" class="select-componente bold" onchange="buscarDadosGrafico()">
+              <option value="1">CPU</option>
+              <option value="2">RAM</option>
+              <!-- <option value="3">DISCO</option> -->
             </select>
           </div>
           <div class="graphic-space-analista">
@@ -172,9 +172,10 @@
       window.location.href = "../index.html";
     }
 
+    let myChart;
     function buscarDadosGrafico() {
       const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-      const idRecurso = 1;
+      const idRecurso = document.getElementById('select-componente').value;
       fetch(`/medidas/graficoRecurso/${idEmpresa}/${idRecurso}`, {
         method: "GET",
         headers: {
@@ -200,7 +201,12 @@
                 console.log(json[i].registro);
                 dadosUso.push(json[i].registro);
               }
+
               function gerarGrafico() {
+                if (myChart) {
+                  myChart.destroy();
+                }
+
                 const data = {
                   //aqui precisa ser a listagem de máquinas por ID
                   labels: listaMaquina,
@@ -248,6 +254,8 @@
                           beginAtZero: true,
                         },
                         beginAtZero: true,
+                        min: 0,   // Define o limite mínimo do eixo Y
+                        max: 100, // Define o limite máximo do eixo Y
                         grid: {
                           display: false,
                         },
@@ -256,7 +264,7 @@
                   },
                 };
 
-                const myGraphBar = new Chart(
+                myChart = new Chart(
                   document.getElementById("myGraphBar"),
                   config
                 );
