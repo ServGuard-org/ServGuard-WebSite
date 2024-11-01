@@ -447,15 +447,23 @@
           if (resposta.ok) {
             return resposta.json().then((json) => {
               console.log(json);
-              const irrPorcentagem = json[0].qtdCpu;
+              const irrPorcentagem = json[0].percentual_irregulares;
               console.log("Valor capturado irrPorcentagem:", irrPorcentagem);
-              document.getElementById("escala-instabilidade").innerHTML = irrPorcentagem;
+              if (irrPorcentagem < 1){
+                document.getElementById("escala-instabilidade").innerHTML = 0;
+              } else if (irrPorcentagem >= 1 && irrPorcentagem < 25){
+                document.getElementById("escala-instabilidade").innerHTML = 1;
+              } else if (irrPorcentagem >= 25 && irrPorcentagem < 50){
+                document.getElementById("escala-instabilidade").innerHTML = 2;
+              } else if (irrPorcentagem >= 50){
+                document.getElementById("escala-instabilidade").innerHTML = 3;
+              }
             });
           } else {
             console.log(
               "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
             );
-            document.getElementById("irr_cpu").innerHTML = "Erro ao obter";
+            document.getElementById("escala-instabilidade").innerHTML = "Erro ao obter";
             return null; // Retorna null em caso de erro
           }
         })
