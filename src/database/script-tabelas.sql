@@ -126,6 +126,8 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 	('usoCPU', '%'),
 	('usoRAM', '%'),
     ('usoTotal', '%'),
+    ('velocidadeDownload', 'Mbps'),
+    ('velocidadeUpload', 'Mbps'),
 	('erroPacotesEntrada', 'Pacote'),
 	('erroPacotesSaida', 'Pacote'),
 	('descartePacotesEntrada', 'Pacote'),
