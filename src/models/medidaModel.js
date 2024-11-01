@@ -18,9 +18,18 @@ function buscarEscalaInstabilidade(idEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function buscarUsoRecursoPorMaquina(idEmpresa, idRecurso) {
+    var instrucaoSql = `SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso 
+	                        WHERE fkEmpresa = ${idEmpresa} AND fkRecurso = ${idRecurso};`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 
 module.exports = {
     buscarDadosHistograma,
-    buscarEscalaInstabilidade
+    buscarEscalaInstabilidade,
+    buscarUsoRecursoPorMaquina
 }

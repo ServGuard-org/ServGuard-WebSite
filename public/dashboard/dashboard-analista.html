@@ -68,7 +68,7 @@
             </select>
           </div>
           <div class="graphic-space-analista">
-            <canvas id="myHistogram"></canvas>
+            <canvas id="myGraphBar"></canvas>
           </div>
         </div>
 
@@ -172,86 +172,91 @@
       window.location.href = "../index.html";
     }
 
-    const data = {
-      //aqui precisa ser a listagem de máquinas por ID
-      labels: [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-      ],
-      datasets: [
-        {
-          label: "Percentual de Uso (%)",
-          data: [
-            10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 70, 60, 80, 90,
-          ],
-          backgroundColor: "#8a4dfb",
-          borderColor: "#4E2E9E",
-          borderWidth: 2,
-          // barThickness: 58, // Ajuste da largura das barras em pixels
-          borderRadius: 5, // Ajuste do border-radius
-          borderSkipped: false,
-        },
-      ],
-    };
-
-    const config = {
-      type: "bar",
-      data: data,
-      options: {
-        responsive: true, // Para tornar o gráfico responsivo
-        maintainAspectRatio: false, // Define se a proporção deve ser mantida
-        plugins: {
-          legend: {
-            display: false,
+    function buscarDadosGrafico(){
+      
+    }
+    function gerarGrafico() {
+      const data = {
+        //aqui precisa ser a listagem de máquinas por ID
+        labels: [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+        ],
+        datasets: [
+          {
+            label: "Percentual de Uso (%)",
+            data: [
+              10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 90, 80, 70, 60, 80, 90,
+            ],
+            backgroundColor: "#8a4dfb",
+            borderColor: "#4E2E9E",
+            borderWidth: 2,
+            // barThickness: 58, // Ajuste da largura das barras em pixels
+            borderRadius: 5, // Ajuste do border-radius
+            borderSkipped: false,
           },
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: "Máquinas por ID",
-              beginAtZero: true,
-            },
-            beginAtZero: true,
-            grid: {
+        ],
+      };
+
+      const config = {
+        type: "bar",
+        data: data,
+        options: {
+          responsive: true, // Para tornar o gráfico responsivo
+          maintainAspectRatio: false, // Define se a proporção deve ser mantida
+          plugins: {
+            legend: {
               display: false,
             },
           },
-          y: {
-            title: {
-              display: true,
-              text: "Uso em %",
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Máquinas por ID",
+                beginAtZero: true,
+              },
               beginAtZero: true,
+              grid: {
+                display: false,
+              },
             },
-            beginAtZero: true,
-            grid: {
-              display: false,
+            y: {
+              title: {
+                display: true,
+                text: "Uso em %",
+                beginAtZero: true,
+              },
+              beginAtZero: true,
+              grid: {
+                display: false,
+              },
             },
           },
         },
-      },
-    };
+      };
 
-    const myHistogram = new Chart(
-      document.getElementById("myHistogram"),
-      config
-    );
+      const myGraphBar = new Chart(
+        document.getElementById("myGraphBar"),
+        config
+      );
+    }
 
-    function verificarCargo(){
+    function verificarCargo() {
       var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
       if (isADM !== null && Number(isADM) === 0) {
         document.getElementById('li-adm').style.display = 'none';
@@ -269,7 +274,7 @@
 
       const apresentacao = false
       // const apresentacao = true
-      const url = apresentacao? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
+      const url = apresentacao ? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
 
       isAtivoBACEN(url);
 
@@ -303,16 +308,16 @@
       fetch(`/externos/check`, {
         method: "POST",
         headers: {
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        url:url
-      }),
-    })
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: url
+        }),
+      })
         .then((resposta) => {
-          resposta.json().then( respostaJSON => 
-          elemento_servico.innerHTML = respostaJSON.status ? respostaJSON.status : "Impossível Alcançar"
-        )
+          resposta.json().then(respostaJSON =>
+            elemento_servico.innerHTML = respostaJSON.status ? respostaJSON.status : "Impossível Alcançar"
+          )
         })
         .catch((error) => {
           // vermelho

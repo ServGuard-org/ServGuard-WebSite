@@ -240,8 +240,20 @@ CREATE OR REPLACE VIEW vista_histograma_cpu AS
 	SELECT registroColuna, fkEmpresa, fkHistograma FROM HistogramaColuna 
 		JOIN Histograma ON fkHistograma = idHistograma;   
         
-SELECT registroColuna FROM vista_histograma_cpu 
-		WHERE fkHistograma = (SELECT MAX(fkHistograma) FROM HistogramaColuna) AND fkEmpresa = 1;
+        
+-- Plot gráfico analista: -----------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE VIEW vista_captura_atual_maquina_recurso AS
+	SELECT registro, fkMaquina, fkEmpresa, fkRecurso FROM Captura
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+			WHERE dthCriacao = (
+				SELECT MAX(dthCriacao) FROM Captura
+					JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+						WHERE fkMaquina = fkMaquina AND fkRecurso = fkRecurso
+			);
+
+SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso 
+	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
 -- Irregularidades de CPU
 CREATE OR REPLACE VIEW vista_irregularidade_cpu AS
@@ -275,7 +287,7 @@ SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_d
 	WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
     
     
-    
+-- Escala instabilidade
 CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
     SELECT 
         m.fkEmpresa,
