@@ -10,8 +10,9 @@ function buscarDadosHistograma(idEmpresa) {
 }
 
 function buscarEscalaInstabilidade(idEmpresa) {
-    var instrucaoSql = `SELECT * FROM vista_irregularidade_total_e_percentual 
-                            WHERE fkEmpresa = ${idEmpresa};`;
+    var instrucaoSql = `SELECT total_maquinas_irregulares, percentual_irregulares 
+                            FROM vista_irregularidade_total_e_percentual 
+                                WHERE fkEmpresa = ${idEmpresa};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

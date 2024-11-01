@@ -279,13 +279,25 @@ SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_d
     
     
 CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
-	SELECT COUNT(DISTINCT idMaquina) AS total_maquinas_irregulares, (COUNT(DISTINCT idMaquina) / (SELECT COUNT(*) FROM Maquina)) * 100 AS percentual_irregulares, fkEmpresa FROM Maquina
-		JOIN MaquinaRecurso ON idMaquina = fkMaquina
-		JOIN Captura c ON idMaquinaRecurso = fkMaquinaRecurso
-		JOIN Empresa ON fkEmpresa = idEmpresa
-			WHERE isAlerta = 1 AND DATE(dthCriacao) = CURDATE();
-        
-	SELECT * FROM vista_irregularidade_total_e_percentual where fkEmpresa = 1;
+    SELECT 
+        m.fkEmpresa,
+        COUNT(DISTINCT m.idMaquina) AS total_maquinas_irregulares,
+        (COUNT(DISTINCT m.idMaquina) / (SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa)) * 100 AS percentual_irregulares
+    FROM Maquina m
+		JOIN MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
+		JOIN Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
+			WHERE c.isAlerta = 1 AND DATE(c.dthCriacao) = CURDATE()
+				GROUP BY fkEmpresa;
+
+-- Consulta à VIEW para uma empresa específica (por exemplo, empresa com ID 1)
+SELECT total_maquinas_irregulares, percentual_irregulares 
+FROM vista_irregularidade_total_e_percentual 
+WHERE fkEmpresa = 1;
+
+
+
+
+
 			
 
 -- PROCEDURES
