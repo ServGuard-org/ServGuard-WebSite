@@ -170,6 +170,12 @@ consultarMaquinas(), verificarCargo()">
                     </a>
                     <input type="number" class="input-popup" placeholder="Uso de RAM(%)" id="input_ram">
                 </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Uso Total(%)" id="input_total">
+                </div>
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar" id="botao_atualizar"><b>Atualizar</b></button>
@@ -211,6 +217,7 @@ consultarMaquinas(), verificarCargo()">
         document.getElementById("input_apelido").value = "";
         document.getElementById("input_ram").value = "";
         document.getElementById("input_cpu").value = "";
+        document.getElementById("input_total").value = "";
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
@@ -309,6 +316,8 @@ consultarMaquinas(), verificarCargo()">
                         document.getElementById("input_cpu").value = alerta.maxRecurso;
                     } else if (alerta.recursoNome === "usoRAM") {
                         document.getElementById("input_ram").value = alerta.maxRecurso;
+                    } else if (alerta.recursoNome === "usoTotal") {
+                        document.getElementById("input_total").value = alerta.maxRecurso;
                     }
                 });
 
@@ -325,6 +334,7 @@ consultarMaquinas(), verificarCargo()">
         const apelido = document.getElementById("input_apelido").value;
         const cpu = document.getElementById("input_cpu").value;
         const ram = document.getElementById("input_ram").value;
+        const total = document.getElementById("input_total").value;
 
         if (apelido !== "indefinido") {
             fetch(`/maquinas/atualizarApelidoPorId`, {
@@ -357,17 +367,17 @@ consultarMaquinas(), verificarCargo()">
                     console.error("Erro ao atualizar: ", error);
                 });
         }
-        const body = {
-            usoCPU: cpu || null,  // Se cpu estiver definido, usa seu valor; caso contrário, usa null
-            usoRAM: ram || null   // Se ram estiver definido, usa seu valor; caso contrário, usa null
-        };
 
         fetch(`/alertas/atualizarPorMaquina/${idMaquina}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify({
+            usoCPU: cpu || null,  // Se cpu estiver definido, usa seu valor; caso contrário, usa null
+            usoRAM: ram || null, // Se ram estiver definido, usa seu valor; caso contrário, usa null
+            usoTotal: total || null   // Se total estiver definido, usa seu valor; caso contrário, usa null
+        })
         })
             .then(response => {
                 if (response.ok) {

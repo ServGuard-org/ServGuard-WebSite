@@ -195,8 +195,6 @@ JOIN
     ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
 JOIN 
     ServGuard.Captura cr ON mr.idMaquinaRecurso = cr.fkMaquinaRecurso
-WHERE 
-    r.nome IN ('usoCPU', 'usoRAM')
 GROUP BY 
     m.idMaquina, m.nome, r.nome, mr.max -- Inclui mr.max no GROUP BY
 ORDER BY 
