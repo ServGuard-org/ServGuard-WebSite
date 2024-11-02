@@ -7,11 +7,11 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - database
+      - db
     networks:
       - servguard-network
 
-  database:
+  db:
     image: eduardoaazevedo/img-banco-servguard:latest
     container_name: servguard_banco
     environment:
