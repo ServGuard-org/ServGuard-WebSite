@@ -1,7 +1,5 @@
-version: '1'
-
 services:
-  site:
+  website:
     image: eduardoaazevedo/img-site-servguard:latest
     container_name: servguard_site
     env_file:
@@ -9,11 +7,11 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - database
     networks:
       - servguard-network
 
-  banco:
+  database:
     image: eduardoaazevedo/img-banco-servguard:latest
     container_name: servguard_banco
     environment:
