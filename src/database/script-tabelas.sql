@@ -245,14 +245,17 @@ CREATE OR REPLACE VIEW vista_histograma_cpu AS
         
 -- Plot gráfico analista: -----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE VIEW vista_captura_atual_maquina_recurso AS
-	SELECT registro, fkMaquina, fkEmpresa, fkRecurso FROM Captura
-		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-		JOIN Maquina ON fkMaquina = idMaquina
-			WHERE dthCriacao = (
-				SELECT MAX(dthCriacao) FROM Captura
-					JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-						WHERE fkMaquina = fkMaquina AND fkRecurso = fkRecurso
-			);
+SELECT registro, fkMaquina, fkEmpresa, fkRecurso 
+FROM Captura
+JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+JOIN Maquina ON fkMaquina = idMaquina
+WHERE dthCriacao = (
+    SELECT MAX(dthCriacao) 
+    FROM Captura cr 
+    JOIN MaquinaRecurso mr ON cr.fkMaquinaRecurso = mr.idMaquinaRecurso
+    WHERE mr.fkMaquina = Maquina.idMaquina 
+    AND mr.fkRecurso = MaquinaRecurso.fkRecurso
+);
 
 SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso 
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
