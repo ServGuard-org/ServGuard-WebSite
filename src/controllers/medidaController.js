@@ -36,6 +36,24 @@ function buscarEscalaInstabilidade(req,res) {
     });
 }
 
+function buscarMapaInstabilidade(req,res) {
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined")
+    }
+    medidaModel.buscarMapaInstabilidade(idEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar o mapa de instabilidade.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function buscarUsoRecursoPorMaquina(req,res) {
     var idEmpresa = req.params.idEmpresa;
     var idRecurso = req.params.idRecurso;
@@ -62,5 +80,6 @@ function buscarUsoRecursoPorMaquina(req,res) {
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
+    buscarMapaInstabilidade,
     buscarUsoRecursoPorMaquina
 }
