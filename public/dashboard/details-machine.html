@@ -375,6 +375,21 @@
                 .catch(error => console.error(error));
         }
 
+        function gerarGrafico() {
+            const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+            fetch(`/maquinas/dadosTempoReal/${idMaquina}`, {
+                method: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.error(error));
+        }
+
     </script>
 
 </body>

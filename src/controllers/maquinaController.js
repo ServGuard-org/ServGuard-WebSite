@@ -162,6 +162,25 @@ function listarVolumesPorMaquina(req, res) {
         });
 }
 
+function dadosTempoReal(req, res) {
+    const idMaquina = req.params.idMaquina;
+
+    maquinaModel.dadosTempoReal(idMaquina)
+        .then(
+            resposta => {
+                if (resposta.length > 0) {
+                    res.status(200).json(resposta)
+                } else {
+                    res.status(204).send(`Não foi encontrada nenhuma máquina para esta empresa! idMaquina: ${idMaquina} `);
+                }
+            }
+        ).catch(erro => {
+            console.log(erro);
+            console.log("Houve um erro ao buscar as máquinas por empresa: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
-    cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId, listarVolumesPorMaquina
+    cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId, listarVolumesPorMaquina, dadosTempoReal
 }

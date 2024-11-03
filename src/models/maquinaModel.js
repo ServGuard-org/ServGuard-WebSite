@@ -50,4 +50,10 @@ function listarVolumesPorMaquina(idMaquina) {
     return database.executar(instrucaoSql);
 }
 
-module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId, listarVolumesPorMaquina }
+function dadosTempoReal(idMaquina) {
+    let instrucaoSql = `SELECT * FROM vista_dados_tempo_real WHERE idMaquina = ${idMaquina};`;
+
+    return database.executar(instrucaoSql);
+}
+
+module.exports = { cadastrar, inativarPorId, ativarPorId, atualizarApelidoPorId, listarPorEmpresa, listarPorId, listarAlertaPorId, listarVolumesPorMaquina, dadosTempoReal }

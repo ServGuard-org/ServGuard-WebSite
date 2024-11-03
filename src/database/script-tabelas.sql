@@ -309,7 +309,55 @@ SELECT total_maquinas_irregulares, percentual_irregulares
 FROM vista_irregularidade_total_e_percentual 
 WHERE fkEmpresa = 1;
 
+CREATE OR REPLACE VIEW vista_ultimas_metricas AS
+SELECT 
+    m.idMaquina,
+    m.fkEmpresa,
+    m.nome AS nomeMaquina,
+    (SELECT c.registro
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina 
+     AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'usoCPU')
+     ORDER BY c.dthCriacao DESC
+     LIMIT 1) AS usoCPU,
+    
+    (SELECT c.registro
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina 
+     AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'usoRAM')
+     ORDER BY c.dthCriacao DESC
+     LIMIT 1) AS usoRAM,
+    
+    (SELECT c.registro
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina 
+     AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'pacotesEnviados')
+     ORDER BY c.dthCriacao DESC
+     LIMIT 1) AS pacotesEnviados,
+    
+    (SELECT c.registro
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina 
+     AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'pacotesRecebidos')
+     ORDER BY c.dthCriacao DESC
+     LIMIT 1) AS pacotesRecebidos,
+    
+    (SELECT c.dthCriacao
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina
+     ORDER BY c.dthCriacao DESC
+     LIMIT 1) AS dthCaptura
+FROM 
+    Maquina m
+WHERE 
+    m.isAtiva = 1;
 
+SELECT * FROM vista_ultimas_metricas WHERE idMaquina = 1;
 
 
 

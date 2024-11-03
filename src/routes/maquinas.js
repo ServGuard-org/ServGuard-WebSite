@@ -35,4 +35,8 @@ router.get("/listarVolumesPorMaquina/:idMaquina", function (req, res) {
     maquinaController.listarVolumesPorMaquina(req, res);
 });
 
+router.get("/dadosTempoReal/:idMaquina", function (req, res) {
+    maquinaController.dadosTempoReal(req, res);
+});
+
 module.exports = router;
