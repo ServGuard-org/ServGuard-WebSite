@@ -100,6 +100,48 @@
   color: var(--dark-purple);
 }
 
+.btn-dashboard-reverse {
+  width: 75%;
+  height: 20%;
+  background-color: var(--white-dark);
+  color: var(--dark-purple);
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  transition: 0.5s ease;
+}
+
+.btn-dashboard-reverse:hover {
+  width: 90%;
+  transition: 0.5s ease;
+}
+
+.btn-dashboard-analista-reverse {
+  width: 65%;
+  height: 20%;
+  background-color: var(--white-dark);
+  color: var(--dark-purple);
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  transition: 0.5s ease;
+}
+
+.btn-dashboard-analista-reverse:hover {
+  width: 77%;
+  transition: 0.5s ease;
+}
+
 /* ESTILIZAÇÃO DE INPUT */
 .formContainer {
   width: 100%;
