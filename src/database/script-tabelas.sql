@@ -320,7 +320,7 @@ SELECT
      WHERE mr.fkMaquina = m.idMaquina 
      AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'usoCPU')
      ORDER BY c.dthCriacao DESC
-     LIMIT 1) AS usoCPU,
+     LIMIT 1) AS ultimo_uso_cpu,
     
     (SELECT c.registro
      FROM Captura c
@@ -328,7 +328,7 @@ SELECT
      WHERE mr.fkMaquina = m.idMaquina 
      AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'usoRAM')
      ORDER BY c.dthCriacao DESC
-     LIMIT 1) AS usoRAM,
+     LIMIT 1) AS ultimo_uso_ram,
     
     (SELECT c.registro
      FROM Captura c
@@ -336,7 +336,7 @@ SELECT
      WHERE mr.fkMaquina = m.idMaquina 
      AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'pacotesEnviados')
      ORDER BY c.dthCriacao DESC
-     LIMIT 1) AS pacotesEnviados,
+     LIMIT 1) AS ultimos_pacotes_enviados,
     
     (SELECT c.registro
      FROM Captura c
@@ -344,14 +344,14 @@ SELECT
      WHERE mr.fkMaquina = m.idMaquina 
      AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'pacotesRecebidos')
      ORDER BY c.dthCriacao DESC
-     LIMIT 1) AS pacotesRecebidos,
+     LIMIT 1) AS ultimos_pacotes_recebidos,
     
     (SELECT c.dthCriacao
      FROM Captura c
      JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
      WHERE mr.fkMaquina = m.idMaquina
      ORDER BY c.dthCriacao DESC
-     LIMIT 1) AS dthCaptura
+     LIMIT 1) AS ultima_captura
 FROM 
     Maquina m
 WHERE 

@@ -51,7 +51,7 @@ function listarVolumesPorMaquina(idMaquina) {
 }
 
 function dadosTempoReal(idMaquina) {
-    let instrucaoSql = `SELECT * FROM vista_dados_tempo_real WHERE idMaquina = ${idMaquina};`;
+    let instrucaoSql = `SELECT * FROM vista_ultimas_metricas WHERE idMaquina = ${idMaquina};`;
 
     return database.executar(instrucaoSql);
 }

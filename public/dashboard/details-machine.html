@@ -14,7 +14,7 @@
     <title>ServGuard | Máquina</title>
 </head>
 
-<body onload="consultarMaquina(), listarVolumes(), plotarGrafico(), verificarCargo()">
+<body onload="consultarMaquina(), listarVolumes(), iniciarMonitoramento(), verificarCargo()">
     <section id="page-details-machine">
         <header>
             <div class="child-navbar-card-dash-adm">
@@ -186,79 +186,6 @@
         }
 
 
-        function plotarGrafico() {
-
-            const ctx = document.getElementById('myLineChart').getContext('2d');
-            const data = {
-                labels: ['15:00', '15:10', '15:20', '15:30', '15:40', '15:50', '16:00', '16:10', '16:20', '16:30', '16:40'],
-                datasets: [
-                    {
-                        label: 'Uso de CPU',
-                        data: [5, 15, 25, 30, 35, 40, 45, 50, 55, 60, 65],
-                        borderColor: '#8a4dfb',
-                        backgroundColor: 'transparent',
-                        pointBorderColor: '#8a4dfb',
-                        pointBackgroundColor: '#8a4dfb',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        fill: false,
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Uso de RAM',
-                        data: [12, 18, 22, 29, 32, 38, 45, 52, 60, 68, 75],
-                        borderColor: '#4dfb8a',
-                        backgroundColor: 'transparent',
-                        pointBorderColor: '#4dfb8a',
-                        pointBackgroundColor: '#4dfb8a',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        fill: false,
-                        tension: 0.4
-                    },
-                    {
-                        label: 'Perda de Pacotes',
-                        data: [1, 2, 5, 8, 12, 15, 18, 22, 25, 30, 35],
-                        borderColor: '#4d8afb',
-                        backgroundColor: 'transparent',
-                        pointBorderColor: '#4d8afb',
-                        pointBackgroundColor: '#4d8afb',
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        fill: false,
-                        tension: 0.4
-                    }
-                ]
-            };
-            const config = {
-                type: 'line',
-                data: data,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                        },
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: '#e5e5e5'
-                            },
-                            beginAtZero: true
-                        }
-                    }
-                }
-            };
-            const myLineChart = new Chart(ctx, config);
-
-        }
 
         function consultarMaquina() {
 
@@ -308,21 +235,21 @@
 
         function adicionarVolume(idVolume, pontoMontagem, capacidade, usado) {
             const novoVolume = `                                    
-                                    <div class="machine-volume-rows">
-                                        <div class="volume-item-rows-lixo">
-                                        </div>
-                                        <div class="volume-item-rows-content">
+                <div class="machine-volume-rows">
+                    <div class="volume-item-rows-lixo">
+                        </div>
+                        <div class="volume-item-rows-content">
                                             <div class="volume-item-rows">
                                                 <p class="">${idVolume}</p>
-                                            </div>
-                                            <div class="volume-item-rows">
-                                                <p class="">${pontoMontagem}</p>
+                                                </div>
+                                                <div class="volume-item-rows">
+                                                    <p class="">${pontoMontagem}</p>
                                             </div>
                                             <div class="volume-item-rows">
                                                 <p class="">${parseFloat(usado).toFixed(2)} / ${parseFloat(capacidade).toFixed(2)} GB</p>
-                                            </div>
+                                                </div>
                                         </div>
-                                    </div>`;
+                                        </div>`;
 
             document.getElementById("pai_volumes").innerHTML += novoVolume;
         }
@@ -375,7 +302,91 @@
                 .catch(error => console.error(error));
         }
 
-        function gerarGrafico() {
+        let myLineChart = null;
+
+        function inicializarGrafico() {
+            const ctx = document.getElementById('myLineChart').getContext('2d');
+
+            const config = {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Uso de CPU',
+                            data: [],
+                            borderColor: '#8a4dfb',
+                            backgroundColor: 'transparent',
+                            pointBorderColor: '#8a4dfb',
+                            pointBackgroundColor: '#8a4dfb',
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            fill: false,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Uso de RAM',
+                            data: [],
+                            borderColor: '#4dfb8a',
+                            backgroundColor: 'transparent',
+                            pointBorderColor: '#4dfb8a',
+                            pointBackgroundColor: '#4dfb8a',
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#e5e5e5'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+
+            myLineChart = new Chart(ctx, config);
+        }
+
+        function formatarData(dataString) {
+            try {
+                // Converter a string da data para objeto Date
+                const data = new Date(dataString);
+
+                // Verificar se a data é válida
+                if (isNaN(data.getTime())) {
+                    throw new Error('Data inválida');
+                }
+
+                // Formatar para hora:minuto
+                return data.toLocaleTimeString('pt-BR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (error) {
+                console.error('Erro ao formatar data:', error, dataString);
+                return 'Hora inválida';
+            }
+        }
+
+        function atualizarGrafico() {
             const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
             fetch(`/maquinas/dadosTempoReal/${idMaquina}`, {
@@ -385,11 +396,41 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
+                    // Pegar o dado mais recente
+                    const dadoMaisRecente = data[data.length - 1];
+
+                    // Formatar a hora do novo ponto com tratamento de erro
+                    const horaFormatada = formatarData(dadoMaisRecente.ultima_captura);
+                    console.log('Data original:', dadoMaisRecente.ultima_captura);
+                    console.log('Data formatada:', horaFormatada);
+
+                    // Adicionar novo ponto ao gráfico
+                    myLineChart.data.labels.push(horaFormatada);
+                    myLineChart.data.datasets[0].data.push(parseFloat(dadoMaisRecente.ultimo_uso_cpu));
+                    myLineChart.data.datasets[1].data.push(parseFloat(dadoMaisRecente.ultimo_uso_ram));
+
+                    // Manter apenas os últimos 10 pontos
+                    if (myLineChart.data.labels.length > 10) {
+                        myLineChart.data.labels.shift();
+                        myLineChart.data.datasets.forEach(dataset => dataset.data.shift());
+                    }
+
+                    // Atualizar o gráfico
+                    myLineChart.update();
                 })
-                .catch(error => console.error(error));
+                .catch(error => console.error('Erro ao buscar dados:', error));
         }
 
+        function iniciarMonitoramento() {
+            // Inicializar o gráfico vazio
+            inicializarGrafico();
+
+            // Fazer a primeira atualização imediatamente
+            atualizarGrafico();
+
+            // Configurar atualizações a cada 31 segundos
+            setInterval(atualizarGrafico, 31000);
+        }
     </script>
 
 </body>
