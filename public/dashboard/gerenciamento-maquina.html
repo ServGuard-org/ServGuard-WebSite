@@ -176,6 +176,70 @@ consultarMaquinas(), verificarCargo()">
                     </a>
                     <input type="number" class="input-popup" placeholder="Uso Total(%)" id="input_total">
                 </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Velocidade de Download (Mbps)"
+                        id="input_velo_download">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Velocidade de Upload (Mbps)"
+                        id="input_velo_upload">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Erro de Pcts. Entrada" id="input_err_pac_in">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Erro de Pcts. Saída" id="input_err_pac_out">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Descarte de Pcts. Entrada"
+                        id="input_desc_pac_in">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Descarte de Pcts. Saída"
+                        id="input_desc_pac_out">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Megabytes Recebidos" id="input_mbs_in">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Megabytes Enviados" id="input_mbs_out">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Pacotes Recebidos" id="input_pac_in">
+                </div>
+                <div class="child-input">
+                    <a class="icone-input">
+                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                    </a>
+                    <input type="number" class="input-popup" placeholder="Pacotes Enviados" id="input_pac_out">
+                </div>
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar" id="botao_atualizar"><b>Atualizar</b></button>
@@ -218,6 +282,16 @@ consultarMaquinas(), verificarCargo()">
         document.getElementById("input_ram").value = "";
         document.getElementById("input_cpu").value = "";
         document.getElementById("input_total").value = "";
+        document.getElementById("input_velo_download").value = "";
+        document.getElementById("input_velo_upload").value = "";
+        document.getElementById("input_err_pac_in").value = "";
+        document.getElementById("input_err_pac_out").value = "";
+        document.getElementById("input_desc_pac_in").value = "";
+        document.getElementById("input_desc_pac_out").value = "";
+        document.getElementById("input_mbs_in").value = "";
+        document.getElementById("input_mbs_out").value = "";
+        document.getElementById("input_pac_in").value = "";
+        document.getElementById("input_pac_out").value = "";
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
@@ -312,12 +386,48 @@ consultarMaquinas(), verificarCargo()">
             .then(response => response.json())
             .then(data => {
                 data.forEach(alerta => {
-                    if (alerta.recursoNome === "usoCPU") {
-                        document.getElementById("input_cpu").value = alerta.maxRecurso;
-                    } else if (alerta.recursoNome === "usoRAM") {
-                        document.getElementById("input_ram").value = alerta.maxRecurso;
-                    } else if (alerta.recursoNome === "usoTotal") {
-                        document.getElementById("input_total").value = alerta.maxRecurso;
+                    switch (alerta.recursoNome) {
+                        case "usoCPU":
+                            document.getElementById("input_cpu").value = alerta.maxRecurso;
+                            break;
+                        case "usoRAM":
+                            document.getElementById("input_ram").value = alerta.maxRecurso;
+                            break;
+                        case "usoTotal":
+                            document.getElementById("input_total").value = alerta.maxRecurso;
+                            break;
+                        case "velocidadeDownload":
+                            document.getElementById("input_velo_download").value = alerta.maxRecurso;
+                            break;
+                        case "velocidadeUpload":
+                            document.getElementById("input_velo_upload").value = alerta.maxRecurso;
+                            break;
+                        case "erroPacotesEntrada":
+                            document.getElementById("input_err_pac_in").value = alerta.maxRecurso;
+                            break;
+                        case "erroPacotesSaida":
+                            document.getElementById("input_err_pac_out").value = alerta.maxRecurso;
+                            break;
+                        case "descartePacotesEntrada":
+                            document.getElementById("input_desc_pac_in").value = alerta.maxRecurso;
+                            break;
+                        case "descartePacotesSaida":
+                            document.getElementById("input_desc_pac_out").value = alerta.maxRecurso;
+                            break;
+                        case "megabytesRecebidos":
+                            document.getElementById("input_mbs_in").value = alerta.maxRecurso;
+                            break;
+                        case "megabytesEnviados":
+                            document.getElementById("input_mbs_out").value = alerta.maxRecurso;
+                            break;
+                        case "pacotesRecebidos":
+                            document.getElementById("input_pac_in").value = alerta.maxRecurso;
+                            break;
+                        case "pacotesEnviados":
+                            document.getElementById("input_pac_out").value = alerta.maxRecurso;
+                            break;
+                        default:
+                            console.warn("Recurso não reconhecido:", alerta.recursoNome);
                     }
                 });
 
@@ -335,6 +445,16 @@ consultarMaquinas(), verificarCargo()">
         const cpu = document.getElementById("input_cpu").value;
         const ram = document.getElementById("input_ram").value;
         const total = document.getElementById("input_total").value;
+        const veloDownload = document.getElementById("input_velo_download").value;
+        const veloUpload = document.getElementById("input_velo_upload").value;
+        const errPacIn = document.getElementById("input_err_pac_in").value;
+        const errPacOut = document.getElementById("input_err_pac_out").value;
+        const descPacIn = document.getElementById("input_desc_pac_in").value;
+        const descPacOut = document.getElementById("input_desc_pac_out").value;
+        const mbsIn = document.getElementById("input_mbs_in").value;
+        const mbsOut = document.getElementById("input_mbs_out").value;
+        const pacIn = document.getElementById("input_pac_in").value;
+        const pacOut = document.getElementById("input_pac_out").value;
 
         if (apelido !== "indefinido") {
             fetch(`/maquinas/atualizarApelidoPorId`, {
@@ -374,10 +494,20 @@ consultarMaquinas(), verificarCargo()">
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-            usoCPU: cpu || null,  // Se cpu estiver definido, usa seu valor; caso contrário, usa null
-            usoRAM: ram || null, // Se ram estiver definido, usa seu valor; caso contrário, usa null
-            usoTotal: total || null   // Se total estiver definido, usa seu valor; caso contrário, usa null
-        })
+                usoCPU: cpu || null,  // Se cpu estiver definido, usa seu valor; caso contrário, usa null
+                usoRAM: ram || null, // Se ram estiver definido, usa seu valor; caso contrário, usa null
+                usoTotal: total || null,   // Se total estiver definido, usa seu valor; caso contrário, usa null
+                velocidadeDownload: veloDownload || null,
+                velocidadeUpload: veloUpload || null,
+                erroPacotesEntrada: errPacIn || null,
+                erroPacotesSaida: errPacOut || null,
+                descartePacotesEntrada: descPacIn || null,
+                descartePacotesSaida: descPacOut || null,
+                megabytesRecebidos: mbsIn || null,
+                megabytesEnviados: mbsOut || null,
+                pacotesRecebidos: pacIn || null,
+                pacotesEnviados: pacOut || null
+            })
         })
             .then(response => {
                 if (response.ok) {

@@ -6,8 +6,33 @@ function atualizarPorMaquina(req, res) {
     let usoCPU = req.body.usoCPU;
     let usoRAM = req.body.usoRAM;
     let usoTotal = req.body.usoTotal;
+    let velocidadeDownload = req.body.velocidadeDownload;
+    let velocidadeUpload = req.body.velocidadeUpload;
+    let erroPacotesEntrada = req.body.erroPacotesEntrada;
+    let erroPacotesSaida = req.body.erroPacotesSaida;
+    let descartePacotesEntrada = req.body.descartePacotesEntrada;
+    let descartePacotesSaida = req.body.descartePacotesSaida;
+    let megabytesRecebidos = req.body.megabytesRecebidos;
+    let megabytesEnviados = req.body.megabytesEnviados;
+    let pacotesRecebidos = req.body.pacotesRecebidos;
+    let pacotesEnviados = req.body.pacotesEnviados;
 
-    alertaModel.atualizarPorMaquina(idMaquina, usoCPU, usoRAM, usoTotal)
+    alertaModel.atualizarPorMaquina(
+        idMaquina, 
+        usoCPU, 
+        usoRAM, 
+        usoTotal,
+        velocidadeDownload,
+        velocidadeUpload,
+        erroPacotesEntrada,
+        erroPacotesSaida,
+        descartePacotesEntrada,
+        descartePacotesSaida,
+        megabytesRecebidos,
+        megabytesEnviados,
+        pacotesRecebidos,
+        pacotesEnviados
+    )
         .then(
             function (resposta) {
                 res.json(resposta);
