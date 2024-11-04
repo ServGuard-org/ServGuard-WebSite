@@ -228,15 +228,37 @@
     backdrop-filter: blur(2px);
 }
 
-.mapa-colunas{
+.mapa-colunas-moc{
     width: 90%;
     min-height: 50px;
     max-height: 50px;
+    border-radius: 100px;
     /* background-color: aqua; */
+    padding: 2px, 0px, 2px, 0px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: var(--gap-1);
+    transition: 200ms;
+}
+
+.mapa-colunas{
+    width: 90%;
+    min-height: 50px;
+    max-height: 50px;
+    border-radius: 100px;
+    /* background-color: aqua; */
+    padding: 2px, 0px, 2px, 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--gap-1);
+    transition: 200ms;
+}
+
+.mapa-colunas:hover {
+    /* border: solid 1px black; */
+    background-color: var(--gray-8);
 }
 
 .mapa-espacamento{

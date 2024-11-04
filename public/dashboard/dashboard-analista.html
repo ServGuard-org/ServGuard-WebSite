@@ -119,7 +119,7 @@
 
         <div class="div-mapa-estabilidade">
           <h4 class="italic">Mapa de estabilidade</h4>
-          <div class="mapa-colunas">
+          <div class="mapa-colunas-moc">
             <div style="width: 15%" class="mapa-espacamento">
               <h4 class="bold italic">ID</h4>
             </div>
@@ -158,6 +158,10 @@
       event.preventDefault();
       sessionStorage.clear();
       window.location.href = "../index.html";
+    }
+    function DetalhesMaquina(idMaquina) {
+        sessionStorage.setItem("ID_MAQUINA", idMaquina);
+        window.location.href = "details-machine.html";
     }
 
     let myChart;
@@ -415,7 +419,7 @@
                 const elementoPai = document.getElementById("pai-maquinas");
 
                 const novoElemento = `
-                  <div class="mapa-colunas">
+                  <div class="mapa-colunas" onclick="DetalhesMaquina(${id})">
                     <div class="mapa-espacamento" style="width: 15%">
                       <h4 class="bold">${id}</h4>
                     </div>
