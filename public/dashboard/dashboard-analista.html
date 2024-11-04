@@ -363,25 +363,53 @@
 
               var listaMaquina = [];
               var dadoCPU = [];
+              var maxCPU = [];
               var dadoRAM = [];
+              var maxRAM = [];
               console.log(`Formando a lista:`);
               for (var i = 0; i < json.length; i++) {
-                console.log(json[i].idMaquina);
                 listaMaquina.push(json[i].idMaquina);
-                console.log(json[i].registro_usoCPU);
                 dadoCPU.push(json[i].registro_usoCPU);
-                console.log(json[i].registro_usoRAM);
+                maxCPU.push(json[i].max_usoCPU);
                 dadoRAM.push(json[i].registro_usoRAM);
+                maxRAM.push(json[i].max_usoRAM);
+
+                var cpu;
+                var ram;
+                if (dadoCPU[i]<maxCPU[i]){cpu="Normal"}
+                if (dadoCPU[i]==maxCPU[i]){cpu="Em Alerta"}
+                if (dadoCPU[i]>maxCPU[i]){cpu="Crítico!"}
+                if (dadoRAM[i]<maxRAM[i]){ram="Normal"}
+                if (dadoRAM[i]==maxRAM[i]){ram="Em Alerta"}
+                if (dadoRAM[i]>maxRAM[i]){ram="Crítico!"}
                 adicionarLinha(
                   listaMaquina[i],
-                  dadoCPU[i],
-                  dadoRAM[i]
+                  cpu,
+                  ram
                 )
               }
+              console.log(dadoCPU)
               console.log(dadoRAM)
               function adicionarLinha(id, cpu, ram) {
-                console.log("chamou adicionarMaquina()!!!!!!!!!!!!!!!!")
-
+                console.log("Chamou listar maquinas!!!")
+                var corCPU;
+                var corRAM;
+                switch(cpu){
+                  case "Normal": corCPU="--green-normal"
+                  break
+                  case "Em Alerta": corCPU="--orange-dark"
+                  break
+                  case "Crítico!": corCPU="--red-light"
+                  break
+                }
+                switch(ram){
+                  case "Normal": corRAM="--green-normal"
+                  break
+                  case "Em Alerta": corRAM="--orange-dark"
+                  break
+                  case "Crítico!": corRAM="--red-light"
+                  break
+                }
                 const elementoPai = document.getElementById("pai-maquinas");
 
                 const novoElemento = `
@@ -389,10 +417,10 @@
                     <div class="mapa-espacamento" style="width: 15%">
                       <h4 class="bold">${id}</h4>
                     </div>
-                    <div class="mapa-espacamento-objeto" style="background-color: var(--red-light)">
+                    <div class="mapa-espacamento-objeto" style="background-color: var(${corCPU})">
                       <h4 class="bold">${cpu}</h4>
                     </div>
-                    <div class="mapa-espacamento-objeto" style="background-color: var(--red-light)">
+                    <div class="mapa-espacamento-objeto" style="background-color: var(${corRAM})">
                       <h4 class="bold">${ram}</h4>
                     </div>
                   </div>
