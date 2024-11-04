@@ -5,13 +5,6 @@
     padding: 3%;
     overflow-y: auto;
 
-    & header {
-        min-width: 100px;
-        width: 9%;
-        height: calc(100vh - 12.7%);
-        position: fixed;
-    }
-
     & main {
         position: relative;
         display: flex;

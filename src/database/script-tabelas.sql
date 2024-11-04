@@ -296,18 +296,78 @@ SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_d
 CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
     SELECT 
         m.fkEmpresa,
+		mr.fkRecurso,
         COUNT(DISTINCT m.idMaquina) AS total_maquinas_irregulares,
         (COUNT(DISTINCT m.idMaquina) / (SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa)) * 100 AS percentual_irregulares
     FROM Maquina m
 		JOIN MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
 		JOIN Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
 			WHERE c.isAlerta = 1 AND DATE(c.dthCriacao) = CURDATE()
-				GROUP BY fkEmpresa;
-
--- Consulta à VIEW para uma empresa específica (por exemplo, empresa com ID 1)
+				GROUP BY fkEmpresa, fkRecurso;
+                
+	
 SELECT total_maquinas_irregulares, percentual_irregulares 
 FROM vista_irregularidade_total_e_percentual 
 WHERE fkEmpresa = 1;
+
+
+CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
+    SELECT 
+        m.idMaquina,
+        m.fkEmpresa,
+        
+        -- CPU
+        (SELECT c.idCaptura 
+         FROM Captura c
+         JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+         JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+         WHERE mr.fkMaquina = m.idMaquina AND r.nome = 'usoCPU'
+         ORDER BY c.dthCriacao DESC
+         LIMIT 1) AS idCaptura_usoCPU,
+        
+        (SELECT c.registro 
+         FROM Captura c
+         JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+         JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+         WHERE mr.fkMaquina = m.idMaquina AND r.nome = 'usoCPU'
+         ORDER BY c.dthCriacao DESC
+         LIMIT 1) AS registro_usoCPU,
+        
+        (SELECT mr.max 
+         FROM MaquinaRecurso mr
+         JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+         WHERE mr.fkMaquina = m.idMaquina AND r.nome = 'usoCPU'
+         LIMIT 1) AS max_usoCPU,
+
+        -- RAM
+        (SELECT c.idCaptura 
+         FROM Captura c
+         JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+         JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+         WHERE mr.fkMaquina = m.idMaquina AND r.nome = 'usoRAM'
+         ORDER BY c.dthCriacao DESC
+         LIMIT 1) AS idCaptura_usoRAM,
+        
+        (SELECT c.registro 
+         FROM Captura c
+         JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+         JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+         WHERE mr.fkMaquina = m.idMaquina AND r.nome = 'usoRAM'
+         ORDER BY c.dthCriacao DESC
+         LIMIT 1) AS registro_usoRAM,
+        
+        (SELECT mr.max 
+         FROM MaquinaRecurso mr
+         JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+         WHERE mr.fkMaquina = m.idMaquina AND r.nome = 'usoRAM'
+         LIMIT 1) AS max_usoRAM
+
+    FROM Maquina m;
+    
+    select idMaquina, registro_usoCPU, max_usoCPU, registro_usoRAM, max_usoRAM from vista_mapa_instabilidade where fkEmpresa=1;
+
+
+
 
 CREATE OR REPLACE VIEW vista_ultimas_metricas AS
 SELECT 

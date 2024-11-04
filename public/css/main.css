@@ -3,7 +3,7 @@
 @import url(./partials/colors.css);
 @import url(./partials/layout.css);
 @import url(./partials/spacing.css);
-/* @import url(./partials/menu.css); */
+@import url(./partials/menu.css);
 @import url(./partials/buttons.css);
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD --- */
