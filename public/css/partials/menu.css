@@ -104,8 +104,9 @@ header {
     padding: var(--gap-1);
     border-radius: 6px;
     position: absolute;
-    z-index: 1;
     transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+
+    z-index: 999;
 }
 
 .tooltip:hover .tooltiptext {
