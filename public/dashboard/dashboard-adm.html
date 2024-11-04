@@ -104,7 +104,7 @@
           </div>
           <button class="btn-dashboard-reverse">Uso de Máquinas</button>
           <button class="btn-dashboard-reverse">Detalhes de Rede</button>
-          <button class="btn-dashboard-reverse">Análise de Alertas</button>
+          <button class="btn-dashboard-reverse" onclick="DashboardAlerta()">Análise de Alertas</button>
         </div>
       </div>
       <div class="child-dash-adm-parameters pt-4">
@@ -204,6 +204,10 @@
 
     function DashboardAnalista() {
       window.location.href = "dashboard-analista.html";
+    }
+
+    function DashboardAlerta() {
+      window.location.href = "../dashboard/dash-caio/dashboard-alert.html";
     }
 
     function carregarPagina() {

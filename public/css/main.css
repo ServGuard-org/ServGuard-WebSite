@@ -15,6 +15,10 @@
 @import url(./pages/dashboard/detalhes-funcionario.css);
 @import url(./pages/dashboard/popups.css);
 
+/* --- IMPORTANDO AS PAGINAS DA DASHBOARD - INDIVIDUAIS --- */
+@import url(../dashboard/dash-caio/dashboard-alert.css);
+
+
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
 @import url(./pages/site-institucional/cadastro.css);
 /* @import url(./pages/site-institucional/welcome.css); */
