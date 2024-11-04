@@ -3,7 +3,7 @@ const router = express.Router();
 const recursoController = require("../controllers/recursoController");
 
 
-router.get("/buscarUltimosDadosRede/:idMaquina", function (req, res) {
+router.get("/buscarUltimosDadosRede/:idEmpresa", function (req, res) {
     recursoController.buscarUltimosDadosRede(req, res);
 });
 

@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas()">
+<body onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas(), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO'))">
   <section id="page-dashboard-adm">
     <header>
       <div class="child-navbar-card-dash-adm">
@@ -720,8 +720,8 @@
 
       return false;
     }
-    function buscarUltimosDadosRede(idMaquina) {
-      fetch(`/buscarUltimosDadosRede/${idMaquina}`, {
+    function buscarUltimosDadosRede(idEmpresa) {
+      fetch(`/recursos/buscarUltimosDadosRede/${idEmpresa}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -731,18 +731,15 @@
           if (!response.ok) {
             throw new Error(`Erro ao buscar dados: ${response.statusText}`);
           }
-          return response.json();
-        })
-        .then(data => {
-          console.log("Dados recebidos:", data);
-          var estado = data
-          console.log(data[0])
-          if (data == X) {
-            estado = "Estavel"
-          }
-          else {
-            estado = "Instavel"
-          }
+          response.json()
+          .then(data => {
+            console.log("Dados recebidos:", data);
+            dados = data[0][0]
+            console.log("2 zeros", data[0][0])
+            console.log("Velocidade de Download de Todas as maquinas: ", dados.velocidadeDownload)
+            console.log("Total de maquinas somadas aqui: ", dados.totalMaquinas)
+            // e assim por diante, só usar dados e acessar o valor que quiser. A função já está sendo chamada no onload do body
+          })
         })
         .catch(error => {
           console.error("Erro na requisição:", error);

@@ -418,7 +418,11 @@ CREATE OR REPLACE VIEW vista_ranking_recurso AS
 select qtdCPU,qtdRAM,qtdDISCO from vista_ranking_recurso
 	WHERE idEmpresa=1;
             
-			
+CREATE OR REPLACE VIEW vista_irregularidade AS
+	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
+			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+			JOIN Maquina ON fkMaquina = idMaquina
+			JOIN Empresa ON fkEmpresa = idEmpresa;
 
 -- PROCEDURES
 
@@ -542,7 +546,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE obter_ultimos_dados_rede_por_empresa(IN empresa INT)
+CREATE PROCEDURE obter_soma_dados_rede_por_empresa(IN empresa INT)
 BEGIN
     WITH RecursosRede AS (
         SELECT 
@@ -554,6 +558,7 @@ BEGIN
         JOIN ServGuard.MaquinaRecurso mr ON mr.fkRecurso = r.idRecurso
         JOIN ServGuard.Maquina m ON m.idMaquina = mr.fkMaquina
         WHERE m.fkEmpresa = empresa
+        AND m.isAtiva = 1
         AND r.nome IN (
             'velocidadeDownload',
             'velocidadeUpload',
@@ -570,24 +575,33 @@ BEGIN
     UltimasLeituras AS (
         SELECT 
             rr.nome,
+            rr.fkMaquina,
             c.registro,
-            c.dthCriacao,
-            ROW_NUMBER() OVER (PARTITION BY rr.nome ORDER BY c.dthCriacao DESC) as rn
+            ROW_NUMBER() OVER (PARTITION BY rr.fkMaquina, rr.nome ORDER BY c.dthCriacao DESC) as rn
         FROM RecursosRede rr
         LEFT JOIN ServGuard.Captura c ON c.fkMaquinaRecurso = rr.idMaquinaRecurso
+    ),
+    UltimosValoresPorMaquina AS (
+        SELECT 
+            nome,
+            registro
+        FROM UltimasLeituras
+        WHERE rn = 1
     )
     SELECT 
-        MAX(CASE WHEN nome = 'velocidadeDownload' AND rn = 1 THEN registro END) as velocidadeDownload,
-        MAX(CASE WHEN nome = 'velocidadeUpload' AND rn = 1 THEN registro END) as velocidadeUpload,
-        MAX(CASE WHEN nome = 'pacotesEnviados' AND rn = 1 THEN registro END) as pacotesEnviados,
-        MAX(CASE WHEN nome = 'pacotesRecebidos' AND rn = 1 THEN registro END) as pacotesRecebidos,
-        MAX(CASE WHEN nome = 'megabytesEnviados' AND rn = 1 THEN registro END) as megabytesEnviados,
-        MAX(CASE WHEN nome = 'megabytesRecebidos' AND rn = 1 THEN registro END) as megabytesRecebidos,
-        MAX(CASE WHEN nome = 'descartePacotesEntrada' AND rn = 1 THEN registro END) as descartePacotesEntrada,
-        MAX(CASE WHEN nome = 'descartePacotesSaida' AND rn = 1 THEN registro END) as descartePacotesSaida,
-        MAX(CASE WHEN nome = 'erroPacotesEntrada' AND rn = 1 THEN registro END) as erroPacotesEntrada,
-        MAX(CASE WHEN nome = 'erroPacotesSaida' AND rn = 1 THEN registro END) as erroPacotesSaida
-    FROM UltimasLeituras;
+        SUM(CASE WHEN nome = 'velocidadeDownload' THEN registro ELSE 0 END) as velocidadeDownload,
+        SUM(CASE WHEN nome = 'velocidadeUpload' THEN registro ELSE 0 END) as velocidadeUpload,
+        SUM(CASE WHEN nome = 'pacotesEnviados' THEN registro ELSE 0 END) as pacotesEnviados,
+        SUM(CASE WHEN nome = 'pacotesRecebidos' THEN registro ELSE 0 END) as pacotesRecebidos,
+        SUM(CASE WHEN nome = 'megabytesEnviados' THEN registro ELSE 0 END) as megabytesEnviados,
+        SUM(CASE WHEN nome = 'megabytesRecebidos' THEN registro ELSE 0 END) as megabytesRecebidos,
+        SUM(CASE WHEN nome = 'descartePacotesEntrada' THEN registro ELSE 0 END) as descartePacotesEntrada,
+        SUM(CASE WHEN nome = 'descartePacotesSaida' THEN registro ELSE 0 END) as descartePacotesSaida,
+        SUM(CASE WHEN nome = 'erroPacotesEntrada' THEN registro ELSE 0 END) as erroPacotesEntrada,
+        SUM(CASE WHEN nome = 'erroPacotesSaida' THEN registro ELSE 0 END) as erroPacotesSaida,
+        COUNT(DISTINCT fkMaquina) as totalMaquinas
+    FROM UltimasLeituras
+    WHERE rn = 1;
 END //
 
 DELIMITER ;

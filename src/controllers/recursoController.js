@@ -1,14 +1,14 @@
 const recursoModel = require("../models/recursoModel");
 
 function buscarUltimosDadosRede(req, res) {
-    var idMaquina = req.params.idMaquina;
+    var idEmpresa = req.params.idEmpresa;
 
     console.log("Erro no recursoController");
 
-    if (idMaquina == undefined) {
+    if (idEmpresa == undefined) {
         res.status(400).send("O ID da máquina está indefinido!");
     } else {
-        recursoModel.buscarUltimosDadosRede(idMaquina)
+        recursoModel.buscarUltimosDadosRede(idEmpresa)
             .then(function (resposta) {
                 console.log("Resultados ao buscar últimos dados de rede:", JSON.stringify(resposta));
                 res.json(resposta);

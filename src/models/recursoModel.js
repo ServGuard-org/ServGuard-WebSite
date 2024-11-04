@@ -1,7 +1,7 @@
 const database = require("../database/config");
 
-function buscarUltimosDadosRede(idMaquina) {
-    const instrucaoSql = `CALL obter_ultimos_dados_rede(${idMaquina});`;
+function buscarUltimosDadosRede(idEmpresa) {
+    const instrucaoSql = `CALL obter_soma_dados_rede_por_empresa(${idEmpresa});`;
 
 return database.executar(instrucaoSql)
 }

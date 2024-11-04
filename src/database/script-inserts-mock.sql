@@ -33,6 +33,9 @@ INSERT INTO ServGuard.CapturaVolume (fkVolume, usado) VALUES
 INSERT INTO ServGuard.MaquinaRecurso (fkMaquina, fkRecurso) VALUES
     (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'usoCPU')),
     (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'usoRAM')),
+    (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'usoTotal')),
+    (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'velocidadeDownload')),
+    (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'velocidadeUpload')),
     (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'erroPacotesEntrada')),
     (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'erroPacotesSaida')),
     (@maquinaId, (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'descartePacotesEntrada')),
@@ -45,6 +48,9 @@ INSERT INTO ServGuard.MaquinaRecurso (fkMaquina, fkRecurso) VALUES
 INSERT INTO ServGuard.Captura (fkMaquinaRecurso, registro, isAlerta) VALUES
     ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'usoCPU')), 89.000, 1),
     ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'usoRAM')), 77.000, 0),
+    ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'usoTotal')), 83.000, 1),
+    ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'velocidadeDownload')), 100.000, 0),
+    ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'velocidadeUpload')), 150.000, 0),
     ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'erroPacotesEntrada')), 5.000, 0),
     ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'erroPacotesSaida')), 3.000, 1),
     ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso WHERE fkMaquina = @maquinaId AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'descartePacotesEntrada')), 2.000, 0),
