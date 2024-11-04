@@ -376,12 +376,12 @@
 
                 var cpu;
                 var ram;
-                if (dadoCPU[i]<maxCPU[i]){cpu="Normal"}
-                if (dadoCPU[i]==maxCPU[i]){cpu="Em Alerta"}
-                if (dadoCPU[i]>maxCPU[i]){cpu="Crítico!"}
-                if (dadoRAM[i]<maxRAM[i]){ram="Normal"}
-                if (dadoRAM[i]==maxRAM[i]){ram="Em Alerta"}
-                if (dadoRAM[i]>maxRAM[i]){ram="Crítico!"}
+                if (dadoCPU[i]<maxCPU[i] || maxCPU[i] == null){cpu="Normal"}
+                else if (dadoCPU[i]==maxCPU[i]){cpu="Em Alerta"}
+                else if (dadoCPU[i]>maxCPU[i]){cpu="Crítico!"}
+                if (dadoRAM[i]<maxRAM[i] || maxRAM[i] == null){ram="Normal"}
+                else if (dadoRAM[i]==maxRAM[i]){ram="Em Alerta"}
+                else if (dadoRAM[i]>maxRAM[i]){ram="Crítico!"}
                 adicionarLinha(
                   listaMaquina[i],
                   cpu,
@@ -389,7 +389,9 @@
                 )
               }
               console.log(dadoCPU)
+              console.log(maxCPU)
               console.log(dadoRAM)
+              console.log(maxRAM)
               function adicionarLinha(id, cpu, ram) {
                 console.log("Chamou listar maquinas!!!")
                 var corCPU;
