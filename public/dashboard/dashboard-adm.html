@@ -90,9 +90,9 @@
             <!-- <p class="pl-1 text-white bold">DASHBOARDS POR ÁREA</p> -->
             <h4 class="text-white bold">DASHBOARDS POR ÁREA</h4>
           </div>
-            <button class="btn-dashboard-reverse">Uso de Máquinas</button>
-            <button class="btn-dashboard-reverse">Detalhes de Rede</button>
-            <button class="btn-dashboard-reverse">Análise de Alertas</button>
+          <button class="btn-dashboard-reverse">Uso de Máquinas</button>
+          <button class="btn-dashboard-reverse">Detalhes de Rede</button>
+          <button class="btn-dashboard-reverse">Análise de Alertas</button>
         </div>
       </div>
       <div class="child-dash-adm-parameters pt-4">
@@ -165,7 +165,7 @@
     function carregarPagina() {
 
       const apresentacao = false
-    
+
       // const apresentacao = true
       const url = apresentacao ? "https://www.bcb.gov.br/" : "https://jsonplaceholder.typicode.com/todos/1"
 
@@ -180,7 +180,7 @@
       let nomeEmpresa = obterNomeEmpresa();
 
       let nomeUsuario = obterNomeUsuario();
-      
+
       const elementoData = document.getElementById("data_tempo_real");
 
       const elementoEmpresa = document.getElementById("empresa_usuario");
@@ -676,6 +676,38 @@
 
       return false;
     }
+    function buscarUltimosDadosRede(idMaquina) {
+      fetch(`/buscarUltimosDadosRede/${idMaquina}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log("Dados recebidos:", data);
+          var estado = data
+          console.log(data[0])
+          if (data == X) {
+            estado = "Estavel"
+          }
+          else {
+            estado = "Instavel"
+          }
+        })
+        .catch(error => {
+          console.error("Erro na requisição:", error);
+        });
+    }
+
+
+
+
   </script>
 </body>
 
