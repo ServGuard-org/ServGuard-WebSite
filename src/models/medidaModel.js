@@ -20,7 +20,7 @@ function buscarEscalaInstabilidade(idEmpresa) {
 
 function buscarMapaInstabilidade(idEmpresa) {
     var instrucaoSql = `SELECT idMaquina, registro_usoCPU, max_usoCPU, registro_usoRAM, max_usoRAM FROM vista_mapa_instabilidade 
-                            WHERE fkEmpresa=${idEmpresa}};`;
+                            WHERE fkEmpresa=${idEmpresa};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -305,7 +305,6 @@ CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
 			WHERE c.isAlerta = 1 AND DATE(c.dthCriacao) = CURDATE()
 				GROUP BY fkEmpresa, fkRecurso;
                 
-	
 SELECT total_maquinas_irregulares, percentual_irregulares 
 FROM vista_irregularidade_total_e_percentual 
 WHERE fkEmpresa = 1;
