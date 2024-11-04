@@ -260,27 +260,16 @@ WHERE dthCriacao = (
 SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso 
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
--- Irregularidades de CPU
-CREATE OR REPLACE VIEW vista_irregularidade_cpu AS
+-- Irregularidades 
+CREATE OR REPLACE VIEW vista_irregularidade AS
 	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
             
-SELECT count(registro) as qtdCpu FROM vista_irregularidade_cpu
+SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
              
-             
--- Irregularidades de RAM
-CREATE OR REPLACE VIEW vista_irregularidade_ram AS
-	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
-		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa;
-            
-SELECT count(registro) as qtdRam FROM vista_irregularidade_cpu
-	WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1;
-
 -- Irregularidades de DISCO
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
@@ -417,6 +406,20 @@ WHERE
     m.isAtiva = 1;
 
 SELECT * FROM vista_ultimas_metricas WHERE idMaquina = 1;
+
+
+-- ranking de recursos mais problematicos
+CREATE OR REPLACE VIEW vista_ranking_recurso AS
+	SELECT (SELECT COUNT(DISTINCT idMaquina) AS DicosIrregulares FROM vista_irregularidade_disco WHERE (usado / capacidade) > 0.85) AS qtdDISCO,
+			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1) AS qtdCPU,
+			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1) AS qtdRAM,
+			idEmpresa FROM Empresa;
+            
+select qtdCPU,qtdRAM,qtdDISCO from vista_ranking_recurso
+	WHERE idEmpresa=1;
+            
+
+		
 
 
 

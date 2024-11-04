@@ -7,7 +7,7 @@ return database.executar(instrucaoSql)
 }
 
 function buscarIrregularidadeCpu(idEmpresa) {
-    var instrucaoSql = `SELECT count(registro) as qtdCpu FROM vista_irregularidade_cpu
+    var instrucaoSql = `SELECT count(registro) AS qtdCpu FROM vista_irregularidade
 	                        WHERE idEmpresa = ${idEmpresa} AND fkRecurso = 1 AND isAlerta=1;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -15,7 +15,7 @@ function buscarIrregularidadeCpu(idEmpresa) {
 }
 
 function buscarIrregularidadeRam(idEmpresa) {
-    var instrucaoSql = `SELECT count(registro) as qtdRam FROM vista_irregularidade_cpu
+    var instrucaoSql = `SELECT count(registro) AS qtdRam FROM vista_irregularidade
 	                        WHERE idEmpresa = ${idEmpresa} AND fkRecurso = 2 AND isAlerta=1;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
