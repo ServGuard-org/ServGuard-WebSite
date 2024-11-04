@@ -19,4 +19,8 @@ router.get("/irregularidade/disco/:idEmpresa", function (req, res) {
     recursoController.buscarIrregularidadeDisco(req,res);
 });
 
+router.get("/rankingRecurso/:idEmpresa", function (req, res) {
+    recursoController.buscarRankingRecurso(req,res);
+});
+
 module.exports = router;

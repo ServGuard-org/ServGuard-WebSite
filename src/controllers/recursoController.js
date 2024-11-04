@@ -75,9 +75,28 @@ function buscarIrregularidadeDisco(req,res) {
     });
 }
 
+function buscarRankingRecurso(req,res) {
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined")
+    }
+    recursoModel.buscarRankingRecurso(idEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar o ranking recurso.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarUltimosDadosRede,
     buscarIrregularidadeCpu,
     buscarIrregularidadeRam,
-    buscarIrregularidadeDisco
+    buscarIrregularidadeDisco,
+    buscarRankingRecurso
 };

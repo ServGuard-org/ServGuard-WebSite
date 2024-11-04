@@ -29,9 +29,19 @@ function buscarIrregularidadeDisco(idEmpresa) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
+function buscarRankingRecurso(idEmpresa) {
+    var instrucaoSql = `SELECT qtdCPU,qtdRAM,qtdDISCO FROM vista_ranking_recurso
+	                        WHERE idEmpresa=${idEmpresa};`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = { 
     buscarUltimosDadosRede,
     buscarIrregularidadeCpu,
     buscarIrregularidadeRam,
-    buscarIrregularidadeDisco 
+    buscarIrregularidadeDisco,
+    buscarRankingRecurso
 }

@@ -77,15 +77,15 @@
             <h5 class="bold">Recursos mais problemáticos:</h5>
             <div class="objeto-recurso">
               <h3 class="bold">1°</h3>
-              <h2 class="bold italic" style="color: var(--red-normal);">CPU</h2>
+              <h2 id="top1" class="bold italic" style="color: var(--red-normal);">CPU</h2>
             </div>
             <div class="objeto-recurso">
               <h3 class="bold">2°</h3>
-              <h2 class="bold italic" style="color: var(--orange-normal);">RAM</h2>
+              <h2 id="top2" class="bold italic" style="color: var(--orange-normal);">RAM</h2>
             </div>
             <div class="objeto-recurso">
               <h3 class="bold">3°</h3>
-              <h2 class="bold italic" style="color: var(--green-dark);">DISCO</h2>
+              <h2 id="top3" class="bold italic" style="color: var(--green-dark);">DISCO</h2>
             </div>
           </div>
           <div class="div-servico-utilizado">
@@ -100,10 +100,8 @@
               <div class="tooltip tooltip-purple">
                 <h4>i</h4>
                 <span class="tooltiptext tooltip-left text-black">
-                  Este histograma exibe a distribuição de uso da CPU de todas as máquinas monitoradas. No eixo horizontal, 
-                  temos a porcentagem de uso da CPU variando de 0% a 100%. No eixo vertical, a frequência indica quantas 
-                  vezes cada faixa de uso da CPU foi observada. Isso nos ajuda a identificar padrões de uso e detectar possíveis 
-                  problemas de desempenho.
+                  Uma breve indicação do status da rede (Estável/Instável), calculado com base na perda de pacotes. 
+                  Para mais detalhes do monitoramento, clique no botão abaixo.
                 </span>
               </div>
             </div>
@@ -132,11 +130,11 @@
           <div class="father-tips">
             <div class="tooltip tooltip-white">
               <h4>i</h4>
-              <span class="tooltiptext tooltip-left text-black">
-                Este histograma exibe a distribuição de uso da CPU de todas as máquinas monitoradas. No eixo horizontal, 
-                temos a porcentagem de uso da CPU variando de 0% a 100%. No eixo vertical, a frequência indica quantas 
-                vezes cada faixa de uso da CPU foi observada. Isso nos ajuda a identificar padrões de uso e detectar possíveis 
-                problemas de desempenho.
+              <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                Esta lista mostra o estado dos componentes de CPU e RAM, separados por máquina. <br>
+                <span class="bold">Normal:</span> Uso do componente abaixo do parâmetro de alerta. <br>
+                <span class="bold">Em Alerta:</span> Uso do componente atingiu o parâmetro de alerta. <br>
+                <span class="bold">Crítico:</span> Uso do componente excede o parâmetro de alerta. <br>
               </span>
             </div>
           </div>
@@ -182,8 +180,8 @@
       window.location.href = "../index.html";
     }
     function DetalhesMaquina(idMaquina) {
-        sessionStorage.setItem("ID_MAQUINA", idMaquina);
-        window.location.href = "details-machine.html";
+      sessionStorage.setItem("ID_MAQUINA", idMaquina);
+      window.location.href = "details-machine.html";
     }
 
     let myChart;
@@ -314,6 +312,7 @@
       verificarCargo()
       buscarDadosGrafico()
       carregarMapaInstabilidade()
+      obterRanking()
 
       const apresentacao = false
       // const apresentacao = true
@@ -402,12 +401,12 @@
 
                 var cpu;
                 var ram;
-                if (dadoCPU[i]<maxCPU[i] || maxCPU[i] == null){cpu="Normal"}
-                else if (dadoCPU[i]==maxCPU[i]){cpu="Em Alerta"}
-                else if (dadoCPU[i]>maxCPU[i]){cpu="Crítico!"}
-                if (dadoRAM[i]<maxRAM[i] || maxRAM[i] == null){ram="Normal"}
-                else if (dadoRAM[i]==maxRAM[i]){ram="Em Alerta"}
-                else if (dadoRAM[i]>maxRAM[i]){ram="Crítico!"}
+                if (dadoCPU[i] < maxCPU[i] || maxCPU[i] == null) { cpu = "Normal" }
+                else if (dadoCPU[i] == maxCPU[i]) { cpu = "Em Alerta" }
+                else if (dadoCPU[i] > maxCPU[i]) { cpu = "Crítico!" }
+                if (dadoRAM[i] < maxRAM[i] || maxRAM[i] == null) { ram = "Normal" }
+                else if (dadoRAM[i] == maxRAM[i]) { ram = "Em Alerta" }
+                else if (dadoRAM[i] > maxRAM[i]) { ram = "Crítico!" }
                 adicionarLinha(
                   listaMaquina[i],
                   cpu,
@@ -422,21 +421,21 @@
                 console.log("Chamou listar maquinas!!!")
                 var corCPU;
                 var corRAM;
-                switch(cpu){
-                  case "Normal": corCPU="--green-normal"
-                  break
-                  case "Em Alerta": corCPU="--orange-dark"
-                  break
-                  case "Crítico!": corCPU="--red-light"
-                  break
+                switch (cpu) {
+                  case "Normal": corCPU = "--green-normal"
+                    break
+                  case "Em Alerta": corCPU = "--orange-dark"
+                    break
+                  case "Crítico!": corCPU = "--red-light"
+                    break
                 }
-                switch(ram){
-                  case "Normal": corRAM="--green-normal"
-                  break
-                  case "Em Alerta": corRAM="--orange-dark"
-                  break
-                  case "Crítico!": corRAM="--red-light"
-                  break
+                switch (ram) {
+                  case "Normal": corRAM = "--green-normal"
+                    break
+                  case "Em Alerta": corRAM = "--orange-dark"
+                    break
+                  case "Crítico!": corRAM = "--red-light"
+                    break
                 }
                 const elementoPai = document.getElementById("pai-maquinas");
 
@@ -466,6 +465,55 @@
           console.log(erro);
         });
       return false;
+    }
+
+    function obterRanking() {
+      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+      fetch(`/recursos/rankingRecurso/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then(function (resposta) {
+          console.log("Iniciando a busca do ranking de recurso!!!");
+
+          if (resposta.ok) {
+            return resposta.json().then((json) => {
+              console.log(json);
+              const irrCPU = json[0].qtdCPU;
+              const irrRAM = json[0].qtdRAM;
+              const irrDISCO = json[0].qtdDISCO;
+
+              const recursos = [
+                { nome: "CPU", irregularidades: irrCPU },
+                { nome: "RAM", irregularidades: irrRAM },
+                { nome: "DISCO", irregularidades: irrDISCO },
+              ];
+
+              // tipo order by no js
+              recursos.sort((a, b) => b.irregularidades - a.irregularidades);
+
+              document.getElementById("top1").innerHTML = recursos[0].nome;
+              document.getElementById("top2").innerHTML = recursos[1].nome;
+              document.getElementById("top3").innerHTML = recursos[2].nome;
+
+              console.log("Ranking de recursos:", recursos);
+            });
+          } else {
+            console.log(
+              "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+            );
+            document.getElementById("top1").innerHTML = "Erro ao obter";
+            document.getElementById("top2").innerHTML = "Erro ao obter";
+            document.getElementById("top3").innerHTML = "Erro ao obter";
+            return null;
+          }
+        })
+        .catch(function (erro) {
+          return null;
+        });
     }
 
   </script>

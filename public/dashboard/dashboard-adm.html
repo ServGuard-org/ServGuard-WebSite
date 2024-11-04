@@ -72,13 +72,15 @@
           <div class="father-tips">
             <div class="tooltip tooltip-white">
               <h4>i</h4>
-              <span class="tooltiptext tooltip-left text-black">
-                Esta página mostra uma visão geral do status das máquinas e da rede, 
-                incluindo o número total de máquinas, máquinas em funcionamento, 
-                irregularidades, e o estado da rede.
+              <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                Uma escala de 0 a 3 que indica o nível de instabilidade/irregularidade das máquinas do servidor. <br>
+                <span class="bold">0</span> = Nenhuma irregularidade. <br>
+                <span class="bold">1</span> = Pelo menos um recurso irregular. <br>
+                <span class="bold">2</span> = Mais de 25% das máquinas estão irregulares. <br>
+                <span class="bold">3</span> = Mais de 50% das máquinas estão irregulares. <br>
               </span>
             </div>
-          </div>          
+          </div>
           <p class="bold mb-2">Escala de instabilidade:</p>
           <h1 class="font-big text-green bold" id="escala-instabilidade">
             0
@@ -111,10 +113,17 @@
           <div class="father-tips">
             <div class="tooltip tooltip-white">
               <h4>i</h4>
-              <span class="tooltiptext tooltip-left text-black">
-                Esta página mostra uma visão geral do status das máquinas e da rede, 
-                incluindo o número total de máquinas, máquinas em funcionamento, 
-                irregularidades, e o estado da rede.
+              <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                <!-- Esta seção fornece uma visão geral dos recursos e da rede do servidor, incluindo: <br>
+                ✅ Total de máquinas e número de máquinas com monitoramento ativo. <br>
+                ⚙️ Quantidade de irregularidades detectadas no monitoramento (dividido em CPU, RAM e Disco). <br>
+                🌐 Status da rede (Estável/Instável), calculado com base na perda de pacotes. <br>
+                📡 Número de máquinas conectadas à rede do servidor. <br> -->
+                Esta seção fornece uma visão geral dos recursos e da rede do servidor, incluindo: <br>
+                • Total de máquinas e número de máquinas com monitoramento ativo. <br>
+                • Quantidade de irregularidades detectadas no monitoramento (dividido em CPU, RAM e Disco). <br>
+                • Status da rede (Estável/Instável), calculado com base na perda de pacotes. <br>
+                • Número de máquinas conectadas à rede do servidor. <br>
               </span>
             </div>
           </div>
@@ -168,9 +177,11 @@
               <div class="tooltip tooltip-white">
                 <h4>i</h4>
                 <span class="tooltiptext tooltip-left text-black">
-                  Este histograma exibe a distribuição de uso da CPU de todas as máquinas monitoradas. No eixo horizontal, 
-                  temos a porcentagem de uso da CPU variando de 0% a 100%. No eixo vertical, a frequência indica quantas 
-                  vezes cada faixa de uso da CPU foi observada. Isso nos ajuda a identificar padrões de uso e detectar possíveis 
+                  Este histograma exibe a distribuição de uso da CPU de todas as máquinas monitoradas. No eixo
+                  horizontal,
+                  temos a porcentagem de uso da CPU variando de 0% a 100%. No eixo vertical, a frequência indica quantas
+                  vezes cada faixa de uso da CPU foi observada. Isso nos ajuda a identificar padrões de uso e detectar
+                  possíveis
                   problemas de desempenho.
                 </span>
               </div>

@@ -418,11 +418,6 @@ CREATE OR REPLACE VIEW vista_ranking_recurso AS
 select qtdCPU,qtdRAM,qtdDISCO from vista_ranking_recurso
 	WHERE idEmpresa=1;
             
-
-		
-
-
-
 			
 
 -- PROCEDURES
