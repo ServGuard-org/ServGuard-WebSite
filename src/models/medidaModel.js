@@ -34,11 +34,26 @@ function buscarUsoRecursoPorMaquina(idEmpresa, idRecurso) {
     return database.executar(instrucaoSql);
 }
 
+function buscarMaquinasConnect(idEmpresa){
+    var instrucaoSql = `
+    SELECT 
+		COUNT(*) AS maquinas_conectadas
+	FROM 
+		MaquinasConectadas
+	WHERE 
+		pacotes_enviados > 0 
+		AND pacotes_recebidos > 0
+		AND idEmpresa = ${idEmpresa};
 
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
 
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
     buscarMapaInstabilidade,
-    buscarUsoRecursoPorMaquina
+    buscarUsoRecursoPorMaquina,
+    buscarMaquinasConnect
 }

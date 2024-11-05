@@ -76,10 +76,29 @@ function buscarUsoRecursoPorMaquina(req,res) {
     });
 }
 
+function buscarMaquinasConnect(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined")
+        return res.status(400).send("Id da empresa é obrigatório.");
+    }
+    medidaModel.buscarMaquinasConnect(idEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as máquinas conectadas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
     buscarMapaInstabilidade,
-    buscarUsoRecursoPorMaquina
+    buscarUsoRecursoPorMaquina,
+    buscarMaquinasConnect
 }

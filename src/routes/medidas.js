@@ -18,4 +18,8 @@ router.get("/graficoRecurso/:idEmpresa/:idRecurso", function (req, res) {
     medidaController.buscarUsoRecursoPorMaquina(req,res);
 });
 
+router.get("/buscarMaquinasConnect/:idEmpresa", function (req, res) {
+    medidaController.buscarMaquinasConnect(req,res);
+});
+
 module.exports = router;
