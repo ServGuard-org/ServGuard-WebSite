@@ -17,6 +17,7 @@
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD - INDIVIDUAIS --- */
 @import url(../dashboard/dash-caio/dashboard-alert.css);
+@import url(../dashboard/dash-marcio/dashboard-adm-rede.css);
 
 @import url(../dashboard/dash-enzo/enzo.css);
 
@@ -52,6 +53,12 @@
 /* HOVER DA BARRA DE MEDIDA */
 ::-webkit-scrollbar-thumb:hover {
     background: var(--darked-purple);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 html{

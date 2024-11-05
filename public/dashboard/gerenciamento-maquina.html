@@ -146,10 +146,9 @@ consultarMaquinas(), verificarCargo()">
     <!-- ----- FIM - TELA PRINCIPAL ----- -->
 
     <!-- ----- POPUP DE EDITAR MAQUINA ----- -->
-    <section class="sessao-popup" id="popupEditar" style="display: none;">
+    <section class="sessao-popup" id="popupEditar" style="display: flex;">
         <div class="father-editar-maquina">
-            <h3 class="bold">Altere o campo que quiser e clique em "<span
-                    style="color: var(--dark-purple);">atualizar</span>"</h3>
+            <h3 class="bold">Altere o campo que quiser e clique em "<span style="color: var(--dark-purple);">atualizar</span>"</h3>
             <div class="child-campos">
                 <div class="child-input">
                     <a class="icone-input">
@@ -157,89 +156,101 @@ consultarMaquinas(), verificarCargo()">
                     </a>
                     <input type="text" class="input-popup" placeholder="Apelido da Máquina" id="input_apelido">
                 </div>
+
                 <h5 class="bold">Parâmetros para Disparo de Alertas:</h5>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/cpu-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Uso de CPU(%)" id="input_cpu">
+
+                <div class="father-campos-column">
+
+                    <div class="child-campos-column">
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/cpu-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Uso de CPU(%)" id="input_cpu">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/ram-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Uso de RAM(%)" id="input_ram">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Uso Total(%)" id="input_total">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Velocidade de Download (Mbps)"
+                                id="input_velo_download">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Velocidade de Upload (Mbps)"
+                                id="input_velo_upload">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Erro de Pcts. Entrada" id="input_err_pac_in">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Erro de Pcts. Saída" id="input_err_pac_out">
+                        </div>
+                    </div>
+    
+                    <div class="child-campos-column">
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Descarte de Pcts. Entrada"
+                                id="input_desc_pac_in">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Descarte de Pcts. Saída"
+                                id="input_desc_pac_out">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Megabytes Recebidos" id="input_mbs_in">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Megabytes Enviados" id="input_mbs_out">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Pacotes Recebidos" id="input_pac_in">
+                        </div>
+                        <div class="child-input">
+                            <a class="icone-input">
+                                <img src="../assets/svg/server-icon.svg" alt="iconeNome">
+                            </a>
+                            <input type="number" class="input-popup" placeholder="Pacotes Enviados" id="input_pac_out">
+                        </div>
+                    </div>                
+
                 </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/ram-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Uso de RAM(%)" id="input_ram">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Uso Total(%)" id="input_total">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Velocidade de Download (Mbps)"
-                        id="input_velo_download">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Velocidade de Upload (Mbps)"
-                        id="input_velo_upload">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Erro de Pcts. Entrada" id="input_err_pac_in">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Erro de Pcts. Saída" id="input_err_pac_out">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Descarte de Pcts. Entrada"
-                        id="input_desc_pac_in">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Descarte de Pcts. Saída"
-                        id="input_desc_pac_out">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Megabytes Recebidos" id="input_mbs_in">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Megabytes Enviados" id="input_mbs_out">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Pacotes Recebidos" id="input_pac_in">
-                </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/server-icon.svg" alt="iconeNome">
-                    </a>
-                    <input type="number" class="input-popup" placeholder="Pacotes Enviados" id="input_pac_out">
-                </div>
+                
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar" id="botao_atualizar"><b>Atualizar</b></button>

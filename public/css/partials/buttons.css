@@ -27,7 +27,7 @@
 }
 
 /* BOTÃO DO WEB-SITE ACESSAR */
-.btn-acessar{
+.btn-acessar {
   padding: 1.3em 3em;
   font-size: 12px;
   text-transform: uppercase;
@@ -48,7 +48,6 @@
   box-shadow: 0px 15px 20px rgba(78, 46, 158, 0.4);
   color: #fff;
 }
-
 
 /* ESTILIZANDO BOTÃO DE FORM SITE INSTITUCIONAL */
 .btnServGuard {
@@ -259,4 +258,44 @@
 .link-back-seta:hover .icon-trian {
   margin-right: var(--gap-1);
   transition: all 0.4s ease;
+}
+
+.form-popup {
+  --width-of-input: 200px;
+  --border-height: 2px;
+  --border-before-color: rgba(221, 221, 221, 0.39);
+  position: relative;
+  width: var(--normal-purple);
+  width: 100%;
+}
+/* styling of Input */
+.input-popup {
+  color: var(--white-normal);
+  background-color: transparent;
+  width: 80%;
+  padding-inline: 0.5em;
+  padding-block: 0.7em;
+  border-bottom: 2px solid var(--border-before-color);
+}
+/* styling of animated border */
+.input-popup-border {
+  position: absolute;
+  background: var(--normal-purple);
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s;
+}
+/* Hover on Input */
+.input-popup:hover {
+  background: rgba(108, 75, 199, 0.144);
+}
+
+.input-popup:focus {
+  outline: none;
+}
+/* here is code of animated border */
+.input-popup:focus ~ .input-popup-border {
+  width: 100%;
 }
