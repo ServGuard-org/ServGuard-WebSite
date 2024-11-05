@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ServGuard | Dashboard Detalhes</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <section id="page-dashboard-details-use">
+        <header>
+            <div class="child-navbar-card-dash-adm">
+                <div class="navbar-logo-dash-adm">
+                    <img src="../../assets/svg/logo.svg" alt="#logo" />
+                </div>
+                <div class="navbar-navlink-dash-adm">
+                    <ul class="list-navlink-dash-adm">
+                        <li>
+                            <a href="../dashboard-adm.html" class="link-dash-adm active">
+                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            </a>
+                            <p class="little-text mt-1">Início</p>
+                        </li>
+                        <li>
+                            <a href="../dashboard-analista.html" class="link-dash-adm">
+                                <img src="../../assets/svg/search.svg" alt="#icone-layout" />
+                            </a>
+                            <p class="little-text mt-1">Detalhes</p>
+                        </li>
+                        <li>
+                            <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
+                                <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+                            </a>
+                            <p class="little-text mt-1">Funcionário</p>
+                        </li>
+                        <li>
+                            <a href="../gerenciamento-maquina.html" class="link-dash-adm">
+                                <img src="../../assets/svg/server-icon.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text mt-1">Máquina</p>
+                        </li>
+                        <li>
+                            <a href="../detalhes-funcionario.html" class="link-dash-adm">
+                                <img src="../../assets/svg/perfil-icon.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text mt-1">Perfil</p>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+                    <img src="../../assets/svg/exit-icon.svg" alt="" />
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="dash-alert-topo">
+                <h1 class="bold">Monitoramento de uso de Máquina:</h1>
+                <div class="link-back-seta">
+                    <a class="bold text-gray-dark" onclick="voltar()">
+                        <div class="icon-trian"></div> Voltar
+                    </a>
+                </div>
+            </div>
+            <div class="dash-alert-pai">
+                <div class="dash-alert-coluna-1">
+                    <h3 class="italic" style="margin-top: 3%; margin-right: 45%;">Detalhes de Alerta:</h3>
+                    <div class="dash-alert-lista-pai">
+                    <div class="dash-alert-lista-coluna-pai">
+                        <div class="dash-alert-lista-coluna1">
+                            <div>
+                                <h4 class="bold">Total de alertas de CPU</h4>
+                                <p class="bold" style="margin: 2%; font-size: 45px;">8</p>
+                            </div>
+                        </div>
+                        <div class="dash-alert-lista-coluna1">
+                                <h4 class="bold">Total de alertas de RAM</h4>
+                                <p class="bold" style="margin: 2%; font-size: 45px;">6</p>
+                        </div>
+                    </div>
+                    <div class="dash-alert-grafic-box-pai">
+                        <div class="dash-alert-grafic-box1">
+                            <canvas id="myGraphUse1"></canvas>
+                        </div>
+                        <div class="dash-alert-grafic-box1">
+                            <canvas id="myGraphUse2"></canvas>
+                        </div>
+                    </div>
+                        <!-- <div class="dash-alert-lista-scroll"> -->
+                            <!-- OBJETO -->
+                            <!-- <div class="dash-alert-lista-objeto">
+                                <div style="width: 13%;">
+                                    <h4 class=" italic">1</h4>
+                                </div>
+                                <div style="width: 70%;">
+                                    <p class="italic">Descrição</p>
+                                </div>
+                                <div style="width: 10%;">
+                                    <button class="bold underline italic botao-acao"
+                                    onclick="DetalhesMaquina()">Detalhes</button>
+                                </div>
+                            </div>
+
+                            <div class="dash-alert-lista-objeto">
+                                <div style="width: 13%;">
+                                    <h4 class=" italic">1</h4>
+                                </div>
+                                <div style="width: 70%;">
+                                    <p class="italic">Descrição</p>
+                                </div>
+                                <div style="width: 10%;">
+                                    <button class="bold underline italic botao-acao"
+                                    onclick="DetalhesMaquina()">Detalhes</button>
+                                </div>
+                            </div>
+
+                            <div class="dash-alert-lista-objeto">
+                                <div style="width: 13%;">
+                                    <h4 class=" italic">1</h4>
+                                </div>
+                                <div style="width: 70%;">
+                                    <p class="italic">Descrição</p>
+                                </div> -->
+                                <!-- <div style="width: 10%;">
+                                    <button class="bold underline italic botao-acao"
+                                    onclick="DetalhesMaquina()">Detalhes</button>
+                                </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                    </div>
+
+                    <!-- BARRA DE DISTRIBUICAO -->
+                    <!-- <h4 class="italic bold">Distribuição de alertas por recurso</h4>
+                    <div class="dash-alert-campo-barra">
+
+                    </div> -->
+
+                </div>
+                <div class="dash-alert-coluna-2">
+                    <div class="dash-alert-coluna-2-dados">
+                        <div class="dados-metade">
+                            <h5 class="bold italic">Total de ocorrências de hoje:</h5>
+                            <h5 class="bold italic">Média de ocorrências por dia:</h5>
+                        </div>
+                        <div class="dados-parte-meio"></div>
+                        <div class="dados-metade">
+                            <h5 class="bold italic">Total de máquinas:</h5>
+                            <h5 class="bold italic">Irregulares:</h5>
+                        </div>
+                    </div>
+                    <div class="dash-alert-coluna-2-area-grafico">
+                        <h3 class="" style="font-weight: 500;">Previsão de tendência diária:</h3>
+                        <div class="area-grafico">
+                            <p>colocar grafico aqui</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+</body>
+<script>
+    function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../../index.html";
+    }
+    function voltar(){
+        window.location.href = "../dashboard-adm.html";
+
+    }
+
+</script>
