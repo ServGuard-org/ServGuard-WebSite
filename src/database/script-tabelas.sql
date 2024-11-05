@@ -261,25 +261,14 @@ SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
 -- Irregularidades de CPU
-CREATE OR REPLACE VIEW vista_irregularidade_cpu AS
+CREATE OR REPLACE VIEW vista_irregularidade AS
 	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
             
-SELECT count(registro) as qtdCpu FROM vista_irregularidade_cpu
+SELECT count(registro) as qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
-             
-             
--- Irregularidades de RAM
-CREATE OR REPLACE VIEW vista_irregularidade_ram AS
-	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
-		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa;
-            
-SELECT count(registro) as qtdRam FROM vista_irregularidade_cpu
-	WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1;
 
 -- Irregularidades de DISCO
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
