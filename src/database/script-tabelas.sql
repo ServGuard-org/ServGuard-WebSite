@@ -414,7 +414,7 @@ CREATE OR REPLACE VIEW vista_ranking_recurso AS
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1) AS qtdCPU,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1) AS qtdRAM,
 			idEmpresa FROM Empresa;
-            
+             
 select qtdCPU,qtdRAM,qtdDISCO from vista_ranking_recurso
 	WHERE idEmpresa=1;
             
