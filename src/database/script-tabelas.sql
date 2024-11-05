@@ -380,7 +380,6 @@ CREATE OR REPLACE VIEW vista_ultimos_alertas AS
 SELECT * FROM vista_ultimos_alertas
 	WHERE fkEmpresa = 1;
 
-
 CREATE OR REPLACE VIEW vista_ultimas_metricas AS
 SELECT 
     m.idMaquina,
