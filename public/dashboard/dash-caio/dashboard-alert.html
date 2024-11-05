@@ -106,7 +106,7 @@
                 <div class="dash-alert-coluna-2">
                     <div class="dash-alert-coluna-2-dados">
                         <div class="dados-metade">
-                            <h5 class="bold italic">Total de ocorrências de hoje: 
+                            <h5 class="bold italic">Total de ocorrências de hoje:
                                 <samp id="id_total_ocorrencias" style="font-size: larger;">...</samp>
                             </h5>
                             <h5 class="bold italic">Média de ocorrências por dia:
@@ -140,219 +140,244 @@
         sessionStorage.clear();
         window.location.href = "../../index.html";
     }
-    function voltar(){
+    function voltar() {
         window.location.href = "../dashboard-adm.html";
     }
-    function carregarPagina(){
+    function carregarPagina() {
         obterDadosDeApoio1()
         obterDadosDeApoio2()
         carregarListaAlertas()
     }
-    function obterDadosDeApoio1(){
+    function obterDadosDeApoio1() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         var totaHoje;
         var mediaA;
         fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-          .then(function (resposta) {
-            console.log("Iniciando a busca de dados apoio 1");
+            .then(function (resposta) {
+                console.log("Iniciando a busca de dados apoio 1");
 
-            if (resposta.ok) {
-              return resposta.json().then((json) => {
-                console.log(json);
-                totalHoje = json[0].total_capturas_alerta_hoje;
-                mediaA = json[0].media_diaria_alertas;
-                console.log("Valor captura alerta hoje:", totalHoje);
-                console.log("Media alerta diaria:", mediaA);
-                
-                mediaDiaria = document.getElementById(
-                  "id_media_ocorrencias"
-                );
-                elementoInstabilidade = document.getElementById(
-                  "id_total_ocorrencias"
-                );
-                elementoInstabilidade.innerHTML = totaHoje;
-                mediaDiaria.innerHTML = parseInt(mediaA);
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        totalHoje = json[0].total_capturas_alerta_hoje;
+                        mediaA = json[0].media_diaria_alertas;
+                        console.log("Valor captura alerta hoje:", totalHoje);
+                        console.log("Media alerta diaria:", mediaA);
 
-                
-                valor = parseFloat(elementoInstabilidade.innerText);
-                media = parseFloat(mediaDiaria.innerText);
-                if (valor < media){
-                    // verde
-                    elementoInstabilidade.classList.remove(
-                      "text-green",
-                      "text-red",
-                      "text-orange",
-                      "text-yellow",
-                      "text-gray"
+                        mediaDiaria = document.getElementById(
+                            "id_media_ocorrencias"
+                        );
+                        elementoInstabilidade = document.getElementById(
+                            "id_total_ocorrencias"
+                        );
+                        elementoInstabilidade.innerHTML = totaHoje;
+                        mediaDiaria.innerHTML = parseInt(mediaA);
+
+
+                        valor = parseFloat(elementoInstabilidade.innerText);
+                        media = parseFloat(mediaDiaria.innerText);
+                        if (valor < media) {
+                            // verde
+                            elementoInstabilidade.classList.remove(
+                                "text-green",
+                                "text-red",
+                                "text-orange",
+                                "text-yellow",
+                                "text-gray"
+                            );
+                            elementoInstabilidade.classList.add("text-green");
+                        } else if (valor = media) {
+                            // laranja
+                            elementoInstabilidade.classList.remove(
+                                "text-green",
+                                "text-red",
+                                "text-orange",
+                                "text-yellow",
+                                "text-gray"
+                            );
+                            elementoInstabilidade.classList.add("text-orange");
+                        } else if (valor > media) {
+                            // vermelho
+                            elementoInstabilidade.classList.remove(
+                                "text-green",
+                                "text-red",
+                                "text-orange",
+                                "text-yellow",
+                                "text-gray"
+                            );
+                            elementoInstabilidade.classList.add("text-red");
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
                     );
-                    elementoInstabilidade.classList.add("text-green");
-                }else if (valor = media){
-                    // laranja
-                    elementoInstabilidade.classList.remove(
-                      "text-green",
-                      "text-red",
-                      "text-orange",
-                      "text-yellow",
-                      "text-gray"
-                    );
-                    elementoInstabilidade.classList.add("text-orange");
-                } else if (valor > media){
-                    // vermelho
-                    elementoInstabilidade.classList.remove(
-                      "text-green",
-                      "text-red",
-                      "text-orange",
-                      "text-yellow",
-                      "text-gray"
-                    );
-                    elementoInstabilidade.classList.add("text-red");                  
+                    document.getElementById("escala-instabilidade").innerHTML =
+                        "Erro ao obter";
+                    return null; // Retorna null em caso de erro
                 }
-              });
-            } else {
-              console.log(
-                "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-              );
-              document.getElementById("escala-instabilidade").innerHTML =
-                "Erro ao obter";
-              return null; // Retorna null em caso de erro
-            }
-          })
-          .catch(function (erro) {
-            // console.log(erro);
-            return null; // Retorna null em caso de erro de conexão
-          });
+            })
+            .catch(function (erro) {
+                // console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
     }
-    function obterDadosDeApoio2(){
+    function obterDadosDeApoio2() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         var totalM;
         var totalIrr;
         fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-          .then(function (resposta) {
-            console.log("Iniciando a busca de dados apoio 2");
+            .then(function (resposta) {
+                console.log("Iniciando a busca de dados apoio 2");
 
-            if (resposta.ok) {
-              return resposta.json().then((json) => {
-                console.log(json);
-                totalIrr = json[0].total_maquinas_irregulares;
-                totalM = json[0].total_maquinas;
-                console.log("Valor capturado total maquinas irregulares:", totalIrr);
-                console.log("Valor capturado total maquinas:", totalM);
-                
-                elementoTotal = document.getElementById(
-                  "id_total_maquinas"
-                );
-                elementoInstabilidade = document.getElementById(
-                  "id_irregularidade_maquinas"
-                );
-                elementoTotal.innerHTML = totalM;
-                elementoInstabilidade.innerHTML = totalIrr;
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        totalIrr = json[0].total_maquinas_irregulares;
+                        totalM = json[0].total_maquinas;
+                        console.log("Valor capturado total maquinas irregulares:", totalIrr);
+                        console.log("Valor capturado total maquinas:", totalM);
 
-                
-                valor = parseFloat(elementoInstabilidade.innerText);
-                total = parseFloat(elementoTotal.innerText);
-                if (valor < total){
-                    // verde
-                    elementoInstabilidade.classList.remove(
-                      "text-green",
-                      "text-red",
-                      "text-orange",
-                      "text-yellow",
-                      "text-gray"
+                        elementoTotal = document.getElementById(
+                            "id_total_maquinas"
+                        );
+                        elementoInstabilidade = document.getElementById(
+                            "id_irregularidade_maquinas"
+                        );
+                        elementoTotal.innerHTML = totalM;
+                        elementoInstabilidade.innerHTML = totalIrr;
+
+
+                        valor = parseFloat(elementoInstabilidade.innerText);
+                        total = parseFloat(elementoTotal.innerText);
+                        if (valor < total) {
+                            // verde
+                            elementoInstabilidade.classList.remove(
+                                "text-green",
+                                "text-red",
+                                "text-orange",
+                                "text-yellow",
+                                "text-gray"
+                            );
+                            elementoInstabilidade.classList.add("text-green");
+                        } else if (valor = total) {
+                            // laranja
+                            elementoInstabilidade.classList.remove(
+                                "text-green",
+                                "text-red",
+                                "text-orange",
+                                "text-yellow",
+                                "text-gray"
+                            );
+                            elementoInstabilidade.classList.add("text-orange");
+                        } else if (valor > total) {
+                            // vermelho
+                            elementoInstabilidade.classList.remove(
+                                "text-green",
+                                "text-red",
+                                "text-orange",
+                                "text-yellow",
+                                "text-gray"
+                            );
+                            elementoInstabilidade.classList.add("text-red");
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
                     );
-                    elementoInstabilidade.classList.add("text-green");
-                }else if (valor = total){
-                    // laranja
-                    elementoInstabilidade.classList.remove(
-                      "text-green",
-                      "text-red",
-                      "text-orange",
-                      "text-yellow",
-                      "text-gray"
-                    );
-                    elementoInstabilidade.classList.add("text-orange");
-                } else if (valor > total){
-                    // vermelho
-                    elementoInstabilidade.classList.remove(
-                      "text-green",
-                      "text-red",
-                      "text-orange",
-                      "text-yellow",
-                      "text-gray"
-                    );
-                    elementoInstabilidade.classList.add("text-red");                  
+                    document.getElementById("escala-instabilidade").innerHTML =
+                        "Erro ao obter";
+                    return null; // Retorna null em caso de erro
                 }
-              });
-            } else {
-              console.log(
-                "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-              );
-              document.getElementById("escala-instabilidade").innerHTML =
-                "Erro ao obter";
-              return null; // Retorna null em caso de erro
-            }
-          })
-          .catch(function (erro) {
-            // console.log(erro);
-            return null; // Retorna null em caso de erro de conexão
-          });
+            })
+            .catch(function (erro) {
+                // console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
     }
 
     function carregarListaAlertas() {
-      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-      fetch(`/medidas/listaAlertas/${idEmpresa}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then(function (resposta) {
-          console.log("Iniciando a busca dos dados da lista de alertas!");
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        fetch(`/medidas/listaAlertas/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca dos dados da lista de alertas!");
 
-          if (resposta.ok) {
-            console.log(resposta);
+                if (resposta.ok) {
+                    console.log(resposta);
 
-            resposta.json().then((json) => {
-              console.log(json);
-              console.log(JSON.stringify(json));
+                    resposta.json().then((json) => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
 
-              var listaMaquina = [];
-              var nomeRecurso = [];
-              console.log(`Formando a lista:`);
-              for (var i = 0; i < json.length; i++) {
-                listaMaquina.push(json[i].fkMaquina);
-                nomeRecurso.push(json[i].nome);
-               
-                var textoRecurso;
-                if (nomeRecurso[i] == "usoCPU") {
-                    textoRecurso = "Parametro de CPU alcançado";
-                } else {
-                    textoRecurso= "Alerta desconhecido"
-                }
-               
-                adicionarLinha(
-                  listaMaquina[i],
-                  textoRecurso
-                )
-              }
-              console.log(listaMaquina)
-              console.log(nomeRecurso)
-              
-              function adicionarLinha(id, desc) {
-                console.log("Chamou listar alertas!!!")
-                
-                const elementoPai = document.getElementById("dash-alert-lista-pai");
+                        var listaMaquina = [];
+                        var nomeRecurso = [];
+                        console.log(`Formando a lista:`);
+                        for (var i = 0; i < json.length; i++) {
+                            listaMaquina.push(json[i].fkMaquina);
+                            nomeRecurso.push(json[i].nome);
 
-                const novoElemento = `
+                            var textoRecurso;
+                            if (nomeRecurso[i] == "usoCPU") {
+                                textoRecurso = "Parâmetro de uso de CPU atingido";
+                            } else if (nomeRecurso[i] == "usoRAM") {
+                                textoRecurso = "Parâmetro de uso de RAM atingido";
+                            } else if (nomeRecurso[i] == "usoTotal") {
+                                textoRecurso = "Capacidade total de uso atingida";
+                            } else if (nomeRecurso[i] == "velocidadeDownload") {
+                                textoRecurso = "Limite de velocidade de download atingido";
+                            } else if (nomeRecurso[i] == "velocidadeUpload") {
+                                textoRecurso = "Limite de velocidade de upload atingido";
+                            } else if (nomeRecurso[i] == "erroPacotesEntrada") {
+                                textoRecurso = "Erro excessivo em pacotes de entrada";
+                            } else if (nomeRecurso[i] == "erroPacotesSaida") {
+                                textoRecurso = "Erro excessivo em pacotes de saída";
+                            } else if (nomeRecurso[i] == "descartePacotesEntrada") {
+                                textoRecurso = "Descartes excessivos em pacotes de entrada";
+                            } else if (nomeRecurso[i] == "descartePacotesSaida") {
+                                textoRecurso = "Descartes excessivos em pacotes de saída";
+                            } else if (nomeRecurso[i] == "megabytesRecebidos") {
+                                textoRecurso = "Limite de megabytes recebidos atingido";
+                            } else if (nomeRecurso[i] == "megabytesEnviados") {
+                                textoRecurso = "Limite de megabytes enviados atingido";
+                            } else if (nomeRecurso[i] == "pacotesEnviados") {
+                                textoRecurso = "Limite de pacotes enviados atingido";
+                            } else if (nomeRecurso[i] == "pacotesRecebidos") {
+                                textoRecurso = "Limite de pacotes recebidos atingido";
+                            } else {
+                                textoRecurso = "Alerta desconhecido";
+                            }
+
+
+                            adicionarLinha(
+                                listaMaquina[i],
+                                textoRecurso
+                            )
+                        }
+                        console.log(listaMaquina)
+                        console.log(nomeRecurso)
+
+                        function adicionarLinha(id, desc) {
+                            console.log("Chamou listar alertas!!!")
+
+                            const elementoPai = document.getElementById("dash-alert-lista-pai");
+
+                            const novoElemento = `
                     <div class="dash-alert-lista-objeto">
                         <div style="width: 13%;">
                             <h4 class=" italic">${id}</h4>
@@ -365,22 +390,22 @@
                         </div>
                     </div>        
                 `;
-                elementoPai.innerHTML += novoElemento;
-            }
+                            elementoPai.innerHTML += novoElemento;
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados do mapa instabilidade!"
+                    );
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
             });
-          } else {
-            console.log(
-              "Houve um erro ao tentar capturar os dados do mapa instabilidade!"
-            );
-          }
-        })
-        .catch(function (erro) {
-          console.log(erro);
-        });
-      return false;
+        return false;
     }
     function DetalhesMaquina(idMaquina) {
-      sessionStorage.setItem("ID_MAQUINA", idMaquina);
-      window.location.href = "../details-machine.html";
+        sessionStorage.setItem("ID_MAQUINA", idMaquina);
+        window.location.href = "../details-machine.html";
     }
 </script>
