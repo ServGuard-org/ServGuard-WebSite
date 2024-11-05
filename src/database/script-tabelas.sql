@@ -269,7 +269,7 @@ CREATE OR REPLACE VIEW vista_irregularidade AS
             
 SELECT count(registro) as qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
-             
+
 -- Irregularidades de DISCO
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
