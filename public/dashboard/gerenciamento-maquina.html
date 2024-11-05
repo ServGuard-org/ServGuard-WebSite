@@ -278,20 +278,13 @@ consultarMaquinas(), verificarCargo()">
         document.getElementById('popupEditar').style.display = 'flex'; // Exibe o popup corretamente
     }
     function sairEditar() {
-        document.getElementById("input_apelido").value = "";
-        document.getElementById("input_ram").value = "";
-        document.getElementById("input_cpu").value = "";
-        document.getElementById("input_total").value = "";
-        document.getElementById("input_velo_download").value = "";
-        document.getElementById("input_velo_upload").value = "";
-        document.getElementById("input_err_pac_in").value = "";
-        document.getElementById("input_err_pac_out").value = "";
-        document.getElementById("input_desc_pac_in").value = "";
-        document.getElementById("input_desc_pac_out").value = "";
-        document.getElementById("input_mbs_in").value = "";
-        document.getElementById("input_mbs_out").value = "";
-        document.getElementById("input_pac_in").value = "";
-        document.getElementById("input_pac_out").value = "";
+
+        const listaIds = ["input_apelido", "input_ram", "input_cpu", "input_total", "input_velo_download", "input_velo_upload", "input_err_pac_in", "input_err_pac_out", "input_desc_pac_in", "input_desc_pac_out", "input_mbs_in", "input_mbs_out", "input_pac_in", "input_pac_out"];
+
+        listaIds.forEach(id => {
+            document.getElementById(id).value = "";
+        });
+
         document.getElementById('popupEditar').style.display = 'none'; // Exibe o popup corretamente
     }
 
