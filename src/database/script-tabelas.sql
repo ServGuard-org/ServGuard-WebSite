@@ -260,14 +260,14 @@ WHERE dthCriacao = (
 SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso 
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
--- Irregularidades 
+-- Irregularidades de CPU
 CREATE OR REPLACE VIEW vista_irregularidade AS
 	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
             
-SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade
+SELECT count(registro) as qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
              
 -- Irregularidades de DISCO
@@ -367,9 +367,18 @@ CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
 
     FROM Maquina m;
     
-    select idMaquina, registro_usoCPU, max_usoCPU, registro_usoRAM, max_usoRAM from vista_mapa_instabilidade where fkEmpresa=1;
 
-
+-- LISTA ULTIMOS ALERTAS
+CREATE OR REPLACE VIEW vista_ultimos_alertas AS
+	SELECT fkMaquina, recurso.nome, dthCriacao, fkEmpresa FROM captura
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Recurso ON fkRecurso = idRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+			WHERE captura.isAlerta = 1
+				ORDER BY dthCriacao DESC;
+                
+SELECT * FROM vista_ultimos_alertas
+	WHERE fkEmpresa = 1;
 
 
 CREATE OR REPLACE VIEW vista_ultimas_metricas AS
