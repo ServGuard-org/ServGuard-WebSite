@@ -764,12 +764,27 @@
               dados.totalMaquinas
             );
             // e assim por diante, só usar dados e acessar o valor que quiser. A função já está sendo chamada no onload do body
+            const  taxaDescarte = ((Number(dados.descartePacotesSaida) + Number(dados.descartePacotesEntrada)) / (Number(dados.pacotesEnviados) + Number(dados.pacotesRecebidos))) * 100
+  
+            console.log(`TAXA DE DESCARTE ${taxaDescarte} !!!!!!!!!!!!!!!!!!!!!!`)
 
+            const estadosRede = ["Estável", "Oscilante", "Instável", "..."];
 
-          const  taxaDescarte = (totalDescartes / totalPacotes) * 100
+            let numeroEstadoRede = 0
 
-            totalDescartes = descartePacotesEntrada + descartePacotesSaida
-            totalPacotes = pacotesEnviados + pacotesRecebidos
+            if (taxaDescarte > 0.5 && taxaDescarte < 2.0) {
+              numeroEstadoRede = estadosRede.indexOf("Oscilante");
+            } else if (taxaDescarte > 2.0) {
+              numeroEstadoRede = estadosRede.indexOf("Instável")
+            } else if (taxaDescarte <= 0.5) {
+              numeroEstadoRede = estadosRede.indexOf("Estável")
+            } else {
+              numeroEstadoRede = estadosRede.indexOf("...")
+            }
+
+            const estadoRede = estadosRede[numeroEstadoRede]
+
+            console.log(estadoRede, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
           });
         })
