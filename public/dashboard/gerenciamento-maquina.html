@@ -457,7 +457,7 @@ consultarMaquinas(), verificarCargo()">
                 },
                 body: JSON.stringify({
                     idMaquina: idMaquina,
-                    apelido: apelido
+                    apelido: apelido || "indefinido"
                 })
             })
                 .then(response => {
