@@ -18,6 +18,8 @@
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD - INDIVIDUAIS --- */
 @import url(../dashboard/dash-caio/dashboard-alert.css);
 
+@import url(../dashboard/dash-enzo/enzo.css);
+
 
 /* --- IMPORTANDO AS PAGINAS DO SITE INSTITUCIONAL --- */
 @import url(./pages/site-institucional/cadastro.css);

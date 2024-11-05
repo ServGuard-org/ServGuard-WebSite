@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ServGuard | Dashboard Alertas</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <section id="page-dashboard-alert">
+        <header>
+            <div class="child-navbar-card-dash-adm">
+                <div class="navbar-logo-dash-adm">
+                    <img src="../../assets/svg/logo.svg" alt="#logo" />
+                </div>
+                <div class="navbar-navlink-dash-adm">
+                    <ul class="list-navlink-dash-adm">
+                        <li>
+                            <a href="../dashboard-adm.html" class="link-dash-adm active">
+                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            </a>
+                            <p class="little-text mt-1">Início</p>
+                        </li>
+                        <li>
+                            <a href="../dashboard-analista.html" class="link-dash-adm">
+                                <img src="../../assets/svg/search.svg" alt="#icone-layout" />
+                            </a>
+                            <p class="little-text mt-1">Detalhes</p>
+                        </li>
+                        <li>
+                            <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
+                                <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+                            </a>
+                            <p class="little-text mt-1">Funcionário</p>
+                        </li>
+                        <li>
+                            <a href="../gerenciamento-maquina.html" class="link-dash-adm">
+                                <img src="../../assets/svg/server-icon.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text mt-1">Máquina</p>
+                        </li>
+                        <li>
+                            <a href="../detalhes-funcionario.html" class="link-dash-adm">
+                                <img src="../../assets/svg/perfil-icon.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text mt-1">Perfil</p>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+                    <img src="../../assets/svg/exit-icon.svg" alt="" />
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="dash-alert-topo">
+                <h1 class="bold">Montitoramento de rede:</h1>
+                <div class="link-back-seta">
+                    <a class="bold text-gray-dark" onclick="voltar()">
+                        <div class="icon-trian"></div> Voltar
+                    </a>
+                </div>
+            </div>
+            <div class="dash-rede-analista">
+                <div class="grafico-rede">
+
+                </div>
+            </div>
+        </main>
+    </section>
+</body>
+<script>
+    function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../../index.html";
+    }
+    function voltar(){
+        window.location.href = "../dashboard-adm.html";
+
+    }
+
+function obterDados(){
+    
+} 
+
+
+
+
+
+
+
+
+
+
+</script>
