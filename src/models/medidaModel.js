@@ -10,9 +10,17 @@ function buscarDadosHistograma(idEmpresa) {
 }
 
 function buscarEscalaInstabilidade(idEmpresa) {
-    var instrucaoSql = `SELECT total_maquinas_irregulares, percentual_irregulares 
+    var instrucaoSql = `SELECT total_maquinas_irregulares, percentual_irregulares, total_maquinas 
                             FROM vista_irregularidade_total_e_percentual 
                                 WHERE fkEmpresa = ${idEmpresa};`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarDadosAlerta(idEmpresa) {
+    var instrucaoSql = `SELECT * FROM vista_capturas_alerta_total_e_media_diaria 
+                            WHERE fkEmpresa=${idEmpresa};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -21,6 +29,13 @@ function buscarEscalaInstabilidade(idEmpresa) {
 function buscarMapaInstabilidade(idEmpresa) {
     var instrucaoSql = `SELECT idMaquina, registro_usoCPU, max_usoCPU, registro_usoRAM, max_usoRAM FROM vista_mapa_instabilidade 
                             WHERE fkEmpresa=${idEmpresa};`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+function buscarListaAlertas(idEmpresa) {
+    var instrucaoSql = `SELECT * FROM vista_ultimos_alertas
+	                        WHERE fkEmpresa = ${idEmpresa};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -53,7 +68,9 @@ function buscarMaquinasConnect(idEmpresa){
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
+    buscarDadosAlerta,
     buscarMapaInstabilidade,
+    buscarListaAlertas,
     buscarUsoRecursoPorMaquina,
     buscarMaquinasConnect
 }
