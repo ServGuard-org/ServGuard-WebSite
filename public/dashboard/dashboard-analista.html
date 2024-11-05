@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="carregarPagina()">
+<body onload="carregarPagina(),buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO'))">
   <section id="page-dashboard-analista">
     <header>
       <div class="child-navbar-card-dash-adm">
@@ -100,13 +100,15 @@
               <div class="tooltip tooltip-purple">
                 <h4>i</h4>
                 <span class="tooltiptext tooltip-left text-black">
-                  Uma breve indicação do status da rede (Estável/Instável), calculado com base na perda de pacotes. 
+                  Uma breve indicação do estado da rede (Estável/Oscilante/Instável), calculado com base na perda de pacotes. 
                   Para mais detalhes do monitoramento, clique no botão abaixo.
                 </span>
               </div>
             </div>
             <h5 class="italic bold">ESTADO DA REDE:</h5>
-            <h3 class="bold" style="color: var(--green-normal);">Estável</h3>
+            <div class="card-conect">
+              <h3 class="bold center text-green" id="estado_rede">...</h3>
+          </div>
             <p class="italic" style="text-align: center;">Acesse a dashboard de monitoramento de rede:</p>
             <button class="btn-dashboard-analista-reverse" style="height: 15%;">Clique Aqui!</button>
             <!-- <div class="perda-pacotes-organizar">
@@ -513,6 +515,73 @@
         })
         .catch(function (erro) {
           return null;
+        });
+    }
+
+    function buscarUltimosDadosRede(idEmpresa) {
+      fetch(`/recursos/buscarUltimosDadosRede/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+          }
+          response.json().then((data) => {
+            console.log("Dados recebidos:", data);
+            dados = data[0][0];
+            console.log("2 zeros", data[0][0]);
+            console.log(
+              "Velocidade de Download de Todas as maquinas: ",
+              dados.velocidadeDownload
+            );
+            console.log(
+              "Total de maquinas somadas aqui: ",
+              dados.totalMaquinas
+            );
+            // e assim por diante, só usar dados e acessar o valor que quiser. A função já está sendo chamada no onload do body
+            const taxaDescarte = ((Number(dados.descartePacotesSaida) + Number(dados.descartePacotesEntrada)) / (Number(dados.pacotesEnviados) + Number(dados.pacotesRecebidos))) * 100
+
+            console.log(`TAXA DE DESCARTE ${taxaDescarte} !!!!!!!!!!!!!!!!!!!!!!`)
+
+            const estadosRede = ["Estável", "Oscilante", "Instável", "..."];
+
+            let numeroEstadoRede = 0
+
+            if (taxaDescarte > 0.5 && taxaDescarte < 2.0) {
+              numeroEstadoRede = estadosRede.indexOf("Oscilante");
+            } else if (taxaDescarte > 2.0) {
+              numeroEstadoRede = estadosRede.indexOf("Instável")
+            } else if (taxaDescarte <= 0.5) {
+              numeroEstadoRede = estadosRede.indexOf("Estável")
+            } else {
+              numeroEstadoRede = estadosRede.indexOf("...")
+            }
+
+            const estadoRede = estadosRede[numeroEstadoRede]
+
+            console.log(estadoRede, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+            const elemento_estado_rede = document.getElementById("estado_rede");
+            elemento_estado_rede.innerText = estadoRede;
+
+            // Alterar a cor do texto com base no estado da rede
+            if (estadoRede == "Oscilante") {
+              elemento_estado_rede.style.color = "#cff9100";  // Cor laranja
+            } else if (estadoRede == "Instável") {
+              elemento_estado_rede.style.color = "#ff0000";     // Cor vermelha
+            } else if (estadoRede == "Estável") {
+              elemento_estado_rede.style.color = "#28bb49";   // Cor verde
+            } else {
+              elemento_estado_rede.style.color = "#0c0c0c";    // Cor Preto
+            }
+
+          });
+        })
+        .catch((error) => {
+          console.error("Erro na requisição:", error);
         });
     }
 
