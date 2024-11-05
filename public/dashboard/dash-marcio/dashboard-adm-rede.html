@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <section id="page-dashboard-alert">
+    <section id="page-dashboard-rede">
         <header>
             <div class="child-navbar-card-dash-adm">
                 <div class="navbar-logo-dash-adm">
@@ -58,7 +58,7 @@
             </div>
         </header>
         <main>
-            <div class="dash-alert-topo">
+            <div class="dash-rede-topo">
                 <h1 class="bold">Monitoramento de Rede</h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
@@ -72,78 +72,101 @@
                     <option value="#" selected disabled>Selecione Uma Semana</option>
                 </select>
             </div>
-            <div class="dash-alert-pai">
-                <div class="dash-alert-coluna-1">
+            <div class="dash-rede-pai">
+                <div class="dash-rede-coluna-1">
 
                     <h3 class="italic" style="margin-top: 3%;">Resumo da Semana</h3>
                     <div class="child-informacoes-macro">
                         <div class="dados-semana">
-                            <h5 class="bold">Pacotes Enviados: <span id="pacotes_enviados" class="thin"></span></h5>
-                            <h5 class="bold">Pacotes Recebidos: <span id="pacotes_recebidos" class="thin"></span></h5>
-                            <h5 class="bold">MBs Enviados: <span id="mbs_enviados" class="thin"></span></h5>
-                            <h5 class="bold">MBs Recebidos: <span id="mbs_recebidos" class="thin"></span></h5>
-                            <h5 class="bold">Erros (E/R): <span id="mbs_recebidos" class="thin"></span></h5>
-                            <h5 class="bold">Pacotes Descartados (E/R): <span id="mbs_recebidos" class="thin"></span>
+                            <h5 class="bold">Pacotes Enviados: <span id="pacotes_enviados" class="thin">...</span></h5>
+                            <h5 class="bold">Pacotes Recebidos: <span id="pacotes_recebidos" class="thin">...</span></h5>
+                            <h5 class="bold">MBs Enviados: <span id="mbs_enviados" class="thin">...</span></h5>
+                            <h5 class="bold">MBs Recebidos: <span id="mbs_recebidos" class="thin">...</span></h5>
+                            <h5 class="bold">Erros (E/R): <span id="mbs_recebidos" class="thin">...</span></h5>
+                            <h5 class="bold">Pacotes Descartados (E/R): <span id="mbs_recebidos" class="thin">...</span>
                             </h5>
                         </div>
                     </div>
 
                     <h3 class="italic" style="margin-top: 3%;">Alertas Desta Semana:</h3>
-                    <div class="dash-alert-lista-pai">
-                        <div class="dash-alert-lista-colunas">
-                            <div style="width: 13%;">
+                    <div class="dash-rede-lista-pai">
+                        <div class="dash-rede-lista-colunas">
+                            <div style="width: 33%;">
                                 <h4 class="bold">Data</h4>
                             </div>
-                            <div style="width: 100%;">
+                            <div style="width: 44%; margin-right: 13%;">
                                 <h4 class="bold">Dado / Recurso</h4>
                             </div>
-                            <div style="width: 20%;">Medição</div>
+                            <div style="width: 22%;">
+                                <h4 class="bold">
+                                    Medição
+                                </h4>
+                            </div>
                         </div>
-                        <div class="dash-alert-lista-scroll">
-                            <!-- OBJETO -->
-                            <div class="dash-alert-lista-objeto">
-                                <div style="width: 13%;">
-                                    <h4 class=" italic">1</h4>
-                                </div>
-                                <div style="width: 70%;">
-                                    <p class="italic">Descrição</p>
-                                </div>
-                                <div style="width: 10%;">
-                                    <button class="bold underline italic botao-acao"
-                                        onclick="DetalhesMaquina()">Detalhes</button>
-                                </div>
-                            </div>
+                        <div class="dash-rede-lista-scroll">
+                            <div class="dash-rede-lista-caixa">
 
-                            <div class="dash-alert-lista-objeto">
-                                <div style="width: 13%;">
-                                    <h4 class=" italic">1</h4>
+                                <!-- OBJETOS -->
+                                <div class="dash-rede-lista-objeto">
+                                    <div style="width: 37%;">
+                                        <h4 class=" italic">1</h4>
+                                    </div>
+                                    <div style="width: 48%;">
+                                        <p class="italic">Descrição</p>
+                                    </div>
+                                    <div style="width: -44%;">
+                                        <button class="bold underline italic botao-acao"
+                                            onclick="DetalhesMaquina()">Detalhes</button>
+                                    </div>
                                 </div>
-                                <div style="width: 70%;">
-                                    <p class="italic">Descrição</p>
+    
+                                <div class="dash-rede-lista-objeto">
+                                    <div style="width: 37%;">
+                                        <h4 class=" italic">1</h4>
+                                    </div>
+                                    <div style="width: 48%;">
+                                        <p class="italic">Descrição</p>
+                                    </div>
+                                    <div style="width: -44%;">
+                                        <button class="bold underline italic botao-acao"
+                                            onclick="DetalhesMaquina()">Detalhes</button>
+                                    </div>
                                 </div>
-                                <div style="width: 10%;">
-                                    <button class="bold underline italic botao-acao"
-                                        onclick="DetalhesMaquina()">Detalhes</button>
+    
+                                <div class="dash-rede-lista-objeto">
+                                    <div style="width: 37%;">
+                                        <h4 class=" italic">1</h4>
+                                    </div>
+                                    <div style="width: 48%;">
+                                        <p class="italic">Descrição</p>
+                                    </div>
+                                    <div style="width: -44%;">
+                                        <button class="bold underline italic botao-acao"
+                                            onclick="DetalhesMaquina()">Detalhes</button>
+                                    </div>
                                 </div>
-                            </div>
+    
+                                <div class="dash-rede-lista-objeto">
+                                    <div style="width: 37%;">
+                                        <h4 class=" italic">1</h4>
+                                    </div>
+                                    <div style="width: 48%;">
+                                        <p class="italic">Descrição</p>
+                                    </div>
+                                    <div style="width: -44%;">
+                                        <button class="bold underline italic botao-acao"
+                                            onclick="DetalhesMaquina()">Detalhes</button>
+                                    </div>
+                                </div>
 
-                            <div class="dash-alert-lista-objeto">
-                                <div style="width: 13%;">
-                                    <h4 class=" italic">1</h4>
-                                </div>
-                                <div style="width: 70%;">
-                                    <p class="italic">Descrição</p>
-                                </div>
-                                <div style="width: 10%;">
-                                    <button class="bold underline italic botao-acao"
-                                        onclick="DetalhesMaquina()">Detalhes</button>
-                                </div>
+                                
                             </div>
+                            
                         </div>
                     </div>
 
                 </div>
-                <div class="dash-alert-coluna-2">
+                <div class="dash-rede-coluna-2">
                     <h3 class="" style="font-weight: 700;">Mapa de Calor:</h3>
                     <div class="dash-rede-coluna-2-area-grafico">
                         <div class="area-grafico-rede">
@@ -152,11 +175,15 @@
                     </div>
                     <h4 class="italic bold">Contagem de Alertas</h4>
                     <div class="dash-rede-campo-barra">
-
+                        <h5 class="bold italic">Pacotes (E/R): <span id="alertas_pacotes">...</span></h5>
+                        <h5 class="bold italic">Megabytes (E/R): <span id="alertas_megabytes">...</span></h5>
+                        <h5 class="bold italic">Erros e Descartes (E/R): <span id="alertas_err_desc">...</span></h5>
                     </div>
                     <h4 class="italic bold">Médias</h4>
                     <div class="dash-rede-campo-barra">
-
+                        <h5 class="bold italic">Pacotes (E/R): <span id="media_pacotes">...</span></h5>
+                        <h5 class="bold italic">Megabytes (E/R): <span id="media_megabytes">...</span></h5>
+                        <h5 class="bold italic">Erros e Descartes (E/R): <span id="media_err_desc">...</span></h5>
                     </div>
 
                 </div>
@@ -210,11 +237,11 @@
             offsetY: 10,
             offsetX: 50,
             style: {
-                    colors: [],
-                    fontSize: '17px',
-                    fontWeight: 800,
-                    cssClass: 'apexcharts-xaxis-label',
-                }
+                colors: [],
+                fontSize: '17px',
+                fontWeight: 800,
+                cssClass: 'apexcharts-xaxis-label',
+            }
         },
         xaxis: {
             title: {
