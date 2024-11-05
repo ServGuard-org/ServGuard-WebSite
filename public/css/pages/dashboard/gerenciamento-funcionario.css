@@ -224,6 +224,7 @@
 .botao-acao{
     border: none;
     background-color: #FFF;
+    background: none;
     color: var(--dark-purple);
     cursor: pointer;
     padding: 5px 10px;

@@ -260,16 +260,16 @@ WHERE dthCriacao = (
 SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso 
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
--- Irregularidades 
+-- Irregularidades de CPU
 CREATE OR REPLACE VIEW vista_irregularidade AS
 	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
             
-SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade
+SELECT count(registro) as qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
-             
+
 -- Irregularidades de DISCO
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
@@ -285,20 +285,35 @@ SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_d
 CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
     SELECT 
         m.fkEmpresa,
-		mr.fkRecurso,
         COUNT(DISTINCT m.idMaquina) AS total_maquinas_irregulares,
+		(SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa) AS total_maquinas,
         (COUNT(DISTINCT m.idMaquina) / (SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa)) * 100 AS percentual_irregulares
     FROM Maquina m
 		JOIN MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
 		JOIN Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
 			WHERE c.isAlerta = 1 AND DATE(c.dthCriacao) = CURDATE()
-				GROUP BY fkEmpresa, fkRecurso;
+				GROUP BY fkEmpresa;
                 
-SELECT total_maquinas_irregulares, percentual_irregulares 
+SELECT total_maquinas_irregulares, percentual_irregulares, total_maquinas 
 FROM vista_irregularidade_total_e_percentual 
 WHERE fkEmpresa = 1;
 
+-- Dados media de alertas
+CREATE OR REPLACE VIEW vista_capturas_alerta_total_e_media_diaria AS
+    SELECT 
+        (SELECT COUNT(*) FROM Captura 
+			WHERE isAlerta = 1 AND DATE(dthCriacao) = CURDATE()) AS total_capturas_alerta_hoje,
+        COUNT(*) / COUNT(DISTINCT DATE(dthCriacao)) AS media_diaria_alertas,
+        fkEmpresa 
+		FROM Captura
+			JOIN MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
+            JOIN Maquina on fkMaquina = idMaquina
+    WHERE isAlerta = 1
+    GROUP BY fkEmpresa;
 
+SELECT * FROM vista_capturas_alerta_total_e_media_diaria WHERE fkEmpresa=1;
+
+-- MAPA INSTABILIDADE
 CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
     SELECT 
         m.idMaquina,
@@ -352,9 +367,18 @@ CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
 
     FROM Maquina m;
     
-    select idMaquina, registro_usoCPU, max_usoCPU, registro_usoRAM, max_usoRAM from vista_mapa_instabilidade where fkEmpresa=1;
 
-
+-- LISTA ULTIMOS ALERTAS
+CREATE OR REPLACE VIEW vista_ultimos_alertas AS
+	SELECT fkMaquina, recurso.nome, dthCriacao, fkEmpresa FROM captura
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Recurso ON fkRecurso = idRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+			WHERE captura.isAlerta = 1
+				ORDER BY dthCriacao DESC;
+                
+SELECT * FROM vista_ultimos_alertas
+	WHERE fkEmpresa = 1;
 
 
 CREATE OR REPLACE VIEW vista_ultimas_metricas AS

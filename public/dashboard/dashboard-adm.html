@@ -168,43 +168,43 @@
               <div class="card-rede-conect-content">
                 <h4 class="bold center">Estado da rede:</h4>
                 <div class="card-conect">
-                  <h3 class="bold center text-green">Estável</h3>
-                </div>
-                <div class="card-machines">
-                  <p class="little-text center">Máquinas Conectadas</p>
-                  <p class="center bold">
-                    <span id="span_maquinaConnect">...</span>
-                  </p>
+                  <h3 class="bold center text-green" id="estado_rede">...</h3>
+              </div>
+                  <div class="card-machines">
+                    <p class="little-text center">Máquinas Conectadas</p>
+                    <p class="center bold">
+                      <span id="span_maquinaConnect">...</span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+            <button class="btn-dashboard" onclick="DashboardAnalista()">
+              Acesse a dashboard de monitoramento!
+            </button>
           </div>
-          <button class="btn-dashboard" onclick="DashboardAnalista()">
-            Acesse a dashboard de monitoramento!
-          </button>
-        </div>
-        <div class="dash-adm-graphic">
-          <div class="graphic-space">
-            <div class="father-tips">
-              <div class="tooltip tooltip-white">
-                <h4>i</h4>
-                <span class="tooltiptext tooltip-left text-black">
-                  Este histograma exibe a distribuição de uso da CPU de todas
-                  as máquinas monitoradas. No eixo horizontal, temos a
-                  porcentagem de uso da CPU variando de 0% a 100%. No eixo
-                  vertical, a frequência indica quantas vezes cada faixa de
-                  uso da CPU foi observada. Isso nos ajuda a identificar
-                  padrões de uso e detectar possíveis problemas de desempenho.
-                </span>
+          <div class="dash-adm-graphic">
+            <div class="graphic-space">
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black">
+                    Este histograma exibe a distribuição de uso da CPU de todas
+                    as máquinas monitoradas. No eixo horizontal, temos a
+                    porcentagem de uso da CPU variando de 0% a 100%. No eixo
+                    vertical, a frequência indica quantas vezes cada faixa de
+                    uso da CPU foi observada. Isso nos ajuda a identificar
+                    padrões de uso e detectar possíveis problemas de desempenho.
+                  </span>
+                </div>
               </div>
+              <h3 class="bold center">
+                HISTOGRAMA DE USO: <span class="text-purple">CPU(%)</span>
+              </h3>
+              <canvas id="myHistogram"></canvas>
             </div>
-            <h3 class="bold center">
-              HISTOGRAMA DE USO: <span class="text-purple">CPU(%)</span>
-            </h3>
-            <canvas id="myHistogram"></canvas>
           </div>
         </div>
-      </div>
     </main>
   </section>
   <script>
@@ -740,6 +740,7 @@
 
       return false;
     }
+
     function buscarUltimosDadosRede(idEmpresa) {
       fetch(`/recursos/buscarUltimosDadosRede/${idEmpresa}`, {
         method: "GET",
@@ -764,8 +765,8 @@
               dados.totalMaquinas
             );
             // e assim por diante, só usar dados e acessar o valor que quiser. A função já está sendo chamada no onload do body
-            const  taxaDescarte = ((Number(dados.descartePacotesSaida) + Number(dados.descartePacotesEntrada)) / (Number(dados.pacotesEnviados) + Number(dados.pacotesRecebidos))) * 100
-  
+            const taxaDescarte = ((Number(dados.descartePacotesSaida) + Number(dados.descartePacotesEntrada)) / (Number(dados.pacotesEnviados) + Number(dados.pacotesRecebidos))) * 100
+
             console.log(`TAXA DE DESCARTE ${taxaDescarte} !!!!!!!!!!!!!!!!!!!!!!`)
 
             const estadosRede = ["Estável", "Oscilante", "Instável", "..."];
@@ -786,12 +787,28 @@
 
             console.log(estadoRede, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
+            const elemento_estado_rede = document.getElementById("estado_rede");
+            elemento_estado_rede.innerText = estadoRede;
+
+            // Alterar a cor do texto com base no estado da rede
+            if (estadoRede == "Oscilante") {
+              elemento_estado_rede.style.color = "#cc8400";  // Cor laranja
+            } else if (estadoRede == "Instável") {
+              elemento_estado_rede.style.color = "#d03333";     // Cor vermelha
+            } else if (estadoRede == "Estável") {
+              elemento_estado_rede.style.color = "#28bb49";   // Cor verde
+            } else {
+              elemento_estado_rede.style.color = "#0c0c0c";    // Cor Preto
+            }
+
           });
         })
         .catch((error) => {
           console.error("Erro na requisição:", error);
         });
     }
+
+
 
     function buscarMaquinasConnect(idEmpresa) {
       fetch(`/medidas/buscarMaquinasConnect/${idEmpresa}`, {

@@ -10,8 +10,16 @@ router.get("/escalaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarEscalaInstabilidade(req,res);
 });
 
+router.get("/medidasAlertas/:idEmpresa", function (req, res) {
+    medidaController.buscarDadosAlerta(req,res);
+});
+
 router.get("/mapaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarMapaInstabilidade(req,res);
+});
+
+router.get("/listaAlertas/:idEmpresa", function (req, res) {
+    medidaController.buscarListaAlertas(req,res);
 });
 
 router.get("/graficoRecurso/:idEmpresa/:idRecurso", function (req, res) {
