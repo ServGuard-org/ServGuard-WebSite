@@ -148,7 +148,77 @@
         obterDadosDeApoio2()
         carregarListaAlertas()
     }
+    
     function obterDadosDeApoio1() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        var totalM;
+        var totalIrr;
+        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca de dados apoio 2");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        if (json && json.length > 0) {
+                    totalHoje = json[0].total_capturas_alerta_hoje;
+                    mediaA = json[0].media_diaria_alertas;
+
+                    console.log("Valor captura alerta hoje:", totalHoje);
+                    console.log("Média alerta diária:", mediaA);
+
+                    const mediaDiaria = document.getElementById("id_media_ocorrencias");
+                    const elementoInstabilidade = document.getElementById("id_total_ocorrencias");
+
+                    if (mediaDiaria && elementoInstabilidade) {
+                        elementoInstabilidade.innerHTML = totalHoje.toString();
+                        mediaDiaria.innerHTML = parseInt(mediaA).toString();
+
+                        const valor = parseFloat(elementoInstabilidade.innerText);
+                        const media = parseFloat(mediaDiaria.innerText);
+
+                        console.log("Comparando valor:", valor, "com média:", media);
+
+                        if (valor < media) {
+                            elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                            elementoInstabilidade.classList.add("text-green");
+                            console.log("Aplicando classe: text-green");
+                        } else if (valor === media) {
+                            elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                            elementoInstabilidade.classList.add("text-orange");
+                            console.log("Aplicando classe: text-orange");
+                        } else if (valor > media) {
+                            elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                            elementoInstabilidade.classList.add("text-red");
+                            console.log("Aplicando classe: text-red");
+                        }
+                    } else {
+                        console.log("Elementos HTML não encontrados para exibição.");
+                    }
+                } else {
+                    console.log("Estrutura JSON inesperada ou vazia.");
+                }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+                    );
+                    document.getElementById("escala-instabilidade").innerHTML =
+                        "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                // console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+    function obterDadosDeApoio2() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         var totalHoje;
         var mediaA;
@@ -170,10 +240,10 @@
                         console.log("Media alerta diaria:", mediaA);
 
                         mediaDiaria = document.getElementById(
-                            "id_media_ocorrencias"
+                            "id_total_maquinas"
                         );
                         elementoInstabilidade = document.getElementById(
-                            "id_total_ocorrencias"
+                            "id_irregularidade_maquinas"
                         );
                         elementoInstabilidade.innerHTML = totaHoje;
                         mediaDiaria.innerHTML = parseInt(mediaA);
@@ -184,110 +254,19 @@
                         if (valor < media) {
                             // verde
                             elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
+                                "text-green","text-red","text-orange","text-yellow","text-gray"
                             );
                             elementoInstabilidade.classList.add("text-green");
                         } else if (valor = media) {
                             // laranja
                             elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
+                                "text-green","text-red","text-orange","text-yellow","text-gray"
                             );
                             elementoInstabilidade.classList.add("text-orange");
                         } else if (valor > media) {
                             // vermelho
                             elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-red");
-                        }
-                    });
-                } else {
-                    console.log(
-                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-                    );
-                    document.getElementById("escala-instabilidade").innerHTML =
-                        "Erro ao obter";
-                    return null; // Retorna null em caso de erro
-                }
-            })
-            .catch(function (erro) {
-                // console.log(erro);
-                return null; // Retorna null em caso de erro de conexão
-            });
-    }
-    function obterDadosDeApoio2() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totalM;
-        var totalIrr;
-        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(function (resposta) {
-                console.log("Iniciando a busca de dados apoio 2");
-
-                if (resposta.ok) {
-                    return resposta.json().then((json) => {
-                        console.log(json);
-                        totalIrr = json[0].total_maquinas_irregulares;
-                        totalM = json[0].total_maquinas;
-                        console.log("Valor capturado total maquinas irregulares:", totalIrr);
-                        console.log("Valor capturado total maquinas:", totalM);
-
-                        elementoTotal = document.getElementById(
-                            "id_total_maquinas"
-                        );
-                        elementoInstabilidade = document.getElementById(
-                            "id_irregularidade_maquinas"
-                        );
-                        elementoTotal.innerHTML = totalM;
-                        elementoInstabilidade.innerHTML = totalIrr;
-
-
-                        valor = parseFloat(elementoInstabilidade.innerText);
-                        total = parseFloat(elementoTotal.innerText);
-                        if (valor < total) {
-                            // verde
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-green");
-                        } else if (valor = total) {
-                            // laranja
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-orange");
-                        } else if (valor > total) {
-                            // vermelho
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
+                                "text-green","text-red","text-orange","text-yellow","text-gray"
                             );
                             elementoInstabilidade.classList.add("text-red");
                         }
@@ -379,13 +358,13 @@
 
                             const novoElemento = `
                     <div class="dash-alert-lista-objeto">
-                        <div style="width: 13%;">
-                            <h4 class=" italic">${id}</h4>
+                        <div style="width: 13%; padding-left: 1%">
+                            <h4 class="italic">${id}</h4>
                         </div>
                         <div style="width: 65%;">
                             <p class="italic little-text">${desc}</p>
                         </div>
-                        <div style="width: 30%;">
+                        <div style="width: 20%;">
                             <button class="bold underline italic botao-acao" onclick="DetalhesMaquina(${id})">Ver Máquina</button>
                         </div>
                     </div>        

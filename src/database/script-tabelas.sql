@@ -243,7 +243,7 @@ CREATE OR REPLACE VIEW vista_histograma_cpu AS
 		JOIN Histograma ON fkHistograma = idHistograma;   
         
         
--- Plot gráfico analista: -----------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Plot gráfico analista:
 CREATE OR REPLACE VIEW vista_captura_atual_maquina_recurso AS
 SELECT registro, fkMaquina, fkEmpresa, fkRecurso 
 FROM Captura
@@ -291,7 +291,7 @@ CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
     FROM Maquina m
 		JOIN MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
 		JOIN Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
-			WHERE c.isAlerta = 1 AND DATE(c.dthCriacao) = CURDATE()
+			WHERE c.isAlerta = 1 -- AND DATE(c.dthCriacao) = CURDATE() -- IMPORTANTE: VOU TIRAR A VALIDACAO DO DIA PARA TER ALGUM PLOT
 				GROUP BY fkEmpresa;
                 
 SELECT total_maquinas_irregulares, percentual_irregulares, total_maquinas 
