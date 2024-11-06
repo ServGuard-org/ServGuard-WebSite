@@ -150,7 +150,7 @@
     }
     function obterDadosDeApoio1() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totaHoje;
+        var totalHoje;
         var mediaA;
         fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
             method: "GET",
