@@ -151,9 +151,9 @@
     
     function obterDadosDeApoio1() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totalM;
-        var totalIrr;
-        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+        var totalHoje;
+        var mediaA;
+        fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -220,9 +220,9 @@
 
     function obterDadosDeApoio2() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totalHoje;
-        var mediaA;
-        fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
+        var totalM;
+        var totalIrr;
+        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -234,10 +234,10 @@
                 if (resposta.ok) {
                     return resposta.json().then((json) => {
                         console.log(json);
-                        totalHoje = json[0].total_capturas_alerta_hoje;
-                        mediaA = json[0].media_diaria_alertas;
-                        console.log("Valor captura alerta hoje:", totalHoje);
-                        console.log("Media alerta diaria:", mediaA);
+                        totalM = json[0].total_maquinas;
+                        mediaA = json[0].total_maquinas_irregulares;
+                        console.log("Total maquinas:", totalHoje);
+                        console.log("Maquinas irregulares:", mediaA);
 
                         mediaDiaria = document.getElementById(
                             "id_total_maquinas"
@@ -266,7 +266,9 @@
                         } else if (valor > media) {
                             // vermelho
                             elementoInstabilidade.classList.remove(
-                                "text-green","text-red","text-orange","text-yellow","text-gray"
+                                "text-green","text-red","text-orange",
+                                "text-yellow",
+                                "text-gray"
                             );
                             elementoInstabilidade.classList.add("text-red");
                         }
