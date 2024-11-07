@@ -283,16 +283,35 @@ SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_d
     
 -- Escala instabilidade
 CREATE OR REPLACE VIEW vista_irregularidade_total_e_percentual AS
-    SELECT 
-        m.fkEmpresa,
-        COUNT(DISTINCT m.idMaquina) AS total_maquinas_irregulares,
-		(SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa) AS total_maquinas,
-        (COUNT(DISTINCT m.idMaquina) / (SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa)) * 100 AS percentual_irregulares
-    FROM Maquina m
-		JOIN MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
-		JOIN Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
-			WHERE c.isAlerta = 1 -- AND DATE(c.dthCriacao) = CURDATE() -- IMPORTANTE: VOU TIRAR A VALIDACAO DO DIA PARA TER ALGUM PLOT
-				GROUP BY fkEmpresa;
+SELECT 
+    m.fkEmpresa,
+    -- Subquery para contar as máquinas irregulares com validações de alerta e data
+    (
+        SELECT COUNT(DISTINCT m_in.idMaquina)
+        FROM Maquina m_in
+        JOIN MaquinaRecurso mr_in ON m_in.idMaquina = mr_in.fkMaquina
+        JOIN Captura c_in ON mr_in.idMaquinaRecurso = c_in.fkMaquinaRecurso
+        WHERE m_in.fkEmpresa = m.fkEmpresa
+          AND c_in.isAlerta = 1
+          AND DATE(c_in.dthCriacao) = CURDATE()
+    ) AS total_maquinas_irregulares,
+    -- Total de máquinas na empresa
+    (SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa) AS total_maquinas,
+    -- Cálculo do percentual de máquinas irregulares
+    (
+        (
+            SELECT COUNT(DISTINCT m_in.idMaquina)
+            FROM Maquina m_in
+            JOIN MaquinaRecurso mr_in ON m_in.idMaquina = mr_in.fkMaquina
+            JOIN Captura c_in ON mr_in.idMaquinaRecurso = c_in.fkMaquinaRecurso
+            WHERE m_in.fkEmpresa = m.fkEmpresa
+              AND c_in.isAlerta = 1
+              AND DATE(c_in.dthCriacao) = CURDATE()
+        ) / (SELECT COUNT(*) FROM Maquina WHERE fkEmpresa = m.fkEmpresa) * 100
+    ) AS percentual_irregulares
+FROM Maquina m
+GROUP BY m.fkEmpresa;
+
                 
 SELECT total_maquinas_irregulares, percentual_irregulares, total_maquinas 
 FROM vista_irregularidade_total_e_percentual 
