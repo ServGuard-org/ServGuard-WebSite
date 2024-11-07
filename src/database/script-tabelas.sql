@@ -389,11 +389,11 @@ CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
 
 -- LISTA ULTIMOS ALERTAS
 CREATE OR REPLACE VIEW vista_ultimos_alertas AS
-	SELECT fkMaquina, recurso.nome, dthCriacao, fkEmpresa FROM captura
+	SELECT fkMaquina, Recurso.nome, dthCriacao, fkEmpresa FROM Captura
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Recurso ON fkRecurso = idRecurso
 		JOIN Maquina ON fkMaquina = idMaquina
-			WHERE captura.isAlerta = 1
+			WHERE Captura.isAlerta = 1
 				ORDER BY dthCriacao DESC;
                 
 SELECT * FROM vista_ultimos_alertas

@@ -15,7 +15,7 @@ services:
     image: eduardoaazevedo/img-banco-servguard:latest
     container_name: servguard_banco
     environment:
-        MYSQL_ROOT_PASSWORD: edukai2303
+        MYSQL_ROOT_PASSWORD: urubu100
     ports:
         - "3306:3306"
     networks:
