@@ -9,7 +9,6 @@
     <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body onload="carregarPagina()">
     <section id="page-dashboard-alert">
         <header>
@@ -101,8 +100,8 @@
                     <div class="dash-alert-campo-barra">
 
                     </div>
-
                 </div>
+
                 <div class="dash-alert-coluna-2">
                     <div class="dash-alert-coluna-2-dados">
                         <div class="dados-metade">
@@ -119,7 +118,8 @@
                                 <samp id="id_total_maquinas" style="font-size: larger;">...</samp>
                             </h5>
                             <h5 class="bold italic">Irregulares:
-                                <samp id="id_irregularidade_maquinas" style="font-size: larger;">...</samp>
+                                <samp id="id_irregularidade_maquinas" style="font-size: larger;"
+                                    class="text-red">...</samp>
                             </h5>
                         </div>
                     </div>
@@ -148,9 +148,10 @@
         obterDadosDeApoio2()
         carregarListaAlertas()
     }
+
     function obterDadosDeApoio1() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totaHoje;
+        var totalHoje;
         var mediaA;
         fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
             method: "GET",
@@ -159,58 +160,47 @@
             },
         })
             .then(function (resposta) {
-                console.log("Iniciando a busca de dados apoio 1");
+                console.log("Iniciando a busca de dados apoio 2");
 
                 if (resposta.ok) {
                     return resposta.json().then((json) => {
-                        console.log(json);
-                        totalHoje = json[0].total_capturas_alerta_hoje;
-                        mediaA = json[0].media_diaria_alertas;
-                        console.log("Valor captura alerta hoje:", totalHoje);
-                        console.log("Media alerta diaria:", mediaA);
+                        if (json && json.length > 0) {
+                            totalHoje = json[0].total_capturas_alerta_hoje;
+                            mediaA = json[0].media_diaria_alertas;
 
-                        mediaDiaria = document.getElementById(
-                            "id_media_ocorrencias"
-                        );
-                        elementoInstabilidade = document.getElementById(
-                            "id_total_ocorrencias"
-                        );
-                        elementoInstabilidade.innerHTML = totaHoje;
-                        mediaDiaria.innerHTML = parseInt(mediaA);
+                            console.log("Valor captura alerta hoje:", totalHoje);
+                            console.log("Média alerta diária:", mediaA);
 
+                            const mediaDiaria = document.getElementById("id_media_ocorrencias");
+                            const elementoInstabilidade = document.getElementById("id_total_ocorrencias");
 
-                        valor = parseFloat(elementoInstabilidade.innerText);
-                        media = parseFloat(mediaDiaria.innerText);
-                        if (valor < media) {
-                            // verde
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-green");
-                        } else if (valor = media) {
-                            // laranja
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-orange");
-                        } else if (valor > media) {
-                            // vermelho
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-red");
+                            if (mediaDiaria && elementoInstabilidade) {
+                                elementoInstabilidade.innerHTML = totalHoje.toString();
+                                mediaDiaria.innerHTML = parseInt(mediaA).toString();
+
+                                const valor = parseFloat(elementoInstabilidade.innerText);
+                                const media = parseFloat(mediaDiaria.innerText);
+
+                                console.log("Comparando valor:", valor, "com média:", media);
+
+                                if (valor < media) {
+                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                                    elementoInstabilidade.classList.add("text-green");
+                                    console.log("Aplicando classe: text-green");
+                                } else if (valor === media) {
+                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                                    elementoInstabilidade.classList.add("text-orange");
+                                    console.log("Aplicando classe: text-orange");
+                                } else if (valor > media) {
+                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                                    elementoInstabilidade.classList.add("text-red");
+                                    console.log("Aplicando classe: text-red");
+                                }
+                            } else {
+                                console.log("Elementos HTML não encontrados para exibição.");
+                            }
+                        } else {
+                            console.log("Estrutura JSON inesperada ou vazia.");
                         }
                     });
                 } else {
@@ -219,14 +209,14 @@
                     );
                     document.getElementById("escala-instabilidade").innerHTML =
                         "Erro ao obter";
-                    return null; // Retorna null em caso de erro
+                    return null; 
                 }
             })
             .catch(function (erro) {
-                // console.log(erro);
-                return null; // Retorna null em caso de erro de conexão
+                return null; 
             });
     }
+
     function obterDadosDeApoio2() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         var totalM;
@@ -238,59 +228,20 @@
             },
         })
             .then(function (resposta) {
-                console.log("Iniciando a busca de dados apoio 2");
+                console.log("Iniciando a busca de dados apoio 1");
 
                 if (resposta.ok) {
                     return resposta.json().then((json) => {
                         console.log(json);
-                        totalIrr = json[0].total_maquinas_irregulares;
                         totalM = json[0].total_maquinas;
-                        console.log("Valor capturado total maquinas irregulares:", totalIrr);
-                        console.log("Valor capturado total maquinas:", totalM);
+                        totalIrr = json[0].total_maquinas_irregulares;
+                        console.log("Total maquinas:", totalM);
+                        console.log("Maquinas irregulares:", totalIrr);
 
-                        elementoTotal = document.getElementById(
-                            "id_total_maquinas"
-                        );
-                        elementoInstabilidade = document.getElementById(
-                            "id_irregularidade_maquinas"
-                        );
-                        elementoTotal.innerHTML = totalM;
-                        elementoInstabilidade.innerHTML = totalIrr;
-
-
-                        valor = parseFloat(elementoInstabilidade.innerText);
-                        total = parseFloat(elementoTotal.innerText);
-                        if (valor < total) {
-                            // verde
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-green");
-                        } else if (valor = total) {
-                            // laranja
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-orange");
-                        } else if (valor > total) {
-                            // vermelho
-                            elementoInstabilidade.classList.remove(
-                                "text-green",
-                                "text-red",
-                                "text-orange",
-                                "text-yellow",
-                                "text-gray"
-                            );
-                            elementoInstabilidade.classList.add("text-red");
-                        }
+                        plotTotalM = document.getElementById("id_total_maquinas");
+                        plotTotalIrr = document.getElementById("id_irregularidade_maquinas");
+                        plotTotalM.innerHTML = totalM.toString();
+                        plotTotalIrr.innerHTML = totalIrr.toString();
                     });
                 } else {
                     console.log(
@@ -298,12 +249,11 @@
                     );
                     document.getElementById("escala-instabilidade").innerHTML =
                         "Erro ao obter";
-                    return null; // Retorna null em caso de erro
+                    return null; 
                 }
             })
             .catch(function (erro) {
-                // console.log(erro);
-                return null; // Retorna null em caso de erro de conexão
+                return null; 
             });
     }
 
@@ -333,37 +283,50 @@
                             nomeRecurso.push(json[i].nome);
 
                             var textoRecurso;
-                            if (nomeRecurso[i] == "usoCPU") {
-                                textoRecurso = "Parâmetro de uso de CPU atingido";
-                            } else if (nomeRecurso[i] == "usoRAM") {
-                                textoRecurso = "Parâmetro de uso de RAM atingido";
-                            } else if (nomeRecurso[i] == "usoTotal") {
-                                textoRecurso = "Capacidade total de uso atingida";
-                            } else if (nomeRecurso[i] == "velocidadeDownload") {
-                                textoRecurso = "Limite de velocidade de download atingido";
-                            } else if (nomeRecurso[i] == "velocidadeUpload") {
-                                textoRecurso = "Limite de velocidade de upload atingido";
-                            } else if (nomeRecurso[i] == "erroPacotesEntrada") {
-                                textoRecurso = "Erro excessivo em pacotes de entrada";
-                            } else if (nomeRecurso[i] == "erroPacotesSaida") {
-                                textoRecurso = "Erro excessivo em pacotes de saída";
-                            } else if (nomeRecurso[i] == "descartePacotesEntrada") {
-                                textoRecurso = "Descartes excessivos em pacotes de entrada";
-                            } else if (nomeRecurso[i] == "descartePacotesSaida") {
-                                textoRecurso = "Descartes excessivos em pacotes de saída";
-                            } else if (nomeRecurso[i] == "megabytesRecebidos") {
-                                textoRecurso = "Limite de megabytes recebidos atingido";
-                            } else if (nomeRecurso[i] == "megabytesEnviados") {
-                                textoRecurso = "Limite de megabytes enviados atingido";
-                            } else if (nomeRecurso[i] == "pacotesEnviados") {
-                                textoRecurso = "Limite de pacotes enviados atingido";
-                            } else if (nomeRecurso[i] == "pacotesRecebidos") {
-                                textoRecurso = "Limite de pacotes recebidos atingido";
-                            } else {
-                                textoRecurso = "Alerta desconhecido";
+
+                            switch (nomeRecurso[i]) {
+                                case "usoCPU":
+                                    textoRecurso = "Parâmetro de uso de CPU atingido";
+                                    break;
+                                case "usoRAM":
+                                    textoRecurso = "Parâmetro de uso de RAM atingido";
+                                    break;
+                                case "usoTotal":
+                                    textoRecurso = "Capacidade total de uso atingida";
+                                    break;
+                                case "velocidadeDownload":
+                                    textoRecurso = "Limite de velocidade de download atingido";
+                                    break;
+                                case "velocidadeUpload":
+                                    textoRecurso = "Limite de velocidade de upload atingido";
+                                    break;
+                                case "erroPacotesEntrada":
+                                    textoRecurso = "Erro excessivo em pacotes de entrada";
+                                    break;
+                                case "erroPacotesSaida":
+                                    textoRecurso = "Erro excessivo em pacotes de saída";
+                                    break;
+                                case "descartePacotesEntrada":
+                                    textoRecurso = "Descartes excessivos em pacotes de entrada";
+                                    break;
+                                case "descartePacotesSaida":
+                                    textoRecurso = "Descartes excessivos em pacotes de saída";
+                                    break;
+                                case "megabytesRecebidos":
+                                    textoRecurso = "Limite de megabytes recebidos atingido";
+                                    break;
+                                case "megabytesEnviados":
+                                    textoRecurso = "Limite de megabytes enviados atingido";
+                                    break;
+                                case "pacotesEnviados":
+                                    textoRecurso = "Limite de pacotes enviados atingido";
+                                    break;
+                                case "pacotesRecebidos":
+                                    textoRecurso = "Limite de pacotes recebidos atingido";
+                                    break;
+                                default:
+                                    textoRecurso = "Alerta desconhecido";
                             }
-
-
                             adicionarLinha(
                                 listaMaquina[i],
                                 textoRecurso
@@ -378,18 +341,18 @@
                             const elementoPai = document.getElementById("dash-alert-lista-pai");
 
                             const novoElemento = `
-                    <div class="dash-alert-lista-objeto">
-                        <div style="width: 13%;">
-                            <h4 class=" italic">${id}</h4>
-                        </div>
-                        <div style="width: 65%;">
-                            <p class="italic little-text">${desc}</p>
-                        </div>
-                        <div style="width: 30%;">
-                            <button class="bold underline italic botao-acao" onclick="DetalhesMaquina(${id})">Ver Máquina</button>
-                        </div>
-                    </div>        
-                `;
+                                <div class="dash-alert-lista-objeto">
+                                    <div style="width: 13%; padding-left: 1%">
+                                        <h4 class="italic">${id}</h4>
+                                    </div>
+                                    <div style="width: 65%;">
+                                        <p class="italic little-text">${desc}</p>
+                                    </div>
+                                    <div style="width: 20%;">
+                                        <button class="bold underline italic botao-acao" onclick="DetalhesMaquina(${id})">Ver Máquina</button>
+                                    </div>
+                                </div>        
+                            `;
                             elementoPai.innerHTML += novoElemento;
                         }
                     });

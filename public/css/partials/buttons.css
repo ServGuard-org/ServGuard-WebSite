@@ -260,42 +260,41 @@
   transition: all 0.4s ease;
 }
 
-.form-popup {
-  --width-of-input: 200px;
-  --border-height: 2px;
-  --border-before-color: rgba(221, 221, 221, 0.39);
-  position: relative;
-  width: var(--normal-purple);
-  width: 100%;
-}
-/* styling of Input */
-.input-popup {
-  color: var(--white-normal);
-  background-color: transparent;
-  width: 80%;
-  padding-inline: 0.5em;
-  padding-block: 0.7em;
-  border-bottom: 2px solid var(--border-before-color);
-}
-/* styling of animated border */
-.input-popup-border {
-  position: absolute;
-  background: var(--normal-purple);
-  width: 0%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  transition: 0.3s;
-}
-/* Hover on Input */
-.input-popup:hover {
-  background: rgba(108, 75, 199, 0.144);
+/* ------------ INPUT PARA OS INPUT ------------ */
+.campo-input {
+  display: flex;
+  flex-direction: column;
+  position: static;
+  width: 90%;
 }
 
-.input-popup:focus {
-  outline: none;
+.campo-input-big{
+  display: flex;
+  flex-direction: column;
+  position: static;
+  width: 96.3%;
 }
-/* here is code of animated border */
-.input-popup:focus ~ .input-popup-border {
-  width: 100%;
+
+.input-title {
+  font-size: 0.75rem;
+  color: var(--normal-purple);
+  font-weight: 700;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 7px;
+  padding: 0 3px;
+  background: #fffffffc;
+  width: fit-content;
+}
+
+.input-text {
+  padding: 11px 10px;
+  font-size: 0.75rem;
+  border: 2px var(--normal-purple) solid;
+  border-radius: 5px;
+  background: #fffffffc;
+}
+
+.input-text:focus {
+  outline: none;
 }
