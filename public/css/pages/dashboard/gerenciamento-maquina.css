@@ -260,13 +260,76 @@
     width: 100%;
     height: 100%;
     gap: var(--gap-5);
-    background: purple;
 }
 
 .child-campos-column{
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-2);
-    background: red;
+    gap: 8px;
+}
+
+.father-campo-input{
+    display: flex;
+    align-items: end;
+    /* background: red; */
+    width: 100%;
+}
+
+.bin-width-little{
+    width: 4.7%;
+}
+
+.bin-width-normal{
+    width: 10%;
+}
+
+.child-icon-bin {
+    
+    max-height: 44px;
+    height: 100%;
+    /* background: blue; */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child-icon-bin button {
+    position: relative;
+    width: 22px;
+    height: 24px;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+
+.child-icon-bin button::before,
+.child-icon-bin button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.child-icon-bin button::before {
+    background: url(../../../assets/svg/icon-bin.svg) no-repeat center center;
+    opacity: 1;
+}
+
+.child-icon-bin button::after {
+    background: url(../../../assets/svg/icon-bin-red.svg) no-repeat center center;
+    opacity: 0;
+}
+
+.child-icon-bin button:hover::before {
+    opacity: 0;
+}
+
+.child-icon-bin button:hover::after {
+    opacity: 1;
 }
