@@ -64,7 +64,7 @@
 .father-editar-funcionario {
     width: 35%;
     height: 60%;
-    padding-left: 4%;
+    padding: var(--gap-3);
 
     display: flex;
     flex-direction: column;
@@ -85,22 +85,21 @@
 
 .father-editar-maquina {
     width: 60%;
-    height: 80%;
+    height: 90%;
     padding: var(--gap-4);
 
     display: flex;
     flex-direction: column;
-    align-items: start;
+    justify-content: space-between;
 
     border-radius: 20px;
     border: 2px solid var(--Grays-White, #FFF);
-    background: rgba(255, 255, 255, 0.99);
+    background: #fffffffc;
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(50px);
 
     & h3{
-        width: 83%;
-        padding-bottom: 10px;
+        width: 100%;
     }
 }
 
@@ -108,15 +107,14 @@
 
 .child-campos {
     width: 100%;
-    height: 80%;
-    gap: var(--gap-2);
+    gap: 8px;
 
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
 
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
 }
 
 
@@ -139,7 +137,7 @@
     align-items: start;
     justify-content: start;
 
-    background-color: rgb(0, 255, 13);
+    /* background-color: rgb(0, 255, 13); */
     border-bottom: 3px solid rgb(95, 95, 95);
 }
 
@@ -176,14 +174,12 @@
 }
 
 .father-popup-botao{
-    width: 100%;
-    height: 60px;
+    width: 90%;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: start;
     align-items: center;
-
-    background: rebeccapurple;
 }
 
 .botao-cadastrar-executar{
