@@ -7,7 +7,9 @@
     <title>ServGuard | Dashboard Alertas</title>
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body onload="carregarPagina()">
     <section id="page-dashboard-alert">
@@ -97,8 +99,16 @@
 
                     <!-- BARRA DE DISTRIBUICAO -->
                     <h4 class="italic bold">Distribuição de alertas por recurso</h4>
-                    <div class="dash-alert-campo-barra">
-
+                    <div class="dash-alert-campo-barra text-medium">
+                            <div id="cpuArea" class="distribuicao-campo-barra bold" style="width: 60%; background-color: var(--red-normal);" >
+                                CPU: 60%
+                            </div>
+                            <div id="ramArea" class="distribuicao-campo-barra bold" style="width: 15%; background-color: var(--orange-normal);" >
+                                RAM: 15%
+                            </div>
+                            <div id="redeArea" class="distribuicao-campo-barra bold" style="width: 25%; background-color: var(--green-dark);" >
+                                REDE: 25%
+                            </div>
                     </div>
                 </div>
 
@@ -147,6 +157,22 @@
         obterDadosDeApoio1()
         obterDadosDeApoio2()
         carregarListaAlertas()
+        atualizarDistribuicao(70, 5, 20)
+    }
+
+    function atualizarDistribuicao(cpuPercent, ramPercent, redePercent) {
+        const cpuArea = document.getElementById("cpuArea");
+        const ramArea = document.getElementById("ramArea");
+        const redeArea = document.getElementById("redekArea");
+
+        cpuArea.style.width = `${cpuPercent}%`;
+        cpuArea.textContent = `CPU: ${cpuPercent}%`;
+
+        ramArea.style.width = `${ramPercent}%`;
+        ramArea.textContent = `RAM: ${ramPercent}%`;
+
+        redeArea.style.width = `${redePercent}%`;
+        redeArea.textContent = `REDE: ${redePercent}%`;
     }
 
     function obterDadosDeApoio1() {
