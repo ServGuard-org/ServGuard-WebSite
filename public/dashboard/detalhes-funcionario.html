@@ -87,36 +87,64 @@
     </section>
     <!-- ----- FIM - TELA PRINCIPAL ----- -->
     <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
-    <section class="sessao-popup" id="popupEditar" style="display: none;">
+    <section class="sessao-popup" id="popupEditar" style="display: flex;">
         <div class="father-detalhes-funcionario">
             <h3 class="bold">Altere o campo que quiser alterar e clique em “<span
                     style="color: var(--dark-purple);">atualizar</span>”</h3>
-            <div class="child-campos">
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/perfil-icon-grey.svg" alt="iconeNome">
-                    </a>
-                    <input type="text" class="input-popup" placeholder="Nome Completo" id="ipt_nome_editar">
+            <div class="child-campos mb-1">
+
+                <div class="campo-input-big">
+                    <label for="percentage-input" class="input-title"
+                      >Nome:</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Coloque o Nome Completo"
+                      name="input"
+                      class="input-text"
+                      id="ipt_nome_editar"
+                    />
                 </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/email-icon-gray.svg" alt="iconeNome">
-                    </a>
-                    <input type="text" class="input-popup" placeholder="E-mail" id="ipt_email_editar">
+
+                <div class="campo-input-big">
+                    <label for="percentage-input" class="input-title"
+                      >E-mail:</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Coloque seu E-mail"
+                      name="input"
+                      class="input-text"
+                      id="ipt_email_editar"
+                    />
                 </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
-                    </a>
-                    <input type="password" class="input-popup" placeholder="Senha" id="ipt_senha_editar">
+
+                <div class="campo-input-big">
+                    <label for="percentage-input" class="input-title"
+                      >Senha:</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Coloque sua Senha"
+                      name="input"
+                      class="input-text"
+                      id="ipt_senha_editar"
+                    />
                 </div>
-                <div class="child-input">
-                    <a class="icone-input">
-                        <img src="../assets/svg/chave-icon-gray.svg" alt="iconeNome">
-                    </a>
-                    <input type="password" class="input-popup" placeholder="Confirmar senha"
-                        id="ipt_confirmar_senha_editar">
+
+                <div class="campo-input-big">
+                    <label for="percentage-input" class="input-title"
+                      >Confirmar Senha:</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="Confirmar sua Senha"
+                      name="input"
+                      class="input-text"
+                      id="ipt_confirmar_senha_editar"
+                    />
                 </div>
+
             </div>
             <div class="father-popup-botao">
                 <button class="botao-cadastrar-executar"

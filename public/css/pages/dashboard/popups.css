@@ -19,17 +19,16 @@
 /*----------------------------FATHERS POPUPS----------------------------*/
 .father-cadastrar-funcionario {
     width: 35%;
-    height: 80%;
-    padding-left: 4%;
+    height: auto;
+    padding: var(--gap-3);
+    gap: var(--gap-1);
 
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
 
     border-radius: 20px;
     border: 2px solid var(--Grays-White, #FFF);
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.99);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(5.5px);
 
@@ -41,17 +40,15 @@
 
 .father-detalhes-funcionario {
     width: 35%;
-    height: 75%;
-    padding-left: 4%;
+    height: auto;
+    padding: var(--gap-3);
 
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
 
     border-radius: 20px;
     border: 2px solid var(--Grays-White, #FFF);
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.99);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(5.5px);
 
@@ -63,17 +60,16 @@
 
 .father-editar-funcionario {
     width: 35%;
-    height: 60%;
+    height: auto;
     padding: var(--gap-3);
+    gap: var(--gap-1);
 
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
 
     border-radius: 20px;
     border: 2px solid var(--Grays-White, #FFF);
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.99);
     box-shadow: 0px 0px 82.7px -41px #794ED4;
     backdrop-filter: blur(5.5px);
 
@@ -122,7 +118,7 @@
     min-width: 40%;
     height: 40px;
     border: 2px;
-    font-size: 22px;
+    font-size: 18px;
     color: var(--normal-grey);
     border-bottom: 3px solid rgb(95, 95, 95);
     background: none;
@@ -199,7 +195,7 @@
     height: 50px;
     cursor: pointer;
     color: var(--dark-purple);
-    background-color: #FFF;
+    background-color: #f2ddff;
 } 
 
 .botao-cadastrar-cancelar{
