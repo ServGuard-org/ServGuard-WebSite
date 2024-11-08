@@ -164,27 +164,79 @@
         obterDadosDeApoio1()
         obterDadosDeApoio2()
         carregarListaAlertas()
-        atualizarDistribuicao(25, 25, 25, 25)
+        buscarDistribuicao()
         buscarDadosGrafico()
     }
 
-    function atualizarDistribuicao(cpuPercent, ramPercent, redePercent, outrosPercent) {
-        const cpuArea = document.getElementById("cpuArea");
-        const ramArea = document.getElementById("ramArea");
-        const redeArea = document.getElementById("redeArea");
-        const outrosArea = document.getElementById("outrosArea");
+    function buscarDistribuicao(){
 
-        cpuArea.style.width = `${cpuPercent}%`;
-        cpuArea.textContent = `CPU: ${cpuPercent}%`;
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        var totalHoje;
+        var mediaA;
+        fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca de dados apoio 2");
 
-        ramArea.style.width = `${ramPercent}%`;
-        ramArea.textContent = `RAM: ${ramPercent}%`;
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        if (json && json.length > 0) {
 
-        redeArea.style.width = `${redePercent}%`;
-        redeArea.textContent = `REDE: ${redePercent}%`;
+                            totalM = json[0].xxx;
+                            cpu = json[0].xxx;
+                            ram = json[0].xxx;
+                            rede = json[0].xxx;
+                            outros = json[0].xxx;
 
-        outrosArea.style.width = `${outrosPercent}%`;
-        outrosArea.textContent = `OUTROS: ${outrosPercent}%`;
+                            console.log("Total Maquinas:", totalM);
+                            console.log("%%%%%%%%%:", cpu, ram, rede, outros);
+
+                            const mediaDiaria = document.getElementById("id_media_ocorrencias");
+                            const elementoInstabilidade = document.getElementById("id_total_ocorrencias");
+
+                            function atualizarDistribuicao(cpuPercent, ramPercent, redePercent, outrosPercent){
+
+                                const cpuArea = document.getElementById("cpuArea");
+                                const ramArea = document.getElementById("ramArea");
+                                const redeArea = document.getElementById("redeArea");
+                                const outrosArea = document.getElementById("outrosArea");
+
+                                cpuArea.style.width = `${cpuPercent}%`;
+                                cpuArea.textContent = `CPU: ${cpuPercent}%`;
+
+                                ramArea.style.width = `${ramPercent}%`;
+                                ramArea.textContent = `RAM: ${ramPercent}%`;
+
+                                redeArea.style.width = `${redePercent}%`;
+                                redeArea.textContent = `REDE: ${redePercent}%`;
+
+                                outrosArea.style.width = `${outrosPercent}%`;
+                                outrosArea.textContent = `OUTROS: ${outrosPercent}%`;
+                            }
+                            atualizarDistribuicao(cpu, ram, rede, outros)
+
+                        } else {
+                            console.log("Estrutura JSON inesperada ou vazia.");
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+                    );
+                    document.getElementById("escala-instabilidade").innerHTML =
+                        "Erro ao obter";
+                    return null;
+                }
+            })
+            .catch(function (erro) {
+                return null;
+            });
+
+
     }
 
     function obterDadosDeApoio1() {

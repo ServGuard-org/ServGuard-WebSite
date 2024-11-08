@@ -270,6 +270,26 @@ CREATE OR REPLACE VIEW vista_irregularidade AS
 SELECT count(registro) as qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
 
+
+-- DISTRIBUICAO ALERTA
+CREATE OR REPLACE VIEW vista_distribuicao_alerta AS
+select (select isAlerta from Captura
+			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
+				where isAlerta = 1 and fkRecurso = 1) as qtdCpu,
+		(select isAlerta from Captura
+			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
+				where isAlerta = 1 and fkRecurso = 2) as qtdRam,
+		(select isAlerta from Captura
+			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
+				where isAlerta = 1 and fkRecurso = 3) as qtdRede,
+		(select idMaquina from Maquina) as qtdMaquina
+    from captura;
+    
+    select * from captura;
+    select count(qtdCpu),count(qtdRam),count(qtdRede),count(qtdMaquina) from vista_distribuicao_alerta; 
+    
+
+
 -- Irregularidades de DISCO
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
