@@ -182,7 +182,14 @@
 
         function voltar() {
             sessionStorage.removeItem("ID_MAQUINA");
-            window.location.href = "./gerenciamento-maquina.html";
+            paginaAnterior = sessionStorage.getItem("VOLTAR_PAGINA")
+            if (paginaAnterior == "D_Alert"){
+                window.location.href = "./dash-caio/dashboard-adm-alert.html";
+            } else if (paginaAnterior == "D_Analista"){
+                window.location.href = "./dashboard-analista.html";
+            }  else if (paginaAnterior == "D_Maquina"){
+                window.location.href = "./gerenciamento-maquina.html";
+            }
         }
 
 

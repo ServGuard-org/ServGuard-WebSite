@@ -161,6 +161,8 @@
         window.location.href = "../dashboard-adm.html";
     }
     function carregarPagina() {
+        sessionStorage.removeItem("VOLTAR_PAGINA");
+        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
         obterDadosDeApoio1()
         obterDadosDeApoio2()
         carregarListaAlertas()

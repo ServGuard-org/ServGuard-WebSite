@@ -489,6 +489,9 @@ consultarMaquinas(), verificarCargo()"
   </body>
   <script>
     function verificarCargo() {
+      sessionStorage.removeItem("VOLTAR_PAGINA");
+      sessionStorage.setItem("VOLTAR_PAGINA", "D_Maquina");
+
       var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
       if (isADM !== null && Number(isADM) === 0) {
         document.getElementById("li-adm").style.display = "none";
