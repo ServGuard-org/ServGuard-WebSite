@@ -283,9 +283,9 @@ select (select isAlerta from Captura
 			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
 				where isAlerta = 1 and fkRecurso = 3) as qtdRede,
 		(select idMaquina from Maquina) as qtdMaquina
-    from captura;
+    from Captura;
     
-    select * from captura;
+    select * from Captura;
     select count(qtdCpu),count(qtdRam),count(qtdRede),count(qtdMaquina) from vista_distribuicao_alerta; 
     
 
