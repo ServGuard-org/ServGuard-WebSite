@@ -278,7 +278,7 @@ SELECT
     SUM(CASE WHEN mr.fkRecurso = 2 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRam,
     SUM(CASE WHEN mr.fkRecurso = 3 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRede,
     SUM(CASE WHEN mr.fkRecurso NOT IN (1, 2, 3) AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdOutros,
-    COUNT(DISTINCT m.idMaquina) AS qtdMaquina,
+    SUM(CASE WHEN isAlerta = 1 THEN 1 ELSE 0 END) AS qtdAlertas,
     fkEmpresa
 FROM Captura c
 	JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
@@ -286,6 +286,46 @@ FROM Captura c
 		GROUP BY fkEmpresa;
 
 SELECT * FROM vista_distribuicao_alerta WHERE fkEmpresa = 1; 
+
+-- VIEW PARA GRÁFICO - REGRESSÃO LINEAR
+CREATE OR REPLACE VIEW vista_alertas_grafico AS
+SELECT t1.data, 
+       COALESCE(t2.quantidade_alertas, 0) AS quantidade_alertas,
+       t2.fkEmpresa
+FROM 
+    (
+        -- Lista dos últimos 30 dias
+        SELECT DATE_SUB(CURDATE(), INTERVAL seq DAY) AS data
+        FROM (
+            SELECT 0 AS seq UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 
+            UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
+            UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 
+            UNION ALL SELECT 12 UNION ALL SELECT 13 UNION ALL SELECT 14 UNION ALL SELECT 15 
+            UNION ALL SELECT 16 UNION ALL SELECT 17 UNION ALL SELECT 18 UNION ALL SELECT 19 
+            UNION ALL SELECT 20 UNION ALL SELECT 21 UNION ALL SELECT 22 UNION ALL SELECT 23 
+            UNION ALL SELECT 24 UNION ALL SELECT 25 UNION ALL SELECT 26 UNION ALL SELECT 27 
+            UNION ALL SELECT 28 UNION ALL SELECT 29
+        ) AS days
+    ) AS t1
+LEFT JOIN 
+    (
+        -- Contagem de alertas por dia, agora incluindo fkEmpresa corretamente
+        SELECT DATE(c.dthCriacao) AS data, 
+               COUNT(*) AS quantidade_alertas, 
+               m.fkEmpresa
+        FROM Captura c
+        JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+        JOIN Maquina m ON mr.fkMaquina = m.idMaquina
+        WHERE c.isAlerta = 1
+        GROUP BY DATE(c.dthCriacao), m.fkEmpresa
+    ) AS t2 
+ON t1.data = t2.data
+ORDER BY t1.data;
+
+
+
+
+select * from vista_alertas_grafico where fkEmpresa = 1;
     
 
 
