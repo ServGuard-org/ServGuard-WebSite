@@ -273,20 +273,19 @@ SELECT count(registro) as qtdCpu FROM vista_irregularidade
 
 -- DISTRIBUICAO ALERTA
 CREATE OR REPLACE VIEW vista_distribuicao_alerta AS
-select (select isAlerta from Captura
-			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
-				where isAlerta = 1 and fkRecurso = 1) as qtdCpu,
-		(select isAlerta from Captura
-			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
-				where isAlerta = 1 and fkRecurso = 2) as qtdRam,
-		(select isAlerta from Captura
-			join MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
-				where isAlerta = 1 and fkRecurso = 3) as qtdRede,
-		(select idMaquina from Maquina) as qtdMaquina
-    from Captura;
-    
-    select * from Captura;
-    select count(qtdCpu),count(qtdRam),count(qtdRede),count(qtdMaquina) from vista_distribuicao_alerta; 
+SELECT 
+    SUM(CASE WHEN mr.fkRecurso = 1 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdCpu,
+    SUM(CASE WHEN mr.fkRecurso = 2 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRam,
+    SUM(CASE WHEN mr.fkRecurso = 3 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRede,
+    SUM(CASE WHEN mr.fkRecurso NOT IN (1, 2, 3) AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdOutros,
+    COUNT(DISTINCT m.idMaquina) AS qtdMaquina,
+    fkEmpresa
+FROM Captura c
+	JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+	JOIN Maquina m ON mr.fkMaquina = m.idMaquina
+		GROUP BY fkEmpresa;
+
+SELECT * FROM vista_distribuicao_alerta WHERE fkEmpresa = 1; 
     
 
 

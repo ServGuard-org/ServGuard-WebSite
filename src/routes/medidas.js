@@ -10,16 +10,9 @@ router.get("/escalaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarEscalaInstabilidade(req,res);
 });
 
-router.get("/medidasAlertas/:idEmpresa", function (req, res) {
-    medidaController.buscarDadosAlerta(req,res);
-});
 
 router.get("/mapaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarMapaInstabilidade(req,res);
-});
-
-router.get("/listaAlertas/:idEmpresa", function (req, res) {
-    medidaController.buscarListaAlertas(req,res);
 });
 
 router.get("/graficoRecurso/:idEmpresa/:idRecurso", function (req, res) {
@@ -28,6 +21,18 @@ router.get("/graficoRecurso/:idEmpresa/:idRecurso", function (req, res) {
 
 router.get("/buscarMaquinasConnect/:idEmpresa", function (req, res) {
     medidaController.buscarMaquinasConnect(req,res);
+});
+
+router.get("/medidasAlertas/:idEmpresa", function (req, res) {
+    medidaController.buscarDadosAlerta(req,res);
+});
+
+router.get("/listaAlertas/:idEmpresa", function (req, res) {
+    medidaController.buscarListaAlertas(req,res);
+});
+
+router.get("/distribuicaoAlertas/:idEmpresa", function (req, res) {
+    medidaController.buscarDistribuicaoAlertas(req,res);
 });
 
 module.exports = router;

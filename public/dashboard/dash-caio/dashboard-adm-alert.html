@@ -173,9 +173,12 @@
     function buscarDistribuicao(){
 
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totalHoje;
-        var mediaA;
-        fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
+        var totalM;
+        var cpu;
+        var ram;
+        var rede;
+        var outros;
+        fetch(`/medidas/distribuicaoAlertas/${idEmpresa}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -188,17 +191,18 @@
                     return resposta.json().then((json) => {
                         if (json && json.length > 0) {
 
-                            totalM = json[0].xxx;
-                            cpu = json[0].xxx;
-                            ram = json[0].xxx;
-                            rede = json[0].xxx;
-                            outros = json[0].xxx;
+                            totalA = json[0].qtdAlertas;
+                            cpu = json[0].qtdCpu;
+                                cpu = Math.round((cpu*100)/totalA);
+                            ram = json[0].qtdRam;
+                                ram = Math.round((ram*100)/totalA);
+                            rede = json[0].qtdRede;
+                                rede = Math.round((rede*100)/totalA);
+                            outros = json[0].qtdOutros;
+                                outros = Math.round((outros*100)/totalA);
 
-                            console.log("Total Maquinas:", totalM);
+                            console.log("Total isAlerta:", totalA);
                             console.log("%%%%%%%%%:", cpu, ram, rede, outros);
-
-                            const mediaDiaria = document.getElementById("id_media_ocorrencias");
-                            const elementoInstabilidade = document.getElementById("id_total_ocorrencias");
 
                             function atualizarDistribuicao(cpuPercent, ramPercent, redePercent, outrosPercent){
 
@@ -207,15 +211,19 @@
                                 const redeArea = document.getElementById("redeArea");
                                 const outrosArea = document.getElementById("outrosArea");
 
+                                if (cpuPercent == 0){cpuArea.style.display = 'none'}
                                 cpuArea.style.width = `${cpuPercent}%`;
                                 cpuArea.textContent = `CPU: ${cpuPercent}%`;
 
+                                if (ramPercent == 0){ramArea.style.display = 'none'}
                                 ramArea.style.width = `${ramPercent}%`;
                                 ramArea.textContent = `RAM: ${ramPercent}%`;
 
+                                if (redePercent == 0){redeArea.style.display = 'none'}
                                 redeArea.style.width = `${redePercent}%`;
                                 redeArea.textContent = `REDE: ${redePercent}%`;
 
+                                if (outrosPercent == 0){outrosArea.style.display = 'none'}
                                 outrosArea.style.width = `${outrosPercent}%`;
                                 outrosArea.textContent = `OUTROS: ${outrosPercent}%`;
                             }

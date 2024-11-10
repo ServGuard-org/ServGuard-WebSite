@@ -121,7 +121,7 @@
 .dash-alert-campo-barra {
     width: 90%;
     height: 10%;
-    background-color: var(--Grays-White);
+    background-color: var(--gray-3);
     border-radius: 50px;
     overflow: hidden;
 
