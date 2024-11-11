@@ -35,4 +35,8 @@ router.get("/distribuicaoAlertas/:idEmpresa", function (req, res) {
     medidaController.buscarDistribuicaoAlertas(req,res);
 });
 
+router.get("/dadosGraficoAlertas/:idEmpresa", function (req, res) {
+    medidaController.buscarDadosGraficoAlertas(req,res);
+});
+
 module.exports = router;

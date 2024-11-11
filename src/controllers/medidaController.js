@@ -36,6 +36,24 @@ function buscarEscalaInstabilidade(req,res) {
     });
 }
 
+function buscarMapaInstabilidade(req,res) {
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined")
+    }
+    medidaModel.buscarMapaInstabilidade(idEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar o mapa de instabilidade.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function buscarDadosAlerta(req,res) {
     var idEmpresa = req.params.idEmpresa;
     if (idEmpresa == undefined){
@@ -72,24 +90,6 @@ function buscarDistribuicaoAlertas(req,res) {
     });
 }
 
-function buscarMapaInstabilidade(req,res) {
-    var idEmpresa = req.params.idEmpresa;
-    if (idEmpresa == undefined){
-        console.log("Id empresa está undefined")
-    }
-    medidaModel.buscarMapaInstabilidade(idEmpresa).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar o mapa de instabilidade.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-    });
-}
-
 function buscarListaAlertas(req,res) {
     var idEmpresa = req.params.idEmpresa;
     if (idEmpresa == undefined){
@@ -103,7 +103,25 @@ function buscarListaAlertas(req,res) {
         }
     }).catch(function (erro) {
         console.log(erro);
-        console.log("Houve um erro ao buscar o mapa de instabilidade.", erro.sqlMessage);
+        console.log("Houve um erro ao buscar a lista de alertas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarDadosGraficoAlertas(req,res) {
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined")
+    }
+    medidaModel.buscarDadosGraficoAlertas(idEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os dados de grafico alerta.", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
     });
 }
@@ -152,10 +170,11 @@ function buscarMaquinasConnect(req, res){
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
+    buscarMapaInstabilidade,
     buscarDadosAlerta,
     buscarDistribuicaoAlertas,
-    buscarMapaInstabilidade,
     buscarListaAlertas,
+    buscarDadosGraficoAlertas,
     buscarUsoRecursoPorMaquina,
     buscarMaquinasConnect
 }

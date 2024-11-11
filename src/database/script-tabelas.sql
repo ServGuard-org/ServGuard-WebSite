@@ -289,13 +289,14 @@ SELECT * FROM vista_distribuicao_alerta WHERE fkEmpresa = 1;
 
 -- VIEW PARA GRÁFICO - REGRESSÃO LINEAR
 CREATE OR REPLACE VIEW vista_alertas_grafico AS
-SELECT t1.data, 
-       COALESCE(t2.quantidade_alertas, 0) AS quantidade_alertas,
-       t2.fkEmpresa
+SELECT 
+    t1.fkEmpresa,
+    DATE_FORMAT(t1.data, '%d-%m-%Y') AS dia_mes, 
+    COALESCE(t2.quantidade_alertas, 0) AS quantidade_alertas
 FROM 
     (
-        -- Lista dos últimos 30 dias
-        SELECT DATE_SUB(CURDATE(), INTERVAL seq DAY) AS data
+        -- Gera os últimos 30 dias para cada fkEmpresa
+        SELECT m.fkEmpresa, DATE_SUB(CURDATE(), INTERVAL seq DAY) AS data
         FROM (
             SELECT 0 AS seq UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 
             UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7
@@ -306,10 +307,12 @@ FROM
             UNION ALL SELECT 24 UNION ALL SELECT 25 UNION ALL SELECT 26 UNION ALL SELECT 27 
             UNION ALL SELECT 28 UNION ALL SELECT 29
         ) AS days
+        CROSS JOIN Maquina m
+        GROUP BY m.fkEmpresa, data
     ) AS t1
 LEFT JOIN 
     (
-        -- Contagem de alertas por dia, agora incluindo fkEmpresa corretamente
+        -- Contagem de alertas por dia e por empresa
         SELECT DATE(c.dthCriacao) AS data, 
                COUNT(*) AS quantidade_alertas, 
                m.fkEmpresa
@@ -319,16 +322,11 @@ LEFT JOIN
         WHERE c.isAlerta = 1
         GROUP BY DATE(c.dthCriacao), m.fkEmpresa
     ) AS t2 
-ON t1.data = t2.data
-ORDER BY t1.data;
+ON t1.data = t2.data AND t1.fkEmpresa = t2.fkEmpresa
+ORDER BY t1.fkEmpresa, t1.data;
 
-
-
-
-select * from vista_alertas_grafico where fkEmpresa = 1;
+SELECT * FROM vista_alertas_grafico WHERE fkEmpresa = 1;
     
-
-
 -- Irregularidades de DISCO
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
