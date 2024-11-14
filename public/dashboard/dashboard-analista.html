@@ -110,7 +110,7 @@
               <h3 class="bold center text-green" id="estado_rede">...</h3>
           </div>
             <p class="italic" style="text-align: center;">Acesse a dashboard de monitoramento de rede:</p>
-            <button class="btn-dashboard-analista-reverse" style="height: 15%;">Clique Aqui!</button>
+            <button class="btn-dashboard-analista-reverse" style="height: 15%;" onclick="DashboardRede()">Clique Aqui!</button>
             <!-- <div class="perda-pacotes-organizar">
               <div class="perda-pacotes-dados">
                 <h3 class="bold">Entrada</h3>
@@ -184,6 +184,9 @@
     function DetalhesMaquina(idMaquina) {
       sessionStorage.setItem("ID_MAQUINA", idMaquina);
       window.location.href = "details-machine.html";
+    }
+    function DashboardRede() {
+      window.location.href = "../dashboard/dash-caio/dashboard-adm-alert.html";
     }
 
     let myChart;
