@@ -139,6 +139,36 @@ INSERT INTO Recurso (nome, unidadeMedida) VALUES
 
 -- VIEWS
 
+CREATE OR REPLACE VIEW vista_capturas_relatorio_semanal AS
+	SELECT fkEmpresa as idEmpresa, 
+		idCaptura, 
+		fkMaquina AS idMaquina, 
+		fkMaquinaRecurso AS idRecurso, 
+		registro, 
+		dthCriacao, 
+		isAlerta 
+	FROM Captura
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+			WHERE dthCriacao >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		GROUP BY fkEmpresa, idCaptura, fkMaquina, fkMaquinaRecurso;
+        
+
+CREATE OR REPLACE VIEW vista_capturas_relatorio_mensal AS
+	SELECT fkEmpresa as idEmpresa,
+		idCaptura, 
+		fkMaquina AS idMaquina, 
+		fkMaquinaRecurso AS idRecurso, 
+		registro, 
+		dthCriacao, 
+		isAlerta 
+	FROM Captura
+		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+		JOIN Maquina ON fkMaquina = idMaquina
+			WHERE dthCriacao >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+		GROUP BY fkEmpresa, idCaptura, fkMaquina, fkMaquinaRecurso;
+
+
 CREATE OR REPLACE VIEW vista_maquinas_com_disco AS
 SELECT 
     m.idMaquina,
