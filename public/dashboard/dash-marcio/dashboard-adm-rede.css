@@ -22,6 +22,19 @@
   height: 100%;
 }
 
+.dash-rede-cor-anterior {
+  color: #2A13D7;
+}
+
+.dash-rede-cor-atual {
+  color: #42CB35;
+}
+
+.dash-rede-fonte-cards {
+  font-size: 20px;
+  margin-bottom: 7%;
+}
+
 .dash-rede-topo {
   width: 100%;
   height: 13%;
@@ -37,6 +50,105 @@
   display: flex;
   flex-direction: row;
   align-items: end;
+}
+
+.dash-rede-pai-cards {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 2%;
+}
+
+.dash-rede-titulo-cards {
+  font-size: 25px;
+  width: 100%;
+  margin: 0.2%;
+}
+
+.dash-rede-barchart{
+  width: 100%;
+  height: 400px;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: var(--gap-2);
+  box-sizing: border-box;
+  box-shadow: 0px 0px 82.7px -41px var(--dark-purple);
+
+  border-radius: 20px;
+  background-color: #FFF;
+  margin-bottom: 20px;
+}
+
+.barplot {
+  max-height: 90%;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.dash-rede-barchart-space{
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-rede-linRegress{
+  width: 100%;
+  height: 400px;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: var(--gap-2);
+  box-sizing: border-box;
+  box-shadow: 0px 0px 82.7px -41px var(--dark-purple);
+
+  border-radius: 20px;
+  background-color: #FFF;
+  margin-bottom: 20px;
+}
+
+.linRegress {
+  max-height: 90%;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.dash-rede-linRegress-space{
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-rede-cards-topo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-width: 100px;
+  max-width: 250px;
+  z-index: 999;
+
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.50);
+  background: #FFFFFF;
+  box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+  backdrop-filter: blur(2px);
 }
 
 .child-informacoes-macro {
@@ -158,9 +270,9 @@
 
 .dash-rede-campo-barra {
   width: 90%;
-  height: 10%;
+  height: 9%;
   background-color: #FFFFFF;
-  border-radius: 50px;
+  border-radius: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
