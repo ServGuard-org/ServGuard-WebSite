@@ -759,3 +759,50 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+
+CREATE PROCEDURE obter_metricas_semana(IN empresa_id INT, IN week_number VARCHAR(6))
+BEGIN
+    WITH NetworkMetrics AS (
+        SELECT 
+            m.fkEmpresa,
+            r.nome as recurso,
+            c.registro,
+            c.dthCriacao
+        FROM Captura c
+        JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+        JOIN Maquina m ON mr.fkMaquina = m.idMaquina
+        JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+        WHERE m.fkEmpresa = empresa_id
+        AND YEARWEEK(c.dthCriacao, 3) = week_number
+    )
+    SELECT 
+        -- Pacotes
+        SUM(CASE WHEN recurso = 'pacotesEnviados' THEN registro ELSE 0 END) as total_pacotes_enviados,
+        SUM(CASE WHEN recurso = 'pacotesRecebidos' THEN registro ELSE 0 END) as total_pacotes_recebidos,
+        
+        -- Megabytes
+        SUM(CASE WHEN recurso = 'megabytesEnviados' THEN registro ELSE 0 END) as total_megabytes_enviados,
+        SUM(CASE WHEN recurso = 'megabytesRecebidos' THEN registro ELSE 0 END) as total_megabytes_recebidos,
+        
+        -- Erros (soma entrada e saída)
+        SUM(CASE 
+            WHEN recurso IN ('erroPacotesEntrada', 'erroPacotesSaida') 
+            THEN registro 
+            ELSE 0 
+        END) as total_erros,
+        
+        -- Descartes (soma entrada e saída)
+        SUM(CASE 
+            WHEN recurso IN ('descartePacotesEntrada', 'descartePacotesSaida') 
+            THEN registro 
+            ELSE 0 
+        END) as total_descartes,
+        
+        -- Metadata
+        MIN(dthCriacao) as inicio_semana,
+        MAX(dthCriacao) as fim_semana
+    FROM NetworkMetrics;
+END //
+
+DELIMITER ;

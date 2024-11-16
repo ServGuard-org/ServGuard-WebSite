@@ -44,7 +44,24 @@ function obterSemanas(req, res) {
   var idEmpresa = req.params.idEmpresa;
 
   empresaModel.obterSemanas(idEmpresa).then((resultado) => {
-    res.status(200).json(resultado);
+    if (resultado.length == 0) {
+      res.status(404).json({ mensagem: `não há semanas de captura para a empresa com id ${idEmpresa}` });
+    } else {
+      res.status(200).json(resultado);
+    }
+  });
+}
+
+function obterCards(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  var numeroSemana = req.params.numeroSemana;
+
+  empresaModel.obterCards(idEmpresa, numeroSemana).then((resultado) => {
+    if (resultado.length == 0) {
+      res.status(404).json({ mensagem: `não há cards para a empresa com id ${idEmpresa} na semana ${numeroSemana}` });
+    } else {
+      res.status(200).json(resultado);
+    }
   });
 }
 
@@ -53,5 +70,6 @@ module.exports = {
   buscarPorId,
   cadastrar,
   listar,
-  obterSemanas
+  obterSemanas,
+  obterCards
 };

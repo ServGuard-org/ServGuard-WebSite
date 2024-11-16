@@ -25,9 +25,15 @@ function cadastrar(nomeEmpresa, nomeResponsavel, emailResponsavel, cnpj) {
 }
 
 function obterSemanas(idEmpresa) {
-  var instrucaoSql = `SELECT * FROM Semana WHERE idEmpresa = '${idEmpresa}'`;
+  var instrucaoSql = `SELECT * FROM vista_semanas_captura_empresa WHERE fkEmpresa = ${idEmpresa};`;
 
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar };
+function obterCards(idEmpresa, numeroSemana) {
+  var instrucaoSql = `CALL obter_metricas_semana(${idEmpresa}, '${numeroSemana}');`
+
+  return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards};

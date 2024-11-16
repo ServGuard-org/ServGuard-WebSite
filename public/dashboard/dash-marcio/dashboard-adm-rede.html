@@ -68,47 +68,48 @@
             </div>
             <div class="dash-rede-subtitulo">
                 <h3 class="bold center">Semana:</h3>
-                <select id="select-semana" class="select-componente bold dash-rede-cor-atual" onchange="">
+                <select id="select-semana" class="select-componente bold dash-rede-cor-atual"
+                    onchange="selecaoSemana()">
                     <option value="#" selected disabled>Selecione Uma Semana</option>
                 </select>
             </div>
             <div class="dash-rede-titulo-cards bold">Comparação com a <span class="dash-rede-cor-anterior">semana
-                    anterior <span id="placeholder_semana_anterior">(dd/mm/yy)</span>:</span>
+                    anterior <span id="semana_anterior_titulo">(dd/mm/yy)</span>:</span>
             </div>
             <div class="dash-rede-pai-cards">
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Pacotes Enviados</p>
-                    <h1 class="dash-rede-fonte-cards  bold" id="A DEFINIR -----------------------------------">
+                    <h1 class="dash-rede-fonte-cards  bold" id="card_pacotes_enviados">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Pacotes Recebidos</p>
-                    <h1 class="dash-rede-fonte-cards  bold" id="A DEFINIR -----------------------------------">
+                    <h1 class="dash-rede-fonte-cards  bold" id="card_pacotes_recebidos">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Megabytes Enviados</p>
-                    <h1 class="dash-rede-fonte-cards  bold" id="A DEFINIR -----------------------------------">
+                    <h1 class="dash-rede-fonte-cards  bold" id="card_mbs_enviados">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Megabytes Recebidos</p>
-                    <h1 class="dash-rede-fonte-cards  bold" id="A DEFINIR -----------------------------------">
+                    <h1 class="dash-rede-fonte-cards  bold" id="card_mbs_recebidos">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Erros (E/R)</p>
-                    <h1 class="dash-rede-fonte-cards  bold" id="A DEFINIR -----------------------------------">
+                    <h1 class="dash-rede-fonte-cards  bold" id="card_erros">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Descartes (E/R)</p>
-                    <h1 class="dash-rede-fonte-cards  bold" id="A DEFINIR -----------------------------------">
+                    <h1 class="dash-rede-fonte-cards  bold" id="card_descartes">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
@@ -166,6 +167,17 @@
 
     const dados = {}
 
+    const formatarSemanas = semana => {
+        const dataInicio = new Date(semana.inicio_semana);
+        const dataFim = new Date(semana.fim_semana);
+        return `${dataInicio.toLocaleDateString()} a ${dataFim.toLocaleDateString()}`;
+    }
+
+    const formatarData = data => {
+        const dataFormatada = new Date(data);
+        return dataFormatada.toLocaleDateString();
+    }
+
     const sairNavbar = () => {
         event.preventDefault();
         sessionStorage.clear();
@@ -197,18 +209,101 @@
             const semanas = await resposta.json();
 
             dados.semanas = semanas;
-
+            select.innerHTML = ""
             semanas.forEach(semana => {
                 const option = document.createElement('option');
-                option.value = semana;
-                option.innerText = semana;
+                option.value = semana.numero_semana;
+                option.innerText = formatarSemanas(semana);
                 select.appendChild(option);
             });
+
+            if (semanas.length > 0) {
+                select.value = semanas[0].numero_semana;
+                selecaoSemana();
+            }
+
         } catch (error) {
             console.error('Erro ao obter semanas:', error);
         }
     };
 
+    const atualizarCards = numeroSemana => {
+        const dadosSemanas = {};
+
+        Promise.all([
+            fetch(`/empresas/obterCards/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(resposta => resposta.json().then(respostaFormatada => {
+    
+                dadosSemanas.semanaAtual = respostaFormatada[0][0];
+                
+            })),
+            fetch(`/empresas/obterCards/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana-1}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(resposta => resposta.json().then(respostaFormatada => {
+    
+                dadosSemanas.semanaPassada = respostaFormatada[0][0];
+    
+            }))
+        ]).then(() => {
+            atualizarCardsInterface(dadosSemanas);
+        }).catch(error => {
+            console.error('Erro ao obter dados:', error);
+        });
+
+    }
+
+    const atualizarCardsInterface = dadosSemanas => {
+        const cardPacotesEnviados = document.getElementById('card_pacotes_enviados');
+        const cardPacotesRecebidos = document.getElementById('card_pacotes_recebidos');
+        const cardMbsEnviados = document.getElementById('card_mbs_enviados');
+        const cardMbsRecebidos = document.getElementById('card_mbs_recebidos');
+        const cardErros = document.getElementById('card_erros');
+        const cardDescartes = document.getElementById('card_descartes');
+    
+        const semanaPassada = dadosSemanas.semanaPassada;
+        const semanaAtual = dadosSemanas.semanaAtual;
+
+        const listaElementos = [cardPacotesEnviados, cardPacotesRecebidos, cardMbsEnviados, cardMbsRecebidos, cardErros, cardDescartes];
+
+        const valores = [
+            { semanaPassada: semanaPassada.total_pacotes_enviados, semanaAtual: semanaAtual.total_pacotes_enviados },
+            { semanaPassada: semanaPassada.total_pacotes_recebidos, semanaAtual: semanaAtual.total_pacotes_recebidos },
+            { semanaPassada: semanaPassada.total_megabytes_enviados, semanaAtual: semanaAtual.total_megabytes_enviados },
+            { semanaPassada: semanaPassada.total_megabytes_recebidos, semanaAtual: semanaAtual.total_megabytes_recebidos },
+            { semanaPassada: semanaPassada.total_erros, semanaAtual: semanaAtual.total_erros },
+            { semanaPassada: semanaPassada.total_descartes, semanaAtual: semanaAtual.total_descartes }
+        ];
+
+        listaElementos.forEach((elemento, index) => {
+            const valor = valores[index];
+            elemento.innerHTML = `<span class="dash-rede-cor-anterior">${parseInt(valor.semanaPassada)}</span> x <span class="dash-rede-cor-atual">${parseInt(valor.semanaAtual)}</span>`;
+        });
+        
+    }
+
+    const selecaoSemana = () => {
+        const select = document.querySelector('#select-semana');
+        const semanaNumero = select.value;
+        const semanaSelecionada = dados.semanas.find(s => s.numero_semana == semanaNumero);
+        const semanaAnterior = dados.semanas.find(s => s.numero_semana == semanaNumero - 1);
+        const inicioSemanaAnterior = semanaAnterior.inicio_semana;
+
+        const elementoSemanaAnterior = document.getElementById('semana_anterior_titulo');
+        elementoSemanaAnterior.innerHTML = formatarData(inicioSemanaAnterior);
+
+        dados.semana = semanaSelecionada;
+        dados.semanaAnterior = semanaAnterior;
+
+        atualizarCards(semanaNumero);
+
+    }
 
     // Primeiro, vamos obter o contexto do canvas
     var ctx = document.querySelector('#myBarChart').getContext('2d');
@@ -394,5 +489,7 @@
             }
         }
     });
+
+    document.onload = obterSemanas();
 
 </script>

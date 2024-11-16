@@ -24,4 +24,8 @@ router.get("/obterSemanas/:idEmpresa", function (req, res) {
   empresaController.obterSemanas(req, res);
 });
 
+router.get("/obterCards/:idEmpresa/:numeroSemana", function (req, res) {
+  empresaController.obterCards(req, res);
+});
+
 module.exports = router;
