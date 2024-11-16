@@ -119,7 +119,7 @@
 
                     <div class="dash-rede-barchart">
                         <div class="dash-rede-barchart-space">
-                            <h4 class="bold mb-2"><span class="dash-rede-cor-anterior">Semana <span
+                            <h4 class="bold mb-2" id="titulo-grafico-barra"><span class="dash-rede-cor-anterior">Semana <span
                                         id="placeholder_semana_anterior">dd/mm/yy</span></span> x <span
                                     class="dash-rede-cor-atual">Semana <span
                                         id="placeholder_semana_atual">dd/mm/yy</span></span></h4>
@@ -166,6 +166,7 @@
 <script>
 
     const dados = {}
+    let myBarChart = null;
 
     const formatarSemanas = semana => {
         const dataInicio = new Date(semana.inicio_semana);
@@ -227,6 +228,78 @@
         }
     };
 
+
+    const atualizarGraficoBarras = valores => {
+        if (myBarChart) {
+            myBarChart.destroy();
+        }
+
+        const dadosAtuais = valores.map(v => v.semanaAtual);
+        const dadosAntigos = valores.map(v => v.semanaPassada);
+
+        var ctx = document.querySelector('#myBarChart').getContext('2d');
+
+        const data = {
+            labels: ['Pacotes Env.', 'Pacotes Rec.', 'MB Env.', 'MB Rec.', 'Erros', 'Descartes'],
+            datasets: [
+                {
+                    label: 'Semana Anterior',
+                    data: dadosAntigos,
+                    backgroundColor: 'rgba(42, 19, 215, 0.2)',
+                    borderColor: 'rgba(42, 19, 215, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Semana Atual',
+                    data: dadosAtuais,
+                    backgroundColor: 'rgba(66, 203, 53, 0.2)',
+                    borderColor: 'rgba(66, 203, 53, 1)',
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        ticks: {
+                            color: 'black',
+                            font: {
+                                size: 11,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    y: {
+                        type: 'logarithmic',
+                        beginAtZero: true,
+                        min: 1,
+                        ticks: {
+                            display: false
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                barPercentage: 0.8,
+                categoryPercentage: 0.9
+            }
+        };
+
+        myBarChart = new Chart(ctx, config);
+    }
+
     const atualizarCards = numeroSemana => {
         const dadosSemanas = {};
 
@@ -237,19 +310,19 @@
                     'Content-Type': 'application/json',
                 }
             }).then(resposta => resposta.json().then(respostaFormatada => {
-    
+
                 dadosSemanas.semanaAtual = respostaFormatada[0][0];
-                
+
             })),
-            fetch(`/empresas/obterCards/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana-1}`, {
+            fetch(`/empresas/obterCards/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana - 1}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
             }).then(resposta => resposta.json().then(respostaFormatada => {
-    
+
                 dadosSemanas.semanaPassada = respostaFormatada[0][0];
-    
+
             }))
         ]).then(() => {
             atualizarCardsInterface(dadosSemanas);
@@ -266,7 +339,7 @@
         const cardMbsRecebidos = document.getElementById('card_mbs_recebidos');
         const cardErros = document.getElementById('card_erros');
         const cardDescartes = document.getElementById('card_descartes');
-    
+
         const semanaPassada = dadosSemanas.semanaPassada;
         const semanaAtual = dadosSemanas.semanaAtual;
 
@@ -285,18 +358,29 @@
             const valor = valores[index];
             elemento.innerHTML = `<span class="dash-rede-cor-anterior">${parseInt(valor.semanaPassada)}</span> x <span class="dash-rede-cor-atual">${parseInt(valor.semanaAtual)}</span>`;
         });
-        
+
+        atualizarGraficoBarras(valores);
+
     }
 
     const selecaoSemana = () => {
         const select = document.querySelector('#select-semana');
         const semanaNumero = select.value;
         const semanaSelecionada = dados.semanas.find(s => s.numero_semana == semanaNumero);
-        const semanaAnterior = dados.semanas.find(s => s.numero_semana == semanaNumero - 1);
+        const semanaAnterior = dados.semanas.find(s => s.numero_semana == (semanaNumero - 1));
+        const inicioSemanaSelecionada = semanaSelecionada.inicio_semana;
         const inicioSemanaAnterior = semanaAnterior.inicio_semana;
 
         const elementoSemanaAnterior = document.getElementById('semana_anterior_titulo');
         elementoSemanaAnterior.innerHTML = formatarData(inicioSemanaAnterior);
+
+
+        const elementoTituloGraficoBarras = document.getElementById('titulo-grafico-barra');
+
+        elementoTituloGraficoBarras.innerHTML = `<span class="dash-rede-cor-anterior">Semana <span
+                                        id="placeholder_semana_anterior">${formatarData(inicioSemanaAnterior)}</span></span> x <span
+                                    class="dash-rede-cor-atual">Semana <span
+                                        id="placeholder_semana_atual">${formatarData(inicioSemanaSelecionada)}</span></span></h4>`
 
         dados.semana = semanaSelecionada;
         dados.semanaAnterior = semanaAnterior;
@@ -305,67 +389,7 @@
 
     }
 
-    // Primeiro, vamos obter o contexto do canvas
-    var ctx = document.querySelector('#myBarChart').getContext('2d');
 
-    // Definimos os dados do gráfico
-    const data = {
-        labels: ['Pacotes Env.', 'Pacotes Rec.', 'MB Env.', 'MB Rec.', 'Erros', 'Descartes'],
-        datasets: [
-            {
-                label: 'Semana Anterior',
-                data: [65, 59, 80, 81, 56, 55],
-                backgroundColor: 'rgba(42, 19, 215, 0.2)',
-                borderColor: 'rgba(42, 19, 215, 1)',
-                borderWidth: 1
-            },
-            {
-                label: 'Semana Atual',
-                data: [40, 45, 60, 70, 45, 50],
-                backgroundColor: 'rgba(66, 203, 53, 0.2)',
-                borderColor: 'rgba(66, 203, 53, 1)',
-                borderWidth: 1
-            }
-        ]
-    };
-
-    // Configuração do gráfico
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Quantidade',
-                        font: {
-                            weight: 'bold'
-                        }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                    labels: {
-                        font: {
-                            weight: 'bold'
-                        }
-                    }
-                }
-            },
-            barPercentage: 0.8,
-            categoryPercentage: 0.9
-        }
-    };
-
-    // Criação do gráfico
-    const myBarChart = new Chart(ctx, config);
 
     // Função para atualizar dados (opcional)
     // function updateChartData(newData) {
