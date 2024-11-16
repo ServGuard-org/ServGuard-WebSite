@@ -553,6 +553,30 @@ CREATE OR REPLACE VIEW vista_irregularidade AS
 			JOIN Maquina ON fkMaquina = idMaquina
 			JOIN Empresa ON fkEmpresa = idEmpresa;
 
+CREATE OR REPLACE VIEW vista_semanas_captura_empresa AS
+SELECT DISTINCT
+    m.fkEmpresa,
+    DATE_SUB(DATE(c.dthCriacao), 
+        INTERVAL WEEKDAY(c.dthCriacao) DAY) AS inicio_semana,
+    DATE_ADD(DATE_SUB(DATE(c.dthCriacao), 
+        INTERVAL WEEKDAY(c.dthCriacao) DAY), 
+        INTERVAL 6 DAY) AS fim_semana,
+    YEARWEEK(c.dthCriacao, 7) as numero_semana,
+    COUNT(DISTINCT c.idCaptura) as total_capturas,
+    MIN(c.dthCriacao) as primeira_captura,
+    MAX(c.dthCriacao) as ultima_captura
+FROM 
+    Captura c
+    JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+    JOIN Maquina m ON mr.fkMaquina = m.idMaquina
+GROUP BY
+    m.fkEmpresa,
+    YEARWEEK(c.dthCriacao, 7),
+    inicio_semana,
+    fim_semana
+ORDER BY
+    inicio_semana DESC;
+
 -- PROCEDURES
 
 DELIMITER //

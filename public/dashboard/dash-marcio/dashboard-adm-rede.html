@@ -163,15 +163,52 @@
     </section>
 </body>
 <script>
-    function sairNavbar() {
+
+    const dados = {}
+
+    const sairNavbar = () => {
         event.preventDefault();
         sessionStorage.clear();
         window.location.href = "../../index.html";
     }
-    function voltar() {
+
+    const voltar = () => {
         window.location.href = "../dashboard-adm.html";
 
     }
+
+    const obterSemanas = async () => {
+        const select = document.querySelector('#select-semana');
+        const idEmpresa = sessionStorage.getItem('ID_EMPRESA_USUARIO');
+
+        try {
+
+            const resposta = await fetch(`/empresas/obterSemanas/${idEmpresa}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!resposta.ok) {
+                throw new Error(`Erro na requisição: ${resposta.status} - ${resposta.statusText}`);
+            }
+
+            const semanas = await resposta.json();
+
+            dados.semanas = semanas;
+
+            semanas.forEach(semana => {
+                const option = document.createElement('option');
+                option.value = semana;
+                option.innerText = semana;
+                select.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erro ao obter semanas:', error);
+        }
+    };
+
 
     // Primeiro, vamos obter o contexto do canvas
     var ctx = document.querySelector('#myBarChart').getContext('2d');

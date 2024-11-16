@@ -24,4 +24,10 @@ function cadastrar(nomeEmpresa, nomeResponsavel, emailResponsavel, cnpj) {
   return database.executar(instrucaoSql);
 }
 
+function obterSemanas(idEmpresa) {
+  var instrucaoSql = `SELECT * FROM Semana WHERE idEmpresa = '${idEmpresa}'`;
+
+  return database.executar(instrucaoSql);
+}
+
 module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar };

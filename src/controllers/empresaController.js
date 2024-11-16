@@ -40,9 +40,18 @@ function cadastrar(req, res) {
   });
 }
 
+function obterSemanas(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  empresaModel.obterSemanas(idEmpresa).then((resultado) => {
+    res.status(200).json(resultado);
+  });
+}
+
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
   listar,
+  obterSemanas
 };
