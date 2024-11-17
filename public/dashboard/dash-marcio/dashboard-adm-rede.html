@@ -21,8 +21,8 @@
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
                         <li>
-                            <a href="../dashboard-adm.html" class="link-dash-adm active">
-                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            <a href="../dashboard-adm.html" class="link-dash-adm">
+                                <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
                             </a>
                             <p class="little-text mt-1">Início</p>
                         </li>
@@ -243,14 +243,14 @@
             labels: ['Pacotes Env.', 'Pacotes Rec.', 'MB Env.', 'MB Rec.', 'Erros', 'Descartes'],
             datasets: [
                 {
-                    label: 'Semana Anterior',
+                    label: `Semana Anterior (${formatarData(dados.semanaAnterior.inicio_semana)})`,
                     data: dadosAntigos,
                     backgroundColor: 'rgba(42, 19, 215, 0.2)',
                     borderColor: 'rgba(42, 19, 215, 1)',
                     borderWidth: 1
                 },
                 {
-                    label: 'Semana Atual',
+                    label: `Semana Selecionada (${formatarData(dados.semana.inicio_semana)})`,
                     data: dadosAtuais,
                     backgroundColor: 'rgba(66, 203, 53, 0.2)',
                     borderColor: 'rgba(66, 203, 53, 1)',
@@ -372,7 +372,7 @@
         const inicioSemanaAnterior = semanaAnterior.inicio_semana;
 
         const elementoSemanaAnterior = document.getElementById('semana_anterior_titulo');
-        elementoSemanaAnterior.innerHTML = formatarData(inicioSemanaAnterior);
+        elementoSemanaAnterior.innerHTML = `(${formatarData(inicioSemanaAnterior)})`;
 
 
         const elementoTituloGraficoBarras = document.getElementById('titulo-grafico-barra');
