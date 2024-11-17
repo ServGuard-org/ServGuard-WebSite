@@ -65,11 +65,25 @@ function obterCards(req, res) {
   });
 }
 
+function obterMapaSemana(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+  var numeroSemana = req.params.numeroSemana;
+
+  empresaModel.obterMapaSemana(idEmpresa, numeroSemana).then((resultado) => {
+    if (resultado.length == 0) {
+      res.status(404).json({ mensagem: `não há mapa para a empresa com id ${idEmpresa} na semana ${numeroSemana}` });
+    } else {
+      res.status(200).json(resultado);
+    }
+  });
+}
+
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
   listar,
   obterSemanas,
-  obterCards
+  obterCards,
+  obterMapaSemana,
 };

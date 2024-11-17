@@ -36,4 +36,10 @@ function obterCards(idEmpresa, numeroSemana) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards};
+function obterMapaSemana(idEmpresa, numeroSemana) {
+  var instrucaoSql = `CALL obter_mapa_semana(${idEmpresa}, '${numeroSemana}');`
+
+  return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards, obterMapaSemana };

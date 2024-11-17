@@ -806,3 +806,73 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE obter_mapa_semana(IN empresa_id INT, IN week_number VARCHAR(6))
+BEGIN
+    WITH RECURSIVE hours AS (
+        SELECT 0 as hour
+        UNION ALL
+        SELECT hour + 1 FROM hours WHERE hour < 23
+    ),
+    NetworkMetrics AS (
+        SELECT 
+            m.fkEmpresa,
+            r.nome as recurso,
+            c.registro,
+            c.dthCriacao,
+            HOUR(c.dthCriacao) as hora,
+            WEEKDAY(c.dthCriacao) + 1 as dia_semana, -- WEEKDAY retorna 0-6 (Mon-Sun), +1 for 1-7
+            DATE(c.dthCriacao) as data
+        FROM Captura c
+        JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+        JOIN Maquina m ON mr.fkMaquina = m.idMaquina
+        JOIN Recurso r ON mr.fkRecurso = r.idRecurso
+        WHERE m.fkEmpresa = empresa_id
+        AND YEARWEEK(c.dthCriacao, 3) = week_number
+    ),
+    TimeGrid AS (
+        SELECT 
+            h.hour as hora,
+            DATE(MIN(m.dthCriacao) + INTERVAL d.dia DAY) as data,
+            WEEKDAY(MIN(m.dthCriacao) + INTERVAL d.dia DAY) + 1 as dia_semana
+        FROM hours h
+        CROSS JOIN (
+            SELECT 0 as dia UNION ALL SELECT 1 UNION ALL SELECT 2 
+            UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 
+            UNION ALL SELECT 6
+        ) d
+        CROSS JOIN NetworkMetrics m
+        GROUP BY h.hour, d.dia
+    )
+    SELECT 
+        tg.data,
+        tg.hora,
+        tg.dia_semana,
+        COALESCE(SUM(CASE 
+            WHEN nm.recurso = 'pacotesEnviados' THEN nm.registro
+            ELSE 0 
+        END), 0) as pacotes_enviados,
+        COALESCE(SUM(CASE 
+            WHEN nm.recurso = 'pacotesRecebidos' THEN nm.registro
+            ELSE 0 
+        END), 0) as pacotes_recebidos,
+        COALESCE(SUM(CASE 
+            WHEN nm.recurso IN ('pacotesEnviados', 'pacotesRecebidos') THEN nm.registro
+            ELSE 0 
+        END), 0) as total_pacotes
+    FROM TimeGrid tg
+    LEFT JOIN NetworkMetrics nm ON 
+        tg.hora = nm.hora AND 
+        tg.data = nm.data
+    GROUP BY 
+        tg.data,
+        tg.hora,
+        tg.dia_semana
+    ORDER BY 
+        tg.data,
+        tg.hora;
+END //
+
+DELIMITER ;

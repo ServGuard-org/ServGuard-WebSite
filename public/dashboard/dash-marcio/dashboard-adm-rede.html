@@ -119,8 +119,8 @@
 
                     <div class="dash-rede-barchart">
                         <div class="dash-rede-barchart-space">
-                            <h4 class="bold mb-2" id="titulo-grafico-barra"><span class="dash-rede-cor-anterior">Semana <span
-                                        id="placeholder_semana_anterior">dd/mm/yy</span></span> x <span
+                            <h4 class="bold mb-2" id="titulo-grafico-barra"><span class="dash-rede-cor-anterior">Semana
+                                    <span id="placeholder_semana_anterior">dd/mm/yy</span></span> x <span
                                     class="dash-rede-cor-atual">Semana <span
                                         id="placeholder_semana_atual">dd/mm/yy</span></span></h4>
                             <div style="width: 100%; height: 90%; position: relative;">
@@ -363,6 +363,88 @@
 
     }
 
+    const atualizarMapaInterface = dadosMapa => {
+
+        // Criando um array de datas únicas	
+        // Por ser um set, não aceita datas duplicadas
+        // ... (spread operator) para transformar o set em array de volta
+        // sort para ordenar as datas em ordem crescente
+        // map para transformar as datas em objetos
+        // exemplo do map: 
+        // "2021-09-01" => { name: "01/09/2021", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        const datas = [...new Set(dadosMapa[0].map(dm => dm.data))].sort();
+
+        console.log('DadosMapa', dadosMapa);
+        console.log('Datas:', datas);
+
+        // Criando um array de objetos com as datas e os registros do dia
+        // para cada data, filtrar os registros do dia
+        // e transformar em um objeto com a data e os registros
+        // converte os totais para inteiro (os dados já vem com casas decimais 0,
+        // mas estou removendo as casas para melhor visualização)
+        // e retorna o objeto
+        const series = datas.map(data => {
+            const registrosDoDia = dadosMapa[0].filter(dm => dm.data === data);
+            return {
+                name: formatarData(data),
+                data: registrosDoDia.map(r => parseInt(r.total_pacotes))
+            };
+        });
+    
+        const options = {
+            series: series,
+            chart: {
+                height: 350,
+                width: 800,
+                type: 'heatmap',
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ["#6C2BB3"],
+            title: {
+                text: 'Mapa de Calor - Pacotes (E/R) por Hora',
+                offsetY: 15,
+                offsetX: 250,
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 'bold'
+                }
+            },
+            xaxis: {
+                categories: Array.from({length: 24}, (_, i) => 
+                    `${String(i).padStart(2, '0')}:00`
+                ),
+                title: {
+                    text: 'Horas do Dia'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Dias da Semana'
+                }
+            }
+        };
+    
+        document.querySelector("#chart").innerHTML = '';
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    }
+
+    const atualizarMapa = numeroSemana => {
+        fetch(`/empresas/obterMapaSemana/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(resposta => resposta.json().then(respostaFormatada => {
+            console.log('Mapa de calor:', respostaFormatada);
+            atualizarMapaInterface(respostaFormatada);
+        })).catch(error => {
+            console.error('Erro ao obter mapa de calor:', error);
+        });
+    }
+
     const selecaoSemana = () => {
         const select = document.querySelector('#select-semana');
         const semanaNumero = select.value;
@@ -386,16 +468,9 @@
         dados.semanaAnterior = semanaAnterior;
 
         atualizarCards(semanaNumero);
+        atualizarMapa(semanaNumero);
 
     }
-
-
-
-    // Função para atualizar dados (opcional)
-    // function updateChartData(newData) {
-    //     myBarChart.data.datasets[0].data = newData;
-    //     myBarChart.update();
-    // }
 
     function generateData(hours, range) {
         var series = [];
@@ -408,60 +483,7 @@
         return series;
     }
 
-    var options = {
-        series: [
-            { name: '28/10', data: generateData(24, { min: 0, max: 90 }) },
-            { name: '29/10', data: generateData(24, { min: 0, max: 90 }) },
-            { name: '30/10', data: generateData(24, { min: 0, max: 90 }) },
-            { name: '31/10', data: generateData(24, { min: 0, max: 90 }) },
-            { name: '01/11', data: generateData(24, { min: 0, max: 90 }) },
-            { name: '02/11', data: generateData(24, { min: 0, max: 90 }) },
-            { name: '03/11', data: generateData(24, { min: 0, max: 90 }) }
-        ],
-        chart: {
-            height: 350,
-            width: 809,
-            type: 'heatmap',
-        },
-        dataLabels: {
-            enabled: false
-        },
-        colors: ["#6C2BB3"],  // Cor roxa
-        title: {
-            text: 'Mapa de Calor de Pacotes de Rede (E/R) por Hora - Semana de 28/10/2024',
-            offsetY: 10,
-            offsetX: 50,
-            style: {
-                colors: [],
-                fontSize: '17px',
-                fontWeight: 800,
-                cssClass: 'apexcharts-xaxis-label',
-            }
-        },
-        xaxis: {
-            title: {
-                text: 'Horas do Dia',
-                offsetY: -20,
-                style: {
-                    colors: [],
-                    fontSize: '15px',
-                    fontWeight: 800,
-                    cssClass: 'apexcharts-xaxis-label',
-                }
-            }
-        },
-        yaxis: {
-            title: {
-                text: 'Dias da Semana',
-                title: {
-                    text: 'Horas do Dia'
-                }
-            }
-        }
-    };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
 
     // Mock data
     const x_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

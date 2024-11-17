@@ -28,4 +28,8 @@ router.get("/obterCards/:idEmpresa/:numeroSemana", function (req, res) {
   empresaController.obterCards(req, res);
 });
 
+router.get("/obterMapaSemana/:idEmpresa/:numeroSemana", function (req, res) {
+  empresaController.obterMapaSemana(req, res);
+});
+
 module.exports = router;
