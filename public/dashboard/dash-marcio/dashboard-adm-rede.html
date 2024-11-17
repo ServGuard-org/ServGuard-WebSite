@@ -211,7 +211,7 @@
 
         const beta = numerador / denominador;
         const alpha = yMean - beta * xMean;
-        console.log("Alpha:", alpha, "Beta:", beta);
+        console.log("Alpha (Intercepto):", alpha, "Beta (Coef. Angular):", beta);
 
         // Calcula valores preditos
         const predictions = Array.from(
@@ -282,6 +282,31 @@
             console.error('Erro ao obter semanas:', error);
         }
     };
+
+    const gerarAnaliseIA = dadosRegressaoLinear => {
+        const mensagem = `
+        Uma regressão linear, com resultado: ${dadosRegressaoLinear} foi gerada. Com base nela,
+        gere uma análise de tendência para a empresa. Esta regressão linear utilizou os dados de pacotes 
+        enviados e recebidos de todos os servidores desta empresa. Faça uma análise sem citar nomes técnicos.
+        Faça, ao final, um comentário geral sobre os resultados obtidos.
+        `;
+
+        fetch(`/externos/GenAI/perguntar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: {
+                pergunta: mensagem
+            }
+        }
+        ).then(resposta => resposta.json().then(respostaFormatada => {
+            console.log('Resposta IA:', respostaFormatada);
+        })).catch(error => {
+            console.error('Erro ao obter resposta IA:', error);
+        });
+
+    }
 
 
     const atualizarGraficoBarras = valores => {
