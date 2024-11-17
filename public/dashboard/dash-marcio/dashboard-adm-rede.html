@@ -81,7 +81,7 @@
                     <p class="bold mb-2">Pacotes Enviados</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_pacotes_enviados">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
-                    </h1> 
+                    </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Pacotes Recebidos</p>
@@ -167,6 +167,24 @@
 
     const dados = {}
     let myBarChart = null;
+
+    const calcularRegressaoLinear = (x, y) => {
+        const n = x.length;
+        const x_mean = x.reduce((sum, xi) => sum + xi, 0) / n;
+        const y_mean = y.reduce((sum, yi) => sum + yi, 0) / n;
+
+        let num = 0, den = 0;
+        for (let i = 0; i < n; i++) {
+            num += (x[i] - x_mean) * (y[i] - y_mean);
+            den += (x[i] - x_mean) ** 2;
+        }
+        const slope = num / den;
+        const intercept = y_mean - slope * x_mean;
+
+        // Calcula valores de y para a linha de tendência
+        const predicted = x.map(xi => slope * xi + intercept);
+        return predicted;
+    }
 
     const formatarSemanas = semana => {
         const dataInicio = new Date(semana.inicio_semana);
@@ -395,7 +413,7 @@
                 data: registrosDoDia.map(r => parseInt(r.total_pacotes))
             };
         });
-    
+
         const options = {
             series: series,
             chart: {
@@ -417,7 +435,7 @@
                 }
             },
             xaxis: {
-                categories: Array.from({length: 24}, (_, i) => 
+                categories: Array.from({ length: 24 }, (_, i) =>
                     `${String(i).padStart(2, '0')}:00`
                 ),
                 title: {
@@ -430,7 +448,7 @@
                 }
             }
         };
-    
+
         document.querySelector("#chart").innerHTML = '';
         var chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
