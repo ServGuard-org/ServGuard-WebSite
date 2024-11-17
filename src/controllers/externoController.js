@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const chaveGemini = process.env.CHAVE_GEMINI;
 
 function check(req, res) {
     let url = req.body.url;
@@ -17,6 +19,37 @@ function check(req, res) {
 
 }
 
+function GenAIPerguntar(req, res) {
+    const pergunta = req.body.pergunta;
+
+    gerarResposta(pergunta).then( resposta => {
+        res.status(200).json({ resposta: resposta });
+    }).catch( erro => {
+        res.status(500).json({ status: "Erro", message: "Falha ao gerar resposta", erro: erro.message});
+    });
+
+    async function gerarResposta(mensagem) {
+        // instanciando a classe GoogleGenerativeAI
+        const chatIA = new GoogleGenerativeAI(chaveGemini);
+        // obtendo o modelo de IA
+        const modeloIA = chatIA.getGenerativeModel({ model: "gemini-pro" });
+    
+        try {
+            // gerando conteúdo com base na pergunta
+            const resultado = await modeloIA.generateContent(`Em um paragráfo responda: ${mensagem}`);
+            const resposta = await resultado.response.text();
+            
+            console.log(resposta);
+    
+            return resposta;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+}
+
 module.exports = {
-    check
+    check, GenAIPerguntar
 }
