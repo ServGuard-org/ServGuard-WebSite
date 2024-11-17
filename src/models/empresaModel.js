@@ -42,4 +42,10 @@ function obterMapaSemana(idEmpresa, numeroSemana) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards, obterMapaSemana };
+function obterPacotes(idEmpresa) {
+  var instrucaoSql = `SELECT * FROM vista_soma_pacotes_por_dia WHERE idEmpresa = ${idEmpresa} AND DATE(data) != CURDATE();`;
+
+  return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards, obterMapaSemana, obterPacotes };

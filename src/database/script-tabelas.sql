@@ -577,6 +577,25 @@ GROUP BY
 ORDER BY
     inicio_semana DESC;
 
+CREATE OR REPLACE VIEW vista_soma_pacotes_por_dia AS
+SELECT
+    m.fkEmpresa AS idEmpresa,
+    DATE(c.dthCriacao) AS data,
+    SUM(CASE WHEN r.nome = 'pacotesEnviados' THEN c.registro ELSE 0 END) AS total_pacotes_enviados,
+    SUM(CASE WHEN r.nome = 'pacotesRecebidos' THEN c.registro ELSE 0 END) AS total_pacotes_recebidos,
+    SUM(CASE WHEN r.nome IN ('pacotesEnviados', 'pacotesRecebidos') THEN c.registro ELSE 0 END) AS total_pacotes
+FROM
+    Captura c
+JOIN
+    MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN
+    Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN
+    Maquina m ON mr.fkMaquina = m.idMaquina
+GROUP BY
+    m.fkEmpresa,
+    DATE(c.dthCriacao);
+
 -- PROCEDURES
 
 DELIMITER //

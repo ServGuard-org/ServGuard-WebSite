@@ -78,6 +78,18 @@ function obterMapaSemana(req, res) {
   });
 }
 
+function obterPacotes(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  empresaModel.obterPacotes(idEmpresa).then((resultado) => {
+    if (resultado.length == 0) {
+      res.status(404).json({ mensagem: `não há pacotes para a empresa com id ${idEmpresa}` });
+    } else {
+      res.status(200).json(resultado);
+    }
+  });
+}
+
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
@@ -86,4 +98,5 @@ module.exports = {
   obterSemanas,
   obterCards,
   obterMapaSemana,
+  obterPacotes
 };

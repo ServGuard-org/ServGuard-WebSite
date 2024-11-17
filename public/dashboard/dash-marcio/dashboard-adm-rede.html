@@ -168,22 +168,59 @@
     const dados = {}
     let myBarChart = null;
 
-    const calcularRegressaoLinear = (x, y) => {
-        const n = x.length;
-        const x_mean = x.reduce((sum, xi) => sum + xi, 0) / n;
-        const y_mean = y.reduce((sum, yi) => sum + yi, 0) / n;
+    function calcularRegressaoLinear(x, y) {
+        console.log("Input arrays:", x, y);
 
-        let num = 0, den = 0;
-        for (let i = 0; i < n; i++) {
-            num += (x[i] - x_mean) * (y[i] - y_mean);
-            den += (x[i] - x_mean) ** 2;
+        // Store original length and make copies of arrays
+        const originalLength = x.length;
+        let xVals = [...x];
+        let yVals = [...y];
+
+        // Remove o último ponto se y for 0 (outlier)
+        if (yVals[yVals.length - 1] === 0) {
+            xVals = xVals.slice(0, -1);
+            yVals = yVals.slice(0, -1);
         }
-        const slope = num / den;
-        const intercept = y_mean - slope * x_mean;
 
-        // Calcula valores de y para a linha de tendência
-        const predicted = x.map(xi => slope * xi + intercept);
-        return predicted;
+        const n = xVals.length;
+        console.log("After outlier removal - n:", n);
+
+        // Calcula médias com maior precisão
+        const xMean = xVals.reduce((sum, xi) => sum + Number(xi), 0) / n;
+        const yMean = yVals.reduce((sum, yi) => sum + Number(yi), 0) / n;
+        console.log("Means - x:", xMean, "y:", yMean);
+
+        // Calcula coeficientes
+        let numerador = 0;
+        let denominador = 0;
+
+        for (let i = 0; i < n; i++) {
+            const xi = Number(xVals[i]);
+            const yi = Number(yVals[i]);
+            numerador += (xi - xMean) * (yi - yMean);
+            denominador += Math.pow(xi - xMean, 2);
+        }
+
+        console.log("Coeficientes - numerador:", numerador, "denominador:", denominador);
+
+        // Evita divisão por zero ou valores muito pequenos
+        if (Math.abs(denominador) < 1e-10) {
+            console.log("Denominador muito pequeno, retornando média");
+            return Array(originalLength).fill(yMean);
+        }
+
+        const beta = numerador / denominador;
+        const alpha = yMean - beta * xMean;
+        console.log("Alpha:", alpha, "Beta:", beta);
+
+        // Calcula valores preditos
+        const predictions = Array.from(
+            { length: originalLength },
+            (_, i) => alpha + beta * (i + 1)
+        );
+        console.log("Predictions:", predictions);
+
+        return predictions;
     }
 
     const formatarSemanas = semana => {
@@ -316,6 +353,83 @@
         };
 
         myBarChart = new Chart(ctx, config);
+    }
+
+    const atualizarRegressaoLinearInterface = dados => {
+
+        // Utilizando números sequenciais como valores de x
+        const x_values = dados.map((_, index) => index + 1);
+        const y_values = dados.map(d => d.total_pacotes);
+
+        const regressao = calcularRegressaoLinear(x_values, y_values);
+
+        console.log('regressao ', regressao);
+
+        regressao.forEach((r, i) => {
+            console.log(`X: ${x_values[i]} - Y: ${y_values[i]} - Y_hat: ${r}`);
+        });
+
+        // Valores preditos pela regressão
+        const y_hat = regressao;
+
+        // Criando o gráfico
+        var ctx = document.getElementById('regressionChart');
+        const mixedChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [
+                    {
+                        type: 'line',
+                        label: `Linha de Projeção`,
+                        data: x_values.map((x, i) => ({ x, y: y_hat[i] })),
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                    },
+                    {
+                        type: 'scatter',
+                        label: 'Valores Reais',
+                        data: x_values.map((x, i) => ({ x, y: y_values[i] })),
+                        backgroundColor: 'rgb(0, 0, 0)',
+                        pointRadius: 5,
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'Observações'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Total de Pacotes'
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    const atualizarRegressaoLinear = () => {
+        fetch(`/empresas/obterPacotes/${sessionStorage.getItem('ID_EMPRESA_USUARIO')}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(resposta => resposta.json().then(respostaFormatada => {
+            console.log('Pacotes por dia: ', respostaFormatada)
+            atualizarRegressaoLinearInterface(respostaFormatada);
+        }).catch(error => {
+            console.error('Erro ao obter pacotes:', error);
+        }))
+
     }
 
     const atualizarCards = numeroSemana => {
@@ -492,6 +606,7 @@
 
         atualizarCards(semanaNumero);
         atualizarMapa(semanaNumero);
+        atualizarRegressaoLinear();
 
     }
 
@@ -505,59 +620,6 @@
         }
         return series;
     }
-
-
-
-    // Mock data
-    const x_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const y_values = [1.2, 2.5, 2.8, 4.1, 5.3, 5.9, 7.1, 8.3, 9.0, 10.5];
-
-    // Calculated regression line (mock)
-    const y_hat = x_values.map(x => 1.1 * x + 0.2); // Example regression line y = 1.1x + 0.2
-
-    // Create the chart
-    var ctx = document.getElementById('regressionChart');
-    const mixedChart = new Chart(ctx, {
-        type: 'scatter',
-        data: {
-            datasets: [
-                {
-                    type: 'line',
-                    label: `Linha de Projeção`,
-                    data: x_values.map((x, i) => ({ x, y: y_hat[i] })),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 2,
-                    tension: 0.3,
-                },
-                {
-                    type: 'scatter',
-                    label: 'Valores Reais',
-                    data: x_values.map((x, i) => ({ x, y: y_values[i] })),
-                    backgroundColor: 'rgb(0, 0, 0)',
-                    pointRadius: 5,
-                }
-            ]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    title: {
-                        display: true,
-                        text: 'X Values'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Y Values'
-                    }
-                }
-            }
-        }
-    });
 
     document.onload = obterSemanas();
 
