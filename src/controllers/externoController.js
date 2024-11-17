@@ -36,10 +36,10 @@ function GenAIPerguntar(req, res) {
     
         try {
             // gerando conteúdo com base na pergunta
-            const resultado = await modeloIA.generateContent(`Em um paragráfo responda: ${mensagem}`);
+            const resultado = await modeloIA.generateContent(`${mensagem}`);
             const resposta = await resultado.response.text();
             
-            console.log(resposta);
+            console.log('Requisição na API do Gemini feita, resposta: ', resposta);
     
             return resposta;
         } catch (error) {
