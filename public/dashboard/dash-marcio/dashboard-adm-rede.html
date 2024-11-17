@@ -81,7 +81,7 @@
                     <p class="bold mb-2">Pacotes Enviados</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_pacotes_enviados">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
-                    </h1>
+                    </h1> 
                 </div>
                 <div class="dash-rede-cards-topo">
                     <p class="bold mb-2">Pacotes Recebidos</p>
@@ -356,7 +356,12 @@
 
         listaElementos.forEach((elemento, index) => {
             const valor = valores[index];
-            elemento.innerHTML = `<span class="dash-rede-cor-anterior">${parseInt(valor.semanaPassada)}</span> x <span class="dash-rede-cor-atual">${parseInt(valor.semanaAtual)}</span>`;
+            if (valor.semanaPassada >= valor.semanaAtual) {
+                var imagemSeta = '<img src="../../assets/svg/arrow-down.svg" alt="">';
+            } else {
+                var imagemSeta = '<img src="../../assets/svg/arrow-up.svg" alt="">';
+            }
+            elemento.innerHTML = `<span class="dash-rede-cor-anterior">${parseInt(valor.semanaPassada)}</span> x <span class="dash-rede-cor-atual">${parseInt(valor.semanaAtual)}</span>${imagemSeta}`;
         });
 
         atualizarGraficoBarras(valores);
