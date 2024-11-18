@@ -71,21 +71,34 @@
                     <!-- BARRA DE DISTRIBUICAO -->
                     <h4 class="italic bold">Distribuição de alertas por recurso</h4>
                     <div class="dash-alert-campo-barra text-medium">
+                        <div id="graficoRadar" class="campo-acesso-radar bold">
+                            <h5 class="underline">
+                                Vizualização detalhada
+                            </h5 class="underline">
+                        </div>
                         <div id="cpuArea" class="distribuicao-campo-barra bold"
                             style="width: 0%; background-color: var(--red-normal);">
-                            CPU: ...%
+                            <h6>
+                                CPU: ...%
+                            </h6>
                         </div>
                         <div id="ramArea" class="distribuicao-campo-barra bold"
                             style="width: 0%; background-color: var(--orange-normal);">
-                            RAM: ...%
+                            <h6>
+                                RAM: ...%
+                            </h6>
                         </div>
                         <div id="redeArea" class="distribuicao-campo-barra bold"
                             style="width: 0%; background-color: var(--green-dark);">
-                            REDE: ...%
+                            <h6>
+                                REDE: ...%
+                            </h6>
                         </div>
                         <div id="outrosArea" class="distribuicao-campo-barra bold"
                             style="width: 100%; background-color: var(--gray-3);">
-                            OUTROS: ...%
+                            <h6>
+                                OUTROS: ...%
+                            </h6>
                         </div>
                     </div>
 
@@ -136,7 +149,7 @@
                             </h5>
                             <h5 class="bold italic">Irregulares:
                                 <samp id="id_irregularidade_maquinas" style="font-size: larger;"
-                                    class="text-red">...</samp>
+                                    class="text-black">...</samp>
                             </h5>
                         </div>
                     </div>
@@ -171,7 +184,7 @@
         buscarDadosGrafico()
     }
 
-    function buscarDistribuicao(){
+    function buscarDistribuicao() {
 
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         var totalM;
@@ -194,39 +207,51 @@
 
                             totalA = json[0].qtdAlertas;
                             cpu = json[0].qtdCpu;
-                                cpu = Math.round((cpu*100)/totalA);
+                            cpu = Math.round((cpu * 100) / totalA);
                             ram = json[0].qtdRam;
-                                ram = Math.round((ram*100)/totalA);
+                            ram = Math.round((ram * 100) / totalA);
                             rede = json[0].qtdRede;
-                                rede = Math.round((rede*100)/totalA);
+                            rede = Math.round((rede * 100) / totalA);
                             outros = json[0].qtdOutros;
-                                outros = Math.round((outros*100)/totalA);
+                            outros = Math.round((outros * 100) / totalA);
 
                             console.log("Total isAlerta:", totalA);
                             console.log("%%%%%%%%%:", cpu, ram, rede, outros);
 
-                            function atualizarDistribuicao(cpuPercent, ramPercent, redePercent, outrosPercent){
+                            function atualizarDistribuicao(cpuPercent, ramPercent, redePercent, outrosPercent) {
 
                                 const cpuArea = document.getElementById("cpuArea");
                                 const ramArea = document.getElementById("ramArea");
                                 const redeArea = document.getElementById("redeArea");
                                 const outrosArea = document.getElementById("outrosArea");
 
-                                if (cpuPercent == 0){cpuArea.style.display = 'none'}
+                                if (cpuPercent == 0) { cpuArea.style.display = 'none' }
                                 cpuArea.style.width = `${cpuPercent}%`;
                                 cpuArea.textContent = `CPU: ${cpuPercent}%`;
+                                ajustarTamanhoTexto(cpuArea, cpuArea.offsetWidth)
 
-                                if (ramPercent == 0){ramArea.style.display = 'none'}
+                                if (ramPercent == 0) { ramArea.style.display = 'none' }
                                 ramArea.style.width = `${ramPercent}%`;
                                 ramArea.textContent = `RAM: ${ramPercent}%`;
+                                ajustarTamanhoTexto(ramArea, ramArea.offsetWidth)
 
-                                if (redePercent == 0){redeArea.style.display = 'none'}
+                                if (redePercent == 0) { redeArea.style.display = 'none' }
                                 redeArea.style.width = `${redePercent}%`;
                                 redeArea.textContent = `REDE: ${redePercent}%`;
+                                ajustarTamanhoTexto(redeArea, redeArea.offsetWidth)
 
-                                if (outrosPercent == 0){outrosArea.style.display = 'none'}
+                                if (outrosPercent == 0) { outrosArea.style.display = 'none' }
                                 outrosArea.style.width = `${outrosPercent}%`;
                                 outrosArea.textContent = `OUTROS: ${outrosPercent}%`;
+                                ajustarTamanhoTexto(outrosArea, outrosArea.offsetWidth)
+
+                            }
+                            function ajustarTamanhoTexto(idArea, width) {
+                                if (width <= 5) {
+                                    idArea.style.fontSize = "10px";
+                                } else if (width <= 10) {
+                                    idArea.style.fontSize = "20px";
+                                }
                             }
                             atualizarDistribuicao(cpu, ram, rede, outros)
 
@@ -341,8 +366,21 @@
 
                         plotTotalM = document.getElementById("id_total_maquinas");
                         plotTotalIrr = document.getElementById("id_irregularidade_maquinas");
+                        porcentagemIrr = (totalIrr * 100) / totalM
+                        console.log("PORCENTAGEM IRREGULAREEES", porcentagemIrr)
                         plotTotalM.innerHTML = totalM.toString();
                         plotTotalIrr.innerHTML = totalIrr.toString();
+                        if (porcentagemIrr > 50) {
+                            plotTotalIrr.classList.remove(
+                                "text-black",
+                            );
+                            plotTotalIrr.classList.add("text-red");
+                        } else {
+                            plotTotalIrr.classList.remove(
+                                "text-black",
+                            );
+                            plotTotalIrr.classList.add("text-orange");
+                        }
                     });
                 } else {
                     console.log(
@@ -515,7 +553,7 @@
                             const predicted = x.map(xi => slope * xi + intercept);
                             return predicted;
                         }
-                        var diaMesCalculo = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+                        var diaMesCalculo = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
                         const linhaDeRegressao = calcularRegressaoLinear(diaMesCalculo, qtdAlertasPDia);
                         console.log("REGRESSÃO LINEAR!!!", linhaDeRegressao)
 
@@ -547,7 +585,7 @@
                                         x: { title: { display: true, text: 'Dias do Mês' } },
                                         y: { title: { display: true, text: 'Frequência de Máquinas Irregulares' } }
                                     },
-                                    responsive: true
+                                    // responsive: true
                                 }
                             });
                         }

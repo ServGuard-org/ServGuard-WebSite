@@ -99,9 +99,35 @@
 
 }
 
+.dash-alert-lista-scroll::-webkit-scrollbar {
+    width: 12px;
+    /* Largura da barra de rolagem */
+}
+
+.dash-alert-lista-scroll::-webkit-scrollbar-track {
+    background: #f0f0f000;
+    /* Cor de fundo da trilha */
+    border-radius: 10px;
+    /* Cantos arredondados */
+}
+
+.dash-alert-lista-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--light-purple);
+    /* Cor do "polegar" da barra */
+    border-radius: 10px;
+    /* Cantos arredondados */
+    border: 3px solid #f0f0f0;
+    /* Espaçamento interno */
+}
+
+.dash-alert-lista-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: var(--dark-purple);
+    /* Cor ao passar o mouse */
+}
+
 .dash-alert-lista-objeto {
     width: 100%;
-    height: 13%;
+    min-height: 13%;
 
     background-color: white;
     border-radius: 50px;
@@ -116,6 +142,7 @@
     & p {
         margin-bottom: 0px;
     }
+
     & h4 {
         margin-bottom: 0px;
     }
@@ -124,22 +151,52 @@
 .dash-alert-campo-barra {
     width: 90%;
     height: 10%;
+    position: relative;
     background-color: var(--gray-3);
     border-radius: 50px;
     overflow: hidden;
-
-
     display: flex;
     flex-direction: row;
 }
 
-.distribuicao-campo-barra{
+.distribuicao-campo-barra {
     color: var(--Grays-White);
     display: flex;
     justify-content: center;
     align-items: center;
     transition: 400ms;
+    text-align: center;
+    text-justify: auto;
+    padding: 2px;
 }
+
+.campo-acesso-radar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%; 
+    height: 100%; 
+    background: none;
+    z-index: 0; 
+    display: none;
+    justify-content: center;
+    align-items: center;
+    transition: 400ms;
+    color: white;
+}
+
+.dash-alert-campo-barra:hover .distribuicao-campo-barra {
+    transition: 200ms;
+    display: none;
+}
+
+.dash-alert-campo-barra:hover .campo-acesso-radar {
+    transition: 200ms;
+    display: flex;
+    width: 100%;
+    background-color: var(--dark-purple);
+}
+
 
 /* PARTE 2 -------------------------------------------------------------------------------- */
 .dash-alert-coluna-2 {
@@ -210,11 +267,11 @@
     box-shadow: 0px 0px 82.7px -41px #794ED4;
 }
 
-.area-grafico{
+.area-grafico {
     width: 100%;
     height: 90%;
     /* background-color: #794ED4; */
-    
+
     display: flex;
     flex-direction: row;
     align-items: start;
