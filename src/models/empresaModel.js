@@ -43,7 +43,7 @@ function obterMapaSemana(idEmpresa, numeroSemana) {
 }
 
 function obterPacotes(idEmpresa) {
-  var instrucaoSql = `SELECT * FROM vista_soma_pacotes_por_dia WHERE idEmpresa = ${idEmpresa} AND DATE(data) != CURDATE();`;
+  var instrucaoSql = `SELECT * FROM vista_soma_pacotes_por_dia WHERE idEmpresa = ${idEmpresa} AND YEARWEEK(DATE(data)) != YEARWEEK(CURDATE());`;
 
   return database.executar(instrucaoSql);
 }
