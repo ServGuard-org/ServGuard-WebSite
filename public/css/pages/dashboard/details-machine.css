@@ -36,6 +36,13 @@
     padding-right: var(--gap-3);
 }
 
+.father-link-seta{
+    display: flex;
+    padding-left: var(--gap-1);
+    width: 30%;
+    justify-content: space-between;
+}
+
 .child-details-machine-info{
     width: 60%;
     height: 100%;
