@@ -65,12 +65,18 @@
             <div class="father-details-machine-father">
                 <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold" id="id_maquina">...</span>
                 </h1>
-                <div class="link-back-seta">
-
+                <div class="father-link-seta">
+                <div class="link-back-seta2">
                     <a class="bold text-gray-dark" onclick="voltar()">
-                        <div class="icon-trian"></div> Voltar
+                        <div class="icon-trian-left"></div> Voltar
                     </a>
                 </div>
+                <div class="link-back-seta2">
+                    <a class="bold text-gray-dark" onclick="dashboardMonitoramento()">
+                         Monitoramento Detalhado <div class="icon-trian"></div>
+                    </a>
+                </div>
+            </div>
             </div>
 
             <div class="father-details-machine">
@@ -191,6 +197,9 @@
                 window.location.href = "./gerenciamento-maquina.html";
             }
         }
+        function dashboardMonitoramento(){
+        window.location.href = "./dash-gustavo/dashboard-analista-use.html"
+    }
 
 
 
