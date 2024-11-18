@@ -153,7 +153,6 @@ CREATE OR REPLACE VIEW vista_capturas_relatorio_semanal AS
 			WHERE dthCriacao >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
 		GROUP BY fkEmpresa, idCaptura, fkMaquina, fkMaquinaRecurso;
         
-
 CREATE OR REPLACE VIEW vista_capturas_relatorio_mensal AS
 	SELECT fkEmpresa as idEmpresa,
 		idCaptura, 
