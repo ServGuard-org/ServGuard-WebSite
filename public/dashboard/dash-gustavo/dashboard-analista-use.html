@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="carregarPagina()">
     <section id="page-dashboard-details-use">
         <header>
             <div class="child-navbar-card-dash-adm">
@@ -57,79 +57,44 @@
             </div>
         </header>
         <main>
-            <div class="dash-alert-topo">
-                <h1 class="bold">Monitoramento de uso de Máquina:</h1>
+            <div class="dash-alert-topo-use">
+                <h1 class="bold">Uso da Máquina (<span id="hostname"></span>): <span class="text-purple bold"
+                        id="id_maquina">...</span></h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar
                     </a>
                 </div>
             </div>
-            <div class="dash-alert-pai">
+            <div class="dash-alert-titulo-detalhe">
+                <h3 class="italic">Detalhes de Alerta:</h3>
+            </div>
+            <div class="father-dash-alert-use">
                 <div class="dash-alert-coluna-1">
-                    <h3 class="italic" style="margin-top: 3%; margin-right: 45%;">Detalhes de Alerta:</h3>
-                    <div class="dash-alert-lista-pai">
-                    <div class="dash-alert-lista-coluna-pai">
-                        <div class="dash-alert-lista-coluna1">
-                            <div>
+                    <div class="father-dash-lista-alertas">
+                        <div class="dash-use-total-medições">
+                            <h4 class="bold" style="margin-top: 2%;">Total de Medições</h4>
+                            <p class="bold" style="margin: 2%; font-size: 45px;">14</p>
+                        </div>
+                        <div class="dash-alert-total">
+                            <div class="dash-alert-lista-coluna-cpu">
                                 <h4 class="bold">Total de alertas de CPU</h4>
                                 <p class="bold" style="margin: 2%; font-size: 45px;">8</p>
+
                             </div>
-                        </div>
-                        <div class="dash-alert-lista-coluna1">
+                            <div class="dash-alert-lista-coluna-ram">
                                 <h4 class="bold">Total de alertas de RAM</h4>
                                 <p class="bold" style="margin: 2%; font-size: 45px;">6</p>
-                        </div>
-                    </div>
-                    <div class="dash-alert-grafic-box-pai">
-                        <div class="dash-alert-grafic-box1">
-                            <canvas id="myGraphUse1"></canvas>
-                        </div>
-                        <div class="dash-alert-grafic-box1">
-                            <canvas id="myGraphUse2"></canvas>
-                        </div>
-                    </div>
-                        <!-- <div class="dash-alert-lista-scroll"> -->
-                            <!-- OBJETO -->
-                            <!-- <div class="dash-alert-lista-objeto">
-                                <div style="width: 13%;">
-                                    <h4 class=" italic">1</h4>
-                                </div>
-                                <div style="width: 70%;">
-                                    <p class="italic">Descrição</p>
-                                </div>
-                                <div style="width: 10%;">
-                                    <button class="bold underline italic botao-acao"
-                                    onclick="DetalhesMaquina()">Detalhes</button>
-                                </div>
                             </div>
-
-                            <div class="dash-alert-lista-objeto">
-                                <div style="width: 13%;">
-                                    <h4 class=" italic">1</h4>
-                                </div>
-                                <div style="width: 70%;">
-                                    <p class="italic">Descrição</p>
-                                </div>
-                                <div style="width: 10%;">
-                                    <button class="bold underline italic botao-acao"
-                                    onclick="DetalhesMaquina()">Detalhes</button>
-                                </div>
+                        </div>
+                        <div class="dash-alert-grafic-box-pai">
+                            <div class="dash-alert-grafic-box1">
+                                <canvas id="myGraphUse1"></canvas>
                             </div>
-
-                            <div class="dash-alert-lista-objeto">
-                                <div style="width: 13%;">
-                                    <h4 class=" italic">1</h4>
-                                </div>
-                                <div style="width: 70%;">
-                                    <p class="italic">Descrição</p>
-                                </div> -->
-                                <!-- <div style="width: 10%;">
-                                    <button class="bold underline italic botao-acao"
-                                    onclick="DetalhesMaquina()">Detalhes</button>
-                                </div> -->
-                            <!-- </div> -->
-                        <!-- </div> -->
+                            <div class="dash-alert-grafic-box1">
+                                <canvas id="myGraphUse2"></canvas>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- BARRA DE DISTRIBUICAO -->
@@ -163,15 +128,66 @@
     </section>
 </body>
 <script>
+
+    const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+    idMaquina === null ? Swal.fire({
+        icon: "error",
+        title: `Falha ao obter o id da máquina!`,
+        showConfirmButton: false,
+        timer: 1100,
+        backdrop: false,
+        background: '#EEE9FA'
+    }).then(() => {
+        window.location.href = "./gerenciamento-maquina.html";
+    }) : null;
+
     function sairNavbar() {
         event.preventDefault();
         sessionStorage.clear();
         window.location.href = "../../index.html";
     }
-    function voltar(){
+    function voltar() {
         window.location.href = "../details-machine.html";
-
     }
-    
+
+    function carregarPagina() {
+        sessionStorage.removeItem("VOLTAR_PAGINA");
+        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
+        consultarMaquina()
+    }
+
+    function consultarMaquina() {
+
+        fetch(`/maquinas/listarPorId/${idMaquina}`, {
+            dataType: 'json',
+            contentType: 'application/json',
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                console.log(data[0]);
+
+                document.getElementById("id_maquina").innerHTML = data[0].idMaquina;
+                document.getElementById("hostname").innerHTML = data[0].nome;
+                document.getElementById("cpu").innerHTML = data[0].modeloCPU;
+                document.getElementById("ram").innerHTML = Math.ceil(data[0].capacidadeRAM);
+                document.getElementById("apelido").innerHTML = data[0].apelido;
+                document.getElementById("nucleos").innerHTML = data[0].qtdNucleosLogicos;
+                document.getElementById("usado").innerHTML = parseFloat(data[0].discoUsado).toFixed(2);
+                document.getElementById("total").innerHTML = parseFloat(data[0].discoTotal).toFixed(2);
+
+                if (data[0].isAtiva === 1) {
+                    document.getElementById("ativar_maquina").style.display = "none";
+                    document.getElementById("desativar_maquina").style.display = "block";
+                } else {
+                    document.getElementById("ativar_maquina").style.display = "block";
+                    document.getElementById("desativar_maquina").style.display = "none";
+                }
+
+            })
+            .catch(error => console.error(error));
+    }
+
 
 </script>
