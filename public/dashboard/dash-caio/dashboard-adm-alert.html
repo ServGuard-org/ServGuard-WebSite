@@ -61,7 +61,7 @@
                 <h1 class="bold">Monitoramento de alertas:</h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
-                        <div class="icon-trian"></div> Voltar
+                        <div class="icon-trian"></div> Voltar para início
                     </a>
                 </div>
             </div>
@@ -77,25 +77,25 @@
                             </h5 class="underline">
                         </div>
                         <div id="cpuArea" class="distribuicao-campo-barra bold"
-                            style="width: 0%; background-color: var(--red-normal);">
+                            style="width: 0%;">
                             <h6>
                                 CPU: ...%
                             </h6>
                         </div>
                         <div id="ramArea" class="distribuicao-campo-barra bold"
-                            style="width: 0%; background-color: var(--orange-normal);">
+                            style="width: 0%;">
                             <h6>
                                 RAM: ...%
                             </h6>
                         </div>
                         <div id="usoGeralArea" class="distribuicao-campo-barra bold"
-                            style="width: 0%; background-color: var(--green-dark);">
+                            style="width: 0%;">
                             <h6>
                                 Uso Geral: ...%
                             </h6>
                         </div>
-                        <div id="redeArea" class="distribuicao-campo-barra bold"
-                            style="width: 100%; background-color: var(--gray-3);">
+                        <div id="redeArea" class="distribuicao-campo-barra bold" 
+                            style="width: 100%;">
                             <h6>
                                 REDE: ...%
                             </h6>
@@ -103,8 +103,8 @@
                     </div>
 
                     <!-- LISTA DE ALERTAS -->
-                    <h3 class="italic" style="margin-top: 3%;">Ocorrências recentes</h3>
                     <div class="dash-alert-lista-pai">
+                        <h3 class="italic" style="margin-bottom: 2%;">Ocorrências recentes</h3>
                         <div class="dash-alert-lista-colunas">
                             <div style="width: 13%;">
                                 <h4 class="bold">ID</h4>
@@ -184,8 +184,10 @@
                                     Este gráfico de radar apresenta a distribuição dos alertas por tipo de recurso
                                     monitorado. <br><br>
 
-                                    <span class="bold">Pontas do radar:</span> Representam os recursos monitorados — CPU, RAM, Uso Geral e Rede. <br>
-                                    <span class="bold">Área do radar:</span> Indica a porcentagem de alertas gerados para cada recurso, permitindo
+                                    <span class="bold">Pontas do radar:</span> Representam os recursos monitorados —
+                                    CPU, RAM, Uso Geral e Rede. <br>
+                                    <span class="bold">Área do radar:</span> Indica a porcentagem de alertas gerados
+                                    para cada recurso, permitindo
                                     identificar quais áreas têm maior incidência de problemas. <br><br>
                                     Use este gráfico para entender como os alertas estão distribuídos entre os recursos
                                     e priorizar ações corretivas.
@@ -193,7 +195,7 @@
                             </div>
                         </div>
                         <h3 class="bold">Radar de distribuição:</h3>
-                        <div style="display: flex; flex-direction: row; height: 70%; width: 100%; justify-content: space-evenly; align-items: center;">
+                        <div class="organizacaopopup">
                             <div class="area-grafico-radar" id="area-grafico-radar">
                                 <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
                             </div>
@@ -204,7 +206,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-sair-radar bold" onclick="fecharRadar()">Sair</button>
+                        <button class="btn-sair-radar bold" onclick="fecharRadar()">Fechar</button>
                     </div>
                 </div>
             </div>
@@ -265,6 +267,27 @@
                             console.log("%%%%%%%%%:", cpu, ram, usoGeral, rede);
 
                             function atualizarDistribuicao(cpuPercent, ramPercent, usoGeralPercent, redePercent) {
+                                const densidade = [
+                                    { nome: "CPU", porcentagem: cpuPercent },
+                                    { nome: "RAM", porcentagem: ramPercent },
+                                    { nome: "USO GERAL", porcentagem: usoGeralPercent },
+                                    { nome: "REDE", porcentagem: redePercent },
+                                ];
+                                // tipo order by no js
+                                densidade.sort((a, b) => b.porcentagem - a.porcentagem);
+                                function validarCorDensidade(idArea, nomePercent) {
+                                    // var area = document.getElementById(nomePercent);
+                                    var area = idArea
+                                    if (densidade[0].nome == nomePercent) {
+                                        area.style.backgroundColor = "#36206d"
+                                    } else if (densidade[1].nome == nomePercent) {
+                                        area.style.backgroundColor = "#4E2E9E"
+                                    } else if (densidade[2].nome == nomePercent) {
+                                        area.style.backgroundColor = "#6D4BC7"
+                                    } else {
+                                        area.style.backgroundColor = "#794ED4"
+                                    }
+                                }
 
                                 const cpuArea = document.getElementById("cpuArea");
                                 const ramArea = document.getElementById("ramArea");
@@ -275,21 +298,25 @@
                                 cpuArea.style.width = `${cpuPercent}%`;
                                 cpuArea.textContent = `CPU: ${cpuPercent}%`;
                                 ajustarTamanhoTexto(cpuArea, cpuArea.offsetWidth)
+                                validarCorDensidade(cpuArea, "CPU")
 
                                 if (ramPercent == 0) { ramArea.style.display = 'none' }
                                 ramArea.style.width = `${ramPercent}%`;
                                 ramArea.textContent = `RAM: ${ramPercent}%`;
                                 ajustarTamanhoTexto(ramArea, ramArea.offsetWidth)
+                                validarCorDensidade(ramArea, "RAM")
 
                                 if (usoGeralPercent == 0) { usoGeralArea.style.display = 'none' }
                                 usoGeralArea.style.width = `${usoGeralPercent}%`;
                                 usoGeralArea.textContent = `Uso Geral: ${usoGeralPercent}%`;
                                 ajustarTamanhoTexto(usoGeralArea, usoGeralArea.offsetWidth)
+                                validarCorDensidade(usoGeralArea, "USO GERAL")
 
                                 if (redePercent == 0) { redeArea.style.display = 'none' }
                                 redeArea.style.width = `${redePercent}%`;
                                 redeArea.textContent = `REDE: ${redePercent}%`;
                                 ajustarTamanhoTexto(redeArea, redeArea.offsetWidth)
+                                validarCorDensidade(redeArea, "REDE")
 
                             }
                             function ajustarTamanhoTexto(idArea, width) {
@@ -335,8 +362,8 @@
             datasets: [{
                 label: 'Porcenagem de Alertas',
                 data: [cpu, ram, rede, outros],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(109, 75, 199, 0.2)',
+                borderColor: 'rgba(109, 75, 199, 1)',
                 borderWidth: 2
             }]
         };
@@ -681,7 +708,7 @@
                                 },
                                 options: {
                                     scales: {
-                                        x: { title: { display: true, text: 'Dias do Mês' } },
+                                        x: { title: { display: true, text: 'Data (últimos 30 dias)' } },
                                         y: { title: { display: true, text: 'Frequência de Máquinas Irregulares' } }
                                     },
                                     // responsive: true
