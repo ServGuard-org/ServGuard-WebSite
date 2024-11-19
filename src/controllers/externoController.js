@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const chaveGemini = process.env.CHAVE_GEMINI;
+const externoModel = require('../models/externoModel');
 
 function check(req, res) {
     let url = req.body.url;
@@ -29,6 +29,24 @@ function GenAIPerguntar(req, res) {
     });
 
     async function gerarResposta(mensagem) {
+
+        let chaveGemini = null;
+
+        try {
+            const respostaBanco = await externoModel.obterChaveGemini();
+            chaveGemini = String(respostaBanco[0].chave);
+        } catch (error) {
+            console.error(`Erro ao obter chave gemini do banco de dados. Tentando obter a chave do .env...`);
+        }
+
+        if (!chaveGemini) {
+            chaveGemini = process.env.CHAVE_GEMINI;
+        }
+
+        if(chaveGemini) {
+            console.log("Chave da API do Gemini Obtida com Sucesso...")
+        }
+
         // instanciando a classe GoogleGenerativeAI
         const chatIA = new GoogleGenerativeAI(chaveGemini);
         // obtendo o modelo de IA
