@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <body onload="carregarPagina()">
@@ -66,15 +67,36 @@
                     </a>
                 </div>
             </div>
-            <div class="dash-alert-titulo-detalhe">
-                <h3 class="italic">Detalhes de Alerta:</h3>
-            </div>
+
             <div class="father-dash-alert-use">
+
                 <div class="dash-alert-coluna-1-use">
+                    <div class="dash-alert-titulo-detalhe">
+                        <h3 class="bold">Detalhes de Alerta:</h3>
+                    </div>
                     <div class="father-dash-lista-alertas">
                         <div class="dash-use-total-medições">
+                            <div class="dash-adm-parameter-stability-use">
+                                <div class="father-tips">
+                                    <div class="tooltip tooltip-white">
+                                        <h4>i</h4>
+                                        <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                            Uma escala de 0 a 3 que indica o nível de
+                                            instabilidade/irregularidade das máquinas do servidor. <br />
+                                            <span class="bold">0</span> = Nenhuma irregularidade. <br />
+                                            <span class="bold">1</span> = Pelo menos um recurso irregular.
+                                            <br />
+                                            <span class="bold">2</span> = Mais de 25% das máquinas estão
+                                            irregulares. <br />
+                                            <span class="bold">3</span> = Mais de 50% das máquinas estão
+                                            irregulares. <br />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                             <h4 class="bold" style="margin-top: 2%;">Total de Medições</h4>
-                            <p class="bold" style="margin: 2%; font-size: 45px;">14</p>
+                            <!-- <p class="bold" style="margin: 2%; font-size: 45px;">14</p> -->
+                            <span class="bold" style="margin: 2%; font-size: 45px;" id="total_maquinas">...</span>
                         </div>
                         <div class="dash-alert-total">
                             <div class="dash-alert-lista-coluna-cpu">
@@ -104,22 +126,21 @@
                     </div> -->
 
                 </div>
-                <div class="dash-alert-coluna-2-use">
-                    <div class="dash-alert-coluna-2-dados">
-                        <div class="dados-metade">
-                            <h5 class="bold italic">Total de ocorrências de hoje:</h5>
-                            <h5 class="bold italic">Média de ocorrências por dia:</h5>
+                <div class="father-dash-alert-use-2">
+                    <div class="dash-alert-coluna-2-use">
+                        <div class="dash-alert-titulo-detalhe-2">
+                            <h3 class="bold">Histórico de Utilização dos últimos 7 dias:</h3>
                         </div>
-                        <div class="dados-parte-meio"></div>
-                        <div class="dados-metade">
-                            <h5 class="bold italic">Total de máquinas:</h5>
-                            <h5 class="bold italic">Irregulares:</h5>
+                        <div class="dash-alert-coluna-2-heat">
+                            <div id="chart" style="width: 100%; height: 100%; margin: 0 auto;"></div>
                         </div>
-                    </div>
-                    <div class="dash-alert-coluna-2-area-grafico">
-                        <h3 class="" style="font-weight: 500;">Previsão de tendência diária:</h3>
-                        <div class="area-grafico">
-                            <p>colocar grafico aqui</p>
+                        <div class="dash-alert-titulo-detalhe-componente">
+                            <h3 class="bold">Histórico de Utilização de Componente:</h3>
+                        </div>
+                        <div class="dash-alert-coluna-2-grafic">
+                            <div class="area-grafic">
+                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -154,7 +175,14 @@
     function carregarPagina() {
         sessionStorage.removeItem("VOLTAR_PAGINA");
         sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
-        consultarMaquina()
+        consultarMaquina();
+        consultarMaquinasFuncionamento();
+        // ValidacaoCores(escolhaRecurso)
+        obterIrrCPU();
+        obterIrrRAM();
+        obterEscalaInstabilidade();
+        var dataHoje = new Date(); 
+        atualizarMapaInterface(dataHoje);
     }
 
     function consultarMaquina() {
@@ -188,6 +216,363 @@
             })
             .catch(error => console.error(error));
     }
+
+    function consultarMaquinasFuncionamento() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById("total_maquinas").innerText = data.length;
+
+                const maquinasAtivas = data.filter(
+                    (maquina) => maquina.isAtiva === 1
+                );
+                document.getElementById("funcionamento_maquinas").innerText = maquinasAtivas.length;
+            });
+    }
+
+
+    function obterIrrCPU() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/recursos/irregularidade/cpu/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca das irregularidades de CPU");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        const irrCPU = json[0].qtdCpu;
+                        console.log("Valor capturado irrCPU:", irrCPU);
+                        document.getElementById("irr_cpu").innerHTML = irrCPU;
+                        // document.getElementById("irr_cpu").innerHTML = 25;
+                        ValidacaoCores("irregularidadesCPU");
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+                    );
+                    document.getElementById("irr_cpu").innerHTML = "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+    function obterIrrRAM() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/recursos/irregularidade/ram/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca das irregularidades de RAM");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        const irrRAM = json[0].qtdRam;
+                        console.log("Valor capturado irrRAM:", irrRAM);
+                        document.getElementById("irr_ram").innerHTML = irrRAM;
+                        ValidacaoCores("irregularidadesRAM");
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades RAM!"
+                    );
+                    document.getElementById("irr_ram").innerHTML = "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+    function ValidacaoCores(escolhaRecurso) {
+        const elementoIrrCPU = document.getElementById("irr_cpu");
+        const elementoIrrRAM = document.getElementById("irr_ram");
+        var idHTML;
+
+        if (escolhaRecurso == "irregularidadesCPU") {
+            idHTML = elementoIrrCPU;
+            valor = parseFloat(idHTML.innerText);
+            console.log("idHTML de CPU:", valor);
+        } else if (escolhaRecurso == "irregularidadesRAM") {
+            idHTML = elementoIrrRAM;
+            valor = parseFloat(idHTML.innerText);
+            console.log("idHTML de RAM:", valor);
+        }
+
+        if (valor <= 0) {
+            // verde
+            idHTML.classList.remove(
+                "text-green",
+                "text-red",
+                "text-orange",
+                "text-yellow",
+                "text-gray"
+            );
+            idHTML.classList.add("text-green");
+            // idHTML.innerHTML = idHTML;
+        } else if (valor > 0 && valor < 15) {
+            // amarelo
+            idHTML.classList.remove(
+                "text-green",
+                "text-red",
+                "text-orange",
+                "text-yellow",
+                "text-gray"
+            );
+            idHTML.classList.add("text-yellow");
+            // idHTML.innerHTML = idHTML;
+        } else if (valor >= 15 && valor < 25) {
+            // laranja
+            idHTML.classList.remove(
+                "text-green",
+                "text-red",
+                "text-orange",
+                "text-yellow",
+                "text-gray"
+            );
+            idHTML.classList.add("text-orange");
+            // idHTML.innerHTML = idHTML;
+        } else if (valor >= 25) {
+            // vermelho
+            idHTML.classList.remove(
+                "text-green",
+                "text-red",
+                "text-orange",
+                "text-yellow",
+                "text-gray"
+            );
+            idHTML.classList.add("text-red");
+            // idHTML.innerHTML = idHTML;
+        } else {
+            // sem cor (teoricamente aqui é impossível)
+            idHTML.classList.remove(
+                "text-green",
+                "text-red",
+                "text-orange",
+                "text-yellow",
+                "text-gray"
+            );
+            idHTML.classList.add("text-gray");
+            // idHTML.innerHTML = idHTML;
+        }
+    }
+
+    function obterEscalaInstabilidade() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca da escala de instabilidade");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        const irrPorcentagem = json[0].percentual_irregulares;
+                        console.log("Valor capturado irrPorcentagem:", irrPorcentagem);
+
+                        elementoInstabilidade = document.getElementById(
+                            "escala-instabilidade-use"
+                        );
+                        if (irrPorcentagem < 1) {
+                            elementoInstabilidade.innerHTML = 0;
+                        } else if (irrPorcentagem >= 1 && irrPorcentagem < 25) {
+                            elementoInstabilidade.innerHTML = 1;
+                        } else if (irrPorcentagem >= 25 && irrPorcentagem < 50) {
+                            elementoInstabilidade.innerHTML = 2;
+                        } else if (irrPorcentagem >= 50) {
+                            elementoInstabilidade.innerHTML = 3;
+                        }
+
+                        valor = parseFloat(elementoInstabilidade.innerText);
+                        switch (valor) {
+                            case 0:
+                                // verde
+                                elementoInstabilidade.classList.remove(
+                                    "text-green",
+                                    "text-red",
+                                    "text-orange",
+                                    "text-yellow",
+                                    "text-gray"
+                                );
+                                elementoInstabilidade.classList.add("text-green");
+                                break;
+                            case 1:
+                                // amarelo
+                                elementoInstabilidade.classList.remove(
+                                    "text-green",
+                                    "text-red",
+                                    "text-orange",
+                                    "text-yellow",
+                                    "text-gray"
+                                );
+                                elementoInstabilidade.classList.add("text-yellow");
+                                break;
+                            case 2:
+                                // laranja
+                                elementoInstabilidade.classList.remove(
+                                    "text-green",
+                                    "text-red",
+                                    "text-orange",
+                                    "text-yellow",
+                                    "text-gray"
+                                );
+                                elementoInstabilidade.classList.add("text-orange");
+                                break;
+                            case 3:
+                                // vermelho
+                                elementoInstabilidade.classList.remove(
+                                    "text-green",
+                                    "text-red",
+                                    "text-orange",
+                                    "text-yellow",
+                                    "text-gray"
+                                );
+                                elementoInstabilidade.classList.add("text-red");
+                                break;
+                            default:
+                                // sem cor (teoricamente aqui é impossível)
+                                elementoInstabilidade.classList.remove(
+                                    "text-green",
+                                    "text-red",
+                                    "text-orange",
+                                    "text-yellow",
+                                    "text-gray"
+                                );
+                                elementoInstabilidade.classList.add("text-gray");
+                                break;
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+                    );
+                    document.getElementById("escala-instabilidade-use").innerHTML =
+                        "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                // console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+    const formatarData = data => {
+        const dataFormatada = new Date(data);
+        return dataFormatada.toLocaleDateString();
+    }
+
+    function atualizarMapaInterface(dadosMapa) {
+
+        // Criando um array de datas únicas	
+        // Por ser um set, não aceita datas duplicadas
+        // ... (spread operator) para transformar o set em array de volta
+        // sort para ordenar as datas em ordem crescente
+        // map para transformar as datas em objetos
+        // exemplo do map: 
+        // "2021-09-01" => { name: "01/09/2021", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        const datas = [...new Set(dadosMapa[0].map(dm => dm.data))].sort();
+
+        console.log('DadosMapa', dadosMapa);
+        console.log('Datas:', datas);
+
+        // Criando um array de objetos com as datas e os registros do dia
+        // para cada data, filtrar os registros do dia
+        // e transformar em um objeto com a data e os registros
+        // converte os totais para inteiro (os dados já vem com casas decimais 0,
+        // mas estou removendo as casas para melhor visualização)
+        // e retorna o objeto
+        const series = datas.map(data => {
+            const registrosDoDia = dadosMapa[0].filter(dm => dm.data === data);
+            return {
+                name: formatarData(data),
+                data: registrosDoDia.map(r => parseInt(r.total_pacotes))
+            };
+        });
+
+        const options = {
+            series: series,
+            chart: {
+                height: 350,
+                width: 800,
+                type: 'heatmap',
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ["#6C2BB3"],
+            title: {
+                text: 'Mapa de Calor - Pacotes (E/R) por Hora',
+                offsetY: 15,
+                offsetX: 250,
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 'bold'
+                }
+            },
+            xaxis: {
+                categories: Array.from({ length: 24 }, (_, i) =>
+                    `${String(i).padStart(2, '0')}:00`
+                ),
+                title: {
+                    text: 'Horas do Dia'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Dias da Semana'
+                }
+            }
+        };
+
+        document.querySelector("#chart").innerHTML = '';
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    }
+
+    function atualizarMapa (numeroSemana) {
+        fetch(`/empresas/obterMapaSemana/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(resposta => resposta.json().then(respostaFormatada => {
+            console.log('Mapa de calor:', respostaFormatada);
+            atualizarMapaInterface(respostaFormatada);
+        })).catch(error => {
+            console.error('Erro ao obter mapa de calor:', error);
+        });
+    }
+
+    
 
 
 </script>

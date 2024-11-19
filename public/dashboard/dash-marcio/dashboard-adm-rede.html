@@ -59,7 +59,7 @@
         </header>
         <main>
             <div class="dash-rede-topo">
-                <h1 class="bold">Monitoramento de Rede</h1>
+                <h1 class="bold">Análise Histórica de Rede</h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar
@@ -148,7 +148,51 @@
                     </div>
 
                     <div class="dash-rede-card-analise">
-                        <div class="dash-rede-dentro-analise"></div>
+                        <div class="dash-rede-dentro-analise">
+                            <h5 class="bold">Resultado da Regressão Linear</h5 class="bold">
+                            <h5>Coeficiente Angular: <span id="placeholder-coef-ang">3,44</span></h5>
+                            <h5>Intercepto: <span id="placeholder-intercepto">0,44</span></h5>
+                            <div class="dash-rede-dentro-scroll">
+                                <p class="little-text" style="padding: 3%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                                    qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
+                                    consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                                    laborum.</p>
+                                </div>
+                                <h6 class="bold" style="display: flex; align-items: center; justify-content: center; width: 100%;">Análise Gerada Por IA <img src="../../assets/svg/SGI-preto.svg" style="width: 20px; margin-left: 0.5%;"> &nbsp;</h6>
+                        </div>
+                        <div class="dash-rede-dentro-divisao"></div>
+                        <div class="dash-rede-dentro-historico">
+                            <div class="dash-rede-dentro-historico-topo">
+                                <div class="dash-rede-itens-rede">
+                                    <h4 class="bold">Contagem de Alertas (<span
+                                            id="placeholder-semana-historico" class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
+                                    <div class="dash-rede-itens-historico">
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dash-rede-dentro-historico-baixo">
+                                <div class="dash-rede-itens-rede">
+                                    <h4 class="bold">Médias (<span
+                                            id="placeholder-semana-historico" class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
+                                    <div class="dash-rede-itens-historico">
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- <h4 class="italic bold">Contagem de Alertas</h4>
                     <div class="dash-rede-campo-barra">
@@ -330,8 +374,8 @@
                 {
                     label: `Semana Anterior (${formatarData(dados.semanaAnterior.inicio_semana)})`,
                     data: dadosAntigos,
-                    backgroundColor: 'rgba(42, 19, 215, 0.2)',
-                    borderColor: 'rgba(42, 19, 215, 1)',
+                    backgroundColor: 'rgba(78, 122, 212, 0.2)',
+                    borderColor: 'rgba(78, 122, 212, 1)',
                     borderWidth: 1
                 },
                 {

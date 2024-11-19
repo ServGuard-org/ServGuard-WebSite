@@ -54,6 +54,7 @@
 }
 
 .select-componente {
+    cursor: pointer;
     height: 85%;
 
     border: none;
