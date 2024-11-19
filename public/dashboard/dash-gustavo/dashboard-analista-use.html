@@ -72,7 +72,7 @@
 
                 <div class="dash-alert-coluna-1-use">
                     <div class="dash-alert-titulo-detalhe">
-                        <h3 class="bold">Detalhes de Alerta:</h3>
+                        <h4 class="bold">Detalhes de Alerta:</h4>
                     </div>
                     <div class="father-dash-lista-alertas">
                         <div class="dash-use-total-medições">
@@ -81,20 +81,13 @@
                                     <div class="tooltip tooltip-white">
                                         <h4>i</h4>
                                         <span class="tooltiptext tooltip-left text-black" style="text-align: left">
-                                            Uma escala de 0 a 3 que indica o nível de
-                                            instabilidade/irregularidade das máquinas do servidor. <br />
-                                            <span class="bold">0</span> = Nenhuma irregularidade. <br />
-                                            <span class="bold">1</span> = Pelo menos um recurso irregular.
-                                            <br />
-                                            <span class="bold">2</span> = Mais de 25% das máquinas estão
-                                            irregulares. <br />
-                                            <span class="bold">3</span> = Mais de 50% das máquinas estão
-                                            irregulares. <br />
+                                            Esse campo mostra quantas máquinas foram medidas, que será o mesmo número de máquinas cadastradas.<br />
+                                            Logo abaixo é feita a separação de todas as medições, mostrando o total de alertas de CPU e RAM. <br />
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="bold" style="margin-top: 2%;">Total de Medições</h4>
+                            <h4 class="bold" style="margin-top: 2%;">Total de Máquinas Medidas</h4>
                             <!-- <p class="bold" style="margin: 2%; font-size: 45px;">14</p> -->
                             <span class="bold" style="margin: 2%; font-size: 45px;" id="total_maquinas">...</span>
                         </div>
@@ -111,10 +104,16 @@
                         </div>
                         <div class="dash-alert-grafic-box-pai">
                             <div class="dash-alert-grafic-box1">
-                                <canvas id="myGraphUse1"></canvas>
+                                <div class="dash-titulo-gauge1">
+                                    <h4 class="bold">Média de uso CPU</h4>
+                                </div>
+                                <div id="chart1" style="max-width: 300px; margin: auto;"></div>
                             </div>
-                            <div class="dash-alert-grafic-box1">
-                                <canvas id="myGraphUse2"></canvas>
+                            <div class="dash-alert-grafic-box2">
+                                <div class="dash-titulo-gauge2">
+                                    <h4 class="bold">Média de uso RAM</h4>
+                                </div>
+                                <div id="chart2" style="max-width: 300px; margin: auto;"></div>
                             </div>
                         </div>
                     </div>
@@ -129,17 +128,18 @@
                 <div class="father-dash-alert-use-2">
                     <div class="dash-alert-coluna-2-use">
                         <div class="dash-alert-titulo-detalhe-2">
-                            <h3 class="bold">Histórico de Utilização dos últimos 7 dias:</h3>
+                            <h4 class="bold">Histórico de Utilização dos últimos 7 dias:</h4>
                         </div>
                         <div class="dash-alert-coluna-2-heat">
-                            <div id="chart" style="width: 100%; height: 100%; margin: 0 auto;"></div>
+                            <div class="dash-use-mapa-heat" id="chart"
+                                style="width: 100%; height: 100%; margin: 0 auto; position: relative;"></div>
                         </div>
                         <div class="dash-alert-titulo-detalhe-componente">
-                            <h3 class="bold">Histórico de Utilização de Componente:</h3>
+                            <h4 class="bold">Histórico de Utilização de Componente:</h4>
                         </div>
                         <div class="dash-alert-coluna-2-grafic">
                             <div class="area-grafic">
-                            
+
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
         obterIrrCPU();
         obterIrrRAM();
         obterEscalaInstabilidade();
-        var dataHoje = new Date(); 
+        var dataHoje = new Date();
         atualizarMapaInterface(dataHoje);
     }
 
@@ -530,7 +530,7 @@
             },
             colors: ["#6C2BB3"],
             title: {
-                text: 'Mapa de Calor - Pacotes (E/R) por Hora',
+                text: 'Mapa de Calor - Uso de CPU e RAM',
                 offsetY: 15,
                 offsetX: 250,
                 style: {
@@ -542,9 +542,9 @@
                 categories: Array.from({ length: 24 }, (_, i) =>
                     `${String(i).padStart(2, '0')}:00`
                 ),
-                title: {
-                    text: 'Horas do Dia'
-                }
+                // title: {
+                //     text: 'Horas do Dia'
+                // }
             },
             yaxis: {
                 title: {
@@ -558,7 +558,7 @@
         chart.render();
     }
 
-    function atualizarMapa (numeroSemana) {
+    function atualizarMapa(numeroSemana) {
         fetch(`/empresas/obterMapaSemana/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
             method: 'GET',
             headers: {
@@ -572,7 +572,134 @@
         });
     }
 
-    
+    function renderGaugeChart(selector, value) {
+        var options = {
+            series: [value], // Valor dinâmico
+            chart: {
+                type: 'radialBar',
+                offsetY: -20,
+                sparkline: {
+                    enabled: true,
+                },
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: "97%",
+                        margin: 5,
+                        dropShadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            color: "#794ED4",
+                            opacity: 1,
+                            blur: 2,
+                        },
+                    },
+                    dataLabels: {
+                        name: {
+                            show: false,
+                        },
+                        value: {
+                            offsetY: -2,
+                            fontSize: "22px",
+                            fontWeight: "bold", // Texto em negrito
+                            color: "black", // Cor do texto
+                            formatter: function (val) {
+                                return val + "%"; // Exibe o valor com "%"
+                            },
+                        },
+                    },
+                },
+            },
+            grid: {
+                padding: {
+                    top: -10,
+                },
+            },
+            fill: {
+                type: "solid", // Preenchimento sólido
+                colors: ["#794ED4"], // Define a cor roxa
+            },
+            labels: ["Média de RAM:"], // Label do gráfico
+        };
+
+        var chart = new ApexCharts(document.querySelector(selector), options);
+        chart.render();
+
+        return chart; // Retorna o objeto do gráfico, caso precise atualizar depois
+    }
+
+    // Chamada da função para criar o gráfico
+    const chart1 = renderGaugeChart("#chart1", 76);
+
+    function renderGaugeChart(selector, value) {
+        var options = {
+            series: [value], // Valor dinâmico
+            chart: {
+                type: 'radialBar',
+                offsetY: -20,
+                sparkline: {
+                    enabled: true
+                }
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: '97%',
+                        margin: 5,
+                        dropShadow: {
+                            enabled: true,
+                            top: 2,
+                            left: 0,
+                            color: '#794ED4',
+                            opacity: 1,
+                            blur: 2
+                        }
+                    },
+                    dataLabels: {
+                        name: {
+                            show: false
+                        },
+                        value: {
+                            offsetY: -2,
+                            fontSize: '22px',
+                            fontWeight: 'bold', // Texto em negrito
+                            color: 'black', // Cor do texto
+                            formatter: function (val) {
+                                return val + "%"; // Exibe o valor com "%"
+                            }
+                        }
+                    }
+                }
+            },
+            grid: {
+                padding: {
+                    top: -10
+                }
+            },
+            fill: {
+                type: '',
+                colors: ['#794ED4'],
+            },
+            labels: ['Média de RAM:'], // Label do gráfico
+        };
+
+        var chart = new ApexCharts(document.querySelector(selector), options);
+        chart.render();
+
+        return chart; // Retorna o objeto do gráfico, caso precise atualizar depois
+    }
+
+    // Chamada da função para criar o gráfico
+    const chart2 = renderGaugeChart("#chart2", 76);
+
 
 
 </script>
