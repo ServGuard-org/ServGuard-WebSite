@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ServGuard | Dashboard Uso Geral</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body
+    onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas(), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarMaquinasConnect(sessionStorage.getItem('ID_EMPRESA_USUARIO'))">
+    <section id="page-dashboard-usoGeral">
+        <header>
+            <div class="child-navbar-card-dash-adm">
+                <div class="navbar-logo-dash-adm">
+                    <img src="../../assets/svg/logo.svg" alt="#logo" />
+                </div>
+                <div class="navbar-navlink-dash-adm">
+                    <ul class="list-navlink-dash-adm">
+                        <li>
+                            <a href="../dashboard-adm.html" class="link-dash-adm active">
+                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            </a>
+                            <p class="little-text mt-1">Início</p>
+                        </li>
+                        <li>
+                            <a href="../dashboard-analista.html" class="link-dash-adm">
+                                <img src="../../assets/svg/search.svg" alt="#icone-layout" />
+                            </a>
+                            <p class="little-text mt-1">Detalhes</p>
+                        </li>
+                        <li>
+                            <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
+                                <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+                            </a>
+                            <p class="little-text mt-1">Funcionário</p>
+                        </li>
+                        <li>
+                            <a href="../gerenciamento-maquina.html" class="link-dash-adm">
+                                <img src="../../assets/svg/server-icon.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text mt-1">Máquina</p>
+                        </li>
+                        <li>
+                            <a href="../detalhes-funcionario.html" class="link-dash-adm">
+                                <img src="../../assets/svg/perfil-icon.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text mt-1">Perfil</p>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+                    <img src="../../assets/svg/exit-icon.svg" alt="" />
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <div class="dash-usoGeral">
+                <h1 class="bold">Monitoramento de Uso Geral:</h1>
+                <div class="link-back-seta">
+                    <a class="bold text-gray-dark" onclick="voltar()">
+                        <div class="icon-trian"></div> Voltar
+                    </a>
+                </div>
+            </div>
+
+            <div class="dash-usoGeral-father">
+
+                <div class="usoGeral-card-info">
+                    <div class="card-info-large">
+                        <p class="bold center">Uso Total das Máquinas da Empresa:</p>
+                        <div class="usoGeral-space-bar">
+                            <p class="usoGeral-text center bold">45%</p>
+                            <div class="usoGeral-bar">
+                                <div class="bar">
+                                    <div class="bar-uso"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="bold center">Armazenamento Total Empresa:</p>
+                        <div class="usoGeral-space-bar">
+                            <p class="usoGeral-text center bold">45%</p>
+                            <div class="usoGeral-bar">
+                                <div class="bar">
+                                    <div class="bar-uso"></div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="card-info-medium">
+                        <p class="bold center">Quantidade Total de Máquinas:</p>
+                        <h1 class="font-big bold center">0</h1>
+                    </div>
+                    <div class="card-info-medium">
+                        <p class="bold center">Número de Alertas de Uso (Semanal):</p>
+                        <h1 class="font-big bold center">0</h1>
+                    </div>
+                    <div class="card-info-large">
+                        <h4 class="center bold">Tendencias de Uso:</h4>
+                        <p class="center mt-1">Clique para ver a análise detalhada e antecipar futuras necessidades de recurso.</p>
+                        <div class="card-large-space-btn">
+                            <button class="btn-analise-usoGeral">
+                                Ver Análise de Uso Geral
+                            </button>   
+                        </div>
+                    </div>
+                </div>
+
+                <div class="usoGeral-machine-list">
+                    <div class="card-machine-list"></div>
+                    <div class="card-machine-list"></div>
+                </div>
+
+            </div>
+        </main>
+
+
+    </section>
+
+    <script>
+        function sairNavbar() {
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.href = "../index.html";
+        }
+
+        function DashboardAnalista() {
+            window.location.href = "dashboard-analista.html";
+        }
+        function DashboardUsoGeral() {
+            window.location.href =
+                "../dashboard/dash-caio/dashboard-adm-alert.html";
+        }
+        function DashboardRede() {
+            window.location.href =
+                "../dashboard/dash-marcio/dashboard-adm-rede.html";
+        }
+        function DashboardAlerta() {
+            window.location.href =
+                "../dashboard/dash-caio/dashboard-adm-alert.html";
+        }
+
+        function carregarPagina() {
+            const apresentacao = false;
+
+            // const apresentacao = true
+            const url = apresentacao
+                ? "https://www.bcb.gov.br/"
+                : "https://jsonplaceholder.typicode.com/todos/1";
+
+            isAtivoBACEN(url);
+            obterEscalaInstabilidade();
+            obterIrrCPU();
+            obterIrrRAM();
+            obterIrrDISCO();
+
+            const data = obterData();
+
+            let nomeEmpresa = obterNomeEmpresa();
+
+            let nomeUsuario = obterNomeUsuario();
+
+            const elementoData = document.getElementById("data_tempo_real");
+
+            const elementoEmpresa = document.getElementById("empresa_usuario");
+
+            const elementoNomeUsuario = document.getElementById("nome_usuario");
+
+            const elementoServico = document.getElementById("elemento_servico");
+
+            elementoNomeUsuario.innerHTML = nomeUsuario;
+
+            elementoEmpresa.innerHTML = nomeEmpresa;
+
+            elementoData.innerHTML = data;
+        }
+
+        function ValidacaoCores(escolhaRecurso) {
+            const elementoIrrCPU = document.getElementById("irr_cpu");
+            const elementoIrrRAM = document.getElementById("irr_ram");
+            const elementoIrrDisco = document.getElementById("irr_disco");
+            var idHTML;
+
+            if (escolhaRecurso == "irregularidadesCPU") {
+                idHTML = elementoIrrCPU;
+                valor = parseFloat(idHTML.innerText);
+                console.log("idHTML de CPU:", valor);
+            } else if (escolhaRecurso == "irregularidadesRAM") {
+                idHTML = elementoIrrRAM;
+                valor = parseFloat(idHTML.innerText);
+                console.log("idHTML de RAM:", valor);
+            } else if (escolhaRecurso == "irregularidadesDISCO") {
+                idHTML = elementoIrrDisco;
+                valor = parseFloat(idHTML.innerText);
+                console.log("idHTML de DISCO:", valor);
+            }
+
+            if (valor <= 0) {
+                // verde
+                idHTML.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                );
+                idHTML.classList.add("text-green");
+                // idHTML.innerHTML = idHTML;
+            } else if (valor > 0 && valor < 15) {
+                // amarelo
+                idHTML.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                );
+                idHTML.classList.add("text-yellow");
+                // idHTML.innerHTML = idHTML;
+            } else if (valor >= 15 && valor < 25) {
+                // laranja
+                idHTML.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                );
+                idHTML.classList.add("text-orange");
+                // idHTML.innerHTML = idHTML;
+            } else if (valor >= 25) {
+                // vermelho
+                idHTML.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                );
+                idHTML.classList.add("text-red");
+                // idHTML.innerHTML = idHTML;
+            } else {
+                // sem cor (teoricamente aqui é impossível)
+                idHTML.classList.remove(
+                    "text-green",
+                    "text-red",
+                    "text-orange",
+                    "text-yellow",
+                    "text-gray"
+                );
+                idHTML.classList.add("text-gray");
+                // idHTML.innerHTML = idHTML;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -34,6 +34,8 @@
     display: flex;
     justify-content: space-between;
     padding-right: var(--gap-3);
+
+    background: red;
 }
 
 .father-link-seta{

@@ -19,13 +19,12 @@
 .dash-alert-topo {
     width: 100%;
     height: 13%;
-    /* background-color: aquamarine; */
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-
+    
 }
 
 .dash-alert-pai {
