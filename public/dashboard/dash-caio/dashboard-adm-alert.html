@@ -20,8 +20,8 @@
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
                         <li>
-                            <a href="../dashboard-adm.html" class="link-dash-adm active">
-                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            <a href="../dashboard-adm.html" class="link-dash-adm">
+                                <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
                             </a>
                             <p class="little-text mt-1">Início</p>
                         </li>
@@ -73,7 +73,7 @@
                     <div class="dash-alert-campo-barra text-medium">
                         <div id="graficoRadar" class="campo-acesso-radar bold" onclick="exibirRadar()">
                             <h5 class="underline">
-                                Vizualização detalhada
+                                Visualização detalhada
                             </h5 class="underline">
                         </div>
                         <div id="cpuArea" class="distribuicao-campo-barra bold"
@@ -154,16 +154,55 @@
                         </div>
                     </div>
                     <div class="dash-alert-coluna-2-area-grafico">
+                        <div class="father-tips">
+                            <div class="tooltip tooltip-white">
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                    <span class="bold">Previsão de Tendência</span> <br>
+                                    Este gráfico mostra a previsão de tendência de máquinas irregulares nos últimos 30
+                                    dias. <br><br>
+
+                                    <span class="bold">Eixo X:</span> Representa as datas dos últimos 30 dias. <br>
+                                    <span class="bold">Eixo Y:</span> Indica a frequência de máquinas com
+                                    irregularidades registradas em cada dia. <br><br>
+                                    A linha de regressão ajuda a identificar a tendência geral, seja de aumento ou
+                                    diminuição, no número de máquinas irregulares ao longo do período analisado.
+                                </span>
+                            </div>
+                        </div>
                         <h3 class="" style="font-weight: 500;">Previsão de tendência diária:</h3>
                         <div class="area-grafico">
                             <canvas id="regressionChart" min-width="100%" max-height="100%"></canvas>
-
                         </div>
                     </div>
                     <div class="pai-popup-radar-fechado" id="areaRadar">
+                        <div class="father-tips">
+                            <div class="tooltip tooltip-white">
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                    <span class="bold">Distribuição de Recursos de Alerta</span> <br>
+                                    Este gráfico de radar apresenta a distribuição dos alertas por tipo de recurso
+                                    monitorado. <br><br>
+
+                                    <span class="bold">Pontas do radar:</span> Representam os recursos monitorados — CPU, RAM, Uso Geral e Rede. <br>
+                                    <span class="bold">Área do radar:</span> Indica a porcentagem de alertas gerados para cada recurso, permitindo
+                                    identificar quais áreas têm maior incidência de problemas. <br><br>
+                                    Use este gráfico para entender como os alertas estão distribuídos entre os recursos
+                                    e priorizar ações corretivas.
+                                </span>
+                            </div>
+                        </div>
                         <h3 class="bold">Radar de distribuição:</h3>
-                        <div class="area-grafico-radar" id="area-grafico-radar">
-                            <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                        <div style="display: flex; flex-direction: row; height: 70%; width: 100%; justify-content: space-evenly; align-items: center;">
+                            <div class="area-grafico-radar" id="area-grafico-radar">
+                                <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                            </div>
+                            <div class="campo-sgi">
+                                <h4>Análise da <span class="bold">SGI</span></h4>
+                                <div class="campo-sgi-resp">
+                                    <p id="respostaSGI">Resposta...</p>
+                                </div>
+                            </div>
                         </div>
                         <button class="btn-sair-radar bold" onclick="fecharRadar()">Sair</button>
                     </div>
@@ -229,7 +268,7 @@
 
                                 const cpuArea = document.getElementById("cpuArea");
                                 const ramArea = document.getElementById("ramArea");
-                                const usoGeralArea= document.getElementById("usoGeralArea");
+                                const usoGeralArea = document.getElementById("usoGeralArea");
                                 const redeArea = document.getElementById("redeArea");
 
                                 if (cpuPercent == 0) { cpuArea.style.display = 'none' }
@@ -539,16 +578,21 @@
                         console.log("PORCENTAGEM IRREGULAREEES", porcentagemIrr)
                         plotTotalM.innerHTML = totalM.toString();
                         plotTotalIrr.innerHTML = totalIrr.toString();
-                        if (porcentagemIrr > 50) {
+                        if (porcentagemIrr >= 50) {
                             plotTotalIrr.classList.remove(
                                 "text-black",
                             );
                             plotTotalIrr.classList.add("text-red");
-                        } else {
+                        } else if (porcentagemIrr > 1 && porcentagemIrr < 50) {
                             plotTotalIrr.classList.remove(
                                 "text-black",
                             );
                             plotTotalIrr.classList.add("text-orange");
+                        } else {
+                            plotTotalIrr.classList.remove(
+                                "text-black",
+                            );
+                            plotTotalIrr.classList.add("text-green");
                         }
                     });
                 } else {
