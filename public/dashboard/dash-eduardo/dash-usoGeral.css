@@ -1,0 +1,126 @@
+#page-dashboard-usoGeral {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
+    padding: 3%;
+    overflow-y: auto;
+    
+    & main {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: calc(100% - 90.4%);
+        width: 91%;
+        height: 100%;
+        gap: var(--gap-1);
+    }
+}
+
+.dash-usoGeral{
+    display: flex;
+    justify-content: space-between;
+}
+
+.dash-usoGeral-father{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: var(--gap-3);
+}
+
+.usoGeral-card-info{
+    display: flex;
+    gap: var(--gap-4);
+    width: 100%;
+    height: 100%;
+    max-height: 210px;
+
+    & .card-info-large{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 500px;
+        height: 100%;
+        flex: 2;
+        padding: var(--gap-2);
+
+        border-radius: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.50);
+        background: rgba(255, 255, 255, 0.11);
+        box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+        backdrop-filter: blur(2px);
+    }
+
+    & .card-info-medium{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 250px;
+        height: 100%;
+        flex: 1;
+        padding: var(--gap-2);
+
+        border-radius: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.50);
+        background: rgba(255, 255, 255, 0.11);
+        box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+        backdrop-filter: blur(2px);
+    }
+}
+
+.card-large-space-btn{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.usoGeral-space-bar{
+    width: 100%;
+    height: 27%;
+
+    & .usoGeral-text{
+        height: 55%;
+    }
+
+    & .usoGeral-bar{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 45%;
+
+        & .bar{
+            width: 90%;
+            height: 100%;
+            border: 2px solid var(--white-darknes);
+            background: var(--white-normal);
+            border-radius: 20px;
+        }
+
+        & .bar-uso{
+            width: 40%;
+            height: 100%;
+            background: var(--normal-purple);
+            border-radius: 11px;
+        }
+    }
+}
+
+
+
+.usoGeral-machine-list{
+    background: rgb(4, 128, 0);
+    display: flex;
+    gap: var(--gap-4);
+    width: 100%;
+    height: calc(100% - 210px);
+
+    & .card-machine-list{
+        flex: 1;
+        height: 100%;
+        background: blue;
+    }
+}

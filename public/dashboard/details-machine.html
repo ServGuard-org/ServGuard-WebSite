@@ -1,256 +1,307 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="shortcut icon" href="../assets/svg/logo-white.svg" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link
+      rel="shortcut icon"
+      href="../assets/svg/logo-white.svg"
+      type="image/x-icon"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>ServGuard | Máquina</title>
-</head>
+  </head>
 
-<body onload="consultarMaquina(), listarVolumes(), iniciarMonitoramento(), verificarCargo()">
+  <body
+    onload="consultarMaquina(), listarVolumes(), iniciarMonitoramento(), verificarCargo()"
+  >
     <section id="page-details-machine">
-        <header>
-            <div class="child-navbar-card-dash-adm">
-                <div class="navbar-logo-dash-adm">
-                    <img src="../assets/svg/logo.svg" alt="#logo">
-                </div>
-                <div class="navbar-navlink-dash-adm">
-                    <ul class="list-navlink-dash-adm" id="ul-nav" style="display: none;">
-                        <li id="li-adm">
-                            <a href="./dashboard-adm.html" class="link-dash-adm">
-                                <img src="../assets/svg/layout-icon.svg" alt="#icone-layout">
-                            </a>
-                            <p class="little-text mt-1">Início</p>
-                        </li>
-                        <li>
-                            <a href="dashboard-analista.html" class="link-dash-adm">
-                                <img src="../assets/svg/search.svg" alt="#icone-layout" />
-                            </a>
-                            <p class="little-text mt-1">Detalhes</p>
-                        </li>
-                        <li id="li-funcionario">
-                            <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
-                                <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario">
-                            </a>
-                            <p class="little-text mt-1">Funcionário</p>
-                        </li>
-                        <li>
-                            <a href="./details-machine.html" class="link-dash-adm active">
-                                <img src="../assets/svg/server-icon-white.svg" alt="#icone-servidor">
-                            </a>
-                            <p class="little-text mt-1">Máquina</p>
-                        </li>
-                        <li>
-                            <a href="detalhes-funcionario.html" class="link-dash-adm">
-                                <img src="../assets/svg/perfil-icon.svg" alt="#icone-">
-                            </a>
-                            <p class="little-text mt-1">Perfil</p>
-                        </li>
-                    </ul>
-                </div>
-                <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-                    <img src="../assets/svg/exit-icon.svg" alt="">
+      <header>
+        <div class="child-navbar-card-dash-adm">
+          <div class="navbar-logo-dash-adm">
+            <img src="../assets/svg/logo.svg" alt="#logo" />
+          </div>
+          <div class="navbar-navlink-dash-adm">
+            <ul class="list-navlink-dash-adm" id="ul-nav" style="display: none">
+              <li id="li-adm">
+                <a href="./dashboard-adm.html" class="link-dash-adm">
+                  <img
+                    src="../assets/svg/layout-icon.svg"
+                    alt="#icone-layout"
+                  />
                 </a>
+                <p class="little-text mt-1">Início</p>
+              </li>
+              <li>
+                <a href="dashboard-analista.html" class="link-dash-adm">
+                  <img src="../assets/svg/search.svg" alt="#icone-layout" />
+                </a>
+                <p class="little-text mt-1">Detalhes</p>
+              </li>
+              <li id="li-funcionario">
+                <a
+                  href="./gerenciamento-funcionario.html"
+                  class="link-dash-adm"
+                >
+                  <img
+                    src="../assets/svg/func-icon.svg"
+                    alt="#icone-funcionario"
+                  />
+                </a>
+                <p class="little-text mt-1">Funcionário</p>
+              </li>
+              <li>
+                <a href="./details-machine.html" class="link-dash-adm active">
+                  <img
+                    src="../assets/svg/server-icon-white.svg"
+                    alt="#icone-servidor"
+                  />
+                </a>
+                <p class="little-text mt-1">Máquina</p>
+              </li>
+              <li>
+                <a href="detalhes-funcionario.html" class="link-dash-adm">
+                  <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
+                </a>
+                <p class="little-text mt-1">Perfil</p>
+              </li>
+            </ul>
+          </div>
+          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+            <img src="../assets/svg/exit-icon.svg" alt="" />
+          </a>
+        </div>
+      </header>
+
+      <main>
+        <div class="father-details-machine-father">
+          <h1 class="bold">
+            Detalhes da máquina de ID:
+            <span class="text-purple bold" id="id_maquina">...</span>
+          </h1>
+          <div class="father-link-seta">
+            <div class="link-back-seta2">
+              <a class="bold text-gray-dark" onclick="voltar()">
+                <div class="icon-trian-left"></div>
+                Voltar
+              </a>
             </div>
-        </header>
-
-        <main>
-            <div class="father-details-machine-father">
-                <h1 class="bold">Detalhes da máquina de ID: <span class="text-purple bold" id="id_maquina">...</span>
-                </h1>
-                <div class="father-link-seta">
-                <div class="link-back-seta2">
-                    <a class="bold text-gray-dark" onclick="voltar()">
-                        <div class="icon-trian-left"></div> Voltar
-                    </a>
-                </div>
-                <div class="link-back-seta2">
-                    <a class="bold text-gray-dark" onclick="dashboardMonitoramento()">
-                         Monitoramento Detalhado <div class="icon-trian"></div>
-                    </a>
-                </div>
+            <div class="link-back-seta2">
+              <a class="bold text-gray-dark" onclick="dashboardMonitoramento()">
+                Monitoramento Detalhado
+                <div class="icon-trian"></div>
+              </a>
             </div>
-            </div>
+          </div>
+        </div>
 
-            <div class="father-details-machine">
-                <div class="child-details-machine-info">
-                    <h3 class="italic thin mb-1">Dados da Máquina: </h3>
-                    <div class="details-machine-info-card mb-2">
-                        <div class="info-card-machine-group mb-1">
-                            <div class="info-card-machine">
-                                <p class="bold">Hostname:</p>
-                                <p class="little-text" id="hostname">...</p>
-                            </div>
-                            <div class="info-card-machine">
-                                <p class="bold">Modelo CPU:</p>
-                                <p class="little-text" id="cpu">...</p>
-                            </div>
-                            <div class="info-card-machine">
-                                <p class="bold">Capacidade RAM:</p>
-                                <p class="little-text"><span class="little-text" id="ram">...</span> GB</p>
-                            </div>
-                        </div>
-                        <div class="info-card-machine-group">
-                            <div class="info-card-machine">
-                                <p class="bold">Apelido:</p>
-                                <p class="little-text" id="apelido">...</p>
-                            </div>
-                            <div class="info-card-machine">
-                                <p class="bold">Núcleos (Totais):</p>
-                                <p class="little-text" id="nucleos">...</p>
-                            </div>
-                            <div class="info-card-machine">
-                                <p class="bold">Armaz. Usado / Total:</p>
-                                <p class="little-text"><span class="little-text" id="usado">...</span> GB de <span
-                                        id="total">...</span> GB</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="details-machine-graphic">
-                        <div class="details-machine-graphic-space">
-                            <h3 class="bold mb-2">Monitoramento em tempo real</h3>
-                            <canvas class="graphic-machine" id="myLineChart"></canvas>
-                        </div>
-                    </div>
+        <div class="father-details-machine">
+          <div class="child-details-machine-info">
+            <h3 class="italic thin mb-1">Dados da Máquina:</h3>
+            <div class="details-machine-info-card mb-2">
+              <div class="info-card-machine-group mb-1">
+                <div class="info-card-machine">
+                  <p class="bold">Hostname:</p>
+                  <p class="little-text" id="hostname">...</p>
                 </div>
-
-                <div class="child-details-machine-volumes">
-                    <div class="details-machine-volume-list mb-1">
-                        <h3 class="italic center mb-1">Volumes:</h3>
-                        <div class="machine-volume-list">
-                            <div class="machine-volume-list-content pr-1">
-                                <div class="machine-volume-coluns">
-                                    <div class="volume-coluns-item bold">ID</div>
-                                    <div class="volume-coluns-item bold">Ponto de Montagem</div>
-                                    <div class="volume-coluns-item bold">Capacidade (Usado / Total)</div>
-                                </div>
-
-                                <div class="machine-volume-area-content" id="pai_volumes">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="machine-active-deactivate">
-                        <h3 class="bold">Gerenciamento da Máquina:</h3>
-                        <div class="active-deactive-options">
-                            <button class="btn-dashboard" id="ativar_maquina" onclick="ativarMaquina()"
-                                style="display: none;">Ativar Máquina</button>
-                            <button class="btn-dashboard" id="desativar_maquina" onclick="desativarMaquina()"
-                                style="display: none;">Desativar Máquina</button>
-                        </div>
-                    </div>
+                <div class="info-card-machine">
+                  <p class="bold">Modelo CPU:</p>
+                  <p class="little-text" id="cpu">...</p>
                 </div>
+                <div class="info-card-machine">
+                  <p class="bold">Capacidade RAM:</p>
+                  <p class="little-text">
+                    <span class="little-text" id="ram">...</span> GB
+                  </p>
+                </div>
+              </div>
+              <div class="info-card-machine-group">
+                <div class="info-card-machine">
+                  <p class="bold">Apelido:</p>
+                  <p class="little-text" id="apelido">...</p>
+                </div>
+                <div class="info-card-machine">
+                  <p class="bold">Núcleos (Totais):</p>
+                  <p class="little-text" id="nucleos">...</p>
+                </div>
+                <div class="info-card-machine">
+                  <p class="bold">Armaz. Usado / Total:</p>
+                  <p class="little-text">
+                    <span class="little-text" id="usado">...</span> GB de
+                    <span id="total">...</span> GB
+                  </p>
+                </div>
+              </div>
             </div>
-        </main>
+            <div class="details-machine-graphic">
+              <div class="details-machine-graphic-space">
+                <h3 class="bold mb-2">Monitoramento em tempo real</h3>
+                <canvas class="graphic-machine" id="myLineChart"></canvas>
+              </div>
+            </div>
+          </div>
 
+          <div class="child-details-machine-volumes">
+            <div class="details-machine-volume-list mb-1">
+              <h3 class="italic center mb-1">Volumes:</h3>
+              <div class="machine-volume-list">
+                <div class="machine-volume-list-content pr-1">
+                  <div class="machine-volume-coluns">
+                    <div class="volume-coluns-item bold">ID</div>
+                    <div class="volume-coluns-item bold">Ponto de Montagem</div>
+                    <div class="volume-coluns-item bold">
+                      Capacidade (Usado / Total)
+                    </div>
+                  </div>
+
+                  <div
+                    class="machine-volume-area-content"
+                    id="pai_volumes"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="machine-active-deactivate">
+              <h3 class="bold">Gerenciamento da Máquina:</h3>
+              <div class="active-deactive-options">
+                <button
+                  class="btn-dashboard"
+                  id="ativar_maquina"
+                  onclick="ativarMaquina()"
+                  style="display: none"
+                >
+                  Ativar Máquina
+                </button>
+                <button
+                  class="btn-dashboard"
+                  id="desativar_maquina"
+                  onclick="desativarMaquina()"
+                  style="display: none"
+                >
+                  Desativar Máquina
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </section>
 
     <script>
+      const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
-        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
-
-        idMaquina === null ? Swal.fire({
+      idMaquina === null
+        ? Swal.fire({
             icon: "error",
             title: `Falha ao obter o id da máquina!`,
             showConfirmButton: false,
             timer: 1100,
             backdrop: false,
-            background: '#EEE9FA'
-        }).then(() => {
+            background: "#EEE9FA",
+          }).then(() => {
             window.location.href = "./gerenciamento-maquina.html";
-        }) : null;
+          })
+        : null;
 
-        function verificarCargo() {
-            var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
-            if (isADM !== null && Number(isADM) === 0) {
-                document.getElementById('li-adm').style.display = 'none';
-                document.getElementById('li-funcionario').style.display = 'none';
-                document.getElementById('ul-nav').style.display = 'flex';
+      function verificarCargo() {
+        var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+        if (isADM !== null && Number(isADM) === 0) {
+          document.getElementById("li-adm").style.display = "none";
+          document.getElementById("li-funcionario").style.display = "none";
+          document.getElementById("ul-nav").style.display = "flex";
+        } else {
+          document.getElementById("li-adm").style.display = "flex";
+          document.getElementById("li-funcionario").style.display = "flex";
+          document.getElementById("ul-nav").style.display = "flex";
+        }
+      }
+
+      function sairNavbar() {
+        event.preventDefault();
+        sessionStorage.clear();
+        window.location.href = "../index.html";
+      }
+
+      function voltar() {
+        sessionStorage.removeItem("ID_MAQUINA");
+        paginaAnterior = sessionStorage.getItem("VOLTAR_PAGINA");
+        if (paginaAnterior == "D_Alert") {
+          window.location.href = "./dash-caio/dashboard-adm-alert.html";
+        } else if (paginaAnterior == "D_Analista") {
+          window.location.href = "./dashboard-analista.html";
+        } else if (paginaAnterior == "D_Maquina") {
+          window.location.href = "./gerenciamento-maquina.html";
+        }
+      }
+      function dashboardMonitoramento() {
+        window.location.href = "./dash-gustavo/dashboard-analista-use.html";
+      }
+
+      function consultarMaquina() {
+        fetch(`/maquinas/listarPorId/${idMaquina}`, {
+          dataType: "json",
+          contentType: "application/json",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data[0]);
+
+            document.getElementById("id_maquina").innerHTML = data[0].idMaquina;
+            document.getElementById("hostname").innerHTML = data[0].nome;
+            document.getElementById("cpu").innerHTML = data[0].modeloCPU;
+            document.getElementById("ram").innerHTML = Math.ceil(
+              data[0].capacidadeRAM
+            );
+            document.getElementById("apelido").innerHTML = data[0].apelido;
+            document.getElementById("nucleos").innerHTML =
+              data[0].qtdNucleosLogicos;
+            document.getElementById("usado").innerHTML = parseFloat(
+              data[0].discoUsado
+            ).toFixed(2);
+            document.getElementById("total").innerHTML = parseFloat(
+              data[0].discoTotal
+            ).toFixed(2);
+
+            if (data[0].isAtiva === 1) {
+              document.getElementById("ativar_maquina").style.display = "none";
+              document.getElementById("desativar_maquina").style.display =
+                "block";
             } else {
-                document.getElementById('li-adm').style.display = 'flex';
-                document.getElementById('li-funcionario').style.display = 'flex';
-                document.getElementById('ul-nav').style.display = 'flex';
+              document.getElementById("ativar_maquina").style.display = "block";
+              document.getElementById("desativar_maquina").style.display =
+                "none";
             }
-        }
+          })
+          .catch((error) => console.error(error));
+      }
 
-        function sairNavbar() {
-            event.preventDefault();
-            sessionStorage.clear();
-            window.location.href = "../index.html";
-        }
+      function listarVolumes() {
+        fetch(`/maquinas/listarVolumesPorMaquina/${idMaquina}`, {
+          dataType: "json",
+          contentType: "application/json",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            data.forEach((element) => {
+              adicionarVolume(
+                element.idVolume,
+                element.pontoMontagem,
+                element.capacidadeTotal,
+                element.capacidadeUsada
+              );
+            });
+          })
+          .catch((error) => console.error(error));
+      }
 
-        function voltar() {
-            sessionStorage.removeItem("ID_MAQUINA");
-            paginaAnterior = sessionStorage.getItem("VOLTAR_PAGINA")
-            if (paginaAnterior == "D_Alert"){
-                window.location.href = "./dash-caio/dashboard-adm-alert.html";
-            } else if (paginaAnterior == "D_Analista"){
-                window.location.href = "./dashboard-analista.html";
-            }  else if (paginaAnterior == "D_Maquina"){
-                window.location.href = "./gerenciamento-maquina.html";
-            }
-        }
-        function dashboardMonitoramento(){
-        window.location.href = "./dash-gustavo/dashboard-analista-use.html"
-    }
-
-
-
-        function consultarMaquina() {
-
-            fetch(`/maquinas/listarPorId/${idMaquina}`, {
-                dataType: 'json',
-                contentType: 'application/json',
-            })
-                .then(response => response.json())
-                .then(data => {
-
-                    console.log(data[0]);
-
-                    document.getElementById("id_maquina").innerHTML = data[0].idMaquina;
-                    document.getElementById("hostname").innerHTML = data[0].nome;
-                    document.getElementById("cpu").innerHTML = data[0].modeloCPU;
-                    document.getElementById("ram").innerHTML = Math.ceil(data[0].capacidadeRAM);
-                    document.getElementById("apelido").innerHTML = data[0].apelido;
-                    document.getElementById("nucleos").innerHTML = data[0].qtdNucleosLogicos;
-                    document.getElementById("usado").innerHTML = parseFloat(data[0].discoUsado).toFixed(2);
-                    document.getElementById("total").innerHTML = parseFloat(data[0].discoTotal).toFixed(2);
-
-                    if (data[0].isAtiva === 1) {
-                        document.getElementById("ativar_maquina").style.display = "none";
-                        document.getElementById("desativar_maquina").style.display = "block";
-                    } else {
-                        document.getElementById("ativar_maquina").style.display = "block";
-                        document.getElementById("desativar_maquina").style.display = "none";
-                    }
-
-                })
-                .catch(error => console.error(error));
-        }
-
-        function listarVolumes() {
-            fetch(`/maquinas/listarVolumesPorMaquina/${idMaquina}`, {
-                dataType: 'json',
-                contentType: 'application/json',
-            }).then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    data.forEach(element => {
-                        adicionarVolume(element.idVolume, element.pontoMontagem, element.capacidadeTotal, element.capacidadeUsada);
-                    });
-                })
-                .catch(error => console.error(error));
-        }
-
-        function adicionarVolume(idVolume, pontoMontagem, capacidade, usado) {
-            const novoVolume = `                                    
+      function adicionarVolume(idVolume, pontoMontagem, capacidade, usado) {
+        const novoVolume = `                                    
                 <div class="machine-volume-rows">
                     <div class="volume-item-rows-lixo">
                         </div>
@@ -262,193 +313,201 @@
                                                     <p class="">${pontoMontagem}</p>
                                             </div>
                                             <div class="volume-item-rows">
-                                                <p class="">${parseFloat(usado).toFixed(2)} / ${parseFloat(capacidade).toFixed(2)} GB</p>
+                                                <p class="">${parseFloat(
+                                                  usado
+                                                ).toFixed(2)} / ${parseFloat(
+          capacidade
+        ).toFixed(2)} GB</p>
                                                 </div>
                                         </div>
                                         </div>`;
 
-            document.getElementById("pai_volumes").innerHTML += novoVolume;
-        }
+        document.getElementById("pai_volumes").innerHTML += novoVolume;
+      }
 
-        function ativarMaquina() {
-            fetch(`/maquinas/ativarPorId/${idMaquina}`, {
-                method: 'GET',
-                dataType: 'json',
-                contentType: 'application/json',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    Swal.fire({
-                        position: "bottom-end",
-                        icon: "success",
-                        title: `Máquina de id: ${idMaquina} Ativada com Sucesso!`,
-                        showConfirmButton: false,
-                        timer: 1100,
-                        backdrop: false,
-                        background: '#EEE9FA'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                })
-                .catch(error => console.error(error));
-        }
+      function ativarMaquina() {
+        fetch(`/maquinas/ativarPorId/${idMaquina}`, {
+          method: "GET",
+          dataType: "json",
+          contentType: "application/json",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: `Máquina de id: ${idMaquina} Ativada com Sucesso!`,
+              showConfirmButton: false,
+              timer: 1100,
+              backdrop: false,
+              background: "#EEE9FA",
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((error) => console.error(error));
+      }
 
-        function desativarMaquina() {
-            fetch(`/maquinas/inativarPorId/${idMaquina}`, {
-                method: 'GET',
-                dataType: 'json',
-                contentType: 'application/json',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    Swal.fire({
-                        position: "bottom-end",
-                        icon: "success",
-                        title: `Máquina de id: ${idMaquina} Desativada com Sucesso!`,
-                        showConfirmButton: false,
-                        timer: 1100,
-                        backdrop: false,
-                        background: '#EEE9FA'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                })
-                .catch(error => console.error(error));
-        }
+      function desativarMaquina() {
+        fetch(`/maquinas/inativarPorId/${idMaquina}`, {
+          method: "GET",
+          dataType: "json",
+          contentType: "application/json",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            Swal.fire({
+              position: "bottom-end",
+              icon: "success",
+              title: `Máquina de id: ${idMaquina} Desativada com Sucesso!`,
+              showConfirmButton: false,
+              timer: 1100,
+              backdrop: false,
+              background: "#EEE9FA",
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((error) => console.error(error));
+      }
 
-        let myLineChart = null;
+      let myLineChart = null;
 
-        function inicializarGrafico() {
-            const ctx = document.getElementById('myLineChart').getContext('2d');
+      function inicializarGrafico() {
+        const ctx = document.getElementById("myLineChart").getContext("2d");
 
-            const config = {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: 'Uso de CPU',
-                            data: [],
-                            borderColor: '#8a4dfb',
-                            backgroundColor: 'transparent',
-                            pointBorderColor: '#8a4dfb',
-                            pointBackgroundColor: '#8a4dfb',
-                            pointRadius: 5,
-                            pointHoverRadius: 7,
-                            fill: false,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'Uso de RAM',
-                            data: [],
-                            borderColor: '#4dfb8a',
-                            backgroundColor: 'transparent',
-                            pointBorderColor: '#4dfb8a',
-                            pointBackgroundColor: '#4dfb8a',
-                            pointRadius: 5,
-                            pointHoverRadius: 7,
-                            fill: false,
-                            tension: 0.4
-                        }
-                    ]
+        const config = {
+          type: "line",
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: "Uso de CPU",
+                data: [],
+                borderColor: "#8a4dfb",
+                backgroundColor: "transparent",
+                pointBorderColor: "#8a4dfb",
+                pointBackgroundColor: "#8a4dfb",
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                fill: false,
+                tension: 0.4,
+              },
+              {
+                label: "Uso de RAM",
+                data: [],
+                borderColor: "#4dfb8a",
+                backgroundColor: "transparent",
+                pointBorderColor: "#4dfb8a",
+                pointBackgroundColor: "#4dfb8a",
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                fill: false,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              x: {
+                grid: {
+                  display: false,
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                        },
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            grid: {
-                                color: '#e5e5e5'
-                            },
-                            beginAtZero: true
-                        }
-                    }
-                }
-            };
+              },
+              y: {
+                grid: {
+                  color: "#e5e5e5",
+                },
+                beginAtZero: true,
+              },
+            },
+          },
+        };
 
-            myLineChart = new Chart(ctx, config);
+        myLineChart = new Chart(ctx, config);
+      }
+
+      function formatarData(dataString) {
+        try {
+          // Converter a string da data para objeto Date
+          const data = new Date(dataString);
+
+          // Verificar se a data é válida
+          if (isNaN(data.getTime())) {
+            throw new Error("Data inválida");
+          }
+
+          // Formatar para hora:minuto
+          return data.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+        } catch (error) {
+          console.error("Erro ao formatar data:", error, dataString);
+          return "Hora inválida";
         }
+      }
 
-        function formatarData(dataString) {
-            try {
-                // Converter a string da data para objeto Date
-                const data = new Date(dataString);
+      function atualizarGrafico() {
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
-                // Verificar se a data é válida
-                if (isNaN(data.getTime())) {
-                    throw new Error('Data inválida');
-                }
+        fetch(`/maquinas/dadosTempoReal/${idMaquina}`, {
+          method: "GET",
+          dataType: "json",
+          contentType: "application/json",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Pegar o dado mais recente
+            const dadoMaisRecente = data[data.length - 1];
 
-                // Formatar para hora:minuto
-                return data.toLocaleTimeString('pt-BR', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-            } catch (error) {
-                console.error('Erro ao formatar data:', error, dataString);
-                return 'Hora inválida';
+            // Formatar a hora do novo ponto com tratamento de erro
+            const horaFormatada = formatarData(dadoMaisRecente.ultima_captura);
+            console.log("Data original:", dadoMaisRecente.ultima_captura);
+            console.log("Data formatada:", horaFormatada);
+
+            // Adicionar novo ponto ao gráfico
+            myLineChart.data.labels.push(horaFormatada);
+            myLineChart.data.datasets[0].data.push(
+              parseFloat(dadoMaisRecente.ultimo_uso_cpu)
+            );
+            myLineChart.data.datasets[1].data.push(
+              parseFloat(dadoMaisRecente.ultimo_uso_ram)
+            );
+
+            // Manter apenas os últimos 10 pontos
+            if (myLineChart.data.labels.length > 10) {
+              myLineChart.data.labels.shift();
+              myLineChart.data.datasets.forEach((dataset) =>
+                dataset.data.shift()
+              );
             }
-        }
 
-        function atualizarGrafico() {
-            const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+            // Atualizar o gráfico
+            myLineChart.update();
+          })
+          .catch((error) => console.error("Erro ao buscar dados:", error));
+      }
 
-            fetch(`/maquinas/dadosTempoReal/${idMaquina}`, {
-                method: 'GET',
-                dataType: 'json',
-                contentType: 'application/json',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Pegar o dado mais recente
-                    const dadoMaisRecente = data[data.length - 1];
+      function iniciarMonitoramento() {
+        // Inicializar o gráfico vazio
+        inicializarGrafico();
 
-                    // Formatar a hora do novo ponto com tratamento de erro
-                    const horaFormatada = formatarData(dadoMaisRecente.ultima_captura);
-                    console.log('Data original:', dadoMaisRecente.ultima_captura);
-                    console.log('Data formatada:', horaFormatada);
+        // Fazer a primeira atualização imediatamente
+        atualizarGrafico();
 
-                    // Adicionar novo ponto ao gráfico
-                    myLineChart.data.labels.push(horaFormatada);
-                    myLineChart.data.datasets[0].data.push(parseFloat(dadoMaisRecente.ultimo_uso_cpu));
-                    myLineChart.data.datasets[1].data.push(parseFloat(dadoMaisRecente.ultimo_uso_ram));
-
-                    // Manter apenas os últimos 10 pontos
-                    if (myLineChart.data.labels.length > 10) {
-                        myLineChart.data.labels.shift();
-                        myLineChart.data.datasets.forEach(dataset => dataset.data.shift());
-                    }
-
-                    // Atualizar o gráfico
-                    myLineChart.update();
-                })
-                .catch(error => console.error('Erro ao buscar dados:', error));
-        }
-
-        function iniciarMonitoramento() {
-            // Inicializar o gráfico vazio
-            inicializarGrafico();
-
-            // Fazer a primeira atualização imediatamente
-            atualizarGrafico();
-
-            // Configurar atualizações a cada 31 segundos
-            setInterval(atualizarGrafico, 31000);
-        }
+        // Configurar atualizações a cada 31 segundos
+        setInterval(atualizarGrafico, 31000);
+      }
     </script>
-
-</body>
-
+  </body>
 </html>
