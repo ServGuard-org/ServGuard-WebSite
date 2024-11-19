@@ -153,42 +153,41 @@
                             <h5>Coeficiente Angular: <span id="placeholder-coef-ang">3,44</span></h5>
                             <h5>Intercepto: <span id="placeholder-intercepto">0,44</span></h5>
                             <div class="dash-rede-dentro-scroll">
-                                <p class="little-text" style="padding: 3%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                                    qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
-                                    consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                    laborum.</p>
-                                </div>
-                                <h6 class="bold" style="display: flex; align-items: center; justify-content: center; width: 100%;">Análise Gerada Por IA <img src="../../assets/svg/SGI-preto.svg" style="width: 20px; margin-left: 0.5%;"> &nbsp;</h6>
+                                <p class="little-text" style="padding: 3%;" id="placeholder-analise-ia"><img
+                                        src="../../assets/gif/loading.gif" alt=""></p>
+                            </div>
+                            <h6 class="bold"
+                                style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                                Análise Gerada Por IA <img src="../../assets/svg/SGI-preto.svg"
+                                    style="width: 20px; margin-left: 0.5%;"> &nbsp;</h6>
                         </div>
                         <div class="dash-rede-dentro-divisao"></div>
                         <div class="dash-rede-dentro-historico">
                             <div class="dash-rede-dentro-historico-topo">
                                 <div class="dash-rede-itens-rede">
-                                    <h4 class="bold">Contagem de Alertas (<span
-                                            id="placeholder-semana-historico" class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
+                                    <h4 class="bold">Contagem de Alertas (<span id="placeholder-semana-historico"
+                                            class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
                                     <div class="dash-rede-itens-historico">
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
+                                                id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
+                                                id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
+                                                id="placeholder-pacotes-er">900</span></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="dash-rede-dentro-historico-baixo">
                                 <div class="dash-rede-itens-rede">
-                                    <h4 class="bold">Médias (<span
-                                            id="placeholder-semana-historico" class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
+                                    <h4 class="bold">Médias (<span id="placeholder-semana-historico"
+                                            class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
                                     <div class="dash-rede-itens-historico">
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
+                                                id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
+                                                id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
+                                                id="placeholder-pacotes-er">900</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +268,16 @@
         );
         console.log("Predictions:", predictions);
 
+        gerarAnaliseIA({ alpha: alpha, beta: beta })
+
         return predictions;
+    }
+
+    const formatarTextoIA = texto => {
+        // Utilizando uma expressão regular para encontrar os textos dentro de **
+        return texto
+        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
+        .replace(/\n/g, '<br>'); // Substitui as quebras de linha
     }
 
     const formatarSemanas = semana => {
@@ -332,9 +340,25 @@
         }
     };
 
+    const atualizarContagensMedias = () => {
+        const elementosData = document.querySelectorAll('#placeholder-semana-historico');
+        console.log(elementosData)
+        const data = formatarData(dados.semana.inicio_semana);
+        elementosData.forEach(ed => ed.innerHTML = data)
+    }
+
     const gerarAnaliseIA = dadosRegressaoLinear => {
-        const mensagem = `
-        Uma regressão linear, com resultado: ${dadosRegressaoLinear} foi gerada. Com base nela,
+
+        const elementoAng = document.getElementById('placeholder-coef-ang');
+        const elementoInt = document.getElementById('placeholder-intercepto');
+
+        elementoAng.innerHTML = `${Math.round(dadosRegressaoLinear.beta, 2)}`;
+        elementoInt.innerHTML = `${Math.round(dadosRegressaoLinear.alpha, 2)}`;
+
+        const dadosPreparados = `Coeficiente Angular: ${dadosRegressaoLinear.beta}, Intercepto: ${dadosRegressaoLinear.alpha}`;
+
+        let mensagem = `
+        Uma regressão linear, com resultado: ${dadosPreparados} foi gerada, onde Y é o número de pacotes enviados e recebidos e X são os dias. Com base nela,
         gere uma análise de tendência para a empresa. Esta regressão linear utilizou os dados de pacotes 
         enviados e recebidos de todos os servidores desta empresa. Faça uma análise sem citar nomes técnicos.
         Faça, ao final, um comentário geral sobre os resultados obtidos.
@@ -345,12 +369,15 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: {
-                pergunta: mensagem
-            }
+            body: JSON.stringify({
+                pergunta: mensagem.toString()
+            })
         }
         ).then(resposta => resposta.json().then(respostaFormatada => {
+            respostaFormatada = formatarTextoIA(respostaFormatada.resposta.toString());
             console.log('Resposta IA:', respostaFormatada);
+            const elementoAnalise = document.getElementById('placeholder-analise-ia');
+            elementoAnalise.innerHTML = respostaFormatada;
         })).catch(error => {
             console.error('Erro ao obter resposta IA:', error);
         });
