@@ -20,8 +20,8 @@
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
                         <li>
-                            <a href="../dashboard-adm.html" class="link-dash-adm active">
-                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            <a href="../dashboard-adm.html" class="link-dash-adm">
+                                <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
                             </a>
                             <p class="little-text mt-1">Início</p>
                         </li>
@@ -71,9 +71,9 @@
                     <!-- BARRA DE DISTRIBUICAO -->
                     <h4 class="italic bold">Distribuição de alertas por recurso</h4>
                     <div class="dash-alert-campo-barra text-medium">
-                        <div id="graficoRadar" class="campo-acesso-radar bold">
+                        <div id="graficoRadar" class="campo-acesso-radar bold" onclick="exibirRadar()">
                             <h5 class="underline">
-                                Vizualização detalhada
+                                Visualização detalhada
                             </h5 class="underline">
                         </div>
                         <div id="cpuArea" class="distribuicao-campo-barra bold"
@@ -88,16 +88,16 @@
                                 RAM: ...%
                             </h6>
                         </div>
-                        <div id="redeArea" class="distribuicao-campo-barra bold"
+                        <div id="usoGeralArea" class="distribuicao-campo-barra bold"
                             style="width: 0%; background-color: var(--green-dark);">
                             <h6>
-                                REDE: ...%
+                                Uso Geral: ...%
                             </h6>
                         </div>
-                        <div id="outrosArea" class="distribuicao-campo-barra bold"
+                        <div id="redeArea" class="distribuicao-campo-barra bold"
                             style="width: 100%; background-color: var(--gray-3);">
                             <h6>
-                                OUTROS: ...%
+                                REDE: ...%
                             </h6>
                         </div>
                     </div>
@@ -154,11 +154,57 @@
                         </div>
                     </div>
                     <div class="dash-alert-coluna-2-area-grafico">
+                        <div class="father-tips">
+                            <div class="tooltip tooltip-white">
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                    <span class="bold">Previsão de Tendência</span> <br>
+                                    Este gráfico mostra a previsão de tendência de máquinas irregulares nos últimos 30
+                                    dias. <br><br>
+
+                                    <span class="bold">Eixo X:</span> Representa as datas dos últimos 30 dias. <br>
+                                    <span class="bold">Eixo Y:</span> Indica a frequência de máquinas com
+                                    irregularidades registradas em cada dia. <br><br>
+                                    A linha de regressão ajuda a identificar a tendência geral, seja de aumento ou
+                                    diminuição, no número de máquinas irregulares ao longo do período analisado.
+                                </span>
+                            </div>
+                        </div>
                         <h3 class="" style="font-weight: 500;">Previsão de tendência diária:</h3>
                         <div class="area-grafico">
                             <canvas id="regressionChart" min-width="100%" max-height="100%"></canvas>
-
                         </div>
+                    </div>
+                    <div class="pai-popup-radar-fechado" id="areaRadar">
+                        <div class="father-tips">
+                            <div class="tooltip tooltip-white">
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                    <span class="bold">Distribuição de Recursos de Alerta</span> <br>
+                                    Este gráfico de radar apresenta a distribuição dos alertas por tipo de recurso
+                                    monitorado. <br><br>
+
+                                    <span class="bold">Pontas do radar:</span> Representam os recursos monitorados — CPU, RAM, Uso Geral e Rede. <br>
+                                    <span class="bold">Área do radar:</span> Indica a porcentagem de alertas gerados para cada recurso, permitindo
+                                    identificar quais áreas têm maior incidência de problemas. <br><br>
+                                    Use este gráfico para entender como os alertas estão distribuídos entre os recursos
+                                    e priorizar ações corretivas.
+                                </span>
+                            </div>
+                        </div>
+                        <h3 class="bold">Radar de distribuição:</h3>
+                        <div style="display: flex; flex-direction: row; height: 70%; width: 100%; justify-content: space-evenly; align-items: center;">
+                            <div class="area-grafico-radar" id="area-grafico-radar">
+                                <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
+                            </div>
+                            <div class="campo-sgi">
+                                <h4>Análise da <span class="bold">SGI</span></h4>
+                                <div class="campo-sgi-resp">
+                                    <p id="respostaSGI">Resposta...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-sair-radar bold" onclick="fecharRadar()">Sair</button>
                     </div>
                 </div>
             </div>
@@ -210,20 +256,20 @@
                             cpu = Math.round((cpu * 100) / totalA);
                             ram = json[0].qtdRam;
                             ram = Math.round((ram * 100) / totalA);
+                            usoGeral = json[0].qtdUsoGeral;
+                            usoGeral = Math.round((usoGeral * 100) / totalA);
                             rede = json[0].qtdRede;
                             rede = Math.round((rede * 100) / totalA);
-                            outros = json[0].qtdOutros;
-                            outros = Math.round((outros * 100) / totalA);
 
                             console.log("Total isAlerta:", totalA);
-                            console.log("%%%%%%%%%:", cpu, ram, rede, outros);
+                            console.log("%%%%%%%%%:", cpu, ram, usoGeral, rede);
 
-                            function atualizarDistribuicao(cpuPercent, ramPercent, redePercent, outrosPercent) {
+                            function atualizarDistribuicao(cpuPercent, ramPercent, usoGeralPercent, redePercent) {
 
                                 const cpuArea = document.getElementById("cpuArea");
                                 const ramArea = document.getElementById("ramArea");
+                                const usoGeralArea = document.getElementById("usoGeralArea");
                                 const redeArea = document.getElementById("redeArea");
-                                const outrosArea = document.getElementById("outrosArea");
 
                                 if (cpuPercent == 0) { cpuArea.style.display = 'none' }
                                 cpuArea.style.width = `${cpuPercent}%`;
@@ -235,15 +281,15 @@
                                 ramArea.textContent = `RAM: ${ramPercent}%`;
                                 ajustarTamanhoTexto(ramArea, ramArea.offsetWidth)
 
+                                if (usoGeralPercent == 0) { usoGeralArea.style.display = 'none' }
+                                usoGeralArea.style.width = `${usoGeralPercent}%`;
+                                usoGeralArea.textContent = `Uso Geral: ${usoGeralPercent}%`;
+                                ajustarTamanhoTexto(usoGeralArea, usoGeralArea.offsetWidth)
+
                                 if (redePercent == 0) { redeArea.style.display = 'none' }
                                 redeArea.style.width = `${redePercent}%`;
                                 redeArea.textContent = `REDE: ${redePercent}%`;
                                 ajustarTamanhoTexto(redeArea, redeArea.offsetWidth)
-
-                                if (outrosPercent == 0) { outrosArea.style.display = 'none' }
-                                outrosArea.style.width = `${outrosPercent}%`;
-                                outrosArea.textContent = `OUTROS: ${outrosPercent}%`;
-                                ajustarTamanhoTexto(outrosArea, outrosArea.offsetWidth)
 
                             }
                             function ajustarTamanhoTexto(idArea, width) {
@@ -253,7 +299,8 @@
                                     idArea.style.fontSize = "20px";
                                 }
                             }
-                            atualizarDistribuicao(cpu, ram, rede, outros)
+                            atualizarDistribuicao(cpu, ram, usoGeral, rede)
+                            gerarGraficoRadar(cpu, ram, usoGeral, rede)
 
                         } else {
                             console.log("Estrutura JSON inesperada ou vazia.");
@@ -275,125 +322,49 @@
 
     }
 
-    function obterDadosDeApoio1() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totalHoje;
-        var mediaA;
-        fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(function (resposta) {
-                console.log("Iniciando a busca de dados apoio 2");
-
-                if (resposta.ok) {
-                    return resposta.json().then((json) => {
-                        if (json && json.length > 0) {
-                            totalHoje = json[0].total_capturas_alerta_hoje;
-                            mediaA = json[0].media_diaria_alertas;
-
-                            console.log("Valor captura alerta hoje:", totalHoje);
-                            console.log("Média alerta diária:", mediaA);
-
-                            const mediaDiaria = document.getElementById("id_media_ocorrencias");
-                            const elementoInstabilidade = document.getElementById("id_total_ocorrencias");
-
-                            if (mediaDiaria && elementoInstabilidade) {
-                                elementoInstabilidade.innerHTML = totalHoje.toString();
-                                mediaDiaria.innerHTML = parseInt(mediaA).toString();
-
-                                const valor = parseFloat(elementoInstabilidade.innerText);
-                                const media = parseFloat(mediaDiaria.innerText);
-
-                                console.log("Comparando valor:", valor, "com média:", media);
-
-                                if (valor < media) {
-                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
-                                    elementoInstabilidade.classList.add("text-green");
-                                    console.log("Aplicando classe: text-green");
-                                } else if (valor === media) {
-                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
-                                    elementoInstabilidade.classList.add("text-orange");
-                                    console.log("Aplicando classe: text-orange");
-                                } else if (valor > media) {
-                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
-                                    elementoInstabilidade.classList.add("text-red");
-                                    console.log("Aplicando classe: text-red");
-                                }
-                            } else {
-                                console.log("Elementos HTML não encontrados para exibição.");
-                            }
-                        } else {
-                            console.log("Estrutura JSON inesperada ou vazia.");
-                        }
-                    });
-                } else {
-                    console.log(
-                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-                    );
-                    document.getElementById("escala-instabilidade").innerHTML =
-                        "Erro ao obter";
-                    return null;
-                }
-            })
-            .catch(function (erro) {
-                return null;
-            });
+    function exibirRadar() {
+        areaPopup = document.getElementById("areaRadar")
+        areaPopup.classList.add("opacidade1");
     }
 
-    function obterDadosDeApoio2() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        var totalM;
-        var totalIrr;
-        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(function (resposta) {
-                console.log("Iniciando a busca de dados apoio 1");
+    function gerarGraficoRadar(cpu, ram, rede, outros) {
+        const ctx = document.getElementById("radarChart").getContext('2d');
+        // Dados do gráfico
+        const data = {
+            labels: ['CPU', 'RAM', 'USO GERAL', 'REDE'],
+            datasets: [{
+                label: 'Porcenagem de Alertas',
+                data: [cpu, ram, rede, outros],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }]
+        };
 
-                if (resposta.ok) {
-                    return resposta.json().then((json) => {
-                        console.log(json);
-                        totalM = json[0].total_maquinas;
-                        totalIrr = json[0].total_maquinas_irregulares;
-                        console.log("Total maquinas:", totalM);
-                        console.log("Maquinas irregulares:", totalIrr);
-
-                        plotTotalM = document.getElementById("id_total_maquinas");
-                        plotTotalIrr = document.getElementById("id_irregularidade_maquinas");
-                        porcentagemIrr = (totalIrr * 100) / totalM
-                        console.log("PORCENTAGEM IRREGULAREEES", porcentagemIrr)
-                        plotTotalM.innerHTML = totalM.toString();
-                        plotTotalIrr.innerHTML = totalIrr.toString();
-                        if (porcentagemIrr > 50) {
-                            plotTotalIrr.classList.remove(
-                                "text-black",
-                            );
-                            plotTotalIrr.classList.add("text-red");
-                        } else {
-                            plotTotalIrr.classList.remove(
-                                "text-black",
-                            );
-                            plotTotalIrr.classList.add("text-orange");
-                        }
-                    });
-                } else {
-                    console.log(
-                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-                    );
-                    document.getElementById("escala-instabilidade").innerHTML =
-                        "Erro ao obter";
-                    return null;
+        // Configurações do gráfico
+        const config = {
+            type: 'radar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true
+                    }
                 }
-            })
-            .catch(function (erro) {
-                return null;
-            });
+            }
+        };
+        new Chart(ctx, config);
+    }
+
+    function fecharRadar() {
+        areaPopup = document.getElementById("areaRadar")
+        areaPopup.classList.remove("opacidade1");
     }
 
     function carregarListaAlertas() {
@@ -506,10 +477,138 @@
             });
         return false;
     }
+
     function DetalhesMaquina(idMaquina) {
         sessionStorage.setItem("ID_MAQUINA", idMaquina);
         window.location.href = "../details-machine.html";
     }
+
+    function obterDadosDeApoio1() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        var totalHoje;
+        var mediaA;
+        fetch(`/medidas/medidasAlertas/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca de dados apoio 2");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        if (json && json.length > 0) {
+                            totalHoje = json[0].total_capturas_alerta_hoje;
+                            mediaA = json[0].media_diaria_alertas;
+
+                            console.log("Valor captura alerta hoje:", totalHoje);
+                            console.log("Média alerta diária:", mediaA);
+
+                            const mediaDiaria = document.getElementById("id_media_ocorrencias");
+                            const elementoInstabilidade = document.getElementById("id_total_ocorrencias");
+
+                            if (mediaDiaria && elementoInstabilidade) {
+                                elementoInstabilidade.innerHTML = totalHoje.toString();
+                                mediaDiaria.innerHTML = parseInt(mediaA).toString();
+
+                                const valor = parseFloat(elementoInstabilidade.innerText);
+                                const media = parseFloat(mediaDiaria.innerText);
+
+                                console.log("Comparando valor:", valor, "com média:", media);
+
+                                if (valor < media) {
+                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                                    elementoInstabilidade.classList.add("text-green");
+                                    console.log("Aplicando classe: text-green");
+                                } else if (valor === media) {
+                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                                    elementoInstabilidade.classList.add("text-orange");
+                                    console.log("Aplicando classe: text-orange");
+                                } else if (valor > media) {
+                                    elementoInstabilidade.classList.remove("text-green", "text-red", "text-orange", "text-yellow", "text-gray");
+                                    elementoInstabilidade.classList.add("text-red");
+                                    console.log("Aplicando classe: text-red");
+                                }
+                            } else {
+                                console.log("Elementos HTML não encontrados para exibição.");
+                            }
+                        } else {
+                            console.log("Estrutura JSON inesperada ou vazia.");
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+                    );
+                    document.getElementById("escala-instabilidade").innerHTML =
+                        "Erro ao obter";
+                    return null;
+                }
+            })
+            .catch(function (erro) {
+                return null;
+            });
+    }
+
+    function obterDadosDeApoio2() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        var totalM;
+        var totalIrr;
+        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca de dados apoio 1");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        totalM = json[0].total_maquinas;
+                        totalIrr = json[0].total_maquinas_irregulares;
+                        console.log("Total maquinas:", totalM);
+                        console.log("Maquinas irregulares:", totalIrr);
+
+                        plotTotalM = document.getElementById("id_total_maquinas");
+                        plotTotalIrr = document.getElementById("id_irregularidade_maquinas");
+                        porcentagemIrr = (totalIrr * 100) / totalM
+                        console.log("PORCENTAGEM IRREGULAREEES", porcentagemIrr)
+                        plotTotalM.innerHTML = totalM.toString();
+                        plotTotalIrr.innerHTML = totalIrr.toString();
+                        if (porcentagemIrr >= 50) {
+                            plotTotalIrr.classList.remove(
+                                "text-black",
+                            );
+                            plotTotalIrr.classList.add("text-red");
+                        } else if (porcentagemIrr > 1 && porcentagemIrr < 50) {
+                            plotTotalIrr.classList.remove(
+                                "text-black",
+                            );
+                            plotTotalIrr.classList.add("text-orange");
+                        } else {
+                            plotTotalIrr.classList.remove(
+                                "text-black",
+                            );
+                            plotTotalIrr.classList.add("text-green");
+                        }
+                    });
+                } else {
+                    console.log(
+                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+                    );
+                    document.getElementById("escala-instabilidade").innerHTML =
+                        "Erro ao obter";
+                    return null;
+                }
+            })
+            .catch(function (erro) {
+                return null;
+            });
+    }
+
     function buscarDadosGrafico() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         fetch(`/medidas/dadosGraficoAlertas/${idEmpresa}/`, {
