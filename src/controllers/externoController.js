@@ -36,15 +36,16 @@ function GenAIPerguntar(req, res) {
             const respostaBanco = await externoModel.obterChaveGemini();
             chaveGemini = String(respostaBanco[0].chave);
         } catch (error) {
-            console.error(`Erro ao obter chave gemini do banco de dados. Tentando obter a chave do .env...`);
+            console.error(`Erro ao obter chave gemini do banco de dados.`);
         }
 
         if (!chaveGemini) {
+            console.error(` Tentando obter a chave do .env...`);
             chaveGemini = process.env.CHAVE_GEMINI;
         }
 
         if(chaveGemini) {
-            console.log("Chave da API do Gemini Obtida com Sucesso...")
+            console.log("Chave da API do Gemini Obtida com Sucesso...");
         }
 
         // instanciando a classe GoogleGenerativeAI

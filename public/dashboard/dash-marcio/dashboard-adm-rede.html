@@ -142,8 +142,8 @@
                 </div>
                 <div class="dash-rede-coluna-2">
                     <div class="dash-rede-coluna-2-area-grafico">
-                        <div class="area-grafico-rede">
-                            <div id="chart" style="width: 100%; height: 100%; margin: 0 auto;"></div>
+                        <div class="area-grafico-rede" id="div-heatmap">
+                            <img src="../../assets/gif/loading.gif" alt="">
                         </div>
                     </div>
 
@@ -276,8 +276,8 @@
     const formatarTextoIA = texto => {
         // Utilizando uma expressão regular para encontrar os textos dentro de **
         return texto
-        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
-        .replace(/\n/g, '<br>'); // Substitui as quebras de linha
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
+            .replace(/\n/g, '<br>'); // Substitui as quebras de linha
     }
 
     const formatarSemanas = semana => {
@@ -408,8 +408,8 @@
                 {
                     label: `Semana Selecionada (${formatarData(dados.semana.inicio_semana)})`,
                     data: dadosAtuais,
-                    backgroundColor: 'rgba(66, 203, 53, 0.2)',
-                    borderColor: 'rgba(66, 203, 53, 1)',
+                    backgroundColor: 'rgba(121, 78, 212, 0.2)',
+                    borderColor: 'rgba(121, 78, 212, 1)',
                     borderWidth: 1
                 }
             ]
@@ -483,9 +483,10 @@
                         type: 'line',
                         label: `Linha de Projeção`,
                         data: x_values.map((x, i) => ({ x, y: y_hat[i] })),
-                        borderColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(121, 78, 212)',
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderWidth: 2,
+                        borderDash: [5, 5],
                         tension: 0.3,
                     },
                     {
@@ -498,6 +499,18 @@
                 ]
             },
             options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Regressão Linear",
+                        font: {
+                            size: 20,
+                            weight: 'bold'
+                        },
+                        color: '#000',
+                        align: 'center'
+                    }
+                },
                 scales: {
                     x: {
                         type: 'linear',
@@ -670,12 +683,18 @@
     }
 
     const atualizarMapa = numeroSemana => {
+
+        const divMapa = document.getElementById('div-heatmap');
+
+        divMapa.innerHTML = `<img src="../../assets/gif/loading.gif" alt="">`
+
         fetch(`/empresas/obterMapaSemana/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then(resposta => resposta.json().then(respostaFormatada => {
+            divMapa.innerHTML = `<div id="chart" style="width: 100%; height: 100%; margin: 0 auto;"></div>`
             console.log('Mapa de calor:', respostaFormatada);
             atualizarMapaInterface(respostaFormatada);
         })).catch(error => {

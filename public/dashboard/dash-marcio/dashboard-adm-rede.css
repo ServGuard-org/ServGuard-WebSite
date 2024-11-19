@@ -27,7 +27,7 @@
 }
 
 .dash-rede-cor-atual {
-  color: #42CB35;
+  color: var(--dark-purple);
 }
 
 .dash-rede-fonte-cards {
@@ -437,6 +437,6 @@
   /* background-color: var(--dark-purple); */
   display: flex;
   flex-direction: row;
-  align-items: start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }
