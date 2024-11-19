@@ -305,8 +305,8 @@ CREATE OR REPLACE VIEW vista_distribuicao_alerta AS
 SELECT 
     SUM(CASE WHEN mr.fkRecurso = 1 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdCpu,
     SUM(CASE WHEN mr.fkRecurso = 2 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRam,
-    SUM(CASE WHEN mr.fkRecurso = 3 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRede,
-    SUM(CASE WHEN mr.fkRecurso NOT IN (1, 2, 3) AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdOutros,
+    SUM(CASE WHEN mr.fkRecurso = 3 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdUsoGeral,
+    SUM(CASE WHEN mr.fkRecurso NOT IN (1, 2, 3) AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdRede,
     SUM(CASE WHEN isAlerta = 1 THEN 1 ELSE 0 END) AS qtdAlertas,
     fkEmpresa
 FROM Captura c
