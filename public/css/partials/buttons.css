@@ -238,6 +238,7 @@
   justify-content: center;
   align-items: end;
   cursor: pointer;
+  z-index: 3;
 
   & a {
     padding: var(--gap-1) var(--gap-2);
