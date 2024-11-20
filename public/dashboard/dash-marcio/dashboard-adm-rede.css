@@ -247,7 +247,7 @@
 .dash-rede-dentro-scroll {
   overflow: scroll;
   text-align: justify;
-  max-height: 500px;
+  max-height: 200px;
 
   padding: 1%;
   margin-right: 3%;

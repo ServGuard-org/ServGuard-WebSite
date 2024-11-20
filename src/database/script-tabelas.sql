@@ -265,6 +265,7 @@ JOIN (
 
 
 -- VIEW PARA O E DO ETL
+-- AJUSTE - ÚLTIMOS 7 DIAS
 CREATE OR REPLACE VIEW vista_registro_cpu AS
 	SELECT registro, idEmpresa, fkRecurso FROM Captura 
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
@@ -299,6 +300,7 @@ SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
 -- Irregularidades de CPU
+-- AJUSTE - APENAS DIA ATUAL
 CREATE OR REPLACE VIEW vista_irregularidade AS
 	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
@@ -310,6 +312,7 @@ SELECT count(registro) as qtdCpu FROM vista_irregularidade
 
 
 -- DISTRIBUICAO ALERTA
+-- AJUSTE - ÚLTIMOS 30 DIAS
 CREATE OR REPLACE VIEW vista_distribuicao_alerta AS
 SELECT 
     SUM(CASE WHEN mr.fkRecurso = 1 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdCpu,
@@ -366,6 +369,7 @@ ORDER BY t1.fkEmpresa, t1.data;
 SELECT * FROM vista_alertas_grafico WHERE fkEmpresa = 1;
     
 -- Irregularidades de DISCO
+-- AJUSTE - DIA ATUAL
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
 		JOIN Empresa ON idEmpresa = fkEmpresa
@@ -413,6 +417,7 @@ FROM vista_irregularidade_total_e_percentual
 WHERE fkEmpresa = 1;
 
 -- Dados media de alertas
+-- AJUSTE - ÚLTIMOS 30 DIAS
 CREATE OR REPLACE VIEW vista_capturas_alerta_total_e_media_diaria AS
     SELECT 
         (SELECT COUNT(*) FROM Captura 
@@ -484,6 +489,7 @@ CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
 
 -- LISTA ULTIMOS ALERTAS
 CREATE OR REPLACE VIEW vista_ultimos_alertas AS
+-- AJUSTE - ÚLTIMOS 30 DIAS
 	SELECT fkMaquina, Recurso.nome, dthCriacao, fkEmpresa FROM Captura
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Recurso ON fkRecurso = idRecurso
@@ -547,6 +553,7 @@ SELECT * FROM vista_ultimas_metricas WHERE idMaquina = 1;
 
 -- ranking de recursos mais problematicos
 CREATE OR REPLACE VIEW vista_ranking_recurso AS
+-- AJUSTE - DIA ATUAL
 	SELECT (SELECT COUNT(DISTINCT idMaquina) AS DicosIrregulares FROM vista_irregularidade_disco WHERE (usado / capacidade) > 0.85) AS qtdDISCO,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1) AS qtdCPU,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1) AS qtdRAM,
@@ -555,12 +562,6 @@ CREATE OR REPLACE VIEW vista_ranking_recurso AS
 select qtdCPU,qtdRAM,qtdDISCO from vista_ranking_recurso
 	WHERE idEmpresa=1;
             
-CREATE OR REPLACE VIEW vista_irregularidade AS
-	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
-			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-			JOIN Maquina ON fkMaquina = idMaquina
-			JOIN Empresa ON fkEmpresa = idEmpresa;
-
 CREATE OR REPLACE VIEW vista_semanas_captura_empresa AS
 SELECT DISTINCT
     m.fkEmpresa,
