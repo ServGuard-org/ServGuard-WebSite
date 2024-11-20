@@ -58,11 +58,14 @@
         </header>
         <main>
             <div class="dash-alert-topo">
-                <h1 class="bold">Monitoramento de alertas:</h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar para início
                     </a>
+                </div>
+                <div class="dash-alert-titulo">
+                    <h1 class="bold">Monitoramento de alertas:</h1>
+                    <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p>
                 </div>
             </div>
             <div class="dash-alert-pai">
@@ -76,26 +79,22 @@
                                 Visualização detalhada
                             </h5 class="underline">
                         </div>
-                        <div id="cpuArea" class="distribuicao-campo-barra bold"
-                            style="width: 0%;">
+                        <div id="cpuArea" class="distribuicao-campo-barra bold" style="width: 0%;">
                             <h6>
                                 CPU: ...%
                             </h6>
                         </div>
-                        <div id="ramArea" class="distribuicao-campo-barra bold"
-                            style="width: 0%;">
+                        <div id="ramArea" class="distribuicao-campo-barra bold" style="width: 0%;">
                             <h6>
                                 RAM: ...%
                             </h6>
                         </div>
-                        <div id="usoGeralArea" class="distribuicao-campo-barra bold"
-                            style="width: 0%;">
+                        <div id="usoGeralArea" class="distribuicao-campo-barra bold" style="width: 0%;">
                             <h6>
                                 Uso Geral: ...%
                             </h6>
                         </div>
-                        <div id="redeArea" class="distribuicao-campo-barra bold" 
-                            style="width: 100%;">
+                        <div id="redeArea" class="distribuicao-campo-barra bold" style="width: 100%;">
                             <h6>
                                 REDE: ...%
                             </h6>
@@ -144,10 +143,10 @@
                         </div>
                         <div class="dados-parte-meio"></div>
                         <div class="dados-metade">
-                            <h5 class="bold italic">Total de máquinas:
+                            <h5 class="bold italic">Total de máquinas ativas:
                                 <samp id="id_total_maquinas" style="font-size: larger;">...</samp>
                             </h5>
-                            <h5 class="bold italic">Irregulares:
+                            <h5 class="bold italic">Total de máquinas irregulares:
                                 <samp id="id_irregularidade_maquinas" style="font-size: larger;"
                                     class="text-black">...</samp>
                             </h5>
@@ -429,7 +428,7 @@
                                     textoRecurso = "Parâmetro de uso de RAM atingido";
                                     break;
                                 case "usoTotal":
-                                    textoRecurso = "Capacidade total de uso atingida";
+                                    textoRecurso = "Parâmetro de Uso Geral atingido";
                                     break;
                                 case "velocidadeDownload":
                                     textoRecurso = "Limite de velocidade de download atingido";
@@ -480,7 +479,7 @@
                             const novoElemento = `
                                 <div class="dash-alert-lista-objeto">
                                     <div style="width: 13%; padding-left: 1%">
-                                        <h4 class="italic">${id}</h4>
+                                        <h4 class="">${id}</h4>
                                     </div>
                                     <div style="width: 65%;">
                                         <p class="italic little-text">${desc}</p>
@@ -694,7 +693,11 @@
                                             label: 'Máquinas Irregulares',
                                             data: qtdAlertasPDia,
                                             borderColor: '#4E2E9E',
-                                            fill: false
+                                            fill: false,
+                                            backgroundColor: '#4E2E9E', // Cor de preenchimento das bolinhas
+                                            pointRadius: 5, // Tamanho das bolinhas
+                                            pointStyle: 'circle', // Estilo das bolinhas
+                                            pointHoverRadius: 7 // Tamanho das bolinhas ao passar o mouse
                                         },
                                         {
                                             label: 'Tendência (Regressão Linear)',
@@ -702,14 +705,19 @@
                                             borderColor: 'black',
                                             borderDash: [5, 5],
                                             fill: false,
-                                            pointRadius: 0
+                                            pointRadius: 0,
+                                            // backgroundColor: 'black'
                                         }
                                     ]
                                 },
                                 options: {
                                     scales: {
                                         x: { title: { display: true, text: 'Data (últimos 30 dias)' } },
-                                        y: { title: { display: true, text: 'Frequência de Máquinas Irregulares' } }
+                                        y: {
+                                            title: { display: true, text: 'Frequência de Máquinas Irregulares' },
+                                            beginAtZero: true, // Garante que o eixo Y começa em 0
+                                            min: 0 // Define o valor mínimo explicitamente como 0 
+                                        }
                                     },
                                     // responsive: true
                                 }

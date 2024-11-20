@@ -19,12 +19,22 @@
 .dash-alert-topo {
     width: 100%;
     height: 13%;
-
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
+}
+
+.dash-alert-titulo{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .dash-alert-pai {
