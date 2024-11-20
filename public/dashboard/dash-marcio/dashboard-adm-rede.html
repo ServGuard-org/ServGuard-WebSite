@@ -59,7 +59,7 @@
         </header>
         <main>
             <div class="dash-rede-topo">
-                <h1 class="bold">Análise Histórica de Rede</h1>
+                <h3 class="bold">Análise Histórica de Rede</h3>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar
@@ -67,8 +67,8 @@
                 </div>
             </div>
             <div class="dash-rede-subtitulo">
-                <h3 class="bold center">Semana:</h3>
-                <select id="select-semana" class="select-componente bold dash-rede-cor-atual"
+                <h4 class="bold center">Semana:</h4>
+                <select id="select-semana" class="select-componente bold dash-rede-cor-atual" style="font-size: 20px;"
                     onchange="selecaoSemana()">
                     <option value="#" selected disabled>Selecione Uma Semana</option>
                 </select>
@@ -78,37 +78,37 @@
             </div>
             <div class="dash-rede-pai-cards">
                 <div class="dash-rede-cards-topo">
-                    <p class="bold mb-2">Pacotes Enviados</p>
+                    <p class="bold mb-2" style="margin: 0;">Pacotes Enviados</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_pacotes_enviados">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
-                    <p class="bold mb-2">Pacotes Recebidos</p>
+                    <p class="bold mb-2" style="margin: 0;">Pacotes Recebidos</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_pacotes_recebidos">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
-                    <p class="bold mb-2">Megabytes Enviados</p>
+                    <p class="bold mb-2" style="margin: 0;">Megabytes Enviados</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_mbs_enviados">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
-                    <p class="bold mb-2">Megabytes Recebidos</p>
+                    <p class="bold mb-2" style="margin: 0;">Megabytes Recebidos</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_mbs_recebidos">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
-                    <p class="bold mb-2">Erros (E/R)</p>
+                    <p class="bold mb-2" style="margin: 0;">Erros (E/R)</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_erros">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
                 </div>
                 <div class="dash-rede-cards-topo">
-                    <p class="bold mb-2">Descartes (E/R)</p>
+                    <p class="bold mb-2" style="margin: 0;">Descartes (E/R)</p>
                     <h1 class="dash-rede-fonte-cards  bold" id="card_descartes">
                         <span class="dash-rede-cor-anterior">...</span> x <span class="dash-rede-cor-atual">...</span>
                     </h1>
@@ -119,7 +119,9 @@
 
                     <div class="dash-rede-barchart">
                         <div class="dash-rede-barchart-space">
-                            <h4 class="bold mb-2" id="titulo-grafico-barra"><span class="dash-rede-cor-anterior">Semana
+                            <h4 class="bold mb-2" id="titulo-grafico-barra"
+                                style="margin-bottom: 0%; border-bottom: 0%; margin-top: 1%;"><span
+                                    class="dash-rede-cor-anterior">Semana
                                     <span id="placeholder_semana_anterior">dd/mm/yy</span></span> x <span
                                     class="dash-rede-cor-atual">Semana <span
                                         id="placeholder_semana_atual">dd/mm/yy</span></span></h4>
@@ -157,9 +159,10 @@
                                         src="../../assets/gif/loading.gif" alt=""></p>
                             </div>
                             <h6 class="bold"
-                                style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                                style="display: flex; align-items: center; justify-content: center; width: 100%;"
+                                id="texto-ia">
                                 Análise Gerada Por IA <img src="../../assets/svg/SGI-preto.svg"
-                                    style="width: 20px; margin-left: 0.5%;"> &nbsp;</h6>
+                                    style="width: 20px; margin-left: 0.5%;" id="icone-ia"></h6>
                         </div>
                         <div class="dash-rede-dentro-divisao"></div>
                         <div class="dash-rede-dentro-historico">
@@ -401,14 +404,14 @@
                 {
                     label: `Semana Anterior (${formatarData(dados.semanaAnterior.inicio_semana)})`,
                     data: dadosAntigos,
-                    backgroundColor: 'rgba(78, 122, 212, 0.2)',
+                    backgroundColor: 'rgba(78, 122, 212, 0.4)',
                     borderColor: 'rgba(78, 122, 212, 1)',
                     borderWidth: 1
                 },
                 {
                     label: `Semana Selecionada (${formatarData(dados.semana.inicio_semana)})`,
                     data: dadosAtuais,
-                    backgroundColor: 'rgba(121, 78, 212, 0.2)',
+                    backgroundColor: 'rgba(121, 78, 212, 0.4)',
                     borderColor: 'rgba(121, 78, 212, 1)',
                     borderWidth: 1
                 }
@@ -499,10 +502,11 @@
                 ]
             },
             options: {
+                responsive: true,
                 plugins: {
                     title: {
                         display: true,
-                        text: "Regressão Linear",
+                        text: "Regressão Linear Simples",
                         font: {
                             size: 20,
                             weight: 'bold'
@@ -517,14 +521,38 @@
                         position: 'bottom',
                         title: {
                             display: true,
-                            text: 'Observações'
-                        }
+                            text: 'Observações (Dias)',
+                            color: 'black',
+                            font: {
+                                size: 15,
+                                weight: 'bold'
+                            }
+                        },
+                        ticks: {
+                            color: 'black',
+                            font: {
+                                size: 12,
+                                weight: 'bold'
+                            }
+                        },
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Total de Pacotes'
-                        }
+                            text: 'Total de Pacotes',
+                            color: 'black',
+                            font: {
+                                size: 15,
+                                weight: 'bold'
+                            }
+                        },
+                        ticks: {
+                            color: 'black',
+                            font: {
+                                size: 13,
+                                weight: 'bold'
+                            }
+                        },
                     }
                 }
             }
@@ -645,7 +673,7 @@
         const options = {
             series: series,
             chart: {
-                height: 350,
+                height: 300,
                 width: 800,
                 type: 'heatmap',
             },
@@ -658,7 +686,7 @@
                 offsetY: 15,
                 offsetX: 250,
                 style: {
-                    fontSize: '18px',
+                    fontSize: '20px',
                     fontWeight: 'bold'
                 }
             },
@@ -667,12 +695,24 @@
                     `${String(i).padStart(2, '0')}:00`
                 ),
                 title: {
-                    text: 'Horas do Dia'
+                    text: 'Horas do Dia',
+                    offsetY: -15,
+                    style: {
+                        fontSize: '15px'
+                    }
                 }
             },
             yaxis: {
                 title: {
-                    text: 'Dias da Semana'
+                    text: 'Dias da Semana',
+                    style: {
+                        fontSize: '15px'
+                    }
+                },
+                labels: {
+                    style: {
+                        fontSize: '15px'
+                    }
                 }
             }
         };
@@ -727,18 +767,8 @@
         atualizarCards(semanaNumero);
         atualizarMapa(semanaNumero);
         atualizarRegressaoLinear();
+        atualizarContagensMedias();
 
-    }
-
-    function generateData(hours, range) {
-        var series = [];
-        for (var i = 0; i < hours; i++) {
-            var hour = (i % 24) + ":00"; // Representação da hora do dia
-            var y = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
-
-            series.push({ x: hour, y: y });
-        }
-        return series;
     }
 
     document.onload = obterSemanas();
