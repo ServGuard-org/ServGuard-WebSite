@@ -22,12 +22,38 @@
   height: 100%;
 }
 
+#texto-ia {
+  font-weight: bold;
+  color: transparent;
+  /* Torna o texto transparente para exibir o gradiente */
+  background: linear-gradient(90deg, #794ED4, #4E7AD4);
+  /* Gradiente no texto */
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* Compatibilidade com WebKit */
+  text-fill-color: transparent;
+  /* Necessário para Safari */
+  text-shadow: 0px 0px 4px rgba(121, 78, 212, 0.6),
+    0px 0px 6px rgba(78, 122, 212, 0.4);
+  /* Brilho no texto */
+}
+
+#icone-ia {
+  filter: drop-shadow(0px 0px 8px rgba(121, 78, 212, 0.8)) 
+  drop-shadow(0px 0px 12px rgba(78, 122, 212, 0.6));
+  /* Brilho com gradiente */
+}
+
+#chart {
+  max-width: 100%;
+}
+
 .dash-rede-cor-anterior {
   color: #4E7AD4;
 }
 
 .dash-rede-cor-atual {
-  color: #42CB35;
+  color: var(--dark-purple);
 }
 
 .dash-rede-fonte-cards {
@@ -63,21 +89,21 @@
 }
 
 .dash-rede-titulo-cards {
-  font-size: 25px;
+  font-size: 20px;
   width: 100%;
-  margin: 0.2%;
+  margin: 0.2% 0 0.2% 0;
 }
 
-.dash-rede-barchart{
+.dash-rede-barchart {
   width: 100%;
-  height: 400px;
+  height: 200px;
   max-width: 100%;
   max-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
-  padding: var(--gap-2);
+  /* padding: var(--gap-2); */
   box-sizing: border-box;
   box-shadow: 0px 0px 82.7px -41px var(--dark-purple);
 
@@ -87,21 +113,22 @@
 }
 
 .barplot {
-  max-height: 90%;
+  /* height: 250px; */
+  max-height: 200px;
   width: 100%;
   margin-top: 10px;
 }
 
-.dash-rede-barchart-space{
-  width: 100%;
-  height: 350px;
+.dash-rede-barchart-space {
+  width: 90%;
+  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
-.dash-rede-linRegress{
+.dash-rede-linRegress {
   width: 100%;
   height: 400px;
   max-width: 100%;
@@ -125,7 +152,7 @@
   margin-top: 10px;
 }
 
-.dash-rede-linRegress-space{
+.dash-rede-linRegress-space {
   width: 100%;
   height: 350px;
   display: flex;
@@ -135,6 +162,7 @@
 }
 
 .dash-rede-cards-topo {
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,7 +170,6 @@
   flex: 1;
   min-width: 100px;
   max-width: 250px;
-  z-index: 999;
 
   border-radius: 20px;
   border: 2px solid rgba(255, 255, 255, 0.50);
@@ -154,7 +181,7 @@
 .dash-rede-card-analise {
   background-color: #FFF;
   width: 90%;
-  height: 800px;
+  height: 500px;
   max-height: 100%;
   flex: 1;
   padding: var(--gap-2);
@@ -172,7 +199,7 @@
 }
 
 .dash-rede-dentro-analise {
-  height: 348px;
+  height: 100%;
   width: 40%;
   display: flex;
   flex-direction: column;
@@ -182,11 +209,11 @@
 .dash-rede-dentro-divisao {
   border-left: 1px solid black;
   width: 1px;
-  height: 348px;
+  height: 95%;
 }
 
 .dash-rede-dentro-historico {
-  height: 348px;
+  height: 100%;
   width: 60%;
 }
 
@@ -287,7 +314,7 @@
 
 .dash-rede-lista-pai {
   width: 90%;
-  height: 80%;
+  height: 100%;
   padding: 5%;
   margin-bottom: 5%;
   display: flex;
@@ -417,13 +444,12 @@
 
 .dash-rede-coluna-2-area-grafico {
   width: 90%;
-  height: 51.25%;
-  padding-left: 3%;
+  height: fit-content;
   padding-top: 2%;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   border-radius: 20px;
   background: var(--Grays-White);
   box-shadow: 0px 0px 82.7px -41px var(--dark-purple);
@@ -432,11 +458,11 @@
 }
 
 .area-grafico-rede {
-  width: 100%;
-  height: 400px;
+  width: 90%;
+  height: 300px;
   /* background-color: var(--dark-purple); */
   display: flex;
   flex-direction: row;
-  align-items: start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 }

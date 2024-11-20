@@ -117,7 +117,16 @@ PRIMARY KEY (idHistogramaColuna)
 );
 
 
+CREATE TABLE IF NOT EXISTS ServGuard.Chaves (
+idChave INT NOT NULL AUTO_INCREMENT,
+chave VARCHAR(500) NOT NULL,
+dthCriacao DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
+PRIMARY KEY(idChave)
+);
+
+INSERT INTO ServGuard.Chaves (chave) VALUES
+	('CHAVE-AQUI');
 
 -- INSERT INTO Histograma (fkHistograma, registroColuna) VALUES 
 	-- ((SELECT MAX(idHistograma) FROM Histograma), %rc);
