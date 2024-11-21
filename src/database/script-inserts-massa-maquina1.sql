@@ -21215,3 +21215,4 @@ INSERT INTO ServGuard.Captura (fkMaquinaRecurso, registro, dthCriacao, isAlerta)
     ((SELECT idMaquinaRecurso FROM ServGuard.MaquinaRecurso 
         WHERE fkMaquina = 1 AND fkRecurso = (SELECT idRecurso FROM ServGuard.Recurso WHERE nome = 'pacotesRecebidos')), 
         593, '2024-11-03 23:00:00', 0);
+ 
