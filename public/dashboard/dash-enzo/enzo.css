@@ -1,0 +1,54 @@
+/* .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+   */
+
+  .card-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    flex: 1;
+    margin: 0 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  .card-body {
+    padding: 20px;
+    /* width: 315px;
+    height: 235px; */
+  }
+  
+  .graph-container {
+    width: 1000px;
+    height: 400px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .speed-test {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .speed-value {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  .start-test {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+
+  }

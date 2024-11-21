@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/main.css" />
     <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
 
 <body>
@@ -58,18 +59,63 @@
         </header>
         <main>
             <div class="dash-alert-topo">
-                <h1 class="bold">Montitoramento de rede:</h1>
+                <h1 class="bold">Monitoramento de rede:</h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar
                     </a>
                 </div>
             </div>
-            <div class="dash-rede-analista">
-                <div class="grafico-rede">
-
+            <div class="container">
+                <div class="card-group">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Estado da rede</h5>
+                      <div class="card-conect">
+                        <h3 class="bold center text-green" id="estado_rede">...</h3>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Máquinas conectadas</h5>
+                      <p class="card-text">50</p>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Perda de Pacotes</h5>
+                      <p class="card-text">X%</p>
+                    </div>
+                  </div>
                 </div>
-            </div>
+                <div class="card-group">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Monitoramento de Pacotes</h5>
+                      <div class="graph-container">
+                    
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Speed Test</h5>
+                      <div class="speed-test">
+                        <div class="download">
+                          <h6>Download</h6>
+                          <div class="speed-value">50</div>
+                        </div>
+                        <div class="upload">
+                          <h6>Upload</h6>
+                          <div class="speed-value">50</div>
+                        </div>
+                        <button class="start-test">Iniciar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </main>
     </section>
 </body>
@@ -87,7 +133,72 @@
 function obterDados(){
     
 } 
+function buscarUltimosDadosRede(idEmpresa) {
+      fetch(`/recursos/buscarUltimosDadosRede/${idEmpresa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+          }
+          response.json().then((data) => {
+            console.log("Dados recebidos:", data);
+            dados = data[0][0];
+            console.log("2 zeros", data[0][0]);
+            console.log(
+              "Velocidade de Download de Todas as maquinas: ",
+              dados.velocidadeDownload
+            );
+            console.log(
+              "Total de maquinas somadas aqui: ",
+              dados.totalMaquinas
+            );
+            // e assim por diante, só usar dados e acessar o valor que quiser. A função já está sendo chamada no onload do body
+            const taxaDescarte = ((Number(dados.descartePacotesSaida) + Number(dados.descartePacotesEntrada)) / (Number(dados.pacotesEnviados) + Number(dados.pacotesRecebidos))) * 100
 
+            console.log(`TAXA DE DESCARTE ${taxaDescarte} !!!!!!!!!!!!!!!!!!!!!!`)
+
+            const estadosRede = ["Estável", "Oscilante", "Instável", "..."];
+
+            let numeroEstadoRede = 0
+
+            if (taxaDescarte > 0.5 && taxaDescarte < 2.0) {
+              numeroEstadoRede = estadosRede.indexOf("Oscilante");
+            } else if (taxaDescarte > 2.0) {
+              numeroEstadoRede = estadosRede.indexOf("Instável")
+            } else if (taxaDescarte <= 0.5) {
+              numeroEstadoRede = estadosRede.indexOf("Estável")
+            } else {
+              numeroEstadoRede = estadosRede.indexOf("...")
+            }
+
+            const estadoRede = estadosRede[numeroEstadoRede]
+
+            console.log(estadoRede, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+            const elemento_estado_rede = document.getElementById("estado_rede");
+            elemento_estado_rede.innerText = estadoRede;
+
+            // Alterar a cor do texto com base no estado da rede
+            if (estadoRede == "Oscilante") {
+              elemento_estado_rede.style.color = "#cc8400";  // Cor laranja
+            } else if (estadoRede == "Instável") {
+              elemento_estado_rede.style.color = "#d03333";  // Cor vermelha
+            } else if (estadoRede == "Estável") {
+              elemento_estado_rede.style.color = "#28bb49";  // Cor verde
+            } else {
+              elemento_estado_rede.style.color = "#0c0c0c";  // Cor Preto
+            }
+
+          });
+        })
+        .catch((error) => {
+          console.error("Erro na requisição:", error);
+        });
+    }
 
 
 
