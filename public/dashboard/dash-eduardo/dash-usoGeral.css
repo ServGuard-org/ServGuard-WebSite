@@ -95,8 +95,7 @@
         & .bar{
             width: 90%;
             height: 100%;
-            border: 2px solid var(--white-darknes);
-            background: var(--white-normal);
+            background: #a6a6a6;
             border-radius: 20px;
         }
 
@@ -112,15 +111,55 @@
 
 
 .usoGeral-machine-list{
-    background: rgb(4, 128, 0);
     display: flex;
     gap: var(--gap-4);
     width: 100%;
     height: calc(100% - 210px);
 
     & .card-machine-list{
+        display: flex;
+        flex-direction: column;
         flex: 1;
         height: 100%;
-        background: blue;
+        padding: var(--gap-3);
+
+        border-radius: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.50);
+        background: rgba(255, 255, 255, 0.11);
+        box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+        backdrop-filter: blur(2px);
+        gap: var(--gap-1);
+
+        & h4{
+            width: 100%;
+            height: 30px;
+            background: red;
+        }
+
+        & .machine-list{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            height: calc(100% - 30px - var(--gap-1));
+            max-height: 370px;
+            background: blue;
+            gap: var(--gap-3);
+            overflow: scroll;
+            overflow-x: hidden;
+
+            & .card-machine{
+                flex: 1;
+                min-width: 250px;
+                height: 200px;
+                max-height: 300px;
+                padding: var(--gap-1);
+
+                border-radius: 30px;
+                border: 2px solid rgba(255, 255, 255, 0.50);
+                background: rgba(255, 255, 255, 0.11);
+                box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+                backdrop-filter: blur(2px);
+            }
+        }
     }
 }

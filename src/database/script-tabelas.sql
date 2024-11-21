@@ -605,6 +605,38 @@ GROUP BY
     m.fkEmpresa,
     DATE(c.dthCriacao);
 
+-- Maquinas Conectadas
+CREATE OR REPLACE VIEW MaquinasConectadas AS
+SELECT 
+    m.idMaquina,
+    m.nome AS nomeMaquina,
+    e.idEmpresa,
+    e.nome AS nomeEmpresa,
+    (SELECT COUNT(*)
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina 
+     AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'pacotesEnviados')) AS pacotes_enviados,
+    (SELECT COUNT(*)
+     FROM Captura c
+     JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina 
+     AND mr.fkRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'pacotesRecebidos')) AS pacotes_recebidos
+FROM 
+    Maquina m
+JOIN 
+    Empresa e ON m.fkEmpresa = e.idEmpresa;
+    
+    
+SELECT 
+		COUNT(*) AS maquinas_conectadas
+	FROM 
+		MaquinasConectadas
+	WHERE 
+		pacotes_enviados > 0 
+		AND pacotes_recebidos > 0
+		AND idEmpresa = 1;
+
 -- PROCEDURES
 
 DELIMITER //
