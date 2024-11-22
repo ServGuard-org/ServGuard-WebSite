@@ -72,133 +72,112 @@
       </header>
 
       <main>
-        <div class="dash-usoGeral">
-          <h1 class="bold">Monitoramento de Uso Geral:</h1>
+        <div class="dash-alert-topo">
           <div class="link-back-seta">
-            <a class="bold text-gray-dark" onclick="voltar()">
-              <div class="icon-trian"></div>
-              Voltar
-            </a>
+              <a class="bold text-gray-dark" onclick="voltar()">
+                  <div class="icon-trian"></div> Voltar para início
+              </a>
+          </div>
+          <div class="dash-alert-titulo">
+              <h1 class="bold">Monitoramento de Uso Geral:</h1>
+              <!-- <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p> -->
           </div>
         </div>
 
-        <div class="dash-usoGeral-father">
-          <div class="usoGeral-card-info">
-            <div class="card-info-large">
-              <p class="bold center">Uso Total das Máquinas da Empresa:</p>
-              <div class="usoGeral-space-bar">
-                <p class="usoGeral-text center bold">45%</p>
-                <div class="usoGeral-bar">
-                  <div class="bar">
-                    <div class="bar-uso"></div>
+        <div class="father-general-use">
+          <div class="child-general-use">
+            <div class="general-use-content-large">
+              <div class="gerenal-use-father-one">
+                <div class="general-use-card-tendencia">
+                  <h3 class="bold center">Tendência de Uso:</h3>
+                  <p class="center">Acompanhe aqui as tendências de uso das máquinas, identificando padrões críticos de desempenho e antecipando possíveis sobrecargas.</p>
+                  <button class="btn-dashboard" onclick="DashboardAnalista()">
+                    Ver Análise de Uso
+                  </button>
+                </div>
+                <div class="general-use-cards-info">
+                  <div class="card-info">
+                    <h5 class="center">Quantidade de Máquinas com Uso de Hardware Maior que 80%</h5>
+                    <h1 class="bold center">2</h1>
+                  </div>
+                  <div class="card-info">
+                    <h5 class="center">Quantidade de Máquinas com Uso de Disco Maior que 80%</h5>
+                    <h1 class="bold center">2</h1>
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="general-use-content-medium">
+              <div class="general-use-father-three">
+                <h4 class="bold center">Histograma de Uso de Hardware das Máquinas:</h4>
+                <div class="space-graphic">
 
-              <p class="bold center">Armazenamento Total Empresa:</p>
-              <div class="usoGeral-space-bar">
-                <p class="usoGeral-text center bold">45%</p>
-                <div class="usoGeral-bar">
-                  <div class="bar">
-                    <div class="bar-uso"></div>
-                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="card-info-medium">
-              <p class="bold center">Quantidade Total de Máquinas:</p>
-              <h1 class="font-big bold center">0</h1>
-            </div>
-            <div class="card-info-medium">
-              <p class="bold center">Número de Alertas de Uso (Semanal):</p>
-              <h1 class="font-big bold center">0</h1>
-            </div>
-            <div class="card-info-large">
-              <h4 class="center bold">Tendencias de Uso:</h4>
-              <p class="center mt-1">
-                Clique para ver a análise detalhada e antecipar futuras
-                necessidades de recurso.
-              </p>
-              <div class="card-large-space-btn">
-                <button class="btn-analise-usoGeral">
-                  Ver Análise de Uso Geral
-                </button>
               </div>
             </div>
           </div>
+          <div class="child-general-use">
+            <div class="general-use-content-large">
+              <div class="general-use-father-two">
+                <div class="list-machine-menu">
+                  <h3>Lista de Máquinas:</h3>
+                </div>
+                <div class="list-machine-card">
+                  <div class="column-machine">
+                    <div class="column-item">
+                      <p class="little-text bold">ID</p>
+                    </div>
+                    <div class="column-item">
+                      <p class="little-text bold">Hostname</p>
+                    </div>
+                    <div class="column-item">
+                      <p class="little-text bold">Uso de Hardware</p>
+                    </div>
+                    <div class="column-item">
+                      <p class="little-text bold">Uso de Disco</p>
+                    </div>
+                    <div class="column-item">
+                      <p class="little-text bold">Problabilidade de Sobrecarga</p>
+                    </div>
+                  </div>
 
-          <div class="usoGeral-machine-list">
-            <div class="card-machine-list">
-              <h4 class="bold">Máquinas Com Probabilidade de Sobrecarga:</h4>
-              <div class="machine-list"></div>
+                  <hr class="line-list-machine">
+
+                  <div class="machine-card-space">
+                    <div class="machine-card">
+                      <div class="column-item">
+                        <p class="little-text bold">01</p>
+                      </div>
+                      <div class="column-item">
+                        <p class="little-text bold">BOOK-1AMQ3DUG8E</p>
+                      </div>
+                      <div class="column-item">
+                        <p class="little-text bold">80%</p>
+                      </div>
+                      <div class="column-item">
+                        <p class="little-text bold">60%</p>
+                      </div>
+                      <div class="column-item">
+                        <p class="little-text bold">95%</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
-            <div class="card-machine-list">
-              <h4 class="bold">Máquinas da Empresa:</h4>
-              <div class="machine-list">
-                <div class="card-machine">
-                  <figure></figure>
-                  <h4>Machine-One</h4>
+            <div class="general-use-content-medium">
+              <div class="general-use-father-three">
+                <h4 class="bold center">Histograma de Uso de Disco das Máquinas:</h4>
+                <div class="space-graphic">
 
-                  <div class="details-machine">
-                    <div class="details-use"></div>
-                    <div class="details-use"></div>
-                  </div>
-                </div>
-
-                <div class="card-machine">
-                  <figure></figure>
-                  <h4>Machine-One</h4>
-
-                  <div class="details-machine">
-                    <div class="details-use"></div>
-                    <div class="details-use"></div>
-                  </div>
-                </div>
-
-                <div class="card-machine">
-                  <figure></figure>
-                  <h4>Machine-One</h4>
-
-                  <div class="details-machine">
-                    <div class="details-use"></div>
-                    <div class="details-use"></div>
-                  </div>
-                </div>
-
-                <div class="card-machine">
-                  <figure></figure>
-                  <h4>Machine-One</h4>
-
-                  <div class="details-machine">
-                    <div class="details-use"></div>
-                    <div class="details-use"></div>
-                  </div>
-                </div>
-
-                <div class="card-machine">
-                  <figure></figure>
-                  <h4>Machine-One</h4>
-
-                  <div class="details-machine">
-                    <div class="details-use"></div>
-                    <div class="details-use"></div>
-                  </div>
-                </div>
-
-                <div class="card-machine">
-                  <figure></figure>
-                  <h4>Machine-One</h4>
-
-                  <div class="details-machine">
-                    <div class="details-use"></div>
-                    <div class="details-use"></div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </main>
+
     </section>
 
     <script>
@@ -224,40 +203,18 @@
           "../dashboard/dash-caio/dashboard-adm-alert.html";
       }
 
-      function carregarPagina() {
-        const apresentacao = false;
-
-        // const apresentacao = true
-        const url = apresentacao
-          ? "https://www.bcb.gov.br/"
-          : "https://jsonplaceholder.typicode.com/todos/1";
-
-        isAtivoBACEN(url);
-        obterEscalaInstabilidade();
-        obterIrrCPU();
-        obterIrrRAM();
-        obterIrrDISCO();
-
-        const data = obterData();
-
-        let nomeEmpresa = obterNomeEmpresa();
-
-        let nomeUsuario = obterNomeUsuario();
-
-        const elementoData = document.getElementById("data_tempo_real");
-
-        const elementoEmpresa = document.getElementById("empresa_usuario");
-
-        const elementoNomeUsuario = document.getElementById("nome_usuario");
-
-        const elementoServico = document.getElementById("elemento_servico");
-
-        elementoNomeUsuario.innerHTML = nomeUsuario;
-
-        elementoEmpresa.innerHTML = nomeEmpresa;
-
-        elementoData.innerHTML = data;
-      }
+      function voltar() {
+        window.location.href = "../dashboard-adm.html";
+    }
+    function carregarPagina() {
+        sessionStorage.removeItem("VOLTAR_PAGINA");
+        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
+        obterDadosDeApoio1()
+        obterDadosDeApoio2()
+        carregarListaAlertas()
+        buscarDistribuicao()
+        buscarDadosGrafico()
+    }
 
       function ValidacaoCores(escolhaRecurso) {
         const elementoIrrCPU = document.getElementById("irr_cpu");
