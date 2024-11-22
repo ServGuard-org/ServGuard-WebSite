@@ -300,19 +300,20 @@ SELECT registro, fkMaquina FROM vista_captura_atual_maquina_recurso
 	 WHERE fkEmpresa = 1 AND fkRecurso = 2;
   
 -- Irregularidades de CPU
--- AJUSTE - APENAS DIA ATUAL
+-- AJUSTADA - VALIDAR
 CREATE OR REPLACE VIEW vista_irregularidade AS
 	SELECT registro, isAlerta, idEmpresa, fkRecurso FROM Captura 
 			JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 			JOIN Maquina ON fkMaquina = idMaquina
-			JOIN Empresa ON fkEmpresa = idEmpresa;
+			JOIN Empresa ON fkEmpresa = idEmpresa
+            WHERE DATE(Captura.dthCriacao) = DATE(NOW());
             
 SELECT count(registro) as qtdCpu FROM vista_irregularidade
 	WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1;
 
 
 -- DISTRIBUICAO ALERTA
--- AJUSTE - ÚLTIMOS 30 DIAS
+-- AJUSTADA - VALIDAR
 CREATE OR REPLACE VIEW vista_distribuicao_alerta AS
 SELECT 
     SUM(CASE WHEN mr.fkRecurso = 1 AND c.isAlerta = 1 THEN 1 ELSE 0 END) AS qtdCpu,
@@ -324,6 +325,7 @@ SELECT
 FROM Captura c
 	JOIN MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
 	JOIN Maquina m ON mr.fkMaquina = m.idMaquina
+    WHERE c.dthCriacao >= CURDATE() - INTERVAL 30 DAY
 		GROUP BY fkEmpresa;
 
 SELECT * FROM vista_distribuicao_alerta WHERE fkEmpresa = 1; 
@@ -369,12 +371,13 @@ ORDER BY t1.fkEmpresa, t1.data;
 SELECT * FROM vista_alertas_grafico WHERE fkEmpresa = 1;
     
 -- Irregularidades de DISCO
--- AJUSTE - DIA ATUAL
+-- AJUSTADA - VALIDAR
 CREATE OR REPLACE VIEW vista_irregularidade_disco AS
 	SELECT idMaquina, usado, capacidade, idEmpresa FROM Maquina
 		JOIN Empresa ON idEmpresa = fkEmpresa
 		JOIN Volume ON idMaquina = fkMaquina
-		JOIN CapturaVolume ON idVolume = fkVolume;
+		JOIN CapturaVolume ON idVolume = fkVolume
+        WHERE DATE(CapturaVolume.dthCriacao) = DATE(NOW());
 
 SELECT COUNT(DISTINCT idMaquina) as DicosIrregulares FROM vista_irregularidade_disco
 	WHERE (usado / capacidade) > 0.85 AND idEmpresa=1;
@@ -427,7 +430,7 @@ CREATE OR REPLACE VIEW vista_capturas_alerta_total_e_media_diaria AS
 		FROM Captura
 			JOIN MaquinaRecurso on fkMaquinaRecurso = idMaquinaRecurso
             JOIN Maquina on fkMaquina = idMaquina
-    WHERE isAlerta = 1
+    WHERE isAlerta = 1 AND Captura.dthCriacao >= CURDATE() - INTERVAL 30 DAY
     GROUP BY fkEmpresa;
 
 SELECT * FROM vista_capturas_alerta_total_e_media_diaria WHERE fkEmpresa=1;
@@ -489,12 +492,12 @@ CREATE OR REPLACE VIEW vista_mapa_instabilidade AS
 
 -- LISTA ULTIMOS ALERTAS
 CREATE OR REPLACE VIEW vista_ultimos_alertas AS
--- AJUSTE - ÚLTIMOS 30 DIAS
+-- AJUSTADA - VALIDAR
 	SELECT fkMaquina, Recurso.nome, dthCriacao, fkEmpresa FROM Captura
 		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
 		JOIN Recurso ON fkRecurso = idRecurso
 		JOIN Maquina ON fkMaquina = idMaquina
-			WHERE Captura.isAlerta = 1
+			WHERE Captura.isAlerta = 1 AND Captura.dthCriacao >= CURDATE() - INTERVAL 30 DAY
 				ORDER BY dthCriacao DESC;
                 
 SELECT * FROM vista_ultimos_alertas
