@@ -59,13 +59,13 @@
         </header>
         <main>
             <div class="dash-alert-topo-use">
-                <h1 class="bold">Máquina (<span id="hostname"></span>) - ID: <span class="text-purple bold"
-                        id="id_maquina">...</span></h1>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar
                     </a>
                 </div>
+                <h1 class="bold" style="margin-right: 15%;">Máquina <span class="text-purple bold" id="hostname"></span>
+                    - ID: <span class="text-purple bold" id="id_maquina">...</span></h1>
             </div>
 
             <div class="father-dash-alert-use">
@@ -81,29 +81,56 @@
                                     <div class="tooltip tooltip-white">
                                         <h4>i</h4>
                                         <span class="tooltiptext tooltip-left text-black" style="text-align: left">
-                                            Esse campo mostra quantas máquinas foram medidas, que será o mesmo número de máquinas cadastradas.<br />
-                                            Logo abaixo é feita a separação de todas as medições, mostrando o total de alertas de CPU e RAM. <br />
+                                            <span class="bold">Total de Medições:</span><span> Esse campo mostra o total
+                                                de capturas realizadas pela máquina selecionada.
+                                            </span> <br />
+                                            <span class="bold">Total de Alertas CPU:</span><span> Nesse campo temos a
+                                                porcentagem apenas dos alertas de CPU em relação ao total de medições.
+                                                Onde de 0% a 50% o número ficará <span class="text-green bold">verde</span>,
+                                                de 50% a 80% o número ficará <span class="text-orange bold">laranja</span> e, 
+                                                de 80% a 100% ficará <span class="text-red bold">vermelho</span> 
+                                            </span> <br />
+                                            <span class="bold">Total de Alertas RAM:</span><span> Nesse campo temos a
+                                                porcentagem apenas dos alertas de RAM em relação ao total de
+                                                medições. Assim como o "Total de Alertas de CPU", a cor dos números
+                                                irá mudar de acordo com o porcentagem.
+                                            </span> <br />
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <h4 class="bold" style="margin-top: 2%;">Total de Máquinas Medidas</h4>
+                            <h4 class="bold" style="margin-top: 2%;">Total de Medições</h4>
                             <!-- <p class="bold" style="margin: 2%; font-size: 45px;">14</p> -->
-                            <span class="bold" style="margin: 2%; font-size: 45px;" id="total_maquinas">...</span>
+                            <span class="bold" style="margin: 2%; font-size: 45px;" id="total_medicoes">...</span>
                         </div>
                         <div class="dash-alert-total">
                             <div class="dash-alert-lista-coluna-cpu">
-                                <h4 class="bold">Total de alertas de CPU</h4>
-                                <p class="bold" style="margin: 2%; font-size: 45px;">8</p>
+                                <h4 class="bold">Total de alertas de CPU(%)</h4>
+                                <p class="bold" style="margin: 2%; font-size: 40px;" id="total_alerta_CPU">...</p>
 
                             </div>
                             <div class="dash-alert-lista-coluna-ram">
-                                <h4 class="bold">Total de alertas de RAM</h4>
-                                <p class="bold" style="margin: 2%; font-size: 45px;">6</p>
+                                <h4 class="bold">Total de alertas de RAM(%)</h4>
+                                <p class="bold" style="margin: 2%; font-size: 40px;" id="total_alerta_RAM">...</p>
                             </div>
                         </div>
                         <div class="dash-alert-grafic-box-pai">
                             <div class="dash-alert-grafic-box1">
+                                <div class="father-tips">
+                                    <div class="tooltip tooltip-white">
+                                        <h4>i</h4>
+                                        <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                            <span> Nesse campo temos a
+                                                porcentagem da média dos últimos 7 dias do uso da CPU por meio de um
+                                                gráfico de Gauge. Assim como os alertas de RAM e CPU, média de uso terá
+                                                uma troca de cor para os números de acordo com a porcentagem. 0% até 40% 
+                                                o número ficará com a cor <span class="text-green bold">verde</span>, de 
+                                                40% até 60% ficará com a cor <span class="text-orange bold">laranja</span>
+                                                e, por fim, se passar de 60% ficará <span class="text-red bold">vermelho</span>.  
+                                            </span> <br />
+                                        </span>
+                                    </div>
+                                </div>
                                 <div class="dash-titulo-gauge1">
                                     <h4 class="bold">Média de uso CPU</h4>
                                 </div>
@@ -176,13 +203,13 @@
         sessionStorage.removeItem("VOLTAR_PAGINA");
         sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
         consultarMaquina();
+        obterNumeroMedicoes();
         consultarMaquinasFuncionamento();
-        // ValidacaoCores(escolhaRecurso)
         obterIrrCPU();
         obterIrrRAM();
         obterEscalaInstabilidade();
-        var dataHoje = new Date();
-        atualizarMapaInterface(dataHoje);
+        obterPorcentagemCpu();
+        obterPorcentagemRam();
     }
 
     function consultarMaquina() {
@@ -379,6 +406,173 @@
             // idHTML.innerHTML = idHTML;
         }
     }
+
+    function obterNumeroMedicoes() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/medidas/totalMedicoes/${idEmpresa}/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca do total de medições");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        const totalMedicoes = json[0].totalMedicoes;
+                        console.log("Número total de capturas:", totalMedicoes);
+
+                        // Atualizando o elemento na página
+                        const elementoMedicoes = document.getElementById("total_medicoes");
+                        elementoMedicoes.innerHTML = totalMedicoes;
+                    });
+                } else {
+                    console.log("Erro ao tentar capturar o número total de medições!");
+                    document.getElementById("total_medicoes").innerHTML = "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                console.log("Erro de conexão:", erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+    function obterPorcentagemCpu() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+        if (!idMaquina) {
+            console.log("ID da máquina não encontrado.");
+            return;
+        }
+
+        fetch(`/medidas/porcentagemAlertasCPU/${idEmpresa}/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca da porcentagem de alertas de CPU");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        let porcentagemCPU = json[0].porcentagem_alertas_CPU;
+                        console.log("Valor capturado porcentagemCPU:", porcentagemCPU);
+                        const elementoCPU = document.getElementById("total_alerta_CPU");
+                        // elementoCPU.innerHTML = `${porcentagemFormatada}%`;
+                        porcentagemCPU = Number(porcentagemCPU);
+
+                        // Verifica se a conversão foi bem-sucedida
+                        if (!isNaN(porcentagemCPU)) {
+                            const porcentagemFormatada = porcentagemCPU.toFixed(0); // Agora pode usar toFixed
+                            const elementoCPU = document.getElementById("total_alerta_CPU");
+                            elementoCPU.innerHTML = `${porcentagemFormatada}%`;
+                        } else {
+                            console.log("Valor de porcentagemCPU inválido:", porcentagemCPU);
+                            document.getElementById("total_alerta_CPU").innerHTML = "Erro ao obter";
+                        }
+
+                        // Validação da porcentagem e troca de cor
+                        if (porcentagemCPU >= 0 && porcentagemCPU <= 50) {
+                            elementoCPU.classList.remove("text-orange", "text-red");
+                            elementoCPU.classList.add("text-green");
+                        } else if (porcentagemCPU > 50 && porcentagemCPU <= 80) {
+                            elementoCPU.classList.remove("text-green", "text-red");
+                            elementoCPU.classList.add("text-orange");
+                        } else if (porcentagemCPU > 80 && porcentagemCPU <= 100) {
+                            elementoCPU.classList.remove("text-green", "text-orange");
+                            elementoCPU.classList.add("text-red");
+                        } else {
+                            // Caso a porcentagem não seja válida (fora do intervalo 0-100)
+                            elementoCPU.innerHTML = "Porcentagem inválida";
+                            elementoCPU.classList.remove("text-green", "text-orange", "text-red");
+                            elementoCPU.classList.add("text-gray");
+                        }
+                    });
+                } else {
+                    console.log("Houve um erro ao tentar capturar os dados de porcentagem de CPU!");
+                    document.getElementById("total_alerta_CPU").innerHTML = "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+    function obterPorcentagemRam() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+        if (!idMaquina) {
+            console.log("ID da máquina não encontrado.");
+            return;
+        }
+
+        fetch(`/medidas/porcentagemAlertasRAM/${idEmpresa}/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(function (resposta) {
+                console.log("Iniciando a busca da porcentagem de alertas de RAM");
+
+                if (resposta.ok) {
+                    return resposta.json().then((json) => {
+                        console.log(json);
+                        let porcentagemRAM = json[0].porcentagem_alertas_RAM;
+                        console.log("Valor capturado porcentagemRAM:", porcentagemRAM);
+                        const elementoRAM = document.getElementById("total_alerta_RAM");
+                        porcentagemRAM = Number(porcentagemRAM);
+
+                        // Verifica se a conversão foi bem-sucedida
+                        if (!isNaN(porcentagemRAM)) {
+                            const porcentagemFormatadaRAM = porcentagemRAM.toFixed(0); // Agora pode usar toFixed
+                            elementoRAM.innerHTML = `${porcentagemFormatadaRAM}%`;
+                        } else {
+                            console.log("Valor de porcentagemRAM inválido:", porcentagemRAM);
+                            elementoRAM.innerHTML = "Erro ao obter";
+                        }
+
+                        // Validação da porcentagem e troca de cor
+                        if (porcentagemRAM >= 0 && porcentagemRAM <= 50) {
+                            elementoRAM.classList.remove("text-orange", "text-red");
+                            elementoRAM.classList.add("text-green");
+                        } else if (porcentagemRAM > 50 && porcentagemRAM <= 80) {
+                            elementoRAM.classList.remove("text-green", "text-red");
+                            elementoRAM.classList.add("text-orange");
+                        } else if (porcentagemRAM > 80 && porcentagemRAM <= 100) {
+                            elementoRAM.classList.remove("text-green", "text-orange");
+                            elementoRAM.classList.add("text-red");
+                        } else {
+                            // Caso a porcentagem não seja válida (fora do intervalo 0-100)
+                            elementoRAM.innerHTML = "Porcentagem inválida";
+                            elementoRAM.classList.remove("text-green", "text-orange", "text-red");
+                            elementoRAM.classList.add("text-gray");
+                        }
+                    });
+                } else {
+                    console.log("Houve um erro ao tentar capturar os dados de porcentagem de RAM!");
+                    document.getElementById("total_alerta_RAM").innerHTML = "Erro ao obter";
+                    return null; // Retorna null em caso de erro
+                }
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                return null; // Retorna null em caso de erro de conexão
+            });
+    }
+
+
+
 
     function obterEscalaInstabilidade() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");

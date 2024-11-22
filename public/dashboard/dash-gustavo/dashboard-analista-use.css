@@ -198,6 +198,7 @@
     height: 105%;
     display: flex;
     flex-direction: column;
+    position: relative;
     text-align: center;
     margin-left: 5%;
     padding: var(--gap-1);

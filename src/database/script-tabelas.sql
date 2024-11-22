@@ -640,6 +640,37 @@ SELECT
 		AND pacotes_recebidos > 0
 		AND idEmpresa = 1;
 
+CREATE OR REPLACE VIEW ViewMedicoes AS
+SELECT 
+    c.idCaptura AS idCaptura,
+    c.registro AS registro,
+    c.dthCriacao AS dataHoraCaptura,
+    c.isAlerta AS isAlerta,
+    mr.idMaquinaRecurso AS idMaquinaRecurso,
+    r.nome AS nomeRecurso,
+    r.unidadeMedida AS unidadeMedida,
+    m.idMaquina AS idMaquina,
+    m.apelido AS apelidoMaquina,
+    m.nome AS nomeMaquina,
+    e.idEmpresa AS idEmpresa,
+    e.nome AS nomeEmpresa
+FROM 
+    ServGuard.Captura c
+JOIN 
+    ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN 
+    ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN 
+    ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+JOIN 
+    ServGuard.Empresa e ON m.fkEmpresa = e.idEmpresa
+ORDER BY 
+    c.dthCriacao DESC;
+
+
+
+
+
 -- PROCEDURES
 
 DELIMITER //

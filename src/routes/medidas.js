@@ -10,6 +10,17 @@ router.get("/escalaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarEscalaInstabilidade(req,res);
 });
 
+router.get("/totalMedicoes/:idEmpresa/:idMaquina", function(req, res){
+    medidaController.buscarMedicoes(req,res);
+});
+
+router.get("/porcentagemAlertasCPU/:idEmpresa/:idMaquina", function(req, res){
+    medidaController.buscarPorcentagemAlertasCPU(req,res);
+});
+router.get("/porcentagemAlertasRAM/:idEmpresa/:idMaquina", function(req, res){
+    medidaController.buscarPorcentagemAlertasRAM(req,res);
+});
+
 
 router.get("/mapaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarMapaInstabilidade(req,res);

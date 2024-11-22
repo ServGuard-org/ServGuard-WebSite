@@ -36,6 +36,77 @@ function buscarEscalaInstabilidade(req,res) {
     });
 }
 
+function buscarMedicoes(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (idEmpresa == undefined || idMaquina == undefined) {
+        console.log("Id empresa ou Id máquina está undefined");
+        return res.status(400).send("Id da empresa ou da máquina não foi fornecido.");
+    }
+
+    medidaModel
+        .buscarMedicoes(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao buscar as medições:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function buscarPorcentagemAlertasCPU(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (idEmpresa == undefined || idMaquina == undefined) {
+        console.log("Id empresa ou Id máquina está undefined");
+        return res.status(400).send("Id da empresa ou da máquina não foi fornecido.");
+    }
+    medidaModel
+        .buscarPorcentagemAlertasCPU(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao buscar a porcentagem de alertas de CPU!!!!", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function buscarPorcentagemAlertasRAM(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (idEmpresa == undefined || idMaquina == undefined) {
+        console.log("Id empresa ou Id máquina está undefined");
+        return res.status(400).send("Id da empresa ou da máquina não foi fornecido.");
+    }
+    medidaModel
+        .buscarPorcentagemAlertasRAM(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao buscar a porcentagem de alertas de RAM!!!!", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
 function buscarMapaInstabilidade(req,res) {
     var idEmpresa = req.params.idEmpresa;
     if (idEmpresa == undefined){
@@ -176,5 +247,8 @@ module.exports = {
     buscarListaAlertas,
     buscarDadosGraficoAlertas,
     buscarUsoRecursoPorMaquina,
-    buscarMaquinasConnect
+    buscarMaquinasConnect,
+    buscarMedicoes,
+    buscarPorcentagemAlertasCPU,
+    buscarPorcentagemAlertasRAM
 }
