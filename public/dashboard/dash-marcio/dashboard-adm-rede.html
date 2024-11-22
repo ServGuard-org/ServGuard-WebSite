@@ -179,29 +179,29 @@
                         <div class="dash-rede-dentro-historico">
                             <div class="dash-rede-dentro-historico-topo">
                                 <div class="dash-rede-itens-rede">
-                                    <h4 class="bold">Contagem de Alertas (<span id="placeholder-semana-historico"
+                                    <h4 class="bold">Contagem de Alertas Semana (<span id="placeholder-semana-historico"
                                             class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
                                     <div class="dash-rede-itens-historico">
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
-                                                id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
-                                                id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
-                                                id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): <span
+                                                id="contagem-pacotes">...</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Megabytes (E/R):
+                                            <span id="contagem-megabytes">...</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Erros e Descartes
+                                            (E/R): <span id="contagem-errosdesc">...</span></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="dash-rede-dentro-historico-baixo">
                                 <div class="dash-rede-itens-rede">
-                                    <h4 class="bold">Médias (<span id="placeholder-semana-historico"
+                                    <h4 class="bold">Médias Semana (<span id="placeholder-semana-historico"
                                             class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
                                     <div class="dash-rede-itens-historico">
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
-                                                id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
-                                                id="placeholder-pacotes-er">900</span></p>
-                                        <p class="bold" style="font-weight: 700;">Pacotes (E/R): <span
-                                                id="placeholder-pacotes-er">900</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): <span
+                                                id="media-pacotes">...</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Megabytes (E/R):
+                                            <span id="media-megabytes">...</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Erros e Descartes
+                                            (E/R): <span id="media-errosdesc">...</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -641,9 +641,17 @@
         listaElementos.forEach((elemento, index) => {
             const valor = valores[index];
             if (valor.semanaPassada >= valor.semanaAtual) {
-                var imagemSeta = '<img src="../../assets/svg/arrow-down.svg" alt="">';
+                if (index >= 4) {
+                    var imagemSeta = '<img src="../../assets/svg/arrow-down-green.svg" alt="">';
+                } else {
+                    var imagemSeta = '<img src="../../assets/svg/arrow-down.svg" alt="">';
+                }
             } else {
-                var imagemSeta = '<img src="../../assets/svg/arrow-up.svg" alt="">';
+                if (index >= 4) {
+                    var imagemSeta = '<img src="../../assets/svg/arrow-up-red.svg" alt="">';
+                } else {
+                    var imagemSeta = '<img src="../../assets/svg/arrow-up.svg" alt="">';
+                }
             }
             elemento.innerHTML = `<span class="dash-rede-cor-anterior">${parseInt(valor.semanaPassada)}</span> x <span class="dash-rede-cor-atual">${parseInt(valor.semanaAtual)}</span>${imagemSeta}`;
         });
@@ -692,7 +700,7 @@
             },
             colors: ["#6C2BB3"],
             title: {
-                text: 'Mapa de Calor - Pacotes (E/R) por Hora',
+                text: `Mapa de Calor - Pacotes (E/R) por Hora`,
                 offsetY: 15,
                 offsetX: 250,
                 style: {
