@@ -58,23 +58,34 @@
             </div>
         </header>
         <main>
-            <div class="dash-rede-topo">
+            <!-- <div class="dash-rede-topo">
                 <h3 class="bold">Análise Histórica de Rede</h3>
                 <div class="link-back-seta">
                     <a class="bold text-gray-dark" onclick="voltar()">
                         <div class="icon-trian"></div> Voltar
                     </a>
                 </div>
-            </div>
-            <div class="dash-rede-subtitulo">
-                <h4 class="bold center">Semana:</h4>
-                <select id="select-semana" class="select-componente bold dash-rede-cor-atual" style="font-size: 20px;"
-                    onchange="selecaoSemana()">
-                    <option value="#" selected disabled>Selecione Uma Semana</option>
-                </select>
-            </div>
-            <div class="dash-rede-titulo-cards bold">Comparação com a <span class="dash-rede-cor-anterior">semana
-                    anterior <span id="semana_anterior_titulo">(dd/mm/yy)</span>:</span>
+            </div> -->
+            <div class="dash-rede-topo">
+                <div class="link-back-seta">
+                    <a class="bold text-gray-dark" onclick="voltar()">
+                        <div class="icon-trian"></div> Voltar para início
+                    </a>
+                </div>
+                <div class="dash-rede-titulo">
+                    <h3 class="bold">Análise Histórica de Rede</h3>
+                    <div class="dash-rede-select-subtitulo">
+                        <p class="bold">Semana:</p>
+                        <select id="select-semana" class="select-componente bold dash-rede-cor-atual"
+                            style="font-size: 20px;" onchange="selecaoSemana()">
+                            <option value="#" selected disabled>Selecione Uma Semana</option>
+                        </select>
+                        <div class="dash-rede-titulo-cards bold">Comparação com a <span
+                                class="dash-rede-cor-anterior">semana
+                                anterior <span id="semana_anterior_titulo">(dd/mm/yy)</span>:</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="dash-rede-pai-cards">
                 <div class="dash-rede-cards-topo">
@@ -155,8 +166,8 @@
                             <h5>Coeficiente Angular: <span id="placeholder-coef-ang">3,44</span></h5>
                             <h5>Intercepto: <span id="placeholder-intercepto">0,44</span></h5>
                             <div class="dash-rede-dentro-scroll">
-                                <p class="little-text" style="padding: 3%; max-height: 100%;" id="placeholder-analise-ia"><img
-                                        src="../../assets/gif/loading.gif" alt=""></p>
+                                <p class="little-text" style="padding: 3%; max-height: 100%;"
+                                    id="placeholder-analise-ia"><img src="../../assets/gif/loading.gif" alt=""></p>
                             </div>
                             <h6 class="bold"
                                 style="display: flex; align-items: center; justify-content: center; width: 100%;"
@@ -673,7 +684,7 @@
             series: series,
             chart: {
                 height: 300,
-                width: 800,
+                width: 825,
                 type: 'heatmap',
             },
             dataLabels: {
@@ -695,7 +706,7 @@
                 ),
                 title: {
                     text: 'Horas do Dia',
-                    offsetY: -15,
+                    offsetY: -10,
                     style: {
                         fontSize: '15px'
                     }
@@ -733,7 +744,7 @@
                 'Content-Type': 'application/json',
             }
         }).then(resposta => resposta.json().then(respostaFormatada => {
-            divMapa.innerHTML = `<div id="chart" style="width: 100%; height: 100%; margin: 0 auto;"></div>`
+            divMapa.innerHTML = `<div id="chart" style="width: 100%; height: 100%; margin: 0 auto;min-height: none;max-height: 275px !important;"></div>`
             console.log('Mapa de calor:', respostaFormatada);
             atualizarMapaInterface(respostaFormatada);
         })).catch(error => {
