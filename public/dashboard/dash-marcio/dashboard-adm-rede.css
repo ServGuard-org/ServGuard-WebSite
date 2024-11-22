@@ -30,8 +30,6 @@
   /* Gradiente no texto */
   background-clip: text;
   -webkit-background-clip: text;
-  /* Compatibilidade com WebKit */
-  text-fill-color: transparent;
   /* Necessário para Safari */
   text-shadow: 0px 0px 4px rgba(121, 78, 212, 0.6),
     0px 0px 6px rgba(78, 122, 212, 0.4);
