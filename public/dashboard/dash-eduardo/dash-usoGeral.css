@@ -2,8 +2,9 @@
     display: flex;
     justify-content: space-between;
     background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
-    padding: 3%;
+    padding: var(--gap-3);
     overflow-y: auto;
+    position: relative;
     
     & main {
         position: relative;
