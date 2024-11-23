@@ -67,6 +67,7 @@
   backdrop-filter: blur(2px);
 }
 
+
 .card-body-maquinas {
   width: 17vw;
   height: 23vh;
@@ -76,7 +77,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* padding-left: 5%; */
+  padding: var(--gap-2);
   gap: var(--gap-1);
 
 
