@@ -5,14 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ServGuard | Dashboard Alertas</title>
-  <link rel="stylesheet" href="../../css/main.css" />
+  <link rel="stylesheet" href="../../css/main.css"/>
   <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
 
 <body>
-  <section id="page-dashboard-rede">
+  <section id="page-rede-analista">
     <header>
       <div class="child-navbar-card-dash-adm">
         <div class="navbar-logo-dash-adm">
@@ -59,46 +59,51 @@
     </header>
     <main>
       <div class="dash-alert-topo">
-        <h1 class="bold">Monitoramento de rede:</h1>
         <div class="link-back-seta">
-          <a class="bold text-gray-dark" onclick="voltar()">
-            <div class="icon-trian"></div> Voltar
-          </a>
+            <a class="bold text-gray-dark" onclick="voltar()">
+                <div class="icon-trian"></div> Voltar para início
+            </a>
+        </div>
+        <div class="dash-alert-titulo">
+            <h1 class="bold">Monitoramento de alertas:</h1>
+            <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p>
         </div>
       </div>
       <div class="container">
-        <div class="card-group">
-          <div class="card-body-estado">
-            <h5 class="card-title">Estado da rede</h5>
-            <!-- <div class="card-conect"> -->
-            <p class="bold center text-green" id="estado_rede">23</p>
-            <!-- </div> -->
-
+        <div class="father-card-group">
+          <div class="card-group">
+            <div class="card-body-estado">
+              <h5 class="card-title">Estado da rede</h5>
+              <!-- <div class="card-conect"> -->
+              <p class="bold center text-green" id="estado_rede">23</p>
+              <!-- </div> -->
+  
+            </div>
+  
+            <div class="card-body-maquinas">
+              <h5 class="card-title">Máquinas conectadas</h5>
+              <p class="card-text">50</p>
+            </div>
+  
+            <div class="card-body-perda">
+              <h5 class="card-title">Perda de Pacotes</h5>
+              <p class="card-text">X%</p>
+            </div>
+  
           </div>
-
-          <div class="card-body-maquinas">
-            <h5 class="card-title">Máquinas conectadas</h5>
-            <p class="card-text">50</p>
-          </div>
-
-          <div class="card-body-perda">
-            <h5 class="card-title">Perda de Pacotes</h5>
-            <p class="card-text">X%</p>
-          </div>
-
-        </div>
-        <div class="card-group">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Monitoramento de Pacotes</h5>
-              <div class="graph-container">
-
+          <div class="card-group">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Monitoramento de Pacotes</h5>
+                <div class="graph-container">
+  
+                </div>
               </div>
             </div>
+  
           </div>
-
         </div>
-    
+        <div class="father-speed-test">
           <div class="card-body-graph">
             <h5 class="card-title">Speed Test</h5>
             <div class="speed-test">
@@ -126,7 +131,7 @@
               </div>
             </div>
           </div>
-        
+        </div>
       </div>
     </main>
   </section>

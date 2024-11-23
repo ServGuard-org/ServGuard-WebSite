@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
-    padding: 3%;
+    padding: var(--gap-3);
     overflow-y: auto;
 
     & main {
@@ -10,8 +10,8 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin-left: calc(100% - 90.4%);
-        width: 91%;
+        margin-left: calc(100% - 91.7%);
+        width: 92%;
         height: 100%;
     }
 }

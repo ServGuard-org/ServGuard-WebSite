@@ -1,0 +1,19 @@
+#page-chat-sgi {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(121, 78, 212, 0.00) 0%, rgba(121, 78, 212, 0.30) 100%), var(--Grays-White, #FFF);
+    padding: var(--gap-3);
+    overflow-y: auto;
+    position: relative;
+    
+    & main {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: calc(100% - 90.4%);
+        width: 91%;
+        height: 100%;
+        background: red;
+    }
+}
