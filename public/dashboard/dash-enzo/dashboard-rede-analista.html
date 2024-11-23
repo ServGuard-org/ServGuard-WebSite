@@ -73,28 +73,29 @@
         <div class="father-card-group">
           <div class="card-group">
             <div class="card-body-estado">
-              <h5 class="card-title">Estado da rede</h5>
-              <!-- <div class="card-conect"> -->
+              <div class="card-body-estado-title"><p class="card-title">Estado Rede</p></div>              <!-- <div class="card-conect"> -->
               <p class="bold center text-green" id="estado_rede">23</p>
               <!-- </div> -->
   
             </div>
-  
+
             <div class="card-body-maquinas">
-              <h5 class="card-title">Máquinas conectadas</h5>
+              <div class="card-body-maquinas-title"><p class="card-title">Máquinas Conectadas</p></div>
               <p class="card-text">50</p>
             </div>
   
             <div class="card-body-perda">
-              <h5 class="card-title">Perda de Pacotes</h5>
-              <p class="card-text">X%</p>
+              <div class="card-body-perda-title"><p class="card-title">Perda de Pacotes</p></div>             
+               <p class="card-text">X%</p>
             </div>
   
           </div>
           <div class="card-group">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Monitoramento de Pacotes</h5>
+                <div class="card-body-title">
+                  <p class="card-title">Monitoramento de Pacotes</p>
+                </div>
                 <div class="graph-container">
   
                 </div>
@@ -109,12 +110,12 @@
             <div class="speed-test">
               <div class="download">
                 <h6>Download</h6>
-                <div class="speed-value">50</div>
+                <div class="dash-alert-grafic-box2">
+                  <div class="dash-titulo-gauge2">
+                    <h4 class="bold">Média de uso RAM</h4>
+                  </div>
               </div>
-              <div class="dash-alert-grafic-box2">
-                <div class="dash-titulo-gauge2">
-                  <h4 class="bold">Média de uso RAM</h4>
-                </div>
+              
                 <div id="chart2" style="max-width: 300px; margin: auto;"></div>
               </div>
               <div class="upload">
@@ -127,6 +128,7 @@
                   </div>
                   <div id="chart2" style="max-width: 300px; margin: auto;"></div>
                 </div>
+                <div class="button-speed-test"></div>
                 <button class="start-test">Iniciar</button>
               </div>
             </div>

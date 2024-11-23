@@ -20,18 +20,20 @@
 .container {
   display: flex;
     width: 100%;
-    background-color: #007bff;
+    padding-left: 30px;
+    padding-top: 30px;
+    /* background-color: #007bff; */
 }
 
 .father-card-group{
   display: flex;
   flex-direction: column;
   width: 70%;
-  background: yellow;
+  /* background: yellow; */
 }
 
 .card-group {
-  background-color: #794ED4;
+  /* background-color: #794ED4; */
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -48,7 +50,7 @@
 .card-body-estado {
   width: 17vw;
   height: 23vh;
-  top: 35pxpx;
+  /* top: 35px; */
 
   display: flex;
   flex-direction: column;
@@ -106,10 +108,11 @@
 }
 
 .father-speed-test{
-  width: 30%;
-  height: 100%;
-  background: rebeccapurple;
+  width: 25%;
+  height: 96%;
+  /* background: rebeccapurple; */
   padding: 0px var(--gap-3);
+  margin-left: 20px;
 }
 
 .card-body-graph {
@@ -130,12 +133,28 @@
   backdrop-filter: blur(2px);
 }
 
+.card-body-title p {
+  font-size: 20px; /* Aumenta o tamanho do texto */
+padding: 10px;
+color: #794ED4;
+}
+
+.card-title{
+  font-size: 25px;
+  align-items: center;
+  color: #794ED4;
+  font-weight: bold;
+  justify-content: center;
+}
+
 .graph-container {
-  width: 900px;
+  width: 1000px;
   height: 400px;
   background-color: #f5f5f5;
   border-radius: 5px;
   margin-top: 10px;
+  margin-left: 15px;
+  margin-bottom: 15px;
 }
 
 .speed-test {
@@ -144,6 +163,7 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+
 }
 
 .speed-value {
@@ -164,4 +184,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.download{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.button-speed-test{
+  margin-top: 90%;
 }
