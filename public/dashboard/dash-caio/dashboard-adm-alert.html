@@ -65,7 +65,8 @@
                 </div>
                 <div class="dash-alert-titulo">
                     <h1 class="bold">Monitoramento de alertas:</h1>
-                    <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p>
+                    <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de
+                        monitoramento.</p>
                 </div>
             </div>
             <div class="dash-alert-pai">
@@ -201,7 +202,8 @@
                             <div class="campo-sgi">
                                 <h4>Análise da <span class="bold">SGI</span></h4>
                                 <div class="campo-sgi-resp">
-                                    <p id="respostaSGI">Resposta...</p>
+                                    <p class="little-text" style="padding: 3%; max-height: 100%;"
+                                    id="placeholder-analise-ia"><img src="../../assets/gif/loading.gif" alt=""></p>
                                 </div>
                             </div>
                         </div>
@@ -353,14 +355,14 @@
         areaPopup.classList.add("opacidade1");
     }
 
-    function gerarGraficoRadar(cpu, ram, rede, outros) {
+    function gerarGraficoRadar(cpu, ram, usoGeral, rede) {
         const ctx = document.getElementById("radarChart").getContext('2d');
         // Dados do gráfico
         const data = {
             labels: ['CPU', 'RAM', 'USO GERAL', 'REDE'],
             datasets: [{
                 label: 'Porcenagem de Alertas',
-                data: [cpu, ram, rede, outros],
+                data: [cpu, ram, usoGeral, rede],
                 backgroundColor: 'rgba(109, 75, 199, 0.2)',
                 borderColor: 'rgba(109, 75, 199, 1)',
                 borderWidth: 2
@@ -386,6 +388,48 @@
             }
         };
         new Chart(ctx, config);
+        gerarAnaliseIA({ alpha: alpha, beta: beta })
+    }
+
+    function gerarAnaliseIA(cpu, ram, usoGeral, rede) {
+
+        let mensagem = `
+            Com base no gráfico de radar gerado, quais insights podem ser obtidos sobre a distribuição de alertas entre 
+            os recursos monitorados (CPU, RAM, Uso Geral e Rede) no contexto do monitoramento de servidores PIX? A 
+            resposta será exibida em uma interface para o usuário final do sistema de monitoramento e deve ser clara e 
+            objetiva.
+            Dados para análise:
+            - CPU: ${cpu}
+            - RAM: ${ram}
+            - Uso Geral (mesma coisa que CPU+RAM/2): ${usoGeral}
+            - rede: ${rede}
+            `;
+
+        fetch(`/externos/GenAI/perguntar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                pergunta: mensagem.toString()
+            })
+        }
+        ).then(resposta => resposta.json().then(respostaFormatada => {
+            respostaFormatada = formatarTextoIA(respostaFormatada.resposta.toString());
+            console.log('Resposta IA:', respostaFormatada);
+            const elementoAnalise = document.getElementById('placeholder-analise-ia');
+            elementoAnalise.innerHTML = respostaFormatada;
+        })).catch(error => {
+            console.error('Erro ao obter resposta IA:', error);
+        });
+
+    }
+
+    const formatarTextoIA = texto => {
+        // Utilizando uma expressão regular para encontrar os textos dentro de **
+        return texto
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
+            .replace(/\n/g, '<br>'); // Substitui as quebras de linha
     }
 
     function fecharRadar() {
