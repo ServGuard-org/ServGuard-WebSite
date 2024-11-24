@@ -668,6 +668,26 @@ ORDER BY
     c.dthCriacao DESC;
 
 
+CREATE OR REPLACE VIEW MediaUsoRecursos AS
+SELECT 
+    mr.fkMaquina AS idMaquina,
+    m.fkEmpresa AS idEmpresa,
+    AVG(c.registro) AS mediaUsoCPU
+FROM 
+    Captura c
+JOIN 
+    MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN 
+    Maquina m ON mr.fkMaquina = m.idMaquina
+JOIN 
+    Recurso r ON mr.fkRecurso = r.idRecurso
+WHERE 
+    r.nome = 'usoCPU'
+    AND c.dthCriacao >= NOW() - INTERVAL 7 DAY
+GROUP BY 
+    mr.fkMaquina, m.fkEmpresa;
+
+
 
 
 

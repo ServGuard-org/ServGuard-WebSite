@@ -84,7 +84,7 @@
 
     /* padding: 5%; */
     /* margin-bottom: 2%; */ 
-
+    gap: 2px;
     display: flex;
     flex-direction: column;
     /* align-items: start; */

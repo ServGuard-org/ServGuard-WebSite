@@ -17,8 +17,13 @@ router.get("/totalMedicoes/:idEmpresa/:idMaquina", function(req, res){
 router.get("/porcentagemAlertasCPU/:idEmpresa/:idMaquina", function(req, res){
     medidaController.buscarPorcentagemAlertasCPU(req,res);
 });
+
 router.get("/porcentagemAlertasRAM/:idEmpresa/:idMaquina", function(req, res){
     medidaController.buscarPorcentagemAlertasRAM(req,res);
+});
+
+router.get("/mediaGaugeCPU/:idEmpresa/:idMaquina", function(req, res){
+    medidaController.buscarMediaGaugeCPU(req,res);
 });
 
 
