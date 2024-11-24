@@ -164,6 +164,23 @@
                 </div>
                 <div class="father-dash-alert-use-2">
                     <div class="dash-alert-coluna-2-use">
+                        <!-- <div class="father-tips">
+                            <div class="tooltip tooltip-white">
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                    <span> Nesse campo temos a
+                                        porcentagem da média dos últimos 7 dias do uso da CPU por meio de um
+                                        gráfico de Gauge. Assim como os alertas de RAM e CPU, média de uso terá
+                                        uma troca de cor para os números de acordo com a porcentagem. 0% até 40%
+                                        o número ficará com a cor <span class="text-green bold">verde</span>, de
+                                        40% até 60% ficará com a cor <span
+                                            class="text-orange bold">laranja</span>
+                                        e, por fim, se passar de 60% ficará <span
+                                            class="text-red bold">vermelho</span>.
+                                    </span> <br />
+                                </span>
+                            </div>
+                        </div> -->
                         <div class="dash-alert-titulo-detalhe-2">
                             <h4 class="bold">Histórico de Utilização dos últimos 7 dias:</h4>
                         </div>
@@ -173,6 +190,23 @@
                         </div>
                         <div class="dash-alert-titulo-detalhe-componente">
                             <h4 class="bold">Histórico de Utilização de Componente:</h4>
+                            <!-- <div class="father-tips">
+                                <div class="tooltip tooltip-white">
+                                    <h4>i</h4>
+                                    <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                        <span> Nesse campo temos a
+                                            porcentagem da média dos últimos 7 dias do uso da CPU por meio de um
+                                            gráfico de Gauge. Assim como os alertas de RAM e CPU, média de uso terá
+                                            uma troca de cor para os números de acordo com a porcentagem. 0% até 40%
+                                            o número ficará com a cor <span class="text-green bold">verde</span>, de
+                                            40% até 60% ficará com a cor <span
+                                                class="text-orange bold">laranja</span>
+                                            e, por fim, se passar de 60% ficará <span
+                                                class="text-red bold">vermelho</span>.
+                                        </span> <br />
+                                    </span>
+                                </div>
+                            </div> -->
                         </div>
                         <div class="dash-alert-coluna-2-grafic">
                             <div class="area-grafic" id="chartBarras" 
@@ -481,7 +515,7 @@
                     } else if (mediaCPU <= 60) {
                         cor = "#FF9800"; // Laranja
                     } else {
-                        cor = "#F44336"; // Vermelho
+                        cor = "#FF0000"; // Vermelho
                     }
 
                     // Configuração do gráfico
@@ -808,12 +842,12 @@
                     ],
                     chart: {
                         type: 'bar',
-                        height: 350
+                        height: 250
                     },
                     plotOptions: {
                         bar: {
                             horizontal: false,
-                            columnWidth: '55%',
+                            columnWidth: '25%',
                             endingShape: 'rounded'
                         },
                     },
