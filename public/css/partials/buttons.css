@@ -369,3 +369,71 @@
   background-color: var(--white-darke);
   color: var(--dark-purple);
 }
+
+/* // ---------------- INPUT PARA O CHAT SGI ---------------- // */
+/* Container da input */
+.input-container {
+  display: flex;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 5px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & textarea{
+    flex: 1;
+    resize: none; /* Remove a opção de redimensionamento manual */
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 20px;
+    height: 45px; /* Começa com uma linha */
+    line-height: 1.5;
+    max-height: 100px; /* Limite máximo da altura */
+    overflow-y: auto; /* Scroll interno quando exceder o limite */
+    background-color: transparent;
+    transition: height 0.2s ease; /* Suaviza a transição da altura */
+  }
+
+  & textarea::placeholder{
+    color: #aaa;
+    font-style: italic;
+  }
+}
+
+.btn-send{
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1px;
+  background: var(--normal-purple);
+  cursor: pointer;
+  transition: all 0.5s ease;
+
+  & figure{
+    background: url(../../assets/svg/icon-enviar-white.svg) no-repeat center center;
+    background-size: cover;
+    width: 70%;
+    height: 70%;
+  }
+}
+
+.btn-send:hover{
+  background: var(--white-darknes);
+  transition: all 0.5s ease;
+  padding-right: 0px;
+
+  & figure{
+    background: url(../../assets/svg/icon-enviar.svg);
+    transition: all 0.5s ease;
+  }
+}

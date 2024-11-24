@@ -78,50 +78,176 @@
       </header>
 
       <main>
-        
+        <div class="dash-alert-topo">
+          <div class="link-back-seta">
+            <a class="bold text-gray-dark" onclick="voltar()">
+              <div class="icon-trian"></div>
+              Voltar para início
+            </a>
+          </div>
+          <div class="dash-alert-titulo">
+            <h1 class="bold">ChatSGI</h1>
+          </div>
+        </div>
+
+        <!-- Estado Inicial do Chat -->
+        <div id="sgi-initial-state" class="father-sgi-inicial">
+          <div class="child-sgi-help">
+            <div class="sgi-space">
+              <h3 class="center bold">Como Posso Ajudar?</h3>
+              <div class="input-container">
+                <textarea
+                  id="text-input-inicial"
+                  placeholder="Digite sua mensagem..."
+                ></textarea>
+                <button class="btn-send" id="send-button-inicial">
+                  <figure></figure>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estado da Conversa -->
+        <div
+          id="sgi-affected-state"
+          class="father-sgi-Affected"
+          style="display: none"
+        >
+          <div class="child-sgi-conversa">
+            <div class="child-sgi-ballons" id="ballons-container"></div>
+
+            <div class="child-space-input">
+              <div class="child-sgi-input">
+                <div class="input-container">
+                  <textarea
+                    id="text-input-afetado"
+                    placeholder="Digite sua mensagem..."
+                  ></textarea>
+                  <button class="btn-send" id="send-button-afetado">
+                    <figure></figure>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
-
     </section>
-    <script>
-      function sairNavbar() {
-        event.preventDefault();
-        sessionStorage.clear();
-        window.location.href = "../index.html";
-      }
-      function DashboardAnalista() {
-        window.location.href = "dashboard-analista.html";
-      }
-      function DashboardUsoGeral() {
-        window.location.href =
-          "../dashboard/dash-eduardo/dashboard-adm-uso.html";
-      }
-      function DashboardRede() {
-        window.location.href =
-          "../dashboard/dash-marcio/dashboard-adm-rede.html";
-      }
-      function DashboardAlerta() {
-        window.location.href =
-          "../dashboard/dash-caio/dashboard-adm-alert.html";
-      }
-      function sairNavbar() {
-        event.preventDefault();
-        sessionStorage.clear();
-        window.location.href = "../../index.html";
-      }
-      function voltar() {
-          window.location.href = "../dashboard-adm.html";
-      }
-      function carregarPagina() {
-          sessionStorage.removeItem("VOLTAR_PAGINA");
-          sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
-          obterDadosDeApoio1()
-          obterDadosDeApoio2()
-          carregarListaAlertas()
-          buscarDistribuicao()
-          buscarDadosGrafico()
-      }
 
-      
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const textInputInicial = document.getElementById("text-input-inicial");
+        const sendButtonInicial = document.getElementById(
+          "send-button-inicial"
+        );
+        const fatherSgiChatInitial =
+          document.getElementById("sgi-initial-state");
+        const fatherSgiChatAffected =
+          document.getElementById("sgi-affected-state");
+        const ballonsContainer = document.getElementById("ballons-container");
+
+        const textInputAfetado = document.getElementById("text-input-afetado");
+        const sendButtonAfetado = document.getElementById(
+          "send-button-afetado"
+        );
+
+        // Função para adicionar a mensagem da IA
+        function addIABubble(message) {
+          const aiBubble = document.createElement("div");
+          aiBubble.classList.add("sgi-chat-chat");
+          aiBubble.innerHTML = `
+      <div class="sgi-icon-user">
+        <div class="sgi-logo">
+          <figure></figure>
+        </div>
+      </div>
+      <div class="sgi-space-text">
+        <div class="balloon">
+          <p class="text-white">Resposta da IA simulada</p>
+        </div>
+      </div>
+    `;
+          ballonsContainer.appendChild(aiBubble);
+          ballonsContainer.scrollTop = ballonsContainer.scrollHeight;
+        }
+
+        // Função para alternar para o segundo chat
+        function switchToSecondChat(message) {
+          const userBubble = document.createElement("div");
+          userBubble.classList.add("sgi-chat-user");
+          userBubble.innerHTML = `
+      <div class="sgi-space-text">
+        <div class="balloon">
+          <p>${message}</p>
+        </div>
+      </div>
+      <div class="sgi-icon-user"></div>
+    `;
+          ballonsContainer.appendChild(userBubble);
+
+          // Simula a resposta da IA após a mensagem inicial
+          addIABubble(message);
+
+          // Mostrar o segundo chat e esconder o inicial
+          fatherSgiChatInitial.style.display = "none";
+          fatherSgiChatAffected.style.display = "flex";
+
+          // Rola a conversa para o final
+          ballonsContainer.scrollTop = ballonsContainer.scrollHeight;
+        }
+
+        // Enviar a mensagem inicial
+        sendButtonInicial.addEventListener("click", () => {
+          const message = textInputInicial.value.trim();
+          if (message) {
+            switchToSecondChat(message);
+            textInputInicial.value = ""; // Limpar a entrada
+          }
+        });
+
+        // Enviar a mensagem ao pressionar Enter no "chat inicial"
+        textInputInicial.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && textInputInicial.value.trim() !== "") {
+            sendButtonInicial.click();
+          }
+        });
+
+        // Lógica do segundo chat - adicionar mensagens
+        sendButtonAfetado.addEventListener("click", () => {
+          const message = textInputAfetado.value.trim();
+          if (message) {
+            // Adiciona balão do usuário
+            const userBubble = document.createElement("div");
+            userBubble.classList.add("sgi-chat-user");
+            userBubble.innerHTML = `
+        <div class="sgi-space-text">
+          <div class="balloon">
+            <p>${message}</p>
+          </div>
+        </div>
+        <div class="sgi-icon-user"></div>
+      `;
+            ballonsContainer.appendChild(userBubble);
+
+            // Simula resposta da IA
+            setTimeout(() => {
+              addIABubble(message);
+            }, 1000);
+
+            // Limpa o campo de entrada
+            textInputAfetado.value = "";
+            textInputAfetado.style.height = "20px"; // Reseta altura
+          }
+        });
+
+        // Enviar mensagem ao pressionar Enter no "chat afetado"
+        textInputAfetado.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && textInputAfetado.value.trim() !== "") {
+            sendButtonAfetado.click();
+          }
+        });
+      });
     </script>
   </body>
 </html>
