@@ -21,34 +21,40 @@
                 <div class="navbar-navlink-dash-adm">
                     <ul class="list-navlink-dash-adm">
                         <li>
-                            <a href="../dashboard-adm.html" class="link-dash-adm active">
-                                <img src="../../assets/svg/layout-icon-white.svg" alt="#icone-layout" />
+                            <a href="../dashboard-adm.html" class="link-dash-adm">
+                                <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
                             </a>
-                            <p class="little-text mt-1">Início</p>
+                            <p class="little-text">Início</p>
                         </li>
                         <li>
                             <a href="../dashboard-analista.html" class="link-dash-adm">
                                 <img src="../../assets/svg/search.svg" alt="#icone-layout" />
                             </a>
-                            <p class="little-text mt-1">Detalhes</p>
+                            <p class="little-text">Detalhes</p>
                         </li>
                         <li>
                             <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
                                 <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
                             </a>
-                            <p class="little-text mt-1">Funcionário</p>
+                            <p class="little-text">Funcionário</p>
                         </li>
                         <li>
                             <a href="../gerenciamento-maquina.html" class="link-dash-adm">
                                 <img src="../../assets/svg/server-icon.svg" alt="#icone-" />
                             </a>
-                            <p class="little-text mt-1">Máquina</p>
+                            <p class="little-text">Máquina</p>
                         </li>
                         <li>
-                            <a href="../detalhes-funcionario.html" class="link-dash-adm">
+                            <a href="../chat-sgi.html" class="link-dash-adm">
+                                <img src="../../assets/svg/logo-sgi.svg" alt="#icone-" />
+                            </a>
+                            <p class="little-text">SGI</p>
+                        </li>
+                        <li>
+                            <a href="detalhes-funcionario.html" class="link-dash-adm">
                                 <img src="../../assets/svg/perfil-icon.svg" alt="#icone-" />
                             </a>
-                            <p class="little-text mt-1">Perfil</p>
+                            <p class="little-text">Perfil</p>
                         </li>
                     </ul>
                 </div>
@@ -86,9 +92,11 @@
                                             </span> <br />
                                             <span class="bold">Total de Alertas CPU:</span><span> Nesse campo temos a
                                                 porcentagem apenas dos alertas de CPU em relação ao total de medições.
-                                                Onde de 0% a 50% o número ficará <span class="text-green bold">verde</span>,
-                                                de 50% a 80% o número ficará <span class="text-orange bold">laranja</span> e, 
-                                                de 80% a 100% ficará <span class="text-red bold">vermelho</span> 
+                                                Onde de 0% a 50% o número ficará <span
+                                                    class="text-green bold">verde</span>,
+                                                de 50% a 80% o número ficará <span
+                                                    class="text-orange bold">laranja</span> e,
+                                                de 80% a 100% ficará <span class="text-red bold">vermelho</span>
                                             </span> <br />
                                             <span class="bold">Total de Alertas RAM:</span><span> Nesse campo temos a
                                                 porcentagem apenas dos alertas de RAM em relação ao total de
@@ -123,10 +131,12 @@
                                             <span> Nesse campo temos a
                                                 porcentagem da média dos últimos 7 dias do uso da CPU por meio de um
                                                 gráfico de Gauge. Assim como os alertas de RAM e CPU, média de uso terá
-                                                uma troca de cor para os números de acordo com a porcentagem. 0% até 40% 
-                                                o número ficará com a cor <span class="text-green bold">verde</span>, de 
-                                                40% até 60% ficará com a cor <span class="text-orange bold">laranja</span>
-                                                e, por fim, se passar de 60% ficará <span class="text-red bold">vermelho</span>.  
+                                                uma troca de cor para os números de acordo com a porcentagem. 0% até 40%
+                                                o número ficará com a cor <span class="text-green bold">verde</span>, de
+                                                40% até 60% ficará com a cor <span
+                                                    class="text-orange bold">laranja</span>
+                                                e, por fim, se passar de 60% ficará <span
+                                                    class="text-red bold">vermelho</span>.
                                             </span> <br />
                                         </span>
                                     </div>
@@ -210,6 +220,7 @@
         obterEscalaInstabilidade();
         obterPorcentagemCpu();
         obterPorcentagemRam();
+        obterMediaGaugeCPU();
     }
 
     function consultarMaquina() {
@@ -569,6 +580,23 @@
                 console.log(erro);
                 return null; // Retorna null em caso de erro de conexão
             });
+    }
+
+    function obterMediaGaugeCPU() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+        if (!idMaquina) {
+            console.log("ID da máquina não encontrado.");
+            return;
+        }
+
+        fetch(`/medidas/mediaGaugeCPU/${idEmpresa}/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
     }
 
 

@@ -82,6 +82,28 @@ function buscarPorcentagemAlertasCPU(req, res) {
             res.status(500).json(erro.sqlMessage);
         });
 }
+function buscarMediaGaugeCPU(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (idEmpresa == undefined || idMaquina == undefined) {
+        console.log("Id empresa ou Id máquina está undefined");
+        return res.status(400).send("Id da empresa ou da máquina não foi fornecido.");
+    }
+    medidaModel
+        .buscarMediaGaugeCPU(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao buscar a media de uso de CPU!!!!", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
 
 function buscarPorcentagemAlertasRAM(req, res) {
     var idEmpresa = req.params.idEmpresa;
@@ -250,5 +272,6 @@ module.exports = {
     buscarMaquinasConnect,
     buscarMedicoes,
     buscarPorcentagemAlertasCPU,
-    buscarPorcentagemAlertasRAM
+    buscarPorcentagemAlertasRAM,
+    buscarMediaGaugeCPU
 }

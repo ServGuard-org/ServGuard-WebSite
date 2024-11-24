@@ -43,6 +43,10 @@ function buscarPorcentagemAlertasRAM(idEmpresa, idMaquina){
     return database.executar(instrucaoSql);
 }
 
+function buscarMediaGaugeCPU(idEmpresa, idMaquina){
+    var instrucaoSql = ``
+}
+
 
 function buscarMapaInstabilidade(idEmpresa) {
     var instrucaoSql = `SELECT idMaquina, registro_usoCPU, max_usoCPU, registro_usoRAM, max_usoRAM FROM vista_mapa_instabilidade 
@@ -121,5 +125,6 @@ module.exports = {
     buscarMaquinasConnect,
     buscarMedicoes,
     buscarPorcentagemAlertasCPU,
-    buscarPorcentagemAlertasRAM
+    buscarPorcentagemAlertasRAM,
+    buscarMediaGaugeCPU
 }

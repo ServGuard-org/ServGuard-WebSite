@@ -14,6 +14,7 @@
 @import url(./pages/dashboard/details-machine.css);
 @import url(./pages/dashboard/detalhes-funcionario.css);
 @import url(./pages/dashboard/popups.css);
+@import url(./pages/dashboard/chat-sgi.css);
 
 /* --- IMPORTANDO AS PAGINAS DA DASHBOARD - INDIVIDUAIS --- */
 @import url(../dashboard/dash-caio/dashboard-alert.css);
