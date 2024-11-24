@@ -26,6 +26,13 @@ router.get("/mediaGaugeCPU/:idEmpresa/:idMaquina", function(req, res){
     medidaController.buscarMediaGaugeCPU(req,res);
 });
 
+router.get("/mediaGaugeRAM/:idEmpresa/:idMaquina", function(req, res){
+    medidaController.buscarMediaGaugeRAM(req,res);
+});
+
+router.get("/usoTotalsemanal/:idEmpresa/:idMaquina", function(req, res){
+    medidaController.buscarUsoTotalSemanal(req,res);
+});
 
 router.get("/mapaInstabilidade/:idEmpresa", function (req, res) {
     medidaController.buscarMapaInstabilidade(req,res);
