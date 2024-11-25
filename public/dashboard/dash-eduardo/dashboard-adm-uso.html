@@ -91,6 +91,30 @@
         </div>
 
         <div class="father-general-use">
+          <div class="child-analise-uso" id="card-analise-uso" style="display: none;">
+            <div class="card-analise-uso">
+              <h2 class="center bold">Tendencia de Uso Semanal</h2>
+              <div class="cards-space-graphic">
+                <div class="graphic-space">
+
+                  <div class="card-graphic-analise">
+
+                  </div>
+
+                </div>
+                <div class="sgi-space">
+
+                  <div class="card-sgi-analise">
+                    
+                  </div>
+
+                </div>
+              </div>
+              <div class="button-space">
+                <button class="btn-dashboard" onclick="fecharAnalise()">Fechar</button>
+              </div>
+            </div>
+          </div>
           <div class="child-general-use">
             <div class="general-use-content-medium">
               <div class="general-use-father-three">
@@ -125,7 +149,7 @@
                     identificando padrões críticos de desempenho e antecipando
                     possíveis sobrecargas.
                   </p>
-                  <button class="btn-dashboard" onclick="DashboardAnalista()">
+                  <button class="btn-dashboard" onclick="AnalisedeUso()">
                     Ver Análise de Uso
                   </button>
                 </div>
@@ -232,82 +256,15 @@
         buscarDadosGrafico();
       }
 
-      function ValidacaoCores(escolhaRecurso) {
-        const elementoIrrCPU = document.getElementById("irr_cpu");
-        const elementoIrrRAM = document.getElementById("irr_ram");
-        const elementoIrrDisco = document.getElementById("irr_disco");
-        var idHTML;
+      // ------------------------ // ANALISE DE USO // ------------------------ //
+      function AnalisedeUso(){
+        const analiseUse = document.getElementById("card-analise-uso");
+        analiseUse.style.display = "flex";
+      }
 
-        if (escolhaRecurso == "irregularidadesCPU") {
-          idHTML = elementoIrrCPU;
-          valor = parseFloat(idHTML.innerText);
-          console.log("idHTML de CPU:", valor);
-        } else if (escolhaRecurso == "irregularidadesRAM") {
-          idHTML = elementoIrrRAM;
-          valor = parseFloat(idHTML.innerText);
-          console.log("idHTML de RAM:", valor);
-        } else if (escolhaRecurso == "irregularidadesDISCO") {
-          idHTML = elementoIrrDisco;
-          valor = parseFloat(idHTML.innerText);
-          console.log("idHTML de DISCO:", valor);
-        }
-
-        if (valor <= 0) {
-          // verde
-          idHTML.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          idHTML.classList.add("text-green");
-          // idHTML.innerHTML = idHTML;
-        } else if (valor > 0 && valor < 15) {
-          // amarelo
-          idHTML.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          idHTML.classList.add("text-yellow");
-          // idHTML.innerHTML = idHTML;
-        } else if (valor >= 15 && valor < 25) {
-          // laranja
-          idHTML.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          idHTML.classList.add("text-orange");
-          // idHTML.innerHTML = idHTML;
-        } else if (valor >= 25) {
-          // vermelho
-          idHTML.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          idHTML.classList.add("text-red");
-          // idHTML.innerHTML = idHTML;
-        } else {
-          // sem cor (teoricamente aqui é impossível)
-          idHTML.classList.remove(
-            "text-green",
-            "text-red",
-            "text-orange",
-            "text-yellow",
-            "text-gray"
-          );
-          idHTML.classList.add("text-gray");
-          // idHTML.innerHTML = idHTML;
-        }
+      function fecharAnalise(){
+        const analiseUse = document.getElementById("card-analise-uso");
+        analiseUse.style.display = "none";
       }
     </script>
   </body>
