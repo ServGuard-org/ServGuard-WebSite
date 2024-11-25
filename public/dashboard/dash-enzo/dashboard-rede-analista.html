@@ -71,30 +71,58 @@
           </a>
         </div>
         <div class="dash-alert-titulo">
-          <h1 class="bold">Monitoramento de alertas:</h1>
-          <p style="color: var(--normal-purple);" class="bold italic">Análise em Tempo Real da Conectividade e Desempenho de seus Servidores.</p>
+          <h1 class="bold">Monitoramento de Rede:</h1>
+          <p style="color: var(--normal-purple);" class="bold italic">Análise em Tempo Real da Conectividade e
+            Desempenho de seus Servidores.</p>
         </div>
       </div>
       <div class="container">
         <div class="father-card-group">
           <div class="card-group">
             <div class="card-body-estado">
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    PENSANDO ...
+                  </span>
+                </div>
+              </div>
               <div class="card-body-estado-title">
                 <p class="card-title">Estado Rede</p>
               </div>
               <h2 class="bold center text-green" id="estado_rede">...</h2>
-              
+
             </div>
 
             <div class="card-body-maquinas">
-              
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    Este card é responsável por monitorar todas as máquinas atualmente conectadas à rede,
+                    permitindo o acompanhamento em tempo real do status e da atividade de cada dispositivo integrado ao
+                    sistema.
+                  </span>
+                </div>
+              </div>
               <div class="card-body-maquinas-title">
                 <p class="card-title center">Máquinas Conectadas</p>
               </div>
-              <h2 class="card-text bold " id="">50</h2>
+              <h2 class="card-text bold " id="">...</h2>
             </div>
 
             <div class="card-body-perda">
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    Este card realiza o monitoramento dos pacotes de dados que não chegam ao destino na rede (pacotes
+                    perdidos).
+                    A análise é feita automaticamente a cada 1 hora
+                  </span>
+                </div>
+              </div>
               <div class="card-body-perda-title">
                 <p class="card-title">Perda de Pacotes</p>
               </div>
@@ -102,7 +130,7 @@
             </div>
 
           </div>
-          <div class="card-group">
+          <div class="card-group-monitoramento">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-title">
@@ -118,6 +146,14 @@
         </div>
         <div class="father-speed-test">
           <div class="card-body-graph">
+            <div class="father-tips">
+              <div class="tooltip tooltip-white">
+                <h4>i</h4>
+                <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                  PENSANDO ...
+                </span>
+              </div>
+            </div>
             <div class="card-title-speed">
               <h5 class="card-title center">Speed Test</h5>
             </div>
@@ -143,7 +179,8 @@
               </div>
             </div>
             <div class="button-speed-test">
-              <button class="start-test">Iniciar</button>
+              <button class="start-test" id="iniciar-speed">Iniciar</button>
+              <p id="timerInfo"></p>
             </div>
           </div>
         </div>
@@ -382,8 +419,49 @@
       });
   }
 
+  // BOTAO HABILITADO/DESABILITADO
 
+  // Seleciona o botão e o elemento de texto
+  const button = document.getElementById("iniciar-speed");
+  const timerInfo = document.getElementById("timerInfo");
 
+  // Função para habilitar o botão
+  function enableButton() {
+    button.disabled = false;
+    button.classList.remove("disabled");
+    button.textContent = "Iniciar";
+    timerInfo.textContent = "";
+  }
+
+  // Função para desabilitar o botão
+  function disableButton() {
+    const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
+    const endTime = new Date().getTime() + disableTime;
+
+    button.disabled = true;
+    button.classList.add("disabled");
+    button.textContent = "Aguarde...";
+
+    // Atualiza o timer na tela
+    const interval = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const timeLeft = Math.max(0, endTime - currentTime);
+      const minutes = Math.floor(timeLeft / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        enableButton();
+      } else {
+        timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
+      }
+    }, 1000);
+  }
+
+  // Adiciona o evento de clique ao botão
+  button.addEventListener("click", () => {
+    disableButton();
+  });
 
 
 
