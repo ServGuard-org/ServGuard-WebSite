@@ -1,253 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ServGuard | Dashboard ADM</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link
-      rel="shortcut icon"
-      href="../assets/svg/logo-white.svg"
-      type="image/x-icon"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
 
-  <body
-    onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas(), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarMaquinasConnect(sessionStorage.getItem('ID_EMPRESA_USUARIO'))"
-  >
-    <section id="page-chat-sgi">
-      <header>
-        <div class="child-navbar-card-dash-adm">
-          <div class="navbar-logo-dash-adm">
-            <img src="../assets/svg/logo.svg" alt="#logo" />
-          </div>
-          <div class="navbar-navlink-dash-adm">
-            <ul class="list-navlink-dash-adm">
-              <li>
-                <a href="dashboard-adm.html" class="link-dash-adm">
-                  <img
-                    src="../assets/svg/layout-icon.svg"
-                    alt="#icone-layout"
-                  />
-                </a>
-                <p class="little-text">Início</p>
-              </li>
-              <li>
-                <a href="dashboard-analista.html" class="link-dash-adm">
-                  <img src="../assets/svg/search.svg" alt="#icone-layout" />
-                </a>
-                <p class="little-text">Detalhes</p>
-              </li>
-              <li>
-                <a
-                  href="./gerenciamento-funcionario.html"
-                  class="link-dash-adm"
-                >
-                  <img
-                    src="../assets/svg/func-icon.svg"
-                    alt="#icone-funcionario"
-                  />
-                </a>
-                <p class="little-text">Funcionário</p>
-              </li>
-              <li>
-                <a href="./gerenciamento-maquina.html" class="link-dash-adm">
-                  <img src="../assets/svg/server-icon.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">Máquina</p>
-              </li>
-              <li>
-                <a href="./chat-sgi.html" class="link-dash-adm active">
-                  <img src="../assets/svg/logo-sgi-white.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">SGI</p>
-              </li>
-              <li>
-                <a href="detalhes-funcionario.html" class="link-dash-adm">
-                  <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">Perfil</p>
-              </li>
-            </ul>
-          </div>
-          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-            <img src="../assets/svg/exit-icon.svg" alt="" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ServGuard | Dashboard ADM</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="shortcut icon" href="../assets/svg/logo-white.svg" type="image/x-icon" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <section id="page-chat-sgi">
+    <header>
+      <div class="child-navbar-card-dash-adm">
+        <div class="navbar-logo-dash-adm">
+          <img src="../assets/svg/logo.svg" alt="#logo" />
+        </div>
+        <div class="navbar-navlink-dash-adm">
+          <ul class="list-navlink-dash-adm">
+            <li>
+              <a href="dashboard-adm.html" class="link-dash-adm">
+                <img src="../assets/svg/layout-icon.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Início</p>
+            </li>
+            <li>
+              <a href="dashboard-analista.html" class="link-dash-adm">
+                <img src="../assets/svg/search.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Detalhes</p>
+            </li>
+            <li>
+              <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+              </a>
+              <p class="little-text">Funcionário</p>
+            </li>
+            <li>
+              <a href="./gerenciamento-maquina.html" class="link-dash-adm">
+                <img src="../assets/svg/server-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Máquina</p>
+            </li>
+            <li>
+              <a href="./chat-sgi.html" class="link-dash-adm active">
+                <img src="../assets/svg/logo-sgi-white.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">SGI</p>
+            </li>
+            <li>
+              <a href="detalhes-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Perfil</p>
+            </li>
+          </ul>
+        </div>
+        <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+          <img src="../assets/svg/exit-icon.svg" alt="" />
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <div class="dash-alert-topo">
+        <div class="link-back-seta">
+          <a class="bold text-gray-dark" onclick="voltar()">
+            <div class="icon-trian"></div>
+            Voltar para início
           </a>
         </div>
-      </header>
+        <div class="dash-alert-titulo">
+          <h1 class="bold">Chat<span class="text-purple">SGI</span></h1>
+        </div>
+      </div>
 
-      <main>
-        <div class="dash-alert-topo">
-          <div class="link-back-seta">
-            <a class="bold text-gray-dark" onclick="voltar()">
-              <div class="icon-trian"></div>
-              Voltar para início
-            </a>
-          </div>
-          <div class="dash-alert-titulo">
-            <h1 class="bold">Chat<span class="text-purple">SGI</span></h1>
+      <!-- Estado Inicial do Chat -->
+      <div id="sgi-initial-state" class="father-sgi-inicial">
+        <div class="child-sgi-help">
+          <div class="sgi-space">
+            <h3 class="center bold">Como Posso Ajudar?</h3>
+            <div class="input-container">
+              <textarea id="text-input-inicial" placeholder="Digite sua mensagem..."></textarea>
+              <button class="btn-send" id="send-button-inicial">
+                <figure></figure>
+              </button>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Estado Inicial do Chat -->
-        <div id="sgi-initial-state" class="father-sgi-inicial">
-          <div class="child-sgi-help">
-            <div class="sgi-space">
-              <h3 class="center bold">Como Posso Ajudar?</h3>
+      <!-- Estado da Conversa -->
+      <div id="sgi-affected-state" class="father-sgi-Affected" style="display: none">
+        <div class="child-sgi-conversa">
+          <div class="child-sgi-ballons" id="ballons-container"></div>
+          <div class="child-space-input">
+            <div class="child-sgi-input">
               <div class="input-container">
-                <textarea
-                  id="text-input-inicial"
-                  placeholder="Digite sua mensagem..."
-                ></textarea>
-                <button class="btn-send" id="send-button-inicial">
+                <textarea id="text-input-afetado" placeholder="Digite sua mensagem..."></textarea>
+                <button class="btn-send" id="send-button-afetado">
                   <figure></figure>
                 </button>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Estado da Conversa -->
-        <div
-          id="sgi-affected-state"
-          class="father-sgi-Affected"
-          style="display: none"
-        >
-          <div class="child-sgi-conversa">
-            <div class="child-sgi-ballons" id="ballons-container"></div>
-
-            <div class="child-space-input">
-              <div class="child-sgi-input">
-                <div class="input-container">
-                  <textarea
-                    id="text-input-afetado"
-                    placeholder="Digite sua mensagem..."
-                  ></textarea>
-                  <button class="btn-send" id="send-button-afetado">
-                    <figure></figure>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </section>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const textInputInicial = document.getElementById("text-input-inicial");
-        const sendButtonInicial = document.getElementById(
-          "send-button-inicial"
-        );
-        const fatherSgiChatInitial =
-          document.getElementById("sgi-initial-state");
-        const fatherSgiChatAffected =
-          document.getElementById("sgi-affected-state");
-        const ballonsContainer = document.getElementById("ballons-container");
-
-        const textInputAfetado = document.getElementById("text-input-afetado");
-        const sendButtonAfetado = document.getElementById(
-          "send-button-afetado"
-        );
-
-        // Função para adicionar a mensagem da IA
-        function addIABubble(message) {
-          const aiBubble = document.createElement("div");
-          aiBubble.classList.add("sgi-chat-chat");
-          aiBubble.innerHTML = `
-      <div class="sgi-icon-user">
-        <div class="sgi-logo">
-          <figure></figure>
-        </div>
       </div>
-      <div class="sgi-space-text">
-        <div class="balloon">
-          <p class="text-white">Resposta da IA simulada</p>
-        </div>
-      </div>
-    `;
-          ballonsContainer.appendChild(aiBubble);
-          ballonsContainer.scrollTop = ballonsContainer.scrollHeight;
+    </main>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const textInputInicial = document.getElementById("text-input-inicial");
+      const sendButtonInicial = document.getElementById("send-button-inicial");
+      const fatherSgiChatInitial = document.getElementById("sgi-initial-state");
+      const fatherSgiChatAffected = document.getElementById("sgi-affected-state");
+      const ballonsContainer = document.getElementById("ballons-container");
+      const textInputAfetado = document.getElementById("text-input-afetado");
+      const sendButtonAfetado = document.getElementById("send-button-afetado");
+
+      function formatarTextoIA (texto) {
+        // Utilizando uma expressão regular para encontrar os textos dentro de **
+        return texto
+            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
+            .replace(/\n/g, '<br>'); // Substitui as quebras de linha
+    }
+
+      async function obterRespostaDaIA(mensagem) {
+        try {
+          const response = await fetch('/externos/GenAI/Perguntar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pergunta: mensagem }),
+          });
+          if (!response.ok) throw new Error('Erro ao comunicar com a API');
+          const data = await response.json();
+          return data.resposta;
+        } catch (error) {
+          console.error('Erro:', error);
+          return 'Desculpe, ocorreu um problema. Tente novamente.';
         }
+      }
 
-        // Função para alternar para o segundo chat
-        function switchToSecondChat(message) {
-          const userBubble = document.createElement("div");
-          userBubble.classList.add("sgi-chat-user");
-          userBubble.innerHTML = `
-      <div class="sgi-space-text">
-        <div class="balloon">
-          <p>${message}</p>
-        </div>
-      </div>
-      <div class="sgi-icon-user"></div>
-    `;
-          ballonsContainer.appendChild(userBubble);
+      function addIABubble(message) {
+        const aiBubble = document.createElement("div");
+        aiBubble.classList.add("sgi-chat-chat");
+        aiBubble.innerHTML = `
+          <div class="sgi-icon-user">
+            <div class="sgi-logo"><figure></figure></div>
+          </div>
+          <div class="sgi-space-text">
+            <div class="balloon">
+              <p class="text-white">${message}</p>
+            </div>
+          </div>`;
+        ballonsContainer.appendChild(aiBubble);
+        ballonsContainer.scrollTop = ballonsContainer.scrollHeight;
+      }
 
-          // Simula a resposta da IA após a mensagem inicial
-          addIABubble(message);
+      function addUserBubble(message) {
+        const userBubble = document.createElement("div");
+        userBubble.classList.add("sgi-chat-user");
+        userBubble.innerHTML = `
+          <div class="sgi-space-text">
+            <div class="balloon"><p>${message}</p></div>
+          </div>
+          <div class="sgi-icon-user"></div>`;
+        ballonsContainer.appendChild(userBubble);
+      }
 
-          // Mostrar o segundo chat e esconder o inicial
+      async function handleUserMessage(message, initial = false) {
+        addUserBubble(message);
+        const iaResponse = await obterRespostaDaIA(message);
+        console.log(iaResponse)
+        const respostaFormatada = formatarTextoIA(iaResponse);
+        addIABubble(respostaFormatada);
+
+        if (initial) {
           fatherSgiChatInitial.style.display = "none";
           fatherSgiChatAffected.style.display = "flex";
-
-          // Rola a conversa para o final
-          ballonsContainer.scrollTop = ballonsContainer.scrollHeight;
         }
+      }
 
-        // Enviar a mensagem inicial
-        sendButtonInicial.addEventListener("click", () => {
-          const message = textInputInicial.value.trim();
-          if (message) {
-            switchToSecondChat(message);
-            textInputInicial.value = ""; // Limpar a entrada
-          }
-        });
-
-        // Enviar a mensagem ao pressionar Enter no "chat inicial"
-        textInputInicial.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" && textInputInicial.value.trim() !== "") {
-            sendButtonInicial.click();
-          }
-        });
-
-        // Lógica do segundo chat - adicionar mensagens
-        sendButtonAfetado.addEventListener("click", () => {
-          const message = textInputAfetado.value.trim();
-          if (message) {
-            // Adiciona balão do usuário
-            const userBubble = document.createElement("div");
-            userBubble.classList.add("sgi-chat-user");
-            userBubble.innerHTML = `
-        <div class="sgi-space-text">
-          <div class="balloon">
-            <p>${message}</p>
-          </div>
-        </div>
-        <div class="sgi-icon-user"></div>
-      `;
-            ballonsContainer.appendChild(userBubble);
-
-            // Simula resposta da IA
-            setTimeout(() => {
-              addIABubble(message);
-            }, 1000);
-
-            // Limpa o campo de entrada
-            textInputAfetado.value = "";
-            textInputAfetado.style.height = "20px"; // Reseta altura
-          }
-        });
-
-        // Enviar mensagem ao pressionar Enter no "chat afetado"
-        textInputAfetado.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" && textInputAfetado.value.trim() !== "") {
-            sendButtonAfetado.click();
-          }
-        });
+      sendButtonInicial.addEventListener("click", () => {
+        const message = textInputInicial.value.trim();
+        if (message) {
+          handleUserMessage(message, true);
+          textInputInicial.value = "";
+        }
       });
-    </script>
-  </body>
+
+      sendButtonAfetado.addEventListener("click", () => {
+        const message = textInputAfetado.value.trim();
+        if (message) {
+          handleUserMessage(message);
+          textInputAfetado.value = "";
+        }
+      });
+
+      textInputInicial.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && textInputInicial.value.trim()) {
+          sendButtonInicial.click();
+        }
+      });
+
+      textInputAfetado.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && textInputAfetado.value.trim()) {
+          sendButtonAfetado.click();
+        }
+      });
+    });
+  </script>
+</body>
+
 </html>
