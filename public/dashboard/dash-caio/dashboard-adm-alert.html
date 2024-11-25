@@ -206,9 +206,17 @@
                                 <canvas id="radarChart" style="max-width: 100%; max-height: 100%;"></canvas>
                             </div>
                             <div class="campo-sgi">
-                                <h4>Análise da <span class="bold">SGI</span></h4>
+                                <div style="display: flex; 
+                                            flex-direction: row; 
+                                            justify-content: center; 
+                                            gap: var(--gap-1); 
+                                            width: 100%;
+                                            align-items: center;">
+                                    <img src="../../assets/svg/logo-sgi.svg" alt="" style="max-width: 10%;">
+                                    <h4>Análise da <span class="bold">SGI</span></h4>
+                                </div>
                                 <div class="campo-sgi-resp">
-                                    <p class="little-text" style="max-height: 100%; max-width: 100%;"
+                                    <p class="little-text" style="max-height: 100%; max-width: 100%; padding-bottom: 2%;"
                                     id="placeholder-analise-ia"><img src="../../assets/gif/loading.gif" alt=""></p>
                                 </div>
                             </div>
@@ -247,6 +255,7 @@
         var ram;
         var rede;
         var outros;
+        console.log("DISTRIBUICOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         fetch(`/medidas/distribuicaoAlertas/${idEmpresa}`, {
             method: "GET",
             headers: {
@@ -254,7 +263,7 @@
             },
         })
             .then(function (resposta) {
-                console.log("Iniciando a busca de dados apoio 2");
+                console.log("Iniciando a busca de dados DISTRIBUICAO");
 
                 if (resposta.ok) {
                     return resposta.json().then((json) => {
@@ -269,19 +278,6 @@
                             usoGeral = Math.round((usoGeral * 100) / totalA);
                             rede = json[0].qtdRede;
                             rede = Math.round((rede * 100) / totalA);
-
-                            gerarAnaliseIA(
-                                totalA,
-                                json[0].qtdCpu,
-                                cpu, 
-                                json[0].qtdRam,
-                                ram, 
-                                json[0].qtdUsoGeral,
-                                usoGeral, 
-                                json[0].qtdRede,
-                                rede
-                            )
-
 
                             console.log("Total isAlerta:", totalA);
                             console.log("%%%%%%%%%:", cpu, ram, usoGeral, rede);
@@ -346,8 +342,20 @@
                                     idArea.style.fontSize = "20px";
                                 }
                             }
+
                             atualizarDistribuicao(cpu, ram, usoGeral, rede)
                             gerarGraficoRadar(cpu, ram, usoGeral, rede)
+                            gerarAnaliseIA(
+                                totalA,
+                                json[0].qtdCpu,
+                                cpu, 
+                                json[0].qtdRam,
+                                ram, 
+                                json[0].qtdUsoGeral,
+                                usoGeral, 
+                                json[0].qtdRede,
+                                rede
+                            )
 
                         } else {
                             console.log("Estrutura JSON inesperada ou vazia.");
@@ -380,7 +388,7 @@
         const data = {
             labels: ['CPU', 'RAM', 'USO GERAL', 'REDE'],
             datasets: [{
-                label: 'Porcenagem de Alertas',
+                label: 'Porcentagem de Alertas',
                 data: [cpu, ram, usoGeral, rede],
                 backgroundColor: 'rgba(109, 75, 199, 0.2)',
                 borderColor: 'rgba(109, 75, 199, 1)',
@@ -425,14 +433,14 @@
             Dados para análise:
             - Total de alertas: ${totalA}
             - Alertas de CPU: ${cpuTotal}
-            - Porcentagem de distribuição CPU: ${cpu}
+            - Porcentagem de distribuição CPU: ${cpuPercent}
             - Alertas de RAM: ${ramTotal}
             - Porcentagem de distribuição RAM: ${ramPercent}
             - Alertas de Uso Geral (mesma coisa que CPU+RAM/2): ${usoGeralTotal}
             - Porcentagem de distribuição Uso Geral: ${usoGeralPercent}
             - Alertas de Rede: ${redeTotal}
             - Porcentagem de distribuição Rede: ${redePercent}
-            `;
+        `;
 
         fetch(`/externos/GenAI/perguntar`, {
             method: 'POST',
@@ -454,7 +462,7 @@
 
     }
 
-    const formatarTextoIA = texto => {
+    function formatarTextoIA(texto) {
         // Utilizando uma expressão regular para encontrar os textos dentro de **
         return texto
             .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
