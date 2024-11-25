@@ -208,7 +208,7 @@
                             <div class="campo-sgi">
                                 <h4>Análise da <span class="bold">SGI</span></h4>
                                 <div class="campo-sgi-resp">
-                                    <p class="little-text" style="padding: 3%; max-height: 100%;"
+                                    <p class="little-text" style="max-height: 100%; max-width: 100%;"
                                     id="placeholder-analise-ia"><img src="../../assets/gif/loading.gif" alt=""></p>
                                 </div>
                             </div>
@@ -269,6 +269,19 @@
                             usoGeral = Math.round((usoGeral * 100) / totalA);
                             rede = json[0].qtdRede;
                             rede = Math.round((rede * 100) / totalA);
+
+                            gerarAnaliseIA(
+                                totalA,
+                                json[0].qtdCpu,
+                                cpu, 
+                                json[0].qtdRam,
+                                ram, 
+                                json[0].qtdUsoGeral,
+                                usoGeral, 
+                                json[0].qtdRede,
+                                rede
+                            )
+
 
                             console.log("Total isAlerta:", totalA);
                             console.log("%%%%%%%%%:", cpu, ram, usoGeral, rede);
@@ -394,21 +407,31 @@
             }
         };
         new Chart(ctx, config);
-        gerarAnaliseIA({ alpha: alpha, beta: beta })
     }
 
-    function gerarAnaliseIA(cpu, ram, usoGeral, rede) {
+    function gerarAnaliseIA(totalA,
+                            cpuTotal, cpuPercent, 
+                            ramTotal, ramPercent, 
+                            usoGeralTotal, usoGeralPercent, 
+                            redeTotal, redePercent
+                            ) {
 
         let mensagem = `
             Com base no gráfico de radar gerado, quais insights podem ser obtidos sobre a distribuição de alertas entre 
             os recursos monitorados (CPU, RAM, Uso Geral e Rede) no contexto do monitoramento de servidores PIX? A 
-            resposta será exibida em uma interface para o usuário final do sistema de monitoramento e deve ser clara e 
-            objetiva.
+            resposta será exibida em uma interface para o usuário final do sistema de monitoramento e deve ser clara, 
+            objetiva e útil para auxiliar o usuário a tomar uma decisão. 
+
             Dados para análise:
-            - CPU: ${cpu}
-            - RAM: ${ram}
-            - Uso Geral (mesma coisa que CPU+RAM/2): ${usoGeral}
-            - rede: ${rede}
+            - Total de alertas: ${totalA}
+            - Alertas de CPU: ${cpuTotal}
+            - Porcentagem de distribuição CPU: ${cpu}
+            - Alertas de RAM: ${ramTotal}
+            - Porcentagem de distribuição RAM: ${ramPercent}
+            - Alertas de Uso Geral (mesma coisa que CPU+RAM/2): ${usoGeralTotal}
+            - Porcentagem de distribuição Uso Geral: ${usoGeralPercent}
+            - Alertas de Rede: ${redeTotal}
+            - Porcentagem de distribuição Rede: ${redePercent}
             `;
 
         fetch(`/externos/GenAI/perguntar`, {
