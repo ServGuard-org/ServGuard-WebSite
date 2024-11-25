@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../css/main.css" />
   <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
 
@@ -131,6 +132,14 @@
 
           </div>
           <div class="card-group-monitoramento">
+             <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    PENSANDO ...
+                  </span>
+                </div>
+              </div>
             <div class="card">
               <div class="card-body">
                 <div class="card-body-title">
@@ -159,27 +168,16 @@
             </div>
             <div class="speed-test">
               <div class="download">
-                <h6>Download</h6>
-                <div class="dash-alert-grafic-box2">
-                  <div class="dash-titulo-gauge2">
-                    <h4 class="bold">Média de uso RAM</h4>
-                  </div>
-                </div>
-
-                <div id="chart2" style="max-width: 300px; margin: auto;"></div>
+                <h5>Download</h5>
+                <div id="chart1" style="max-width: 300px; margin: auto;"></div>
               </div>
               <div class="upload">
-                <h6>Upload</h6>
-                <div class="dash-alert-grafic-box2">
-                  <div class="dash-titulo-gauge2">
-                    <h4 class="bold">Média de uso RAM</h4>
-                  </div>
-                  <div id="chart2" style="max-width: 300px; margin: auto;"></div>
-                </div>
+                <h5>Upload</h5>
+                  <div id="chart2" style="max-width: 300px; margin: auto;"></div>         
               </div>
             </div>
             <div class="button-speed-test">
-              <button class="start-test" id="iniciar-speed">Iniciar</button>
+               <button class="start-test" id="iniciar-speed" onclick="Clikado()">Clique Aqui</button>
               <p id="timerInfo"></p>
             </div>
           </div>
@@ -306,7 +304,7 @@
               fontWeight: "bold", // Texto em negrito
               color: "black", // Cor do texto
               formatter: function (val) {
-                return val + "%"; // Exibe o valor com "%"
+                return val + " Mbps"; // Exibe o valor com "%"
               },
             },
           },
@@ -370,7 +368,7 @@
               fontWeight: 'bold', // Texto em negrito
               color: 'black', // Cor do texto
               formatter: function (val) {
-                return val + "%"; // Exibe o valor com "%"
+                return val + " Mbps"; // Exibe o valor com "%"
               }
             }
           }
@@ -422,48 +420,41 @@
   // BOTAO HABILITADO/DESABILITADO
 
   // Seleciona o botão e o elemento de texto
-  const button = document.getElementById("iniciar-speed");
-  const timerInfo = document.getElementById("timerInfo");
 
-  // Função para habilitar o botão
-  function enableButton() {
-    button.disabled = false;
-    button.classList.remove("disabled");
-    button.textContent = "Iniciar";
-    timerInfo.textContent = "";
-  }
+    function Clikado() {
+      const button = document.getElementById("iniciar-speed");
+      const timerInfo = document.getElementById("timerInfo");
 
-  // Função para desabilitar o botão
-  function disableButton() {
-    const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
-    const endTime = new Date().getTime() + disableTime;
+      // Verifica se o botão já está desabilitado
+      if (button.disabled) return;
 
-    button.disabled = true;
-    button.classList.add("disabled");
-    button.textContent = "Aguarde...";
+      const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
+      const endTime = new Date().getTime() + disableTime;
 
-    // Atualiza o timer na tela
-    const interval = setInterval(() => {
-      const currentTime = new Date().getTime();
-      const timeLeft = Math.max(0, endTime - currentTime);
-      const minutes = Math.floor(timeLeft / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      // Desabilita o botão e altera o texto
+      button.disabled = true;
+      button.classList.add("disabled");
+      button.textContent = "Aguarde...";
 
-      if (timeLeft <= 0) {
-        clearInterval(interval);
-        enableButton();
-      } else {
-        timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
-      }
-    }, 1000);
-  }
+      // Atualiza o timer na tela
+      const interval = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const timeLeft = Math.max(0, endTime - currentTime);
+        const minutes = Math.floor(timeLeft / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-  // Adiciona o evento de clique ao botão
-  button.addEventListener("click", () => {
-    disableButton();
-  });
-
-
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          // Reabilita o botão e limpa o texto
+          button.disabled = false;
+          button.classList.remove("disabled");
+          button.textContent = "Clique Aqui";
+          timerInfo.textContent = "";
+        } else {
+          timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
+        }
+      }, 1000);
+    }
 
 
 

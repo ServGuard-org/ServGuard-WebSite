@@ -150,6 +150,7 @@ padding: 10px;
 
 .card-group-monitoramento {
   /* background-color: #794ED4; */
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
@@ -182,7 +183,7 @@ padding: 10px;
 }
 
 .start-test {
-  background-color: #007bff;
+  background-color:#794ED4;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -208,7 +209,7 @@ padding: 10px;
   cursor: pointer;
 }
 button.disabled {
-  background-color: purple;
+  background-color: gray;
   color: white;
   cursor: not-allowed;
 }
@@ -246,7 +247,7 @@ button.disabled {
 .tooltip .tooltiptext {
   visibility: hidden;
   opacity: 0;
-  min-width: 500px;
+  min-width: 300px;
   background-color: #EFEAFA;
   border: 2px solid var(--normal-purple);
   text-align: center;
