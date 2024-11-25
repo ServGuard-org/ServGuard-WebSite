@@ -85,10 +85,11 @@ function buscarPorcentagemAlertasCPU(req, res) {
 function buscarMediaGaugeCPU(req, res) {
     var idEmpresa = req.params.idEmpresa;
     var idMaquina = req.params.idMaquina;
+    // var idMaquinaRecurso = req.params.idMaquinaRecurso;
 
     if (idEmpresa == undefined || idMaquina == undefined) {
         console.log("Id empresa ou Id máquina está undefined");
-        return res.status(400).send("Id da empresa ou da máquina não foi fornecido.");
+        return res.status(400).send("O idEmpresa ou idMaquina não foram fornecidos.");
     }
     medidaModel
         .buscarMediaGaugeCPU(idEmpresa, idMaquina)
@@ -101,6 +102,54 @@ function buscarMediaGaugeCPU(req, res) {
         })
         .catch(function (erro) {
             console.log("Houve um erro ao buscar a media de uso de CPU!!!!", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function buscarMediaGaugeRAM(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+    // var idMaquinaRecurso = req.params.idMaquinaRecurso;
+
+    if (idEmpresa == undefined || idMaquina == undefined) {
+        console.log("Id empresa ou Id máquina está undefined");
+        return res.status(400).send("O idEmpresa ou idMaquina não foram fornecidos.");
+    }
+    medidaModel
+        .buscarMediaGaugeRAM(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao buscar a media de uso de RAM!!!!", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function buscarUsoTotalSemanal(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+    // var idMaquinaRecurso = req.params.idMaquinaRecurso;
+
+    if (idEmpresa == undefined || idMaquina == undefined) {
+        console.log("Id empresa ou Id máquina está undefined");
+        return res.status(400).send("O idEmpresa ou idMaquina não foram fornecidos.");
+    }
+    medidaModel
+        .buscarUsoTotalSemanal(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Houve um erro ao buscar o uso total da máquina!!!!", erro.sqlMessage);
             res.status(500).json(erro.sqlMessage);
         });
 }
@@ -273,5 +322,7 @@ module.exports = {
     buscarMedicoes,
     buscarPorcentagemAlertasCPU,
     buscarPorcentagemAlertasRAM,
-    buscarMediaGaugeCPU
+    buscarMediaGaugeCPU,
+    buscarMediaGaugeRAM,
+    buscarUsoTotalSemanal
 }

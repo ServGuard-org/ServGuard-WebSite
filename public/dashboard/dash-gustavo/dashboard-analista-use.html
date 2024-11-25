@@ -144,13 +144,13 @@
                                 <div class="dash-titulo-gauge1">
                                     <h4 class="bold">Média de uso CPU</h4>
                                 </div>
-                                <div id="chart1" style="max-width: 300px; margin: auto;"></div>
+                                <div id="gaugeChart" style="max-width: 300px; margin: auto;"></div>
                             </div>
                             <div class="dash-alert-grafic-box2">
                                 <div class="dash-titulo-gauge2">
                                     <h4 class="bold">Média de uso RAM</h4>
                                 </div>
-                                <div id="chart2" style="max-width: 300px; margin: auto;"></div>
+                                <div id="gaugeChart2" style="max-width: 300px; margin: auto;"></div>
                             </div>
                         </div>
                     </div>
@@ -164,6 +164,23 @@
                 </div>
                 <div class="father-dash-alert-use-2">
                     <div class="dash-alert-coluna-2-use">
+                        <!-- <div class="father-tips">
+                            <div class="tooltip tooltip-white">
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                    <span> Nesse campo temos a
+                                        porcentagem da média dos últimos 7 dias do uso da CPU por meio de um
+                                        gráfico de Gauge. Assim como os alertas de RAM e CPU, média de uso terá
+                                        uma troca de cor para os números de acordo com a porcentagem. 0% até 40%
+                                        o número ficará com a cor <span class="text-green bold">verde</span>, de
+                                        40% até 60% ficará com a cor <span
+                                            class="text-orange bold">laranja</span>
+                                        e, por fim, se passar de 60% ficará <span
+                                            class="text-red bold">vermelho</span>.
+                                    </span> <br />
+                                </span>
+                            </div>
+                        </div> -->
                         <div class="dash-alert-titulo-detalhe-2">
                             <h4 class="bold">Histórico de Utilização dos últimos 7 dias:</h4>
                         </div>
@@ -173,11 +190,27 @@
                         </div>
                         <div class="dash-alert-titulo-detalhe-componente">
                             <h4 class="bold">Histórico de Utilização de Componente:</h4>
+                            <!-- <div class="father-tips">
+                                <div class="tooltip tooltip-white">
+                                    <h4>i</h4>
+                                    <span class="tooltiptext tooltip-left text-black" style="text-align: left">
+                                        <span> Nesse campo temos a
+                                            porcentagem da média dos últimos 7 dias do uso da CPU por meio de um
+                                            gráfico de Gauge. Assim como os alertas de RAM e CPU, média de uso terá
+                                            uma troca de cor para os números de acordo com a porcentagem. 0% até 40%
+                                            o número ficará com a cor <span class="text-green bold">verde</span>, de
+                                            40% até 60% ficará com a cor <span
+                                                class="text-orange bold">laranja</span>
+                                            e, por fim, se passar de 60% ficará <span
+                                                class="text-red bold">vermelho</span>.
+                                        </span> <br />
+                                    </span>
+                                </div>
+                            </div> -->
                         </div>
                         <div class="dash-alert-coluna-2-grafic">
-                            <div class="area-grafic">
-
-                            </div>
+                            <div class="area-grafic" id="chartBarras" 
+                            style="width: 100%; height: 100%; margin: 0 auto; position: relative"></div>
                         </div>
                     </div>
                 </div>
@@ -213,14 +246,17 @@
         sessionStorage.removeItem("VOLTAR_PAGINA");
         sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
         consultarMaquina();
+        // consultarMaquinasFuncionamento();
+        // obterIrrCPU();
+        // obterIrrRAM();
+        // obterEscalaInstabilidade();
         obterNumeroMedicoes();
-        consultarMaquinasFuncionamento();
-        obterIrrCPU();
-        obterIrrRAM();
-        obterEscalaInstabilidade();
         obterPorcentagemCpu();
         obterPorcentagemRam();
         obterMediaGaugeCPU();
+        obterMediaGaugeRAM();
+        obterUsoTotalSemanal();
+        obterUsoTotalSemanalBarras();
     }
 
     function consultarMaquina() {
@@ -255,168 +291,26 @@
             .catch(error => console.error(error));
     }
 
-    function consultarMaquinasFuncionamento() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+    // function consultarMaquinasFuncionamento() {
+    //     const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-        fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                document.getElementById("total_maquinas").innerText = data.length;
+    //     fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             document.getElementById("total_maquinas").innerText = data.length;
 
-                const maquinasAtivas = data.filter(
-                    (maquina) => maquina.isAtiva === 1
-                );
-                document.getElementById("funcionamento_maquinas").innerText = maquinasAtivas.length;
-            });
-    }
+    //             const maquinasAtivas = data.filter(
+    //                 (maquina) => maquina.isAtiva === 1
+    //             );
+    //             document.getElementById("funcionamento_maquinas").innerText = maquinasAtivas.length;
+    //         });
+    // }
 
-
-    function obterIrrCPU() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-        fetch(`/recursos/irregularidade/cpu/${idEmpresa}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(function (resposta) {
-                console.log("Iniciando a busca das irregularidades de CPU");
-
-                if (resposta.ok) {
-                    return resposta.json().then((json) => {
-                        console.log(json);
-                        const irrCPU = json[0].qtdCpu;
-                        console.log("Valor capturado irrCPU:", irrCPU);
-                        document.getElementById("irr_cpu").innerHTML = irrCPU;
-                        // document.getElementById("irr_cpu").innerHTML = 25;
-                        ValidacaoCores("irregularidadesCPU");
-                    });
-                } else {
-                    console.log(
-                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-                    );
-                    document.getElementById("irr_cpu").innerHTML = "Erro ao obter";
-                    return null; // Retorna null em caso de erro
-                }
-            })
-            .catch(function (erro) {
-                console.log(erro);
-                return null; // Retorna null em caso de erro de conexão
-            });
-    }
-
-    function obterIrrRAM() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-        fetch(`/recursos/irregularidade/ram/${idEmpresa}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(function (resposta) {
-                console.log("Iniciando a busca das irregularidades de RAM");
-
-                if (resposta.ok) {
-                    return resposta.json().then((json) => {
-                        console.log(json);
-                        const irrRAM = json[0].qtdRam;
-                        console.log("Valor capturado irrRAM:", irrRAM);
-                        document.getElementById("irr_ram").innerHTML = irrRAM;
-                        ValidacaoCores("irregularidadesRAM");
-                    });
-                } else {
-                    console.log(
-                        "Houve um erro ao tentar capturar os dados de irregularidades RAM!"
-                    );
-                    document.getElementById("irr_ram").innerHTML = "Erro ao obter";
-                    return null; // Retorna null em caso de erro
-                }
-            })
-            .catch(function (erro) {
-                console.log(erro);
-                return null; // Retorna null em caso de erro de conexão
-            });
-    }
-
-    function ValidacaoCores(escolhaRecurso) {
-        const elementoIrrCPU = document.getElementById("irr_cpu");
-        const elementoIrrRAM = document.getElementById("irr_ram");
-        var idHTML;
-
-        if (escolhaRecurso == "irregularidadesCPU") {
-            idHTML = elementoIrrCPU;
-            valor = parseFloat(idHTML.innerText);
-            console.log("idHTML de CPU:", valor);
-        } else if (escolhaRecurso == "irregularidadesRAM") {
-            idHTML = elementoIrrRAM;
-            valor = parseFloat(idHTML.innerText);
-            console.log("idHTML de RAM:", valor);
-        }
-
-        if (valor <= 0) {
-            // verde
-            idHTML.classList.remove(
-                "text-green",
-                "text-red",
-                "text-orange",
-                "text-yellow",
-                "text-gray"
-            );
-            idHTML.classList.add("text-green");
-            // idHTML.innerHTML = idHTML;
-        } else if (valor > 0 && valor < 15) {
-            // amarelo
-            idHTML.classList.remove(
-                "text-green",
-                "text-red",
-                "text-orange",
-                "text-yellow",
-                "text-gray"
-            );
-            idHTML.classList.add("text-yellow");
-            // idHTML.innerHTML = idHTML;
-        } else if (valor >= 15 && valor < 25) {
-            // laranja
-            idHTML.classList.remove(
-                "text-green",
-                "text-red",
-                "text-orange",
-                "text-yellow",
-                "text-gray"
-            );
-            idHTML.classList.add("text-orange");
-            // idHTML.innerHTML = idHTML;
-        } else if (valor >= 25) {
-            // vermelho
-            idHTML.classList.remove(
-                "text-green",
-                "text-red",
-                "text-orange",
-                "text-yellow",
-                "text-gray"
-            );
-            idHTML.classList.add("text-red");
-            // idHTML.innerHTML = idHTML;
-        } else {
-            // sem cor (teoricamente aqui é impossível)
-            idHTML.classList.remove(
-                "text-green",
-                "text-red",
-                "text-orange",
-                "text-yellow",
-                "text-gray"
-            );
-            idHTML.classList.add("text-gray");
-            // idHTML.innerHTML = idHTML;
-        }
-    }
 
     function obterNumeroMedicoes() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
@@ -586,341 +480,755 @@
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
-        if (!idMaquina) {
-            console.log("ID da máquina não encontrado.");
-            return;
-        }
-
         fetch(`/medidas/mediaGaugeCPU/${idEmpresa}/${idMaquina}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Erro ao obter dados do servidor.");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data && data.length > 0) {
+                    const mediaCPU = data[0].mediaUsoCPU; // Acessa o primeiro item do array e pega a mediaUsoCPU
+                    if (mediaCPU === null || mediaCPU === undefined) {
+                        console.log("Média de CPU não disponível.");
+                        console.log(mediaCPU);
+                        console.log(data);
+                        return;
+                    }
+
+                    // Limpar o conteúdo do elemento do gráfico antes de criar um novo gráfico
+                    const element = document.querySelector("#gaugeChart");
+                    if (element) {
+                        element.innerHTML = ''; // Remove o conteúdo do elemento
+                    }
+
+                    // Definir cor com base na média
+                    let cor;
+                    if (mediaCPU <= 40) {
+                        cor = "#32CD32"; // Verde
+                    } else if (mediaCPU <= 60) {
+                        cor = "#FF9800"; // Laranja
+                    } else {
+                        cor = "#FF0000"; // Vermelho
+                    }
+
+                    // Configuração do gráfico
+                    var options = {
+                        series: [parseFloat(mediaCPU)], // Valor dinâmico
+                        chart: {
+                            type: "radialBar",
+                            offsetY: -20,
+                            sparkline: {
+                                enabled: true,
+                            },
+                        },
+                        plotOptions: {
+                            radialBar: {
+                                startAngle: -90,
+                                endAngle: 90,
+                                track: {
+                                    background: "#e7e7e7",
+                                    strokeWidth: "97%",
+                                    margin: 5,
+                                    dropShadow: {
+                                        enabled: true,
+                                        top: 2,
+                                        left: 0,
+                                        color: cor,
+                                        opacity: 1,
+                                        blur: 2,
+                                    },
+                                },
+                                dataLabels: {
+                                    name: {
+                                        show: false,
+                                    },
+                                    value: {
+                                        offsetY: -2,
+                                        fontSize: "25px",
+                                        fontWeight: "bold",
+                                        color: "black",
+                                        formatter: function (val) {
+                                            return val.toFixed(2) + "%"; // Exibe o valor com 2 casas decimais
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        grid: {
+                            padding: {
+                                top: -10,
+                            },
+                        },
+                        fill: {
+                            type: "solid",
+                            colors: [cor], // Aplica a cor dinâmica
+                        },
+                        // labels: ["Média de CPU:"], // Label do gráfico
+                    };
+
+                    // Renderizar o gráfico
+                    var chart = new ApexCharts(element, options);
+                    chart.render();
+
+                    return chart; // Retorna o objeto do gráfico
+                }
+            })
+            .catch((error) => {
+                console.error("Erro ao obter ou processar dados:", error);
+            });
     }
 
+    // Garantir que o gráfico seja renderizado após o carregamento da página
+    document.addEventListener("DOMContentLoaded", function () {
+        obterMediaGaugeCPU();
+    });
 
 
-
-    function obterEscalaInstabilidade() {
+    function obterMediaGaugeRAM() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
-        fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+        fetch(`/medidas/mediaGaugeRAM/${idEmpresa}/${idMaquina}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         })
-            .then(function (resposta) {
-                console.log("Iniciando a busca da escala de instabilidade");
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Erro ao obter dados do servidor.");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data && data.length > 0) {
+                    const mediaRAM = data[0].mediaUsoRAM; // Acessa o primeiro item do array e pega a mediaUsoCPU
+                    if (mediaRAM === null || mediaRAM === undefined) {
+                        console.log("Média de RAM não disponível.");
+                        console.log(mediaRAM);
+                        console.log(data);
+                        return;
+                    }
 
-                if (resposta.ok) {
-                    return resposta.json().then((json) => {
-                        console.log(json);
-                        const irrPorcentagem = json[0].percentual_irregulares;
-                        console.log("Valor capturado irrPorcentagem:", irrPorcentagem);
+                    // Limpar o conteúdo do elemento do gráfico antes de criar um novo gráfico
+                    const element = document.querySelector("#gaugeChart2");
+                    if (element) {
+                        element.innerHTML = ''; // Remove o conteúdo do elemento
+                    }
 
-                        elementoInstabilidade = document.getElementById(
-                            "escala-instabilidade-use"
-                        );
-                        if (irrPorcentagem < 1) {
-                            elementoInstabilidade.innerHTML = 0;
-                        } else if (irrPorcentagem >= 1 && irrPorcentagem < 25) {
-                            elementoInstabilidade.innerHTML = 1;
-                        } else if (irrPorcentagem >= 25 && irrPorcentagem < 50) {
-                            elementoInstabilidade.innerHTML = 2;
-                        } else if (irrPorcentagem >= 50) {
-                            elementoInstabilidade.innerHTML = 3;
-                        }
+                    // Definir cor com base na média
+                    let cor;
+                    if (mediaRAM <= 40) {
+                        cor = "#4CAF50"; // Verde
+                    } else if (mediaRAM <= 60) {
+                        cor = "#FF9800"; // Laranja
+                    } else {
+                        cor = "#FF0000"; // Vermelho
+                    }
 
-                        valor = parseFloat(elementoInstabilidade.innerText);
-                        switch (valor) {
-                            case 0:
-                                // verde
-                                elementoInstabilidade.classList.remove(
-                                    "text-green",
-                                    "text-red",
-                                    "text-orange",
-                                    "text-yellow",
-                                    "text-gray"
-                                );
-                                elementoInstabilidade.classList.add("text-green");
-                                break;
-                            case 1:
-                                // amarelo
-                                elementoInstabilidade.classList.remove(
-                                    "text-green",
-                                    "text-red",
-                                    "text-orange",
-                                    "text-yellow",
-                                    "text-gray"
-                                );
-                                elementoInstabilidade.classList.add("text-yellow");
-                                break;
-                            case 2:
-                                // laranja
-                                elementoInstabilidade.classList.remove(
-                                    "text-green",
-                                    "text-red",
-                                    "text-orange",
-                                    "text-yellow",
-                                    "text-gray"
-                                );
-                                elementoInstabilidade.classList.add("text-orange");
-                                break;
-                            case 3:
-                                // vermelho
-                                elementoInstabilidade.classList.remove(
-                                    "text-green",
-                                    "text-red",
-                                    "text-orange",
-                                    "text-yellow",
-                                    "text-gray"
-                                );
-                                elementoInstabilidade.classList.add("text-red");
-                                break;
-                            default:
-                                // sem cor (teoricamente aqui é impossível)
-                                elementoInstabilidade.classList.remove(
-                                    "text-green",
-                                    "text-red",
-                                    "text-orange",
-                                    "text-yellow",
-                                    "text-gray"
-                                );
-                                elementoInstabilidade.classList.add("text-gray");
-                                break;
-                        }
-                    });
-                } else {
-                    console.log(
-                        "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
-                    );
-                    document.getElementById("escala-instabilidade-use").innerHTML =
-                        "Erro ao obter";
-                    return null; // Retorna null em caso de erro
+                    // Configuração do gráfico
+                    var options = {
+                        series: [parseFloat(mediaRAM)], // Valor dinâmico
+                        chart: {
+                            type: "radialBar",
+                            offsetY: -20,
+                            sparkline: {
+                                enabled: true,
+                            },
+                        },
+                        plotOptions: {
+                            radialBar: {
+                                startAngle: -90,
+                                endAngle: 90,
+                                track: {
+                                    background: "#e7e7e7",
+                                    strokeWidth: "97%",
+                                    margin: 5,
+                                    dropShadow: {
+                                        enabled: true,
+                                        top: 2,
+                                        left: 0,
+                                        color: cor,
+                                        opacity: 1,
+                                        blur: 2,
+                                    },
+                                },
+                                dataLabels: {
+                                    name: {
+                                        show: false,
+                                    },
+                                    value: {
+                                        offsetY: -2,
+                                        fontSize: "25px",
+                                        fontWeight: "bold",
+                                        color: "black",
+                                        formatter: function (val) {
+                                            return val.toFixed(2) + "%"; // Exibe o valor com 2 casas decimais
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        grid: {
+                            padding: {
+                                top: -10,
+                            },
+                        },
+                        fill: {
+                            type: "solid",
+                            colors: [cor], // Aplica a cor dinâmica
+                        },
+                        // labels: ["Média de RAM:"], // Label do gráfico
+                    };
+
+                    // Renderizar o gráfico
+                    var chart = new ApexCharts(element, options);
+                    chart.render();
+
+                    return chart; // Retorna o objeto do gráfico
                 }
             })
-            .catch(function (erro) {
-                // console.log(erro);
-                return null; // Retorna null em caso de erro de conexão
+            .catch((error) => {
+                console.error("Erro ao obter ou processar dados:", error);
             });
     }
 
-    const formatarData = data => {
-        const dataFormatada = new Date(data);
-        return dataFormatada.toLocaleDateString();
-    }
+    // Garantir que o gráfico seja renderizado após o carregamento da página
+    document.addEventListener("DOMContentLoaded", function () {
+        obterMediaGaugeRAM();
+    });
 
-    function atualizarMapaInterface(dadosMapa) {
+    function obterUsoTotalSemanal() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
-        // Criando um array de datas únicas	
-        // Por ser um set, não aceita datas duplicadas
-        // ... (spread operator) para transformar o set em array de volta
-        // sort para ordenar as datas em ordem crescente
-        // map para transformar as datas em objetos
-        // exemplo do map: 
-        // "2021-09-01" => { name: "01/09/2021", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
-        const datas = [...new Set(dadosMapa[0].map(dm => dm.data))].sort();
-
-        console.log('DadosMapa', dadosMapa);
-        console.log('Datas:', datas);
-
-        // Criando um array de objetos com as datas e os registros do dia
-        // para cada data, filtrar os registros do dia
-        // e transformar em um objeto com a data e os registros
-        // converte os totais para inteiro (os dados já vem com casas decimais 0,
-        // mas estou removendo as casas para melhor visualização)
-        // e retorna o objeto
-        const series = datas.map(data => {
-            const registrosDoDia = dadosMapa[0].filter(dm => dm.data === data);
-            return {
-                name: formatarData(data),
-                data: registrosDoDia.map(r => parseInt(r.total_pacotes))
-            };
-        });
-
-        const options = {
-            series: series,
-            chart: {
-                height: 350,
-                width: 800,
-                type: 'heatmap',
-            },
-            dataLabels: {
-                enabled: false
-            },
-            colors: ["#6C2BB3"],
-            title: {
-                text: 'Mapa de Calor - Uso de CPU e RAM',
-                offsetY: 15,
-                offsetX: 250,
-                style: {
-                    fontSize: '18px',
-                    fontWeight: 'bold'
-                }
-            },
-            xaxis: {
-                categories: Array.from({ length: 24 }, (_, i) =>
-                    `${String(i).padStart(2, '0')}:00`
-                ),
-                // title: {
-                //     text: 'Horas do Dia'
-                // }
-            },
-            yaxis: {
-                title: {
-                    text: 'Dias da Semana'
-                }
-            }
-        };
-
-        document.querySelector("#chart").innerHTML = '';
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-    }
-
-    function atualizarMapa(numeroSemana) {
-        fetch(`/empresas/obterMapaSemana/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
-            method: 'GET',
+        fetch(`/medidas/usoTotalsemanal/${idEmpresa}/${idMaquina}`, {
+            method: "GET",
             headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then(resposta => resposta.json().then(respostaFormatada => {
-            console.log('Mapa de calor:', respostaFormatada);
-            atualizarMapaInterface(respostaFormatada);
-        })).catch(error => {
-            console.error('Erro ao obter mapa de calor:', error);
-        });
-    }
-
-    function renderGaugeChart(selector, value) {
-        var options = {
-            series: [value], // Valor dinâmico
-            chart: {
-                type: 'radialBar',
-                offsetY: -20,
-                sparkline: {
-                    enabled: true,
-                },
+                "Content-Type": "application/json",
             },
-            plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    track: {
-                        background: "#e7e7e7",
-                        strokeWidth: "97%",
-                        margin: 5,
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Processar os dados recebidos
+                const categories = data.map(item => item.data_registro); // Datas no eixo X
+                const usoCPU = data.map(item => item.media_semanal_uso_cpu); // Média de uso CPU
+                const usoRAM = data.map(item => item.media_semanal_uso_ram); // Média de uso RAM
+
+                // Configuração do gráfico
+                var options = {
+                    series: [
+                        {
+                            name: "Uso Médio RAM (%)",
+                            data: usoRAM
+                        },
+                        {
+
+                            name: "Uso Médio CPU (%)",
+                            data: usoCPU
+                        }
+                    ],
+                    chart: {
+                        height: 350,
+                        type: 'line',
                         dropShadow: {
                             enabled: true,
-                            top: 2,
-                            left: 0,
-                            color: "#794ED4",
-                            opacity: 1,
-                            blur: 2,
+                            color: '#000',
+                            top: 18,
+                            left: 7,
+                            blur: 10,
+                            opacity: 0.2
                         },
-                    },
-                    dataLabels: {
-                        name: {
-                            show: false,
+                        zoom: {
+                            enabled: false
                         },
-                        value: {
-                            offsetY: -2,
-                            fontSize: "22px",
-                            fontWeight: "bold", // Texto em negrito
-                            color: "black", // Cor do texto
-                            formatter: function (val) {
-                                return val + "%"; // Exibe o valor com "%"
-                            },
-                        },
-                    },
-                },
-            },
-            grid: {
-                padding: {
-                    top: -10,
-                },
-            },
-            fill: {
-                type: "solid", // Preenchimento sólido
-                colors: ["#794ED4"], // Define a cor roxa
-            },
-            labels: ["Média de RAM:"], // Label do gráfico
-        };
-
-        var chart = new ApexCharts(document.querySelector(selector), options);
-        chart.render();
-
-        return chart; // Retorna o objeto do gráfico, caso precise atualizar depois
-    }
-
-    // Chamada da função para criar o gráfico
-    const chart1 = renderGaugeChart("#chart1", 76);
-
-    function renderGaugeChart(selector, value) {
-        var options = {
-            series: [value], // Valor dinâmico
-            chart: {
-                type: 'radialBar',
-                offsetY: -20,
-                sparkline: {
-                    enabled: true
-                }
-            },
-            plotOptions: {
-                radialBar: {
-                    startAngle: -90,
-                    endAngle: 90,
-                    track: {
-                        background: "#e7e7e7",
-                        strokeWidth: '97%',
-                        margin: 5,
-                        dropShadow: {
-                            enabled: true,
-                            top: 2,
-                            left: 0,
-                            color: '#794ED4',
-                            opacity: 1,
-                            blur: 2
+                        toolbar: {
+                            show: false
                         }
                     },
+                    colors: ['#4E7AD4', '#8A2BE2'], // Azul para CPU, Vermelho para RAM
                     dataLabels: {
-                        name: {
-                            show: false
+                        enabled: true,
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    title: {
+                        text: 'Uso Semanal da Máquina (CPU e RAM)',
+                        align: 'left'
+                    },
+                    grid: {
+                        borderColor: '#e7e7e7',
+                        row: {
+                            colors: ['#f3f3f3', 'transparent'], // Alternar cores das linhas
+                            opacity: 0.5
                         },
-                        value: {
-                            offsetY: -2,
-                            fontSize: '22px',
-                            fontWeight: 'bold', // Texto em negrito
-                            color: 'black', // Cor do texto
+                    },
+                    markers: {
+                        size: 1
+                    },
+                    xaxis: {
+                        categories: categories, // Datas no eixo X
+                        title: {
+                            text: 'Dos Últimos 7 Dias'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Uso Médio (%)'
+                        },
+                        min: 0,
+                        max: 100, // Garantir o range de 0 a 100
+                        labels: {
+                            formatter: function (value) {
+                                return value + "%"; // Adicionar o sufixo "%"
+                            }
+                        },
+                        tickAmount: 5 // Define 5 divisões no eixo Y: 0%, 20%, 40%, 60%, 80%, 100%
+                    },
+                    legend: {
+                        position: 'top',
+                        horizontalAlign: 'right',
+                        floating: true,
+                        offsetY: -25,
+                        offsetX: -5
+                    }
+                };
+
+                // Renderizar o gráfico
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+            })
+            .catch(error => { console.error('Erro ao carregar os dados:', error) });
+
+    }
+
+
+    function obterUsoTotalSemanalBarras() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+        fetch(`/medidas/usoTotalsemanal/${idEmpresa}/${idMaquina}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Processar os dados recebidos
+                const categories = data.map(item => item.data_registro); // Datas no eixo X
+                const usoCPU = data.map(item => item.media_semanal_uso_cpu); // Média de uso CPU
+                const usoRAM = data.map(item => item.media_semanal_uso_ram); // Média de uso RAM
+
+                // Configuração do gráfico de barras
+                var options = {
+                    series: [
+                        {
+                            name: "Uso Médio CPU (%)",
+                            data: usoCPU
+                        },
+                        {
+                            name: "Uso Médio RAM (%)",
+                            data: usoRAM
+                        }
+                    ],
+                    chart: {
+                        type: 'bar',
+                        height: 250
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '25%',
+                            endingShape: 'rounded'
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: categories, // Datas no eixo X
+                        title: {
+                            text: 'Dos Últimos 7 Dias'
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Uso Médio (%)'
+                        },
+                        min: 0,
+                        max: 100, // Garantir o range de 0 a 100
+                        labels: {
                             formatter: function (val) {
-                                return val + "%"; // Exibe o valor com "%"
+                                return val + "%"; // Adicionar o sufixo "%"
+                            }
+                        },
+                        tickAmount: 5 // Define 5 divisões no eixo Y: 0%, 20%, 40%, 60%, 80%, 100%
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + "%"; // Adicionar o símbolo de porcentagem no tooltip
                             }
                         }
+                    },
+                    colors: ['#4E7AD4', '#8A2BE2'], // Azul para CPU, Roxo para RAM
+                    legend: {
+                        position: 'top',
+                        horizontalAlign: 'right',
+                        floating: true,
+                        offsetY: -25,
+                        offsetX: -5
                     }
-                }
-            },
-            grid: {
-                padding: {
-                    top: -10
-                }
-            },
-            fill: {
-                type: '',
-                colors: ['#794ED4'],
-            },
-            labels: ['Média de RAM:'], // Label do gráfico
-        };
+                };
 
-        var chart = new ApexCharts(document.querySelector(selector), options);
-        chart.render();
-
-        return chart; // Retorna o objeto do gráfico, caso precise atualizar depois
+                // Renderizar o gráfico
+                var chart = new ApexCharts(document.querySelector("#chartBarras"), options);
+                chart.render();
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os dados:', error);
+            });
     }
 
-    // Chamada da função para criar o gráfico
-    const chart2 = renderGaugeChart("#chart2", 76);
+
+
+
+    // function obterEscalaInstabilidade() {
+    //     const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+    //     fetch(`/medidas/escalaInstabilidade/${idEmpresa}`, {
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //     })
+    //         .then(function (resposta) {
+    //             console.log("Iniciando a busca da escala de instabilidade");
+
+    //             if (resposta.ok) {
+    //                 return resposta.json().then((json) => {
+    //                     console.log(json);
+    //                     const irrPorcentagem = json[0].percentual_irregulares;
+    //                     console.log("Valor capturado irrPorcentagem:", irrPorcentagem);
+
+    //                     elementoInstabilidade = document.getElementById(
+    //                         "escala-instabilidade-use"
+    //                     );
+    //                     if (irrPorcentagem < 1) {
+    //                         elementoInstabilidade.innerHTML = 0;
+    //                     } else if (irrPorcentagem >= 1 && irrPorcentagem < 25) {
+    //                         elementoInstabilidade.innerHTML = 1;
+    //                     } else if (irrPorcentagem >= 25 && irrPorcentagem < 50) {
+    //                         elementoInstabilidade.innerHTML = 2;
+    //                     } else if (irrPorcentagem >= 50) {
+    //                         elementoInstabilidade.innerHTML = 3;
+    //                     }
+
+    //                     valor = parseFloat(elementoInstabilidade.innerText);
+    //                     switch (valor) {
+    //                         case 0:
+    //                             // verde
+    //                             elementoInstabilidade.classList.remove(
+    //                                 "text-green",
+    //                                 "text-red",
+    //                                 "text-orange",
+    //                                 "text-yellow",
+    //                                 "text-gray"
+    //                             );
+    //                             elementoInstabilidade.classList.add("text-green");
+    //                             break;
+    //                         case 1:
+    //                             // amarelo
+    //                             elementoInstabilidade.classList.remove(
+    //                                 "text-green",
+    //                                 "text-red",
+    //                                 "text-orange",
+    //                                 "text-yellow",
+    //                                 "text-gray"
+    //                             );
+    //                             elementoInstabilidade.classList.add("text-yellow");
+    //                             break;
+    //                         case 2:
+    //                             // laranja
+    //                             elementoInstabilidade.classList.remove(
+    //                                 "text-green",
+    //                                 "text-red",
+    //                                 "text-orange",
+    //                                 "text-yellow",
+    //                                 "text-gray"
+    //                             );
+    //                             elementoInstabilidade.classList.add("text-orange");
+    //                             break;
+    //                         case 3:
+    //                             // vermelho
+    //                             elementoInstabilidade.classList.remove(
+    //                                 "text-green",
+    //                                 "text-red",
+    //                                 "text-orange",
+    //                                 "text-yellow",
+    //                                 "text-gray"
+    //                             );
+    //                             elementoInstabilidade.classList.add("text-red");
+    //                             break;
+    //                         default:
+    //                             // sem cor (teoricamente aqui é impossível)
+    //                             elementoInstabilidade.classList.remove(
+    //                                 "text-green",
+    //                                 "text-red",
+    //                                 "text-orange",
+    //                                 "text-yellow",
+    //                                 "text-gray"
+    //                             );
+    //                             elementoInstabilidade.classList.add("text-gray");
+    //                             break;
+    //                     }
+    //                 });
+    //             } else {
+    //                 console.log(
+    //                     "Houve um erro ao tentar capturar os dados de irregularidades CPU!"
+    //                 );
+    //                 document.getElementById("escala-instabilidade-use").innerHTML =
+    //                     "Erro ao obter";
+    //                 return null; // Retorna null em caso de erro
+    //             }
+    //         })
+    //         .catch(function (erro) {
+    //             // console.log(erro);
+    //             return null; // Retorna null em caso de erro de conexão
+    //         });
+    // }
+
+    // const formatarData = data => {
+    //     const dataFormatada = new Date(data);
+    //     return dataFormatada.toLocaleDateString();
+    // }
+
+    // function atualizarMapaInterface(dadosMapa) {
+
+    //     // Criando um array de datas únicas
+    //     // Por ser um set, não aceita datas duplicadas
+    //     // ... (spread operator) para transformar o set em array de volta
+    //     // sort para ordenar as datas em ordem crescente
+    //     // map para transformar as datas em objetos
+    //     // exemplo do map:
+    //     // "2021-09-01" => { name: "01/09/2021", data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+    //     const datas = [...new Set(dadosMapa[0].map(dm => dm.data))].sort();
+
+    //     console.log('DadosMapa', dadosMapa);
+    //     console.log('Datas:', datas);
+
+    //     // Criando um array de objetos com as datas e os registros do dia
+    //     // para cada data, filtrar os registros do dia
+    //     // e transformar em um objeto com a data e os registros
+    //     // converte os totais para inteiro (os dados já vem com casas decimais 0,
+    //     // mas estou removendo as casas para melhor visualização)
+    //     // e retorna o objeto
+    //     const series = datas.map(data => {
+    //         const registrosDoDia = dadosMapa[0].filter(dm => dm.data === data);
+    //         return {
+    //             name: formatarData(data),
+    //             data: registrosDoDia.map(r => parseInt(r.total_pacotes))
+    //         };
+    //     });
+
+    //     const options = {
+    //         series: series,
+    //         chart: {
+    //             height: 350,
+    //             width: 800,
+    //             type: 'heatmap',
+    //         },
+    //         dataLabels: {
+    //             enabled: false
+    //         },
+    //         colors: ["#6C2BB3"],
+    //         title: {
+    //             text: 'Mapa de Calor - Uso de CPU e RAM',
+    //             offsetY: 15,
+    //             offsetX: 250,
+    //             style: {
+    //                 fontSize: '18px',
+    //                 fontWeight: 'bold'
+    //             }
+    //         },
+    //         xaxis: {
+    //             categories: Array.from({ length: 24 }, (_, i) =>
+    //                 `${String(i).padStart(2, '0')}:00`
+    //             ),
+    //             // title: {
+    //             //     text: 'Horas do Dia'
+    //             // }
+    //         },
+    //         yaxis: {
+    //             title: {
+    //                 text: 'Dias da Semana'
+    //             }
+    //         }
+    //     };
+
+    //     document.querySelector("#chart").innerHTML = '';
+    //     var chart = new ApexCharts(document.querySelector("#chart"), options);
+    //     chart.render();
+    // }
+
+    // function atualizarMapa(numeroSemana) {
+    //     fetch(`/empresas/obterMapaSemana/${sessionStorage.getItem("ID_EMPRESA_USUARIO")}/${numeroSemana}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         }
+    //     }).then(resposta => resposta.json().then(respostaFormatada => {
+    //         console.log('Mapa de calor:', respostaFormatada);
+    //         atualizarMapaInterface(respostaFormatada);
+    //     })).catch(error => {
+    //         console.error('Erro ao obter mapa de calor:', error);
+    //     });
+    // }
+
+    // function renderGaugeChart(selector, value) {
+    //     var options = {
+    //         series: [value], // Valor dinâmico
+    //         chart: {
+    //             type: 'radialBar',
+    //             offsetY: -20,
+    //             sparkline: {
+    //                 enabled: true,
+    //             },
+    //         },
+    //         plotOptions: {
+    //             radialBar: {
+    //                 startAngle: -90,
+    //                 endAngle: 90,
+    //                 track: {
+    //                     background: "#e7e7e7",
+    //                     strokeWidth: "97%",
+    //                     margin: 5,
+    //                     dropShadow: {
+    //                         enabled: true,
+    //                         top: 2,
+    //                         left: 0,
+    //                         color: "#794ED4",
+    //                         opacity: 1,
+    //                         blur: 2,
+    //                     },
+    //                 },
+    //                 dataLabels: {
+    //                     name: {
+    //                         show: false,
+    //                     },
+    //                     value: {
+    //                         offsetY: -2,
+    //                         fontSize: "22px",
+    //                         fontWeight: "bold", // Texto em negrito
+    //                         color: "black", // Cor do texto
+    //                         formatter: function (val) {
+    //                             return val + "%"; // Exibe o valor com "%"
+    //                         },
+    //                     },
+    //                 },
+    //             },
+    //         },
+    //         grid: {
+    //             padding: {
+    //                 top: -10,
+    //             },
+    //         },
+    //         fill: {
+    //             type: "solid", // Preenchimento sólido
+    //             colors: ["#794ED4"], // Define a cor roxa
+    //         },
+    //         labels: ["Média de RAM:"], // Label do gráfico
+    //     };
+
+    //     var chart = new ApexCharts(document.querySelector(selector), options);
+    //     chart.render();
+
+    //     return chart; // Retorna o objeto do gráfico, caso precise atualizar depois
+    // }
+
+    // // Chamada da função para criar o gráfico
+    // const chart1 = renderGaugeChart("#chart1", 76);
+
+    // function renderGaugeChart(selector, value) {
+    //     var options = {
+    //         series: [value], // Valor dinâmico
+    //         chart: {
+    //             type: 'radialBar',
+    //             offsetY: -20,
+    //             sparkline: {
+    //                 enabled: true
+    //             }
+    //         },
+    //         plotOptions: {
+    //             radialBar: {
+    //                 startAngle: -90,
+    //                 endAngle: 90,
+    //                 track: {
+    //                     background: "#e7e7e7",
+    //                     strokeWidth: '97%',
+    //                     margin: 5,
+    //                     dropShadow: {
+    //                         enabled: true,
+    //                         top: 2,
+    //                         left: 0,
+    //                         color: '#794ED4',
+    //                         opacity: 1,
+    //                         blur: 2
+    //                     }
+    //                 },
+    //                 dataLabels: {
+    //                     name: {
+    //                         show: false
+    //                     },
+    //                     value: {
+    //                         offsetY: -2,
+    //                         fontSize: '22px',
+    //                         fontWeight: 'bold', // Texto em negrito
+    //                         color: 'black', // Cor do texto
+    //                         formatter: function (val) {
+    //                             return val + "%"; // Exibe o valor com "%"
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         },
+    //         grid: {
+    //             padding: {
+    //                 top: -10
+    //             }
+    //         },
+    //         fill: {
+    //             type: '',
+    //             colors: ['#794ED4'],
+    //         },
+    //         labels: ['Média de RAM:'], // Label do gráfico
+    //     };
+
+    //     var chart = new ApexCharts(document.querySelector(selector), options);
+    //     chart.render();
+
+    //     return chart; // Retorna o objeto do gráfico, caso precise atualizar depois
+    // }
+
+    // // Chamada da função para criar o gráfico
+    // const chart2 = renderGaugeChart("#chart2", 76);
 
 
 

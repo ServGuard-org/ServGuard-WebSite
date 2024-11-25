@@ -5,125 +5,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ServGuard | Dashboard Alertas</title>
-  <link rel="stylesheet" href="../../css/main.css"/>
+  <link rel="stylesheet" href="../../css/main.css" />
   <link rel="shortcut icon" href="../../assets/svg/logo-white.svg" type="image/x-icon" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
 
-<body>
+<body onload="consultarMaquinas(),renderGaugeChart(), buscarUltimosDadosRede() ">
   <section id="page-rede-analista">
     <header>
       <div class="child-navbar-card-dash-adm">
-          <div class="navbar-logo-dash-adm">
-              <img src="../../assets/svg/logo.svg" alt="#logo" />
-          </div>
-          <div class="navbar-navlink-dash-adm">
-              <ul class="list-navlink-dash-adm">
-                  <li>
-                      <a href="../dashboard-adm.html" class="link-dash-adm">
-                          <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
-                      </a>
-                      <p class="little-text">Início</p>
-                  </li>
-                  <li>
-                      <a href="../dashboard-analista.html" class="link-dash-adm">
-                          <img src="../../assets/svg/search.svg" alt="#icone-layout" />
-                      </a>
-                      <p class="little-text">Detalhes</p>
-                  </li>
-                  <li>
-                      <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
-                          <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
-                      </a>
-                      <p class="little-text">Funcionário</p>
-                  </li>
-                  <li>
-                      <a href="../gerenciamento-maquina.html" class="link-dash-adm">
-                          <img src="../../assets/svg/server-icon.svg" alt="#icone-" />
-                      </a>
-                      <p class="little-text">Máquina</p>
-                  </li>
-                  <li>
-                      <a href="../chat-sgi.html" class="link-dash-adm">
-                          <img src="../../assets/svg/logo-sgi.svg" alt="#icone-" />
-                      </a>
-                      <p class="little-text">SGI</p>
-                  </li>
-                  <li>
-                      <a href="detalhes-funcionario.html" class="link-dash-adm">
-                          <img src="../../assets/svg/perfil-icon.svg" alt="#icone-" />
-                      </a>
-                      <p class="little-text">Perfil</p>
-                  </li>
-              </ul>
-          </div>
-          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-              <img src="../../assets/svg/exit-icon.svg" alt="" />
-          </a>
+        <div class="navbar-logo-dash-adm">
+          <img src="../../assets/svg/logo.svg" alt="#logo" />
+        </div>
+        <div class="navbar-navlink-dash-adm">
+          <ul class="list-navlink-dash-adm">
+            <li>
+              <a href="../dashboard-adm.html" class="link-dash-adm">
+                <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Início</p>
+            </li>
+            <li>
+              <a href="../dashboard-analista.html" class="link-dash-adm">
+                <img src="../../assets/svg/search.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Detalhes</p>
+            </li>
+            <li>
+              <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
+                <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+              </a>
+              <p class="little-text">Funcionário</p>
+            </li>
+            <li>
+              <a href="../gerenciamento-maquina.html" class="link-dash-adm">
+                <img src="../../assets/svg/server-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Máquina</p>
+            </li>
+            <li>
+              <a href="../chat-sgi.html" class="link-dash-adm">
+                <img src="../../assets/svg/logo-sgi.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">SGI</p>
+            </li>
+            <li>
+              <a href="detalhes-funcionario.html" class="link-dash-adm">
+                <img src="../../assets/svg/perfil-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Perfil</p>
+            </li>
+          </ul>
+        </div>
+        <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+          <img src="../../assets/svg/exit-icon.svg" alt="" />
+        </a>
       </div>
-  </header>
+    </header>
     <main>
       <div class="dash-alert-topo">
         <div class="link-back-seta">
-            <a class="bold text-gray-dark" onclick="voltar()">
-                <div class="icon-trian"></div> Voltar para início
-            </a>
+          <a class="bold text-gray-dark" onclick="voltar()">
+            <div class="icon-trian"></div> Voltar para início
+          </a>
         </div>
         <div class="dash-alert-titulo">
-            <h1 class="bold">Monitoramento de alertas:</h1>
-            <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p>
+          <h1 class="bold">Monitoramento de Rede:</h1>
+          <p style="color: var(--normal-purple);" class="bold italic">Análise em Tempo Real da Conectividade e
+            Desempenho de seus Servidores.</p>
         </div>
       </div>
       <div class="container">
         <div class="father-card-group">
           <div class="card-group">
             <div class="card-body-estado">
-              <div class="card-body-estado-title"><p class="card-title">Estado Rede</p></div>      
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    PENSANDO ...
+                  </span>
+                </div>
+              </div>
+              <div class="card-body-estado-title">
+                <p class="card-title">Estado Rede</p>
+              </div>
               <h2 class="bold center text-green" id="estado_rede">...</h2>
-           
-  
+
             </div>
 
             <div class="card-body-maquinas">
-              <div class="card-body-maquinas-title"><p class="card-title center">Máquinas Conectadas</p></div>
-              <h2 class="card-text bold " id="" >50</h2>
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    Este card é responsável por monitorar todas as máquinas atualmente conectadas à rede,
+                    permitindo o acompanhamento em tempo real do status e da atividade de cada dispositivo integrado ao
+                    sistema.
+                  </span>
+                </div>
+              </div>
+              <div class="card-body-maquinas-title">
+                <p class="card-title center">Máquinas Conectadas</p>
+              </div>
+              <h2 class="card-text bold " id="">...</h2>
             </div>
-  
+
             <div class="card-body-perda">
-              <div class="card-body-perda-title"><p class="card-title">Perda de Pacotes</p></div>             
-               <h2 class="card-text bold">X%</h2>
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                    Este card realiza o monitoramento dos pacotes de dados que não chegam ao destino na rede (pacotes
+                    perdidos).
+                    A análise é feita automaticamente a cada 1 hora
+                  </span>
+                </div>
+              </div>
+              <div class="card-body-perda-title">
+                <p class="card-title">Perda de Pacotes</p>
+              </div>
+              <h2 class="card-text bold">X%</h2>
             </div>
-  
+
           </div>
-          <div class="card-group">
+          <div class="card-group-monitoramento">
             <div class="card">
               <div class="card-body">
                 <div class="card-body-title">
                   <p class="card-title">Monitoramento de Pacotes</p>
                 </div>
                 <div class="graph-container">
-  
+
                 </div>
               </div>
             </div>
-  
+
           </div>
         </div>
         <div class="father-speed-test">
           <div class="card-body-graph">
-            <div class="card-title-speed" style="background: red;">
-              <h5 class="card-title center">Speed Test</h5> 
+            <div class="father-tips">
+              <div class="tooltip tooltip-white">
+                <h4>i</h4>
+                <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                  PENSANDO ...
+                </span>
+              </div>
             </div>
-            <div class="speed-test" style="background: blue;">
+            <div class="card-title-speed">
+              <h5 class="card-title center">Speed Test</h5>
+            </div>
+            <div class="speed-test">
               <div class="download">
                 <h6>Download</h6>
                 <div class="dash-alert-grafic-box2">
                   <div class="dash-titulo-gauge2">
                     <h4 class="bold">Média de uso RAM</h4>
                   </div>
-              </div>
-              
+                </div>
+
                 <div id="chart2" style="max-width: 300px; margin: auto;"></div>
               </div>
               <div class="upload">
@@ -136,8 +178,9 @@
                 </div>
               </div>
             </div>
-            <div class="button-speed-test" style="background: purple;">
-              <button class="start-test">Iniciar</button>
+            <div class="button-speed-test">
+              <button class="start-test" id="iniciar-speed">Iniciar</button>
+              <p id="timerInfo"></p>
             </div>
           </div>
         </div>
@@ -355,6 +398,70 @@
   const chart2 = renderGaugeChart("#chart2", 76);
 
 
+  function consultarMaquinas() {
+    const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+    fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("total_maquinas").innerText = data.length;
+
+        const maquinasAtivas = data.filter(
+          (maquina) => maquina.isAtiva === 1
+        );
+        document.getElementById("funcionamento_maquinas").innerText =
+          maquinasAtivas.length;
+      });
+  }
+
+  // BOTAO HABILITADO/DESABILITADO
+
+  // Seleciona o botão e o elemento de texto
+  const button = document.getElementById("iniciar-speed");
+  const timerInfo = document.getElementById("timerInfo");
+
+  // Função para habilitar o botão
+  function enableButton() {
+    button.disabled = false;
+    button.classList.remove("disabled");
+    button.textContent = "Iniciar";
+    timerInfo.textContent = "";
+  }
+
+  // Função para desabilitar o botão
+  function disableButton() {
+    const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
+    const endTime = new Date().getTime() + disableTime;
+
+    button.disabled = true;
+    button.classList.add("disabled");
+    button.textContent = "Aguarde...";
+
+    // Atualiza o timer na tela
+    const interval = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const timeLeft = Math.max(0, endTime - currentTime);
+      const minutes = Math.floor(timeLeft / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        enableButton();
+      } else {
+        timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
+      }
+    }, 1000);
+  }
+
+  // Adiciona o evento de clique ao botão
+  button.addEventListener("click", () => {
+    disableButton();
+  });
 
 
 

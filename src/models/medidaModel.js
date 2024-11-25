@@ -44,7 +44,28 @@ function buscarPorcentagemAlertasRAM(idEmpresa, idMaquina){
 }
 
 function buscarMediaGaugeCPU(idEmpresa, idMaquina){
-    var instrucaoSql = ``
+    var instrucaoSql = `SELECT mediaUsoCPU FROM MediaUsoCPU WHERE idEmpresa = ${idEmpresa} AND idMaquina = ${idMaquina}      
+    AND idRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'usoCPU');`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+function buscarMediaGaugeRAM(idEmpresa, idMaquina){
+    var instrucaoSql = `SELECT mediaUsoRAM FROM MediaUsoRAM WHERE idEmpresa = ${idEmpresa} AND idMaquina = ${idMaquina}      
+    AND idRecurso = (SELECT idRecurso FROM Recurso WHERE nome = 'usoRAM');`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarUsoTotalSemanal(idEmpresa, idMaquina){
+    var instrucaoSql = ` SELECT id_maquina, nome_maquina, id_empresa_relacionada, data_registro, media_semanal_uso_cpu, media_semanal_uso_ram 
+    FROM uso_maquinas_semana WHERE id_empresa_relacionada = ${idEmpresa} AND id_maquina = ${idMaquina};`
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
 
@@ -126,5 +147,7 @@ module.exports = {
     buscarMedicoes,
     buscarPorcentagemAlertasCPU,
     buscarPorcentagemAlertasRAM,
-    buscarMediaGaugeCPU
+    buscarMediaGaugeCPU,
+    buscarMediaGaugeRAM,
+    buscarUsoTotalSemanal
 }

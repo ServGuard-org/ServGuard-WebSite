@@ -668,10 +668,11 @@ ORDER BY
     c.dthCriacao DESC;
 
 
-CREATE OR REPLACE VIEW MediaUsoRecursos AS
+CREATE OR REPLACE VIEW MediaUsoCPU AS
 SELECT 
     mr.fkMaquina AS idMaquina,
     m.fkEmpresa AS idEmpresa,
+    mr.fkRecurso AS idRecurso,
     AVG(c.registro) AS mediaUsoCPU
 FROM 
     Captura c
@@ -685,10 +686,55 @@ WHERE
     r.nome = 'usoCPU'
     AND c.dthCriacao >= NOW() - INTERVAL 7 DAY
 GROUP BY 
-    mr.fkMaquina, m.fkEmpresa;
+    mr.fkMaquina, m.fkEmpresa, mr.fkRecurso;
 
 
+CREATE OR REPLACE VIEW MediaUsoRAM AS
+SELECT 
+    mr.fkMaquina AS idMaquina,
+    m.fkEmpresa AS idEmpresa,
+    mr.fkRecurso AS idRecurso,
+    AVG(c.registro) AS mediaUsoRAM
+FROM 
+    Captura c
+JOIN 
+    MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN 
+    Maquina m ON mr.fkMaquina = m.idMaquina
+JOIN 
+    Recurso r ON mr.fkRecurso = r.idRecurso
+WHERE 
+    r.nome = 'usoRAM'
+    AND c.dthCriacao >= NOW() - INTERVAL 7 DAY
+GROUP BY 
+    mr.fkMaquina, m.fkEmpresa, mr.fkRecurso;
 
+
+    CREATE OR REPLACE VIEW uso_maquinas_semana AS
+SELECT
+    maquina.idMaquina AS id_maquina,
+    maquina.nome AS nome_maquina,
+    maquina.fkEmpresa AS id_empresa_relacionada,
+    DATE(captura.dthCriacao) AS data_registro,
+    AVG(CASE WHEN recurso.nome = 'usoCPU' THEN captura.registro ELSE NULL END) AS media_semanal_uso_cpu,
+    AVG(CASE WHEN recurso.nome = 'usoRAM' THEN captura.registro ELSE NULL END) AS media_semanal_uso_ram
+FROM
+    ServGuard.Captura AS captura
+INNER JOIN
+    ServGuard.MaquinaRecurso AS maquina_recurso
+    ON captura.fkMaquinaRecurso = maquina_recurso.idMaquinaRecurso
+INNER JOIN
+    ServGuard.Recurso AS recurso
+    ON maquina_recurso.fkRecurso = recurso.idRecurso
+INNER JOIN
+    ServGuard.Maquina AS maquina
+    ON maquina_recurso.fkMaquina = maquina.idMaquina
+WHERE
+    captura.dthCriacao >= NOW() - INTERVAL 7 DAY
+GROUP BY
+    maquina.idMaquina, maquina.fkEmpresa, DATE(captura.dthCriacao)
+ORDER BY
+    maquina.idMaquina, data_registro;
 
 
 -- PROCEDURES
