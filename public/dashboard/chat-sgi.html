@@ -128,11 +128,12 @@
     }
 
       async function obterRespostaDaIA(mensagem) {
+        const base = "Você é uma IA assistiva de uma aplicação de monitoramento de servidores, você deve, principalmente, auxiliar na interpretação de métricas, KPIs e outros com destreza e expertise. Responda de acordo a pergunta: ";
         try {
           const response = await fetch('/externos/GenAI/Perguntar', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pergunta: mensagem }),
+            body: JSON.stringify({ pergunta: base + mensagem }),
           });
           if (!response.ok) throw new Error('Erro ao comunicar com a API');
           const data = await response.json();

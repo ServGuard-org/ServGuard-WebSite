@@ -86,9 +86,9 @@
                             style="font-size: 20px;" onchange="selecaoSemana()">
                             <option value="#" selected disabled>Selecione Uma Semana</option>
                         </select>
-                        <div class="dash-rede-titulo-cards bold">Comparação com a <span
-                                class="dash-rede-cor-anterior">semana
-                                anterior <span id="semana_anterior_titulo">(dd/mm/yy)</span>:</span>
+                        <div class="dash-rede-titulo-cards bold">Comparação com a semana
+                            anterior<span class="dash-rede-cor-anterior"> <span
+                                    id="semana_anterior_titulo">(dd/mm/yy)</span>:</span>
                         </div>
                     </div>
                 </div>
@@ -137,17 +137,15 @@
                     <div class="dash-rede-barchart">
                         <div class="father-tips">
                             <div class="tooltip tooltip-white">
-                              <h4>i</h4>
-                              <span class="tooltiptext tooltip-left text-black">
-                                Este histograma exibe a distribuição de uso da CPU de todas
-                                as máquinas monitoradas. No eixo horizontal, temos a
-                                porcentagem de uso da CPU variando de 0% a 100%. No eixo
-                                vertical, a frequência indica quantas vezes cada faixa de
-                                uso da CPU foi observada. Isso nos ajuda a identificar
-                                padrões de uso e detectar possíveis problemas de desempenho.
-                              </span>
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black">
+                                    Este gráfico de barras traz uma visualização comparativa dos
+                                    dados apresentados nos cards acima, aqui, é possível identificar
+                                    quais dados se sobressairam, se os aumentos foram grandes, ou não.
+                                    É um comparativo entre a semana selecionada e a semana anterior.
+                                </span>
                             </div>
-                          </div>
+                        </div>
                         <div class="dash-rede-barchart-space">
                             <h4 class="bold mb-2" id="titulo-grafico-barra"
                                 style="margin-bottom: 0%; border-bottom: 0%; margin-top: 1%;"><span
@@ -163,18 +161,18 @@
 
                     <div class="dash-rede-linRegress">
                         <div class="father-tips">
+                            <br>
                             <div class="tooltip tooltip-white">
-                              <h4>i</h4>
-                              <span class="tooltiptext tooltip-left text-black">
-                                Este histograma exibe a distribuição de uso da CPU de todas
-                                as máquinas monitoradas. No eixo horizontal, temos a
-                                porcentagem de uso da CPU variando de 0% a 100%. No eixo
-                                vertical, a frequência indica quantas vezes cada faixa de
-                                uso da CPU foi observada. Isso nos ajuda a identificar
-                                padrões de uso e detectar possíveis problemas de desempenho.
-                              </span>
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black">
+                                    Este gráfico combina dados reais (pontos pretos), com uma linha de projeção
+                                    (roxa, pontilhada). Esta linha é obtida através da técnica matemática
+                                    de regressão linear, que possibilita a simulação de tendências baseada em
+                                    dados históricos, com a análise deste gráfico, pode-se perceber tendências
+                                    de aumento, diminuição ou até relativa esta
+                                </span>
                             </div>
-                          </div>
+                        </div>
                         <div class="dash-rede-linRegress-space">
                             <h5 class="bold mb-2" style="text-align: center;">Previsão Por Tendência - Pacotes Env. e
                                 Rec. (Todas as Semanas)</h5>
@@ -189,17 +187,15 @@
                     <div class="dash-rede-coluna-2-area-grafico">
                         <div class="father-tips">
                             <div class="tooltip tooltip-white">
-                              <h4>i</h4>
-                              <span class="tooltiptext tooltip-left text-black">
-                                Este histograma exibe a distribuição de uso da CPU de todas
-                                as máquinas monitoradas. No eixo horizontal, temos a
-                                porcentagem de uso da CPU variando de 0% a 100%. No eixo
-                                vertical, a frequência indica quantas vezes cada faixa de
-                                uso da CPU foi observada. Isso nos ajuda a identificar
-                                padrões de uso e detectar possíveis problemas de desempenho.
-                              </span>
+                                <h4>i</h4>
+                                <span class="tooltiptext tooltip-left text-black">
+                                    Este mapa de calor traz os dados históricos da semana selecionada,
+                                    dia a dia, hora a hora, possibilitando a análise de momentos de pico e
+                                    baixa no tráfego de pacotes na rede. Cores escuras indicam alto tráfego,
+                                    enquanto cores mais claras indicam baixo tráfego de pacotes de rede.
+                                </span>
                             </div>
-                          </div>
+                        </div>
                         <div class="area-grafico-rede" id="div-heatmap">
                             <img src="../../assets/gif/loading.gif" alt="">
                         </div>
@@ -230,7 +226,8 @@
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): <span
                                                 id="contagem-pacotes">...</span></p>
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Megabytes (E/R):
-                                            <span id="contagem-megabytes">...</span></p>
+                                            <span id="contagem-megabytes">...</span>
+                                        </p>
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Erros e Descartes
                                             (E/R): <span id="contagem-errosdesc">...</span></p>
                                     </div>
@@ -244,7 +241,8 @@
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): <span
                                                 id="media-pacotes">...</span></p>
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Megabytes (E/R):
-                                            <span id="media-megabytes">...</span></p>
+                                            <span id="media-megabytes">...</span>
+                                        </p>
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Erros e Descartes
                                             (E/R): <span id="media-errosdesc">...</span></p>
                                     </div>
