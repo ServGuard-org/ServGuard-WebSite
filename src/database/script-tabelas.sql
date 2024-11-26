@@ -267,14 +267,17 @@ JOIN (
 -- VIEW PARA O E DO ETL
 -- AJUSTE - ÚLTIMOS 7 DIAS
 CREATE OR REPLACE VIEW vista_registro_cpu AS
-	SELECT registro, idEmpresa, fkRecurso FROM Captura 
-		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa;
+SELECT 
+    registro, 
+    idEmpresa, 
+    fkRecurso 
+FROM Captura
+JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+JOIN Maquina ON fkMaquina = idMaquina
+JOIN Empresa ON fkEmpresa = idEmpresa
+WHERE dthCriacao >= DATE_SUB(CURDATE(), INTERVAL 7 DAY);
         
-SELECT registro FROM vista_registro_cpu
-	 WHERE idEmpresa = 1 AND fkRecurso = 1;
-             
+        
              
 -- VIEW PARA O PLOT DO HISTOGRAMA
 CREATE OR REPLACE VIEW vista_histograma_cpu AS
@@ -420,7 +423,7 @@ FROM vista_irregularidade_total_e_percentual
 WHERE fkEmpresa = 1;
 
 -- Dados media de alertas
--- AJUSTE - ÚLTIMOS 30 DIAS
+-- AJUSTADA - ÚLTIMOS 30 DIAS
 CREATE OR REPLACE VIEW vista_capturas_alerta_total_e_media_diaria AS
     SELECT 
         (SELECT COUNT(*) FROM Captura 
@@ -556,7 +559,6 @@ SELECT * FROM vista_ultimas_metricas WHERE idMaquina = 1;
 
 -- ranking de recursos mais problematicos
 CREATE OR REPLACE VIEW vista_ranking_recurso AS
--- AJUSTE - DIA ATUAL
 	SELECT (SELECT COUNT(DISTINCT idMaquina) AS DicosIrregulares FROM vista_irregularidade_disco WHERE (usado / capacidade) > 0.85) AS qtdDISCO,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1) AS qtdCPU,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1) AS qtdRAM,
