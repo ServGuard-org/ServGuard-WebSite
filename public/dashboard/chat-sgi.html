@@ -65,7 +65,7 @@
 
     <main>
       <div class="dash-alert-topo">
-        
+
         <div class="dash-alert-titulo">
           <!-- <h1 class="bold">Suporte <span class="text-purple">SGI</span></h1> -->
           <h1 class="bold">Chat<span class="text-purple">SGI</span></h1>
@@ -108,16 +108,7 @@
 
   <script>
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const textInputInicial = document.getElementById("text-input-inicial");
-      const sendButtonInicial = document.getElementById("send-button-inicial");
-      const fatherSgiChatInitial = document.getElementById("sgi-initial-state");
-      const fatherSgiChatAffected = document.getElementById("sgi-affected-state");
-      const ballonsContainer = document.getElementById("ballons-container");
-      const textInputAfetado = document.getElementById("text-input-afetado");
-      const sendButtonAfetado = document.getElementById("send-button-afetado");
-
-      function verificarCargo() {
+    function verificarCargo() {
       var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
       if (isADM !== null && Number(isADM) === 0) {
         document.getElementById('li-adm').style.display = 'none';
@@ -130,12 +121,23 @@
       }
     }
 
-      function formatarTextoIA (texto) {
+    document.addEventListener("DOMContentLoaded", () => {
+      const textInputInicial = document.getElementById("text-input-inicial");
+      const sendButtonInicial = document.getElementById("send-button-inicial");
+      const fatherSgiChatInitial = document.getElementById("sgi-initial-state");
+      const fatherSgiChatAffected = document.getElementById("sgi-affected-state");
+      const ballonsContainer = document.getElementById("ballons-container");
+      const textInputAfetado = document.getElementById("text-input-afetado");
+      const sendButtonAfetado = document.getElementById("send-button-afetado");
+
+
+
+      function formatarTextoIA(texto) {
         // Utilizando uma expressão regular para encontrar os textos dentro de **
         return texto
-            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
-            .replace(/\n/g, '<br>'); // Substitui as quebras de linha
-    }
+          .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // Substitui os negritos
+          .replace(/\n/g, '<br>'); // Substitui as quebras de linha
+      }
 
       async function obterRespostaDaIA(mensagem) {
         const base = "Você é uma IA assistiva de uma aplicação de monitoramento de servidores, você deve, principalmente, auxiliar na interpretação de métricas, KPIs e outros com destreza e expertise. Responda de acordo a pergunta: ";
