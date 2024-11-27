@@ -870,21 +870,21 @@
             "Content-Type": "application/json",
           },
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Erro ao buscar dados: ${response.statusText}`);
-            }
-            return response.json(); // Corrigido para retornar a resposta
-          })
-          .then((data) => {
-            const elementoMaquinaConect = document.getElementById(
-              "span_maquinaConnect"
-            );
-            elementoMaquinaConect.innerText = data[0].maquinas_conectadas;
-          })
-          .catch((error) => {
-            console.error("Erro na requisição:", error);
-          });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar dados: ${response.statusText}`);
+          }
+          return response.json(); // Corrigido para retornar a resposta
+        })
+        .then((data) => {
+          const elementoMaquinaConect = document.getElementById(
+            "span_maquinaConnect"
+          );
+          elementoMaquinaConect.innerText = data[0].maquinas_conectadas;
+        })
+        .catch((error) => {
+          console.error("Erro na requisição:", error);
+        });
       }
     </script>
   </body>

@@ -11,11 +11,10 @@
       type="image/x-icon"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
 
-  <body
-    onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas(), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarMaquinasConnect(sessionStorage.getItem('ID_EMPRESA_USUARIO'))"
-  >
+  <body onload="carregarPagina()">
     <section id="page-dashboard-usoGeral">
       <header>
         <div class="child-navbar-card-dash-adm">
@@ -86,32 +85,29 @@
           </div>
           <div class="dash-alert-titulo">
             <h1 class="bold">Monitoramento de Uso Geral:</h1>
-            <!-- <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p> -->
           </div>
         </div>
 
         <div class="father-general-use">
-          <div class="child-analise-uso" id="card-analise-uso" style="display: none;">
+          <div
+            class="child-analise-uso"
+            id="card-analise-uso"
+            style="display: none"
+          >
             <div class="card-analise-uso">
               <h2 class="center bold">Tendencia de Uso Semanal</h2>
               <div class="cards-space-graphic">
                 <div class="graphic-space">
-
-                  <div class="card-graphic-analise">
-
-                  </div>
-
+                  <div class="card-graphic-analise"></div>
                 </div>
                 <div class="sgi-space">
-
-                  <div class="card-sgi-analise">
-                    
-                  </div>
-
+                  <div class="card-sgi-analise"></div>
                 </div>
               </div>
               <div class="button-space">
-                <button class="btn-dashboard" onclick="fecharAnalise()">Fechar</button>
+                <button class="btn-dashboard" onclick="fecharAnalise()">
+                  Fechar
+                </button>
               </div>
             </div>
           </div>
@@ -121,7 +117,11 @@
                 <h4 class="bold center">
                   Histograma de Uso de Hardware das Máquinas:
                 </h4>
-                <div class="space-graphic"></div>
+                <canvas
+                  id="histograma-uso"
+                  class="space-graphic"
+                  style="height: 300px"
+                ></canvas>
               </div>
             </div>
 
@@ -132,13 +132,13 @@
                     <h5 class="center">
                       Quantidade de Máquinas com Uso de Hardware Maior que 80%
                     </h5>
-                    <h1 class="bold center">2</h1>
+                    <h1 class="bold center" id="uso-hardware-kpi">...</h1>
                   </div>
                   <div class="card-info">
                     <h5 class="center">
                       Quantidade de Máquinas com Uso de Disco Maior que 80%
                     </h5>
-                    <h1 class="bold center">2</h1>
+                    <h1 class="bold center" id="uso-disco-kpi">...</h1>
                   </div>
                 </div>
 
@@ -162,7 +162,11 @@
                 <h4 class="bold center">
                   Histograma de Uso de Disco das Máquinas:
                 </h4>
-                <div class="space-graphic"></div>
+                <canvas
+                  id="histograma-disco"
+                  class="space-graphic"
+                  style="height: 300px"
+                ></canvas>
               </div>
             </div>
             <div class="general-use-content-large">
@@ -227,44 +231,150 @@
         window.location.href = "../index.html";
       }
 
-      function DashboardAnalista() {
-        window.location.href = "dashboard-analista.html";
-      }
-      function DashboardUsoGeral() {
-        window.location.href =
-          "../dashboard/dash-caio/dashboard-adm-alert.html";
-      }
-      function DashboardRede() {
-        window.location.href =
-          "../dashboard/dash-marcio/dashboard-adm-rede.html";
-      }
-      function DashboardAlerta() {
-        window.location.href =
-          "../dashboard/dash-caio/dashboard-adm-alert.html";
-      }
-
       function voltar() {
         window.location.href = "../dashboard-adm.html";
       }
-      function carregarPagina() {
-        sessionStorage.removeItem("VOLTAR_PAGINA");
-        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
-        obterDadosDeApoio1();
-        obterDadosDeApoio2();
-        carregarListaAlertas();
-        buscarDistribuicao();
-        buscarDadosGrafico();
-      }
 
-      // ------------------------ // ANALISE DE USO // ------------------------ //
-      function AnalisedeUso(){
+      function AnalisedeUso() {
         const analiseUse = document.getElementById("card-analise-uso");
         analiseUse.style.display = "flex";
       }
 
-      function fecharAnalise(){
+      function fecharAnalise() {
         const analiseUse = document.getElementById("card-analise-uso");
         analiseUse.style.display = "none";
+      }
+
+      function carregarPagina() {
+        sessionStorage.removeItem("VOLTAR_PAGINA");
+        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
+        obterDadosHistogramaUso();
+        obterDadosHistogramaDisco();
+        buscarUsoHardwareAlto();
+        buscarUsoDiscoAlto();
+      }
+
+      // ------------------------------------- // PARAMETROS DE USO MAIOR QUE 80  // ------------------------------------- //
+
+      function buscarUsoHardwareAlto() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/medidas/usohardwarealto/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // Supondo que 'data.usoHardwareAlto' seja o campo com o número que você quer exibir
+            document.getElementById("uso-hardware-kpi").innerText = data[0].qtdMaquinas;
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de hardware:", error);
+          });
+      }
+
+      function buscarUsoDiscoAlto() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/medidas/usoDiscoAlto/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // Supondo que 'data.usoHardwareAlto' seja o campo com o número que você quer exibir
+            document.getElementById("uso-disco-kpi").innerText = data;
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de disco:", error);
+          });
+      }
+
+      // ------------------------------------- // HISTOGRAMAS // ------------------------------------- //
+      function obterDadosHistogramaUso() {
+        const dadosMocados = [
+          { faixa: "0-50%", quantidade: 10 },
+          { faixa: "50-80%", quantidade: 7 },
+          { faixa: "80-100%", quantidade: 3 },
+        ];
+
+        const labels = dadosMocados.map((item) => item.faixa);
+        const dados = dadosMocados.map((item) => item.quantidade);
+
+        const ctx = document.getElementById("histograma-uso").getContext("2d");
+        const grafico = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Máquinas por Faixa de Uso de Hardware",
+                data: dados,
+                backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      }
+
+      function obterDadosHistogramaDisco() {
+        const dadosMocados = [
+          { faixa: "0-50%", quantidade: 10 },
+          { faixa: "50-80%", quantidade: 7 },
+          { faixa: "80-100%", quantidade: 3 },
+        ];
+
+        const labels = dadosMocados.map((item) => item.faixa);
+        const dados = dadosMocados.map((item) => item.quantidade);
+
+        const ctx = document
+          .getElementById("histograma-disco")
+          .getContext("2d");
+        const grafico = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Máquinas por Faixa de Uso de Disco",
+                data: dados,
+                backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+              },
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
       }
     </script>
   </body>

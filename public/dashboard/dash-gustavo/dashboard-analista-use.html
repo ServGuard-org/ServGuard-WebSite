@@ -718,7 +718,7 @@
             .then(response => response.json())
             .then(data => {
                 // Processar os dados recebidos
-                const categories = data.map(item => item.data_registro); // Datas no eixo X
+                const categories = data.map(item => formatarData(item.data_registro)); // Datas no eixo X
                 const usoCPU = data.map(item => item.media_semanal_uso_cpu); // Média de uso CPU
                 const usoRAM = data.map(item => item.media_semanal_uso_ram); // Média de uso RAM
 
@@ -824,7 +824,7 @@
             .then(response => response.json())
             .then(data => {
                 // Processar os dados recebidos
-                const categories = data.map(item => item.data_registro); // Datas no eixo X
+                const categories = data.map(item => formatarData(item.data_registro)); // Datas no eixo X
                 const usoCPU = data.map(item => item.media_semanal_uso_cpu); // Média de uso CPU
                 const usoRAM = data.map(item => item.media_semanal_uso_ram); // Média de uso RAM
 
@@ -1015,10 +1015,10 @@
     //         });
     // }
 
-    // const formatarData = data => {
-    //     const dataFormatada = new Date(data);
-    //     return dataFormatada.toLocaleDateString();
-    // }
+    function formatarData (data)  {
+        const dataFormatada = new Date(data);
+        return dataFormatada.toLocaleDateString();
+    }
 
     // function atualizarMapaInterface(dadosMapa) {
 
