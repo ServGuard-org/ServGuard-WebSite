@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="verificarCargo()">
   <section id="page-chat-sgi">
     <header>
       <div class="child-navbar-card-dash-adm">
@@ -18,8 +18,8 @@
           <img src="../assets/svg/logo.svg" alt="#logo" />
         </div>
         <div class="navbar-navlink-dash-adm">
-          <ul class="list-navlink-dash-adm">
-            <li>
+          <ul class="list-navlink-dash-adm" id="ul-nav">
+            <li id="li-adm">
               <a href="dashboard-adm.html" class="link-dash-adm">
                 <img src="../assets/svg/layout-icon.svg" alt="#icone-layout" />
               </a>
@@ -31,7 +31,7 @@
               </a>
               <p class="little-text">Detalhes</p>
             </li>
-            <li>
+            <li id="li-funcionario">
               <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
                 <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario" />
               </a>
@@ -107,6 +107,7 @@
   </section>
 
   <script>
+
     document.addEventListener("DOMContentLoaded", () => {
       const textInputInicial = document.getElementById("text-input-inicial");
       const sendButtonInicial = document.getElementById("send-button-inicial");
@@ -115,6 +116,19 @@
       const ballonsContainer = document.getElementById("ballons-container");
       const textInputAfetado = document.getElementById("text-input-afetado");
       const sendButtonAfetado = document.getElementById("send-button-afetado");
+
+      function verificarCargo() {
+      var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+      if (isADM !== null && Number(isADM) === 0) {
+        document.getElementById('li-adm').style.display = 'none';
+        document.getElementById('li-funcionario').style.display = 'none';
+        document.getElementById('ul-nav').style.display = 'flex';
+      } else {
+        document.getElementById('li-adm').style.display = 'flex';
+        document.getElementById('li-funcionario').style.display = 'flex';
+        document.getElementById('ul-nav').style.display = 'flex';
+      }
+    }
 
       function formatarTextoIA (texto) {
         // Utilizando uma expressão regular para encontrar os textos dentro de **

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
 
-<body onload="consultarMaquinas(),renderGaugeChart(), buscarUltimosDadosRede() ">
+<body onload="consultarMaquinas(),renderGaugeChart(), buscarUltimosDadosRede(), verificarCargo()">
   <section id="page-rede-analista">
     <header>
       <div class="child-navbar-card-dash-adm">
@@ -20,8 +20,8 @@
           <img src="../../assets/svg/logo.svg" alt="#logo" />
         </div>
         <div class="navbar-navlink-dash-adm">
-          <ul class="list-navlink-dash-adm">
-            <li>
+          <ul class="list-navlink-dash-adm" id="ul-nav">
+            <li id="li-adm">
               <a href="../dashboard-adm.html" class="link-dash-adm">
                 <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
               </a>
@@ -33,7 +33,7 @@
               </a>
               <p class="little-text">Detalhes</p>
             </li>
-            <li>
+            <li id="li-funcionario">
               <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
                 <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
               </a>
@@ -132,14 +132,14 @@
 
           </div>
           <div class="card-group-monitoramento">
-             <div class="father-tips">
-                <div class="tooltip tooltip-white">
-                  <h4>i</h4>
-                  <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
-                    PENSANDO ...
-                  </span>
-                </div>
+            <div class="father-tips">
+              <div class="tooltip tooltip-white">
+                <h4>i</h4>
+                <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
+                  PENSANDO ...
+                </span>
               </div>
+            </div>
             <div class="card">
               <div class="card-body">
                 <div class="card-body-title">
@@ -173,11 +173,11 @@
               </div>
               <div class="upload">
                 <h5>Upload</h5>
-                  <div id="chart2" style="max-width: 300px; margin: auto;"></div>         
+                <div id="chart2" style="max-width: 300px; margin: auto;"></div>
               </div>
             </div>
             <div class="button-speed-test">
-               <button class="start-test" id="iniciar-speed" onclick="Clikado()">Clique Aqui</button>
+              <button class="start-test" id="iniciar-speed" onclick="Clikado()">Clique Aqui</button>
               <p id="timerInfo"></p>
             </div>
           </div>
@@ -187,6 +187,19 @@
   </section>
 </body>
 <script>
+
+  function verificarCargo() {
+    var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+    if (isADM !== null && Number(isADM) === 0) {
+      document.getElementById('li-adm').style.display = 'none';
+      document.getElementById('li-funcionario').style.display = 'none';
+      document.getElementById('ul-nav').style.display = 'flex';
+    } else {
+      document.getElementById('li-adm').style.display = 'flex';
+      document.getElementById('li-funcionario').style.display = 'flex';
+      document.getElementById('ul-nav').style.display = 'flex';
+    }
+  }
   function sairNavbar() {
     event.preventDefault();
     sessionStorage.clear();
@@ -421,40 +434,40 @@
 
   // Seleciona o botão e o elemento de texto
 
-    function Clikado() {
-      const button = document.getElementById("iniciar-speed");
-      const timerInfo = document.getElementById("timerInfo");
+  function Clikado() {
+    const button = document.getElementById("iniciar-speed");
+    const timerInfo = document.getElementById("timerInfo");
 
-      // Verifica se o botão já está desabilitado
-      if (button.disabled) return;
+    // Verifica se o botão já está desabilitado
+    if (button.disabled) return;
 
-      const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
-      const endTime = new Date().getTime() + disableTime;
+    const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
+    const endTime = new Date().getTime() + disableTime;
 
-      // Desabilita o botão e altera o texto
-      button.disabled = true;
-      button.classList.add("disabled");
-      button.textContent = "Aguarde...";
+    // Desabilita o botão e altera o texto
+    button.disabled = true;
+    button.classList.add("disabled");
+    button.textContent = "Aguarde...";
 
-      // Atualiza o timer na tela
-      const interval = setInterval(() => {
-        const currentTime = new Date().getTime();
-        const timeLeft = Math.max(0, endTime - currentTime);
-        const minutes = Math.floor(timeLeft / (1000 * 60));
-        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    // Atualiza o timer na tela
+    const interval = setInterval(() => {
+      const currentTime = new Date().getTime();
+      const timeLeft = Math.max(0, endTime - currentTime);
+      const minutes = Math.floor(timeLeft / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-        if (timeLeft <= 0) {
-          clearInterval(interval);
-          // Reabilita o botão e limpa o texto
-          button.disabled = false;
-          button.classList.remove("disabled");
-          button.textContent = "Clique Aqui";
-          timerInfo.textContent = "";
-        } else {
-          timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
-        }
-      }, 1000);
-    }
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        // Reabilita o botão e limpa o texto
+        button.disabled = false;
+        button.classList.remove("disabled");
+        button.textContent = "Clique Aqui";
+        timerInfo.textContent = "";
+      } else {
+        timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
+      }
+    }, 1000);
+  }
 
 
 
