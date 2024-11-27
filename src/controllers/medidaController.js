@@ -309,6 +309,44 @@ function buscarMaquinasConnect(req, res){
     });
 }
 
+function buscarUsoHardwareAlto(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarUsoHardwareAlto(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar quantidade de maquinas com uso de Hardware alto", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarUsoDiscoAlto(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarUsoDiscoAlto(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar quantidade de maquinas com uso de Disco alto", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -324,5 +362,7 @@ module.exports = {
     buscarPorcentagemAlertasRAM,
     buscarMediaGaugeCPU,
     buscarMediaGaugeRAM,
-    buscarUsoTotalSemanal
+    buscarUsoTotalSemanal,
+    buscarUsoHardwareAlto,
+    buscarUsoDiscoAlto
 }

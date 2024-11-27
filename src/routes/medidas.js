@@ -62,4 +62,12 @@ router.get("/dadosGraficoAlertas/:idEmpresa", function (req, res) {
     medidaController.buscarDadosGraficoAlertas(req,res);
 });
 
+router.get("/usohardwarealto/:idEmpresa", function(req,res){
+    medidaController.buscarUsoHardwareAlto(req,res);
+});
+
+router.get("/usoDiscoAlto/:idEmpresa", function (req, res){
+    medidaController.buscarUsoDiscoAlto(req,res);
+});
+
 module.exports = router;

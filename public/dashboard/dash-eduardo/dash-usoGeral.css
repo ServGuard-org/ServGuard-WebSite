@@ -271,7 +271,6 @@
     }
 
     & .space-graphic{
-        background: rgb(0, 66, 128);
         width: 100%;
         height: calc(100% - 33px);
     }

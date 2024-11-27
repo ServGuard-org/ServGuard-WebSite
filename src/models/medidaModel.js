@@ -134,6 +134,39 @@ function buscarMaquinasConnect(idEmpresa){
     return database.executar(instrucaoSql, [idEmpresa]);
 }
 
+function buscarUsoHardwareAlto(idEmpresa) {
+    var instrucaoSql = `
+        SELECT 
+            qtdMaquinas
+        FROM 
+            ServGuard.MaquinasUsoHardAlto
+        WHERE 
+            fkEmpresa = ${idEmpresa};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarUsoDiscoAlto(idEmpresa){
+    var instrucaoSql = `
+        SELECT 
+            idMaquina,
+            nomeMaquina,
+            fkEmpresa,
+            qtdMaquinas
+        FROM 
+            ServGuard.MaquinasUsoDiscoAlto
+        WHERE 
+            fkEmpresa = ${idEmpresa}
+        ORDER BY 
+            qtdMaquinas DESC;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -149,5 +182,7 @@ module.exports = {
     buscarPorcentagemAlertasRAM,
     buscarMediaGaugeCPU,
     buscarMediaGaugeRAM,
-    buscarUsoTotalSemanal
+    buscarUsoTotalSemanal,
+    buscarUsoHardwareAlto,
+    buscarUsoDiscoAlto
 }
