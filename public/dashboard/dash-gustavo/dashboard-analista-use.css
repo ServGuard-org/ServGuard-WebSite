@@ -124,7 +124,7 @@
 .dash-alert-total {
 
     width: 90%;
-    height: 25.5%;
+    height: 20%;
 
     gap: var(--gap-1);
     margin-top: 2%;
@@ -141,7 +141,7 @@
 
 .dash-alert-lista-coluna-cpu {
     width: 50%;
-    height: 80%;
+    height: 90%;
     /* background-color: red; */
     display: flex;
     flex-direction: column;
@@ -157,7 +157,7 @@
 
 .dash-alert-lista-coluna-ram {
     width: 50%;
-    height: 80%;
+    height: 90%;
     /* background-color: blue; */
     display: flex;
     flex-direction: column;
@@ -196,7 +196,7 @@
 
 .dash-alert-grafic-box1 {
     width: 90%;
-    height: 105%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -211,7 +211,7 @@
 }
 .dash-alert-grafic-box2 {
     width: 90%;
-    height: 105%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -307,7 +307,7 @@
 .dash-alert-coluna-2-grafic {
     width: 90%;
     height: 36%;
-    padding: 4%;
+    padding: var(--gap-1);
 
     display: flex;
     flex-direction: column;
