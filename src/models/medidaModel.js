@@ -135,13 +135,8 @@ function buscarMaquinasConnect(idEmpresa){
 }
 
 function buscarUsoHardwareAlto(idEmpresa) {
-    var instrucaoSql = `
-        SELECT 
-            qtdMaquinas
-        FROM 
-            ServGuard.MaquinasUsoHardAlto
-        WHERE 
-            fkEmpresa = ${idEmpresa};
+    var instrucaoSql = `SELECT qtdMaquinas FROM ServGuard.MaquinasUsoHardAlto
+        WHERE fkEmpresa = ${idEmpresa};
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -149,18 +144,24 @@ function buscarUsoHardwareAlto(idEmpresa) {
 }
 
 function buscarUsoDiscoAlto(idEmpresa){
-    var instrucaoSql = `
-        SELECT 
-            idMaquina,
-            nomeMaquina,
-            fkEmpresa,
-            qtdMaquinas
-        FROM 
-            ServGuard.MaquinasUsoDiscoAlto
-        WHERE 
-            fkEmpresa = ${idEmpresa}
-        ORDER BY 
-            qtdMaquinas DESC;
+    var instrucaoSql = `SELECT COUNT(*) AS qtdMaquinas FROM ServGuard.ArmazenamentoMaquinas
+        WHERE fkEmpresa = ${idEmpresa} AND (usadoTotal / capacidadeTotal) > 0.8;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarRamCpuMaquina(idEmpresa){
+    var instrucaoSql = `SELECT * FROM ServGuard.UsoRamCpuPorEmpresa
+        WHERE fkEmpresa = ${idEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarUsoDiscoMaquinas(idEmpresa){
+    var instrucaoSql = `SELECT fkEmpresa, idMaquina, capacidadeTotal, usadoTotal FROM ServGuard.ArmazenamentoMaquinas
+        WHERE fkEmpresa = ${idEmpresa};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [idEmpresa]);
@@ -184,5 +185,7 @@ module.exports = {
     buscarMediaGaugeRAM,
     buscarUsoTotalSemanal,
     buscarUsoHardwareAlto,
-    buscarUsoDiscoAlto
+    buscarUsoDiscoAlto,
+    buscarRamCpuMaquina,
+    buscarUsoDiscoMaquinas
 }

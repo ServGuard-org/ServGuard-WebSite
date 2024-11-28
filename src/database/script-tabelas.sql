@@ -738,6 +738,99 @@ GROUP BY
 ORDER BY
     maquina.idMaquina, data_registro;
 
+CREATE VIEW ServGuard.MaquinasUsoHardAlto AS
+WITH UltimaCaptura AS (
+    SELECT 
+        MR.fkMaquina, 
+        C.fkMaquinaRecurso,
+        R.nome AS nomeRecurso,
+        MAX(C.dthCriacao) AS ultimaCaptura
+    FROM 
+        ServGuard.Captura C
+    JOIN 
+        ServGuard.MaquinaRecurso MR ON C.fkMaquinaRecurso = MR.idMaquinaRecurso
+    JOIN 
+        ServGuard.Recurso R ON MR.fkRecurso = R.idRecurso
+    WHERE 
+        (R.nome = 'usoCPU' OR R.nome = 'usoRAM') -- Filtro apenas para CPU e RAM
+    GROUP BY 
+        MR.fkMaquina, C.fkMaquinaRecurso, R.nome
+)
+SELECT 
+    M.idMaquina,
+    M.nome AS nomeMaquina,
+    M.fkEmpresa,
+    COUNT(DISTINCT M.idMaquina) AS qtdMaquinas
+FROM 
+    ServGuard.Maquina M
+JOIN 
+    ServGuard.MaquinaRecurso MR ON M.idMaquina = MR.fkMaquina
+JOIN 
+    UltimaCaptura UC ON MR.idMaquinaRecurso = UC.fkMaquinaRecurso
+JOIN 
+    ServGuard.Captura C ON UC.fkMaquinaRecurso = C.fkMaquinaRecurso AND UC.ultimaCaptura = C.dthCriacao
+JOIN 
+    ServGuard.Recurso R ON MR.fkRecurso = R.idRecurso
+WHERE 
+    (R.nome = 'usoCPU' AND C.registro) OR (R.nome = 'usoRAM' AND C.registro) > 80 -- Filtra máquinas com uso > 80%
+GROUP BY 
+    M.idMaquina, M.nome, M.fkEmpresa;
+    
+    
+CREATE VIEW ServGuard.ArmazenamentoMaquinas AS
+SELECT 
+    M.fkEmpresa,                           -- Identificador da empresa
+    M.idMaquina,                           -- Identificador da máquina
+    SUM(V.capacidade) AS capacidadeTotal,  -- Soma da capacidade total de todos os volumes da máquina
+    SUM(CV.usado) AS usadoTotal            -- Soma do uso total de todos os volumes da máquina
+FROM 
+    ServGuard.Maquina M
+JOIN 
+    ServGuard.Volume V ON M.idMaquina = V.fkMaquina
+JOIN 
+    ServGuard.CapturaVolume CV ON V.idVolume = CV.fkVolume
+JOIN 
+    (SELECT 
+        fkVolume, 
+        MAX(dthCriacao) AS ultimaCaptura -- Garante que usamos a última captura de cada volume
+     FROM 
+        ServGuard.CapturaVolume
+     GROUP BY 
+        fkVolume) AS UC ON CV.fkVolume = UC.fkVolume AND CV.dthCriacao = UC.ultimaCaptura
+GROUP BY 
+    M.fkEmpresa, M.idMaquina;
+    
+
+CREATE VIEW ServGuard.UsoRamCpuPorEmpresa AS
+SELECT 
+    M.fkEmpresa,               -- Identificador da empresa
+    M.idMaquina,               -- Identificador da máquina
+    M.nome AS nomeMaquina,     -- Nome da máquina (ou apelido)
+    RAM.registro AS usoRAM,    -- Uso de RAM da máquina
+    CPU.registro AS usoCPU     -- Uso de CPU da máquina
+FROM 
+    ServGuard.Maquina M
+JOIN 
+    ServGuard.MaquinaRecurso MR_RAM ON M.idMaquina = MR_RAM.fkMaquina
+JOIN 
+    ServGuard.Recurso R_RAM ON MR_RAM.fkRecurso = R_RAM.idRecurso AND R_RAM.nome = 'usoRAM'
+JOIN 
+    ServGuard.Captura RAM ON MR_RAM.idMaquinaRecurso = RAM.fkMaquinaRecurso AND RAM.dthCriacao = (
+        SELECT MAX(C.dthCriacao)
+        FROM ServGuard.Captura C
+        WHERE C.fkMaquinaRecurso = MR_RAM.idMaquinaRecurso
+    )
+JOIN 
+    ServGuard.MaquinaRecurso MR_CPU ON M.idMaquina = MR_CPU.fkMaquina
+JOIN 
+    ServGuard.Recurso R_CPU ON MR_CPU.fkRecurso = R_CPU.idRecurso AND R_CPU.nome = 'usoCPU'
+JOIN 
+    ServGuard.Captura CPU ON MR_CPU.idMaquinaRecurso = CPU.fkMaquinaRecurso AND CPU.dthCriacao = (
+        SELECT MAX(C.dthCriacao)
+        FROM ServGuard.Captura C
+        WHERE C.fkMaquinaRecurso = MR_CPU.idMaquinaRecurso
+    );
+
 
 -- PROCEDURES
 

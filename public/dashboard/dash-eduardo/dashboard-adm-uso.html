@@ -115,12 +115,12 @@
             <div class="general-use-content-medium">
               <div class="general-use-father-three">
                 <h4 class="bold center">
-                  Histograma de Uso de Hardware das Máquinas:
+                  Histograma de Uso de Processamento das Máquinas:
                 </h4>
                 <canvas
                   id="histograma-uso"
                   class="space-graphic"
-                  style="height: 300px"
+                  style="height: 280px"
                 ></canvas>
               </div>
             </div>
@@ -130,7 +130,8 @@
                 <div class="general-use-cards-info">
                   <div class="card-info">
                     <h5 class="center">
-                      Quantidade de Máquinas com Uso de Hardware Maior que 80%
+                      Quantidade de Máquinas com Uso de Processamento Maior que
+                      80%
                     </h5>
                     <h1 class="bold center" id="uso-hardware-kpi">...</h1>
                   </div>
@@ -183,7 +184,7 @@
                       <p class="little-text bold">Hostname</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Uso de Hardware</p>
+                      <p class="little-text bold">Processamento</p>
                     </div>
                     <div class="column-item">
                       <p class="little-text bold">Uso de Disco</p>
@@ -269,7 +270,8 @@
           .then((data) => {
             console.log(data);
             // Supondo que 'data.usoHardwareAlto' seja o campo com o número que você quer exibir
-            document.getElementById("uso-hardware-kpi").innerText = data[0].qtdMaquinas;
+            document.getElementById("uso-hardware-kpi").innerText =
+              data[0].qtdMaquinas;
           })
           .catch((error) => {
             console.error("Erro ao buscar uso de hardware:", error);
@@ -289,7 +291,8 @@
           .then((data) => {
             console.log(data);
             // Supondo que 'data.usoHardwareAlto' seja o campo com o número que você quer exibir
-            document.getElementById("uso-disco-kpi").innerText = data;
+            document.getElementById("uso-disco-kpi").innerText =
+              data[0].qtdMaquinas;
           })
           .catch((error) => {
             console.error("Erro ao buscar uso de disco:", error);
@@ -298,83 +301,176 @@
 
       // ------------------------------------- // HISTOGRAMAS // ------------------------------------- //
       function obterDadosHistogramaUso() {
-        const dadosMocados = [
-          { faixa: "0-50%", quantidade: 10 },
-          { faixa: "50-80%", quantidade: 7 },
-          { faixa: "80-100%", quantidade: 3 },
-        ];
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        let maqUsoBaixo = 0;
+        let maqUsoMedio = 0;
+        let maqUsoAlto = 0;
 
-        const labels = dadosMocados.map((item) => item.faixa);
-        const dados = dadosMocados.map((item) => item.quantidade);
+        fetch(`/medidas/usoRamCpuPorMaquina/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
 
-        const ctx = document.getElementById("histograma-uso").getContext("2d");
-        const grafico = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: "Máquinas por Faixa de Uso de Hardware",
-                data: dados,
-                backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
+            for (let i = 0; i < data.length; i++) {
+              let usoProcessamento =
+                (Number(data[i].usoRAM) + Number(data[i].usoCPU)) / 2;
+
+              console.log(
+                `Uso processamento da máquina ${i}: ${usoProcessamento}`
+              );
+
+              if (usoProcessamento >= 0 && usoProcessamento <= 50) {
+                maqUsoBaixo++;
+                console.log("Máquina em uso baixo");
+              } else if (usoProcessamento >= 51 && usoProcessamento <= 80) {
+                maqUsoMedio++;
+                console.log("Máquina em uso médio");
+              } else if (usoProcessamento >= 81 && usoProcessamento <= 100) {
+                maqUsoAlto++;
+                console.log("Máquina em uso alto");
+              } else {
+                console.log("Erro: valor de uso fora do intervalo esperado");
+              }
+            }
+
+            // Agora os logs estão no lugar correto
+            console.log(`Máquinas com uso baixo: ${maqUsoBaixo}`);
+            console.log(`Máquinas com uso médio: ${maqUsoMedio}`);
+            console.log(`Máquinas com uso alto: ${maqUsoAlto}`);
+
+            const dadosMocados = [
+              { faixa: "0-50%", quantidade: maqUsoBaixo },
+              { faixa: "51-80%", quantidade: maqUsoMedio },
+              { faixa: "81-100%", quantidade: maqUsoAlto },
+            ];
+
+            const labels = dadosMocados.map((item) => item.faixa);
+            const dados = dadosMocados.map((item) => item.quantidade);
+
+            const ctx = document
+              .getElementById("histograma-uso")
+              .getContext("2d");
+            const grafico = new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: "Máquinas por Faixa de Uso de Hardware",
+                    data: dados,
+                    backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
+                    barThickness: 223.5, // Ajuste da largura das barras em pixels
+                    borderRadius: 5, // Ajuste do border-radius
+                  },
+                ],
               },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "top",
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: "top",
+                  },
+                },
+                scales: {
+                  x: {
+                    beginAtZero: true,
+                  },
+                },
               },
-            },
-            scales: {
-              x: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
+            });
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar CPU e RAM das máquinas:", error);
+          });
       }
 
       function obterDadosHistogramaDisco() {
-        const dadosMocados = [
-          { faixa: "0-50%", quantidade: 10 },
-          { faixa: "50-80%", quantidade: 7 },
-          { faixa: "80-100%", quantidade: 3 },
-        ];
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        let discUsoBaixo = 0;
+        let discUsoMedio = 0;
+        let discUsoAlto = 0;
 
-        const labels = dadosMocados.map((item) => item.faixa);
-        const dados = dadosMocados.map((item) => item.quantidade);
+        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
 
-        const ctx = document
-          .getElementById("histograma-disco")
-          .getContext("2d");
-        const grafico = new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: "Máquinas por Faixa de Uso de Disco",
-                data: dados,
-                backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
+            for (let i = 0; i < data.length; i++) {
+              if(data[i].capacidadeTotal === 0){
+                return 0;
+              } else {
+                let porcentagemUso = (Number(data[i].usadoTotal) / Number(data[i].capacidadeTotal)) * 100;               
+
+                if (porcentagemUso >= 0 && porcentagemUso <= 50) {
+                  discUsoBaixo++;
+                  console.log("Máquina em uso baixo");
+                } else if (porcentagemUso >= 51 && porcentagemUso <= 80) {
+                  discUsoMedio++;
+                  console.log("Máquina em uso médio");
+                } else if (porcentagemUso >= 81 && porcentagemUso <= 100) {
+                  discUsoAlto++;
+                  console.log("Máquina em uso alto");
+                } else {
+                  console.log("Erro: valor de uso fora do intervalo esperado");
+                }
+                
+              }
+            }
+
+            const dadosMocados = [
+              { faixa: "0-50%", quantidade: discUsoBaixo },
+              { faixa: "50-80%", quantidade: discUsoMedio },
+              { faixa: "80-100%", quantidade: discUsoAlto },
+            ];
+
+            const labels = dadosMocados.map((item) => item.faixa);
+            const dados = dadosMocados.map((item) => item.quantidade);
+
+            const ctx = document
+              .getElementById("histograma-disco")
+              .getContext("2d");
+            const grafico = new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: "Máquinas por Faixa de Uso de Disco",
+                    data: dados,
+                    backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
+                    barThickness: 223.5, // Ajuste da largura das barras em pixels
+                    borderRadius: 5, // Ajuste do border-radius
+                  },
+                ],
               },
-            ],
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: "top",
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: "top",
+                  },
+                },
+                scales: {
+                  x: {
+                    beginAtZero: true,
+                  },
+                },
               },
-            },
-            scales: {
-              x: {
-                beginAtZero: true,
-              },
-            },
-          },
-        });
+            });
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de disco:", error);
+          });
       }
     </script>
   </body>

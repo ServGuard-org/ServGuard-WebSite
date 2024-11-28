@@ -70,4 +70,12 @@ router.get("/usoDiscoAlto/:idEmpresa", function (req, res){
     medidaController.buscarUsoDiscoAlto(req,res);
 });
 
+router.get("/usoRamCpuPorMaquina/:idEmpresa", function (req, res){
+    medidaController.buscarRamCpuMaquina(req,res);
+});
+
+router.get("/usoDiscoMaquinas/:idEmpresa", function(req, res){
+    medidaController.buscarUsoDiscoMaquinas(req,res);
+});
+
 module.exports = router;
