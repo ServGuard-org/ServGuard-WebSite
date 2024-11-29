@@ -89,29 +89,41 @@
         </div>
 
         <div class="father-general-use">
-          <div
-            class="child-analise-uso"
-            id="card-analise-uso"
-            style="display: none"
-          >
-            <div class="card-analise-uso">
-              <h2 class="center bold">Tendencia de Uso Semanal</h2>
-              <div class="cards-space-graphic">
-                <div class="graphic-space">
-                  <div class="card-graphic-analise"></div>
+          <div class="child-general-use">
+            <div class="general-use-content-disco">
+              <div class="general-use-father-three">
+                <h4 class="bold center">
+                  Armazenamento Total da Empresa:
+                </h4>
+                <div class="space-disco-info">
+                  <div
+                    id="histograma-disco"
+                    class="space-graphic-disco"
+                  ></div>
+                  <div class="info-disco-maquinas">
+                    <h5 class="bold">Faixas de Uso de Armazenamento das Máquinas:</h5>
+                    <div class="item-faixa">
+                      <p class="">Faixa de 100-81%:</p>
+                      <div class="space-disco-faixa">
+                        <h3 class="bold">0</h3>
+                      </div>
+                    </div>
+                    <div class="item-faixa">
+                      <p class="">Faixa de 80-51%:</p>
+                      <div class="space-disco-faixa">
+                        <h3 class="bold">0</h3>
+                      </div>
+                    </div>
+                    <div class="item-faixa">
+                      <p class="">Faixa de 50-0%:</p>
+                      <div class="space-disco-faixa">
+                        <h3 class="bold">0</h3>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="sgi-space">
-                  <div class="card-sgi-analise"></div>
-                </div>
-              </div>
-              <div class="button-space">
-                <button class="btn-dashboard" onclick="fecharAnalise()">
-                  Fechar
-                </button>
               </div>
             </div>
-          </div>
-          <div class="child-general-use">
             <div class="general-use-content-medium">
               <div class="general-use-father-three">
                 <h4 class="bold center">
@@ -124,53 +136,27 @@
                 ></canvas>
               </div>
             </div>
-
-            <div class="general-use-content-large">
-              <div class="gerenal-use-father-one">
-                <div class="general-use-cards-info">
-                  <div class="card-info">
-                    <h5 class="center">
-                      Quantidade de Máquinas com Uso de Processamento Maior que
-                      80%
-                    </h5>
-                    <h1 class="bold center" id="uso-hardware-kpi">...</h1>
-                  </div>
-                  <div class="card-info">
-                    <h5 class="center">
-                      Quantidade de Máquinas com Uso de Disco Maior que 80%
-                    </h5>
-                    <h1 class="bold center" id="uso-disco-kpi">...</h1>
-                  </div>
-                </div>
-
-                <div class="general-use-card-tendencia">
-                  <h3 class="bold center">Tendência de Uso:</h3>
-                  <p class="center">
-                    Acompanhe aqui as tendências de uso das máquinas,
-                    identificando padrões críticos de desempenho e antecipando
-                    possíveis sobrecargas.
-                  </p>
-                  <button class="btn-dashboard" onclick="AnalisedeUso()">
-                    Ver Análise de Uso
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
+
           <div class="child-general-use">
-            <div class="general-use-content-medium">
-              <div class="general-use-father-three">
-                <h4 class="bold center">
-                  Histograma de Uso de Disco das Máquinas:
-                </h4>
-                <canvas
-                  id="histograma-disco"
-                  class="space-graphic"
-                  style="height: 300px"
-                ></canvas>
-              </div>
-            </div>
             <div class="general-use-content-large">
+
+              <div class="general-use-cards-info">
+                <div class="card-info">
+                  <h5 class="center">
+                    Quantidade de Máquinas com Uso de Processamento Maior que
+                    80%
+                  </h5>
+                  <h1 class="bold center" id="uso-hardware-kpi">...</h1>
+                </div>
+                <div class="card-info">
+                  <h5 class="center">
+                    Quantidade de Máquinas com Uso de Disco Maior que 80%
+                  </h5>
+                  <h1 class="bold center" id="uso-disco-kpi">...</h1>
+                </div>
+              </div>
+
               <div class="general-use-father-two">
                 <div class="list-machine-menu">
                   <h3>Lista de Máquinas:</h3>
@@ -178,19 +164,19 @@
                 <div class="list-machine-card">
                   <div class="column-machine">
                     <div class="column-item">
-                      <p class="little-text bold">ID</p>
+                      <p class="little-text bold center">ID</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Hostname</p>
+                      <p class="little-text bold center">Hostname</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Processamento</p>
+                      <p class="little-text bold center">Processamento</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Uso de Disco</p>
+                      <p class="little-text bold center">Uso de Disco</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">
+                      <p class="little-text bold center">
                         Problabilidade de Sobrecarga
                       </p>
                     </div>
@@ -218,6 +204,31 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="father-general-use" style="display: none">
+          <div
+            class="child-analise-uso"
+            id="card-analise-uso"
+            style="display: none"
+          >
+            <div class="card-analise-uso">
+              <h2 class="center bold">Tendencia de Uso Semanal</h2>
+              <div class="cards-space-graphic">
+                <div class="graphic-space">
+                  <div class="card-graphic-analise"></div>
+                </div>
+                <div class="sgi-space">
+                  <div class="card-sgi-analise"></div>
+                </div>
+              </div>
+              <div class="button-space">
+                <button class="btn-dashboard" onclick="fecharAnalise()">
+                  Fechar
+                </button>
               </div>
             </div>
           </div>
@@ -299,7 +310,112 @@
           });
       }
 
-      // ------------------------------------- // HISTOGRAMAS // ------------------------------------- //
+      // ------------------------------------- // GRÁFICOS // ------------------------------------- //
+      
+      function obterDadosHistogramaDisco() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        let discUsoBaixo = 0;
+        let discUsoMedio = 0;
+        let discUsoAlto = 0;
+
+        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].capacidadeTotal === 0) {
+                return 0;
+              } else {
+                let porcentagemUso =
+                  (Number(data[i].usadoTotal) /
+                    Number(data[i].capacidadeTotal)) *
+                  100;
+
+                if (porcentagemUso >= 0 && porcentagemUso <= 50) {
+                  discUsoBaixo++;
+                  console.log("Máquina em uso baixo");
+                } else if (porcentagemUso >= 51 && porcentagemUso <= 80) {
+                  discUsoMedio++;
+                  console.log("Máquina em uso médio");
+                } else if (porcentagemUso >= 81 && porcentagemUso <= 100) {
+                  discUsoAlto++;
+                  console.log("Máquina em uso alto");
+                } else {
+                  console.log("Erro: valor de uso fora do intervalo esperado");
+                }
+              }
+            }
+
+            const dadosMocados = [
+              { faixa: "Usado", quantidade: discUsoBaixo },
+              { faixa: "Livre", quantidade: discUsoMedio },
+            ];
+
+            // Extraindo dados para o gráfico
+            const series = dadosMocados.map((dado) => dado.quantidade);
+            const labels = dadosMocados.map((dado) => dado.faixa);
+
+            // Configuração do gráfico
+            var options = {
+              series: series,
+              chart: {
+                width: 380,
+                type: "donut",
+              },
+              labels: labels,
+              plotOptions: {
+                pie: {
+                  startAngle: -90,
+                  endAngle: 270,
+                },
+              },
+              dataLabels: {
+                enabled: false,
+              },
+              fill: {
+                type: "gradient",
+              },
+              legend: {
+                formatter: function (val, opts) {
+                  return val + " - " + opts.w.globals.series[opts.seriesIndex];
+                },
+              },
+              title: {
+                text: "Gráfico de Uso de armazenamento",
+              },
+              responsive: [
+                {
+                  breakpoint: 480,
+                  options: {
+                    chart: {
+                      width: 200,
+                    },
+                    legend: {
+                      position: "bottom",
+                    },
+                  },
+                },
+              ],
+            };
+
+            // Renderizando o gráfico
+            var chart = new ApexCharts(
+              document.querySelector("#histograma-disco"),
+              options
+            );
+            chart.render();
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de disco:", error);
+          });
+      }
+      
       function obterDadosHistogramaUso() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
         let maqUsoBaixo = 0;
@@ -386,90 +502,6 @@
           })
           .catch((error) => {
             console.error("Erro ao buscar CPU e RAM das máquinas:", error);
-          });
-      }
-
-      function obterDadosHistogramaDisco() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        let discUsoBaixo = 0;
-        let discUsoMedio = 0;
-        let discUsoAlto = 0;
-
-        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-
-            for (let i = 0; i < data.length; i++) {
-              if(data[i].capacidadeTotal === 0){
-                return 0;
-              } else {
-                let porcentagemUso = (Number(data[i].usadoTotal) / Number(data[i].capacidadeTotal)) * 100;               
-
-                if (porcentagemUso >= 0 && porcentagemUso <= 50) {
-                  discUsoBaixo++;
-                  console.log("Máquina em uso baixo");
-                } else if (porcentagemUso >= 51 && porcentagemUso <= 80) {
-                  discUsoMedio++;
-                  console.log("Máquina em uso médio");
-                } else if (porcentagemUso >= 81 && porcentagemUso <= 100) {
-                  discUsoAlto++;
-                  console.log("Máquina em uso alto");
-                } else {
-                  console.log("Erro: valor de uso fora do intervalo esperado");
-                }
-                
-              }
-            }
-
-            const dadosMocados = [
-              { faixa: "0-50%", quantidade: discUsoBaixo },
-              { faixa: "50-80%", quantidade: discUsoMedio },
-              { faixa: "80-100%", quantidade: discUsoAlto },
-            ];
-
-            const labels = dadosMocados.map((item) => item.faixa);
-            const dados = dadosMocados.map((item) => item.quantidade);
-
-            const ctx = document
-              .getElementById("histograma-disco")
-              .getContext("2d");
-            const grafico = new Chart(ctx, {
-              type: "bar",
-              data: {
-                labels: labels,
-                datasets: [
-                  {
-                    label: "Máquinas por Faixa de Uso de Disco",
-                    data: dados,
-                    backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
-                    barThickness: 223.5, // Ajuste da largura das barras em pixels
-                    borderRadius: 5, // Ajuste do border-radius
-                  },
-                ],
-              },
-              options: {
-                responsive: true,
-                plugins: {
-                  legend: {
-                    position: "top",
-                  },
-                },
-                scales: {
-                  x: {
-                    beginAtZero: true,
-                  },
-                },
-              },
-            });
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar uso de disco:", error);
           });
       }
     </script>
