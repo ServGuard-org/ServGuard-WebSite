@@ -21,7 +21,7 @@
 .father-general-use{
     position: relative;
     display: flex;
-    gap: var(--gap-2);
+    gap: var(--gap-3);
     width: 100%;
     height: 100%;
     z-index: 10;
@@ -38,13 +38,13 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            gap: var(--gap-2);
+            gap: var(--gap-3);
         }
 
         & .general-use-content-medium{
             width: 100%;
             height: 52%;
-            padding: var(--gap-1);
+            padding: var(--gap-2);
 
             border-radius: 30px;
             border: 2px solid rgba(255, 255, 255, 0.50);
@@ -157,7 +157,7 @@
 
 .general-use-cards-info{
     display: flex;
-    gap: var(--gap-2);
+    gap: var(--gap-3);
     width: 100%;
     height: 25%;
 
@@ -183,7 +183,9 @@
     gap: var(--gap-1);
     width: 100%;
     height: 75%;
+    max-height: 540px;
     padding: var(--gap-1);
+    overflow: hidden;
 
     border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.50);
@@ -198,7 +200,8 @@
 
     & .list-machine-card{
         width: 100%;
-        height: calc(100% - 43px);
+        height: calc(100% - 60px);
+        position: relative;
 
         & .column-machine{
             display: grid;
@@ -226,8 +229,7 @@
             overflow-y: scroll;
             overflow-x: hidden;
             width: 99.8%;
-            max-height: 210px;
-            height: calc(100% - 44px);
+            height: calc(100% - 50px);
             padding: 0px 5px 0px 5px;
             
             & .machine-card{
@@ -269,6 +271,18 @@
             background: var(--normal-purple);
             border-radius: 10px;
         }
+    }
+
+    & .list-machine-card::after {
+        content: ''; /* Necessário para criar o pseudo-elemento */
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        width: 100%;
+        height: 10%; /* Tamanho do gradiente de blur */
+        background: #f7edfd88; /* Cor de fundo com transparência */
+        filter: blur(10px); /* Aplica o efeito de desfoque */
+        pointer-events: none; /* Garante que o pseudo-elemento não interfira na interação */
     }
 }
 

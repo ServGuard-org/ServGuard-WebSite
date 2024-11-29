@@ -404,6 +404,25 @@ function buscarUsoProcessamentoUltimos7(req, res){
     });
 }
 
+function buscarHistoricoMaquina(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarHistoricoMaquina(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar uso de processamento das Máquinas nos ultimos 7 dias", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -424,5 +443,6 @@ module.exports = {
     buscarUsoDiscoAlto,
     buscarRamCpuMaquina,
     buscarUsoDiscoMaquinas,
-    buscarUsoProcessamentoUltimos7
+    buscarUsoProcessamentoUltimos7,
+    buscarHistoricoMaquina
 }
