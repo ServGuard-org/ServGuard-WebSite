@@ -831,6 +831,35 @@ JOIN
         WHERE C.fkMaquinaRecurso = MR_CPU.idMaquinaRecurso
     );
 
+CREATE VIEW ServGuard.MaioresUsosCpuRamUltimos7Dias AS
+SELECT
+    e.idEmpresa,
+    e.nome AS nomeEmpresa,
+    m.idMaquina,
+    m.nome AS nomeMaquina,
+    MAX(CASE WHEN r.nome = 'usoCPU' THEN c.registro ELSE 0 END) AS maiorUsoCPU,
+    MAX(CASE WHEN r.nome = 'usoRAM' THEN c.registro ELSE 0 END) AS maiorUsoRAM,
+    (MAX(CASE WHEN r.nome = 'usoCPU' THEN c.registro ELSE 0 END) + 
+     MAX(CASE WHEN r.nome = 'usoRAM' THEN c.registro ELSE 0 END)) / 2 AS maiorUsoSomadoDividido,
+    MAX(c.dthCriacao) AS dataCaptura
+FROM
+    ServGuard.Empresa e
+JOIN
+    ServGuard.Maquina m ON e.idEmpresa = m.fkEmpresa
+JOIN
+    ServGuard.MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
+JOIN
+    ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN
+    ServGuard.Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
+WHERE
+    r.nome IN ('usoCPU', 'usoRAM') -- Filtro para CPU e RAM
+    AND c.dthCriacao >= CURDATE() - INTERVAL 7 DAY -- Filtra os últimos 7 dias
+GROUP BY
+    e.idEmpresa, m.idMaquina
+ORDER BY
+    maiorUsoSomadoDividido DESC;
+
 
 -- PROCEDURES
 

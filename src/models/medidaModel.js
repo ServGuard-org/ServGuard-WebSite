@@ -167,6 +167,14 @@ function buscarUsoDiscoMaquinas(idEmpresa){
     return database.executar(instrucaoSql, [idEmpresa]);
 }
 
+function buscarUsoProcessamentoUltimos7(idEmpresa){
+    var instrucaoSql = `SELECT * FROM ServGuard.MaioresUsosCpuRamUltimos7Dias
+        WHERE idEmpresa = ${idEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
 
 module.exports = {
     buscarDadosHistograma,
@@ -187,5 +195,6 @@ module.exports = {
     buscarUsoHardwareAlto,
     buscarUsoDiscoAlto,
     buscarRamCpuMaquina,
-    buscarUsoDiscoMaquinas
+    buscarUsoDiscoMaquinas,
+    buscarUsoProcessamentoUltimos7
 }

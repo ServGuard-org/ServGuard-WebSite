@@ -471,7 +471,7 @@
         let faixa90 = 0;
         let faixa100 = 0;
 
-        fetch(`/medidas/usoRamCpuPorMaquina/${idEmpresa}`, {
+        fetch(`/medidas/usoProcessamentoUltimos7/${idEmpresa}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -482,8 +482,7 @@
             console.log(data);
 
             for (let i = 0; i < data.length; i++) {
-              let usoProcessamento =
-                (Number(data[i].usoRAM) + Number(data[i].usoCPU)) / 2;
+              let usoProcessamento = Number(data[i].maiorUsoSomadoDividido);
 
               console.log(
                 `Uso processamento da máquina ${i}: ${usoProcessamento}`

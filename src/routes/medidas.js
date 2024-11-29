@@ -78,4 +78,8 @@ router.get("/usoDiscoMaquinas/:idEmpresa", function(req, res){
     medidaController.buscarUsoDiscoMaquinas(req,res);
 });
 
+router.get("/usoProcessamentoUltimos7/:idEmpresa", function(req, res){
+    medidaController.buscarUsoProcessamentoUltimos7(req,res);
+});
+
 module.exports = router;
