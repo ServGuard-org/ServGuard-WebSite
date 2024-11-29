@@ -92,35 +92,33 @@
           <div class="child-general-use">
             <div class="general-use-content-disco">
               <div class="general-use-father-three">
-                <h4 class="bold center">
-                  Armazenamento Total da Empresa:
-                </h4>
+                <h4 class="bold center">Armazenamento Total da Empresa:</h4>
                 <div class="space-disco-info">
-                  <div
-                    id="histograma-disco"
-                    class="space-graphic-disco"
-                  ></div>
                   <div class="info-disco-maquinas">
-                    <h5 class="bold">Faixas de Uso de Armazenamento das Máquinas:</h5>
+                    <h5 class="bold">
+                      Faixas de Uso de Armazenamento das Máquinas:
+                    </h5>
                     <div class="item-faixa">
                       <p class="">Faixa de 100-81%:</p>
                       <div class="space-disco-faixa">
-                        <h3 class="bold">0</h3>
+                        <h3 class="bold" id="faixa-disco-alta">0</h3>
                       </div>
                     </div>
                     <div class="item-faixa">
                       <p class="">Faixa de 80-51%:</p>
                       <div class="space-disco-faixa">
-                        <h3 class="bold">0</h3>
+                        <h3 class="bold" id="faixa-disco-media">0</h3>
                       </div>
                     </div>
                     <div class="item-faixa">
                       <p class="">Faixa de 50-0%:</p>
                       <div class="space-disco-faixa">
-                        <h3 class="bold">0</h3>
+                        <h3 class="bold" id="faixa-disco-baixa">0</h3>
                       </div>
                     </div>
                   </div>
+
+                  <div id="histograma-disco" class="space-graphic-disco"></div>
                 </div>
               </div>
             </div>
@@ -140,7 +138,6 @@
 
           <div class="child-general-use">
             <div class="general-use-content-large">
-
               <div class="general-use-cards-info">
                 <div class="card-info">
                   <h5 class="center">
@@ -262,6 +259,7 @@
         sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
         obterDadosHistogramaUso();
         obterDadosHistogramaDisco();
+        buscarFaixasUsoDisco();
         buscarUsoHardwareAlto();
         buscarUsoDiscoAlto();
       }
@@ -310,10 +308,12 @@
           });
       }
 
-      // ------------------------------------- // GRÁFICOS // ------------------------------------- //
-      
-      function obterDadosHistogramaDisco() {
+      function buscarFaixasUsoDisco() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const faixaBaixa = document.getElementById("faixa-disco-baixa");
+        const faixaMedia = document.getElementById("faixa-disco-media");
+        const faixaAlta = document.getElementById("faixa-disco-alta");
+
         let discUsoBaixo = 0;
         let discUsoMedio = 0;
         let discUsoAlto = 0;
@@ -326,8 +326,6 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-
             for (let i = 0; i < data.length; i++) {
               if (data[i].capacidadeTotal === 0) {
                 return 0;
@@ -352,14 +350,53 @@
               }
             }
 
+            faixaBaixa.innerHTML = discUsoBaixo;
+            faixaMedia.innerHTML = discUsoMedio;
+            faixaAlta.innerHTML = discUsoAlto;
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de disco:", error);
+          });
+      }
+
+      // ------------------------------------- // GRÁFICOS // ------------------------------------- //
+
+      function obterDadosHistogramaDisco() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(`-------------------------${data[0].capacidadeTotal}`);
+            console.log(`-------------------------${data[0].usadoTotal}`);
+
+            let totalArmazenamento = 0;
+            let totalUsado = 0;
+
+            data.forEach((maquina) => {
+              totalArmazenamento = +maquina.capacidadeTotal;
+              totalUsado = +maquina.usadoTotal;
+            });
+
+            const percentualUsado = (totalUsado / totalArmazenamento) * 100;
+            const percentualLivre = 100 - percentualUsado;
+
             const dadosMocados = [
-              { faixa: "Usado", quantidade: discUsoBaixo },
-              { faixa: "Livre", quantidade: discUsoMedio },
+              { faixa: "Usado", quantidade: percentualUsado },
+              { faixa: "Livre", quantidade: percentualLivre },
             ];
 
             // Extraindo dados para o gráfico
             const series = dadosMocados.map((dado) => dado.quantidade);
             const labels = dadosMocados.map((dado) => dado.faixa);
+
+            // Definindo cores personalizadas para cada faixa
+            const coresPersonalizadas = ["#6D4BC7", "#a6a6a7"]; // Exemplo de cores para "Usado" e "Livre"
 
             // Configuração do gráfico
             var options = {
@@ -383,12 +420,22 @@
               },
               legend: {
                 formatter: function (val, opts) {
-                  return val + " - " + opts.w.globals.series[opts.seriesIndex];
+                  return (
+                    val + " - " + opts.w.globals.series[opts.seriesIndex] + "%"
+                  );
                 },
               },
               title: {
                 text: "Gráfico de Uso de armazenamento",
               },
+              tooltip: {
+                y: {
+                  formatter: function (val) {
+                    return val + "%"; // Adiciona o símbolo de porcentagem ao tooltip
+                  },
+                },
+              },
+              colors: coresPersonalizadas, // Definindo as cores
               responsive: [
                 {
                   breakpoint: 480,
@@ -415,12 +462,14 @@
             console.error("Erro ao buscar uso de disco:", error);
           });
       }
-      
+
       function obterDadosHistogramaUso() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-        let maqUsoBaixo = 0;
-        let maqUsoMedio = 0;
-        let maqUsoAlto = 0;
+        let faixa25 = 0;
+        let faixa50 = 0;
+        let faixa75 = 0;
+        let faixa90 = 0;
+        let faixa100 = 0;
 
         fetch(`/medidas/usoRamCpuPorMaquina/${idEmpresa}`, {
           method: "GET",
@@ -440,29 +489,27 @@
                 `Uso processamento da máquina ${i}: ${usoProcessamento}`
               );
 
-              if (usoProcessamento >= 0 && usoProcessamento <= 50) {
-                maqUsoBaixo++;
-                console.log("Máquina em uso baixo");
-              } else if (usoProcessamento >= 51 && usoProcessamento <= 80) {
-                maqUsoMedio++;
-                console.log("Máquina em uso médio");
-              } else if (usoProcessamento >= 81 && usoProcessamento <= 100) {
-                maqUsoAlto++;
-                console.log("Máquina em uso alto");
+              if (usoProcessamento >= 0 && usoProcessamento <= 25) {
+                faixa25++;
+              } else if (usoProcessamento >= 26 && usoProcessamento <= 50) {
+                faixa50++;
+              } else if (usoProcessamento >= 51 && usoProcessamento <= 75) {
+                faixa75++;
+              } else if (usoProcessamento >= 76 && usoProcessamento <= 90) {
+                faixa90++;
+              } else if (usoProcessamento >= 91 && usoProcessamento <= 100) {
+                faixa100++;
               } else {
                 console.log("Erro: valor de uso fora do intervalo esperado");
               }
             }
 
-            // Agora os logs estão no lugar correto
-            console.log(`Máquinas com uso baixo: ${maqUsoBaixo}`);
-            console.log(`Máquinas com uso médio: ${maqUsoMedio}`);
-            console.log(`Máquinas com uso alto: ${maqUsoAlto}`);
-
             const dadosMocados = [
-              { faixa: "0-50%", quantidade: maqUsoBaixo },
-              { faixa: "51-80%", quantidade: maqUsoMedio },
-              { faixa: "81-100%", quantidade: maqUsoAlto },
+              { faixa: "0-25%", quantidade: faixa25 },
+              { faixa: "26-50%", quantidade: faixa50 },
+              { faixa: "51-75%", quantidade: faixa75 },
+              { faixa: "76-90%", quantidade: faixa90 },
+              { faixa: "91-100%", quantidade: faixa100 },
             ];
 
             const labels = dadosMocados.map((item) => item.faixa);
@@ -479,9 +526,15 @@
                   {
                     label: "Máquinas por Faixa de Uso de Hardware",
                     data: dados,
-                    backgroundColor: ["#36206d", "#4E2E9E", "#9870FF"],
-                    barThickness: 223.5, // Ajuste da largura das barras em pixels
-                    borderRadius: 5, // Ajuste do border-radius
+                    backgroundColor: [
+                      "#36206d",
+                      "#4E2E9E",
+                      "#7D5CC5",
+                      "#9870FF",
+                      "#c090ff",
+                    ],
+                    barThickness: 152,
+                    borderRadius: 5,
                   },
                 ],
               },
