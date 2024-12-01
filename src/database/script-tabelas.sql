@@ -947,7 +947,7 @@ ORDER BY
     m.idMaquina;
 
 
-CREATE VIEW ServGuard.HistoricoCpuRam AS
+CREATE OR REPLACE VIEW ServGuard.HistoricoCpuRam AS
 SELECT 
     m.idMaquina,
     m.nome AS nomeMaquina,
@@ -974,6 +974,112 @@ GROUP BY
     m.idMaquina, m.nome, c.dthCriacao, m.fkEmpresa  -- Agrupando por máquina, data e empresa
 ORDER BY 
     c.dthCriacao DESC;  -- Ordenando pela data de captura, do mais recente para o mais antigo
+
+CREATE OR REPLACE VIEW ServGuard.vista_maquinas_rede_por_semana AS
+WITH MaquinasRede AS (
+    SELECT 
+        CONCAT(
+            YEAR(dthCriacao), 
+            LPAD(WEEK(dthCriacao, 1), 2, '0')
+        ) AS numero_semana,
+        m.fkEmpresa,
+        COUNT(DISTINCT mr.fkMaquina) AS quantidade_maquinas
+    FROM 
+        ServGuard.Captura c
+    JOIN 
+        ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+    JOIN 
+        ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+    JOIN 
+        ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+    WHERE 
+        r.nome IN (
+            'velocidadeDownload',
+            'velocidadeUpload',
+            'pacotesEnviados',
+            'pacotesRecebidos',
+            'megabytesEnviados',
+            'megabytesRecebidos',
+            'descartePacotesEntrada',
+            'descartePacotesSaida',
+            'erroPacotesEntrada',
+            'erroPacotesSaida'
+        )
+        AND m.isAtiva = 1
+    GROUP BY 
+        numero_semana,
+        m.fkEmpresa
+)
+SELECT 
+    numero_semana,
+    quantidade_maquinas,
+    fkEmpresa
+FROM 
+    MaquinasRede
+ORDER BY 
+    numero_semana DESC;
+
+CREATE OR REPLACE VIEW ServGuard.vista_alertas_rede_por_semana AS
+WITH AlertasRede AS (
+    SELECT 
+        CONCAT(
+            YEAR(c.dthCriacao), 
+            LPAD(WEEK(c.dthCriacao, 1), 2, '0')
+        ) AS numero_semana,
+        m.fkEmpresa,
+        
+        SUM(CASE 
+            WHEN r.nome IN ('pacotesEnviados', 'pacotesRecebidos') 
+            THEN 1 
+            ELSE 0 
+        END) AS total_alertas_pacotes,
+        
+        SUM(CASE 
+            WHEN r.nome IN ('megabytesEnviados', 'megabytesRecebidos') 
+            THEN 1 
+            ELSE 0 
+        END) AS total_alertas_megabytes,
+        
+        SUM(CASE 
+            WHEN r.nome IN ('descartePacotesEntrada', 'descartePacotesSaida', 'erroPacotesEntrada', 'erroPacotesSaida') 
+            THEN 1 
+            ELSE 0 
+        END) AS total_alertas_erros_descartes
+        
+    FROM 
+        ServGuard.Captura c
+    JOIN 
+        ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+    JOIN 
+        ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+    JOIN 
+        ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+    WHERE 
+        c.isAlerta = 1
+        AND r.nome IN (
+            'pacotesEnviados',
+            'pacotesRecebidos',
+            'megabytesEnviados',
+            'megabytesRecebidos',
+            'descartePacotesEntrada',
+            'descartePacotesSaida',
+            'erroPacotesEntrada',
+            'erroPacotesSaida'
+        )
+    GROUP BY 
+        numero_semana,
+        m.fkEmpresa
+)
+SELECT 
+    numero_semana,
+    fkEmpresa,
+    total_alertas_pacotes,
+    total_alertas_megabytes,
+    total_alertas_erros_descartes
+FROM 
+    AlertasRede
+ORDER BY 
+    numero_semana DESC;
 
 -- PROCEDURES
 

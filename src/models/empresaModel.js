@@ -48,4 +48,16 @@ function obterPacotes(idEmpresa) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards, obterMapaSemana, obterPacotes };
+function obterQtdMaquinasPorSemana(idEmpresa) {
+  const instrucaoSql = `SELECT * FROM ServGuard.vista_maquinas_rede_por_semana WHERE fkEmpresa = ${idEmpresa};`;
+
+  return database.executar(instrucaoSql);
+}
+
+function obterQtdAlertasSemana(idEmpresa) {
+  const instrucaoSql = `SELECT * FROM ServGuard.vista_alertas_rede_por_semana WHERE fkEmpresa = ${idEmpresa};`
+
+  return database.executar(instrucaoSql);
+}
+
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar, obterSemanas, obterCards, obterMapaSemana, obterPacotes, obterQtdMaquinasPorSemana, obterQtdAlertasSemana };

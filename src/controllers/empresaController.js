@@ -90,6 +90,30 @@ function obterPacotes(req, res) {
   });
 }
 
+function obterQtdMaquinasPorSemana(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  empresaModel.obterQtdMaquinasPorSemana(idEmpresa).then((resultado) => {
+    if (resultado.length == 0) {
+      res.status(404).json({ mensagem: `não há maquinas que realizaram medidas históricas para a empresa de id: ${idEmpresa}` });
+    } else {
+      res.status(200).json(resultado);
+    }
+  });
+}
+
+function obterQtdAlertasSemana(req, res) {
+  var idEmpresa = req.params.idEmpresa;
+
+  empresaModel.obterQtdAlertasSemana(idEmpresa).then((resultado) => {
+    if (resultado.length == 0) {
+      res.status(404).json({ mensagem: `não há contagem de alertas de rede para a empresa de id: ${idEmpresa}` });
+    } else {
+      res.status(200).json(resultado);
+    }
+  });
+}
+
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
@@ -98,5 +122,7 @@ module.exports = {
   obterSemanas,
   obterCards,
   obterMapaSemana,
-  obterPacotes
+  obterPacotes,
+  obterQtdMaquinasPorSemana,
+  obterQtdAlertasSemana
 };
