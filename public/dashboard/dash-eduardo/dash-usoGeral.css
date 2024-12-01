@@ -101,6 +101,7 @@
                     padding: var(--gap-3);
 
                     & .card-graphic-analise{
+                        position: relative;
                         width: 100%;
                         height: 100%;
                         border: 2px solid var(--normal-purple);
@@ -114,6 +115,7 @@
                     padding: var(--gap-3);
 
                     & .card-sgi-analise{
+                        position: relative;
                         width: 100%;
                         height: 100%;
                         border: 2px solid var(--normal-purple);
@@ -241,6 +243,8 @@
     & .list-machine-menu{
         width: 100%;
         height: 43px;
+        display: flex;
+        align-items: center;
     }
 
     & .list-machine-card{
@@ -346,7 +350,7 @@
     width: 100%;
     height: 100%;
 
-    & h4{
+    & .Armazenamento{
         width: 100%;
         height: 33px;
     }

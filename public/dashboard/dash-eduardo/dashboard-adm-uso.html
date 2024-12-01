@@ -84,7 +84,7 @@
             </a>
           </div>
           <div class="dash-alert-titulo">
-            <h1 class="bold">Monitoramento de Uso Geral:</h1>
+            <h2 class="bold">Visão Geral do Uso de Processamento</h2>
           </div>
         </div>
 
@@ -92,11 +92,24 @@
           <div class="child-general-use">
             <div class="general-use-content-disco">
               <div class="general-use-father-three">
-                <h4 class="bold center">Armazenamento Total da Empresa:</h4>
+                <div class="father-tips">
+                  <div class="tooltip tooltip-white">
+                    <h4>i</h4>
+                    <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                      Visualize a distribuição do uso de armazenamento das máquinas. O gráfico mostra a quantidade 
+                      de máquinas em cada faixa de uso de disco, facilitando a identificação das que apresentam alto 
+                      consumo de armazenamento. Ele também exibe a divisão entre armazenamento usado e livre, permitindo 
+                      uma rápida identificação da capacidade disponível.
+                      <br>
+                      <span class="bold italic">Material baseados no dia atual.</span>
+                    </span>
+                  </div>
+                </div>
+                <h4 class="armazenamento bold center">Resumo do Armazenamento da Empresa:</h4>
                 <div class="space-disco-info">
                   <div class="info-disco-maquinas">
                     <h5 class="bold">
-                      Faixas de Uso de Armazenamento das Máquinas:
+                      Distribuição das Máquinas por Uso de Armazenamento:
                     </h5>
                     <div class="item-faixa">
                       <p class="">Faixa de 100-81%:</p>
@@ -123,9 +136,23 @@
               </div>
             </div>
             <div class="general-use-content-medium">
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                    Visualize a distribuição dos picos de uso de processamento das máquinas.
+                    <br>
+                    O gráfico mostra como as máquinas estão distribuídas em diferentes faixas de uso de processamento,
+                    determinamos o uso de processamento com o cálculo de CPU mais RAM dividido por dois,
+                    permitindo identificar rapidamente quais estão consumindo mais recursos de processamento.
+                    <br>
+                    <span class="bold italic">Dados baseados nos últimos 7 dias.</span>
+                  </span>
+                </div>
+              </div>
               <div class="general-use-father-three">
                 <h4 class="bold center">
-                  Histograma de Uso de Processamento das Máquinas:
+                  Distribuição dos Picos de Uso de Processamento
                 </h4>
                 <canvas
                   id="histograma-uso"
@@ -138,25 +165,25 @@
 
           <div class="child-general-use">
             <div class="general-use-content-large">
-              <!-- <div class="general-use-cards-info">
-                <div class="card-info">
-                  <h5 class="center">
-                    Quantidade de Máquinas com Uso de Processamento Maior que
-                    80%
-                  </h5>
-                  <h1 class="bold center" id="uso-hardware-kpi">...</h1>
+              <div class="father-tips" style="z-index: 999;">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                    Aqui são listadas as máquinas com suas informações principais. Mostramos o 
+                    <span class="bold">hostname</span> da máquina, o <span class="bold">uso de processamento</span> 
+                    (calculado pela média entre o uso de <span class="bold">CPU</span> e  <span class="bold">RAM</span>, 
+                    considerando o pico nos últimos 7 dias), o <span class="bold">uso de isco atual</span> e a 
+                    <span class="bold">probabilidade de sobrecarga</span>. A sobrecarga é calculada com 
+                    base no <span class="bold">Z-score</span>, que avalia o histórico da máquina para determinar a chance 
+                    de o uso de processamento ultrapassar 90%.
+                    <br>
+                    <span class="bold italic">Dados baseados nos últimos 7 dias e dados do dia atual.</span>
+                  </span>
                 </div>
-                <div class="card-info">
-                  <h5 class="center">
-                    Quantidade de Máquinas com Uso de Disco Maior que 80%
-                  </h5>
-                  <h1 class="bold center" id="uso-disco-kpi">...</h1>
-                </div>
-              </div> -->
-
+              </div>
               <div class="general-use-father-two">
                 <div class="list-machine-menu">
-                  <h3>Lista de Máquinas:</h3>
+                  <h4 class="bold">Detalhes das Máquinas Monitoradas:</h4>
                 </div>
                 <div class="list-machine-card">
                   <div class="column-machine">
@@ -182,23 +209,7 @@
                   <hr class="line-list-machine" />
 
                   <div class="machine-card-space" id="father-machine-space">
-                    <!-- <div class="machine-card">
-                      <div class="column-item">
-                        <p class="little-text bold">01</p>
-                      </div>
-                      <div class="column-item">
-                        <p class="little-text bold">BOOK-1AMQ3DUG8E</p>
-                      </div>
-                      <div class="column-item">
-                        <p class="little-text bold">80%</p>
-                      </div>
-                      <div class="column-item">
-                        <p class="little-text bold">60%</p>
-                      </div>
-                      <div class="column-item">
-                        <p class="little-text bold">95%</p>
-                      </div>
-                    </div> -->
+                    <!-- LISTA DAS MÁQUINAS -->
                   </div>
                 </div>
               </div>
@@ -210,12 +221,26 @@
             style="display: none"
           >
             <div class="card-analise-uso">
-              <h2 class="center bold">Analise da Tendencia de Uso</h2>
+              <h2 class="center bold">Previsão de Tendências de Uso</h2>
               <div class="cards-space-graphic">
                 <div class="graphic-space">
                   <div class="card-graphic-analise">
+                    <div class="father-tips" style="top: 10px; right: 10px;">
+                      <div class="tooltip tooltip-white">
+                        <h4>i</h4>
+                        <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                          Este gráfico exibe a tendência do consumo diário de processamento, com base 
+                          nos picos de uso (o uso de processamento é calculado pela média entre o uso 
+                          de CPU e RAM). A linha de regressão linear mostra a tendência do uso ao longo 
+                          dos dias, permitindo identificar padrões de aumento ou diminuição no consumo 
+                          de recursos.
+                          <br>
+                          <span class="bold italic">Dados baseado no histórico do uso de Processamento.</span>
+                        </span>
+                      </div>
+                    </div>
                     <h4 class="bold center my-1">
-                      Previsão de Tendência Diária
+                      Tendência de Consumo Diário de Processamento
                     </h4>
                     <canvas
                       id="regressionChart"
@@ -226,6 +251,18 @@
                 </div>
                 <div class="sgi-space">
                   <div class="card-sgi-analise">
+                    <div class="father-tips" style="top: 10px; right: 10px;">
+                      <div class="tooltip tooltip-white">
+                        <h4>i</h4>
+                        <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                          A Inteligência Artificial SGI realiza uma análise da regressão linear da 
+                          tendência de consumo diário de processamento, ajudando a compreender os 
+                          padrões de aumento ou diminuição no uso de recursos ao longo do tempo.
+                          <br>
+                          <span class="bold italic">Dados baseado na regressão linear.</span>
+                        </span>
+                      </div>
+                    </div>
                     <div class="space-logo-title">
                       <h4 class="bold center my-2">Analise da <span class="text-purple">SGI</span></h4>
                       <img src="../../assets/svg/logo-sgi.svg" alt="" style="max-width: 10%;">
@@ -658,7 +695,7 @@
                 },
               },
               title: {
-                text: "Gráfico de Uso de armazenamento",
+                text: "Percentual de Armazenamento Usado vs Livre",
               },
               tooltip: {
                 y: {
