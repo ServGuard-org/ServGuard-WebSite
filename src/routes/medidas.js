@@ -86,4 +86,12 @@ router.get("/usoMaquinaHistorico/:idEmpresa", function(req,res){
     medidaController.buscarHistoricoMaquina(req,res);
 });
 
+router.get("/listarMaquinasPico/:idEmpresa", function(req,res){
+    medidaController.obterListaMaquinasPico(req,res);
+});
+
+router.get("/listarHistoricoProcessamento/:idEmpresa/:idMaquina", function(req,res){
+    medidaController.obterListaHistoricoProcessamento(req,res);
+});
+
 module.exports = router;

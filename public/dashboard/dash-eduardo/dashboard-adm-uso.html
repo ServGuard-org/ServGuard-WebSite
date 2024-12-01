@@ -138,7 +138,7 @@
 
           <div class="child-general-use">
             <div class="general-use-content-large">
-              <div class="general-use-cards-info">
+              <!-- <div class="general-use-cards-info">
                 <div class="card-info">
                   <h5 class="center">
                     Quantidade de Máquinas com Uso de Processamento Maior que
@@ -152,7 +152,7 @@
                   </h5>
                   <h1 class="bold center" id="uso-disco-kpi">...</h1>
                 </div>
-              </div>
+              </div> -->
 
               <div class="general-use-father-two">
                 <div class="list-machine-menu">
@@ -255,8 +255,8 @@
       }
 
       function carregarPagina() {
-        sessionStorage.removeItem("VOLTAR_PAGINA");
         sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
+        listarMaquinasDetalhesPico();
         obterDadosHistogramaUso();
         obterDadosHistogramaDisco();
         buscarFaixasUsoDisco();
@@ -265,9 +265,9 @@
         listarMaquinaHistorico();
       }
 
-      // ------------------------------------- //            // ------------------------------------- //
-      // ------------------------------------- // PARAMETROS // ------------------------------------- //
-      // ------------------------------------- //            // ------------------------------------- //
+      // ------------------------------------- //                             // ------------------------------------- //
+      // ------------------------------------- // PARAMETROS - NÃO UTILIZADOS // ------------------------------------- //
+      // ------------------------------------- //                             // ------------------------------------- //
 
       function buscarUsoHardwareAlto() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
@@ -280,8 +280,6 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-            // Supondo que 'data.usoHardwareAlto' seja o campo com o número que você quer exibir
             document.getElementById("uso-hardware-kpi").innerText =
               data[0].qtdMaquinas;
           })
@@ -301,8 +299,6 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-            // Supondo que 'data.usoHardwareAlto' seja o campo com o número que você quer exibir
             document.getElementById("uso-disco-kpi").innerText =
               data[0].qtdMaquinas;
           })
@@ -317,10 +313,6 @@
         const faixaMedia = document.getElementById("faixa-disco-media");
         const faixaAlta = document.getElementById("faixa-disco-alta");
 
-        let discUsoBaixo = 0;
-        let discUsoMedio = 0;
-        let discUsoAlto = 0;
-
         fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
           method: "GET",
           headers: {
@@ -329,29 +321,29 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].capacidadeTotal === 0) {
-                return 0;
-              } else {
-                let porcentagemUso =
-                  (Number(data[i].usadoTotal) /
-                    Number(data[i].capacidadeTotal)) *
-                  100;
+            let discUsoBaixo = 0;
+            let discUsoMedio = 0;
+            let discUsoAlto = 0;
 
-                if (porcentagemUso >= 0 && porcentagemUso <= 50) {
-                  discUsoBaixo++;
-                  console.log("Máquina em uso baixo");
-                } else if (porcentagemUso >= 51 && porcentagemUso <= 80) {
-                  discUsoMedio++;
-                  console.log("Máquina em uso médio");
-                } else if (porcentagemUso >= 81 && porcentagemUso <= 100) {
-                  discUsoAlto++;
-                  console.log("Máquina em uso alto");
-                } else {
-                  console.log("Erro: valor de uso fora do intervalo esperado");
-                }
+            data.forEach((maquina) => {
+              let totalUsado = maquina.discoUsado;
+              let totalArmazenamento = maquina.discoTotal;
+
+              let percentualUsado = Math.round(
+                (totalUsado / totalArmazenamento) * 100
+              );
+              let percentualLivre = 100 - percentualUsado;
+
+              if (percentualUsado >= 0 && percentualUsado <= 50) {
+                discUsoBaixo++;
+              } else if (percentualUsado >= 51 && percentualUsado <= 80) {
+                discUsoMedio++;
+              } else if (percentualUsado >= 81 && percentualUsado <= 100) {
+                discUsoAlto++;
+              } else {
+                console.log("Erro: valor de uso fora do intervalo esperado");
               }
-            }
+            });
 
             faixaBaixa.innerHTML = discUsoBaixo;
             faixaMedia.innerHTML = discUsoMedio;
@@ -434,8 +426,6 @@
         usoArmazenamento,
         probabilidade
       ) {
-        console.log("chamou adicionarMaquina()!!!!!!!!!!!!!!!!");
-
         const elementoPai = document.getElementById("father-machine-space");
 
         const novoElemento = `
@@ -447,13 +437,13 @@
               <p class="little-text bold">${nome}</p>
             </div>
             <div class="column-item">
-              <p class="little-text bold">${usoProcessamento}</p>
+              <p class="little-text bold">${usoProcessamento}%</p>
             </div>
             <div class="column-item">
-              <p class="little-text bold">${usoArmazenamento}</p>
+              <p class="little-text bold">${usoArmazenamento}%</p>
             </div>
             <div class="column-item">
-              <p class="little-text bold">${probabilidade}</p>
+              <p class="little-text bold">${probabilidade}%</p>
             </div>
           </div>
         `;
@@ -461,22 +451,101 @@
         elementoPai.innerHTML += novoElemento;
       }
 
-      function listarMaquinaHistorico() {
+      // ------------------------------------- // Listando maquinas e seus pico de uso // -------------------------------------//
+
+      async function historicoCpuRam(idMaquina) {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data)
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar uso de disco:", error);
-          });
+        try {
+          const response = await fetch(
+            `/medidas/listarHistoricoProcessamento/${idEmpresa}/${idMaquina}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Erro na resposta: ${response.status}`);
+          }
+
+          const data = await response.json();
+          return data; // Retorna os dados para quem chamou a função
+        } catch (error) {
+          console.error("Erro ao buscar histórico de CPU/RAM:", error);
+          throw error; // Repropaga o erro para quem chamou
+        }
+      }
+
+      // ------------------------------------- // Listando maquinas e seus pico de uso // -------------------------------------//
+      async function listarMaquinasDetalhesPico() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        try {
+          const response = await fetch(
+            `/medidas/listarMaquinasPico/${idEmpresa}`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar máquinas: ${response.status}`);
+          }
+
+          const maquinas = await response.json();
+
+          for (const maquina of maquinas) {
+            try {
+              const historico = await historicoCpuRam(maquina.idMaquina);
+              console.log(historico);
+
+              const usoProcessamento = Math.round((Number(maquina.usoCPU) + Number(maquina.usoRAM)) / 2);
+              const percentualUsado = Math.round((Number(maquina.discoUsado) / Number(maquina.discoTotal)) * 100);
+
+              const historicoUso = []; // Dados históricos de uso de CPU
+
+              historico.forEach((processamento) => {
+                historicoUso.push(Number(processamento.usoProcessamento));
+              })
+
+              console.log(historicoUso);
+
+              const maiorUsoProcessa = 25;
+
+              // Calcular a média e o desvio padrão do histórico
+              const mediaProcessa = calcularMedia(historicoUso);
+              const desvioPadraoProcessa = calcularDesvioPadrao(historicoUso, mediaProcessa);
+
+              // Calcular o z-score
+              const zScoreProcessa = calcularZScore(maiorUsoProcessa, mediaProcessa, desvioPadraoProcessa);
+
+              // Calcular a probabilidade de sobrecarga (uso > 90%)
+              const probabilidadeSobrecargaProcessa = 1 - calcularProbabilidade(zScoreProcessa);
+              const probabilidade =  (probabilidadeSobrecargaProcessa * 100).toFixed(0)
+
+              adicionarMaquina(
+                maquina.idMaquina,
+                maquina.nome,
+                usoProcessamento,
+                percentualUsado,
+                probabilidade
+              );
+
+
+            } catch (error) {
+              console.error(
+                `Erro ao buscar histórico para máquina ${maquina.idMaquina}:`,
+                error
+              );
+            }
+          }
+        } catch (error) {
+          console.error("Erro ao buscar detalhes de pico das máquinas:", error);
+        }
       }
 
       // ------------------------------------- //          // ------------------------------------- //
@@ -494,18 +563,17 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(`-------------------------${data[0].capacidadeTotal}`);
-            console.log(`-------------------------${data[0].usadoTotal}`);
-
             let totalArmazenamento = 0;
             let totalUsado = 0;
 
             data.forEach((maquina) => {
-              totalArmazenamento = +maquina.capacidadeTotal;
-              totalUsado = +maquina.usadoTotal;
+              totalArmazenamento += Number(maquina.discoTotal);
+              totalUsado += Number(maquina.discoUsado);
             });
 
-            const percentualUsado = (totalUsado / totalArmazenamento) * 100;
+            const percentualUsado = Math.round(
+              (totalUsado / totalArmazenamento) * 100
+            );
             const percentualLivre = 100 - percentualUsado;
 
             const dadosMocados = [
@@ -601,14 +669,8 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-
             for (let i = 0; i < data.length; i++) {
               let usoProcessamento = Number(data[i].maiorUsoSomadoDividido);
-
-              console.log(
-                `Uso processamento da máquina ${i}: ${usoProcessamento}`
-              );
 
               if (usoProcessamento >= 0 && usoProcessamento <= 25) {
                 faixa25++;

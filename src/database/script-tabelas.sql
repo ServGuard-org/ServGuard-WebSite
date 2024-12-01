@@ -860,6 +860,120 @@ GROUP BY
 ORDER BY
     maiorUsoSomadoDividido DESC;
 
+CREATE OR REPLACE VIEW detalhesMaquinasPico AS
+SELECT 
+    m.idMaquina,
+    m.fkEmpresa,
+    IFNULL(m.apelido, 'indefinido') AS apelido,
+    m.nome,
+    -- Uso de CPU nos últimos 7 dias
+    (SELECT MAX(c.registro) 
+     FROM ServGuard.Captura c
+     JOIN ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina
+     AND mr.fkRecurso = (SELECT r.idRecurso FROM ServGuard.Recurso r WHERE r.nome = 'usoCPU')
+     AND c.dthCriacao > NOW() - INTERVAL 7 DAY
+    ) AS usoCPU,
+    -- Uso de RAM nos últimos 7 dias
+    (SELECT MAX(c.registro) 
+     FROM ServGuard.Captura c
+     JOIN ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina
+     AND mr.fkRecurso = (SELECT r.idRecurso FROM ServGuard.Recurso r WHERE r.nome = 'usoRAM')
+     AND c.dthCriacao > NOW() - INTERVAL 7 DAY
+    ) AS usoRAM,
+    m.modeloCPU,
+    m.qtdNucleosFisicos,
+    m.qtdNucleosLogicos,
+    m.capacidadeRAM,
+    m.MACAddress,
+    m.isAtiva,
+    -- Captura o último valor de usado do disco
+    (SELECT SUM(cv.usado)
+     FROM ServGuard.CapturaVolume cv
+     JOIN ServGuard.Volume v2 ON v2.idVolume = cv.fkVolume
+     WHERE v2.fkMaquina = m.idMaquina 
+     AND cv.dthCriacao = (
+         SELECT MAX(cv2.dthCriacao)
+         FROM ServGuard.CapturaVolume cv2
+         WHERE cv2.fkVolume = v2.idVolume
+     )
+    ) AS discoUsado,
+    -- Soma a capacidade total dos volumes
+    SUM(DISTINCT v.capacidade) AS discoTotal
+FROM 
+    ServGuard.Maquina m
+LEFT JOIN 
+    ServGuard.Volume v ON v.fkMaquina = m.idMaquina
+GROUP BY 
+    m.idMaquina,
+    m.fkEmpresa,
+    m.apelido,
+    m.nome,
+    m.modeloCPU,
+    m.qtdNucleosFisicos,
+    m.qtdNucleosLogicos,
+    m.capacidadeRAM,
+    m.MACAddress,
+    m.isAtiva
+ORDER BY 
+    m.isAtiva DESC;
+
+CREATE OR REPLACE VIEW detalhesDiscoMaquinas AS
+SELECT 
+    m.idMaquina,
+    m.fkEmpresa,  -- Incluindo fkEmpresa para filtrar se necessário
+    -- Captura o último valor de usado do disco
+    (SELECT SUM(cv.usado)
+     FROM ServGuard.CapturaVolume cv
+     JOIN ServGuard.Volume v2 ON v2.idVolume = cv.fkVolume
+     WHERE v2.fkMaquina = m.idMaquina 
+     AND cv.dthCriacao = (
+         SELECT MAX(cv2.dthCriacao)
+         FROM ServGuard.CapturaVolume cv2
+         WHERE cv2.fkVolume = v2.idVolume
+     )
+    ) AS discoUsado,
+    -- Soma a capacidade total dos volumes
+    SUM(DISTINCT v.capacidade) AS discoTotal
+FROM 
+    ServGuard.Maquina m
+LEFT JOIN 
+    ServGuard.Volume v ON v.fkMaquina = m.idMaquina
+GROUP BY 
+    m.idMaquina,
+    m.fkEmpresa
+ORDER BY 
+    m.idMaquina;
+
+
+CREATE VIEW ServGuard.HistoricoCpuRam AS
+SELECT 
+    m.idMaquina,
+    m.nome AS nomeMaquina,
+    c.dthCriacao AS dataCaptura,
+    m.fkEmpresa,  -- Incluindo o ID da empresa para que você possa filtrar depois
+    AVG(
+        CASE 
+            WHEN r.nome = 'usoCPU' THEN c.registro
+            WHEN r.nome = 'usoRAM' THEN c.registro
+            ELSE NULL
+        END
+    ) AS usoProcessamento -- Calculando a média de CPU e RAM para cada captura
+FROM 
+    ServGuard.Captura c
+JOIN 
+    ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN 
+    ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+JOIN 
+    ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+WHERE 
+    r.nome IN ('usoCPU', 'usoRAM')  -- Filtrando para CPU e RAM
+GROUP BY 
+    m.idMaquina, m.nome, c.dthCriacao, m.fkEmpresa  -- Agrupando por máquina, data e empresa
+ORDER BY 
+    c.dthCriacao DESC;  -- Ordenando pela data de captura, do mais recente para o mais antigo
 
 -- PROCEDURES
 

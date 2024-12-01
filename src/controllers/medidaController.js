@@ -423,6 +423,50 @@ function buscarHistoricoMaquina(req, res){
     });
 }
 
+function obterListaMaquinasPico(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.obterListaMaquinasPico(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar maquinas e uso de cpu e ram dos ultimos 7 dias", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function obterListaHistoricoProcessamento(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio");
+    }
+    if (idMaquina == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Máquina é Obrigatorio");
+    }
+    medidaModel.obterListaHistoricoProcessamento(idEmpresa, idMaquina).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar historico de Maquinas da Empresa!", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -444,5 +488,7 @@ module.exports = {
     buscarRamCpuMaquina,
     buscarUsoDiscoMaquinas,
     buscarUsoProcessamentoUltimos7,
-    buscarHistoricoMaquina
+    buscarHistoricoMaquina,
+    obterListaMaquinasPico,
+    obterListaHistoricoProcessamento
 }
