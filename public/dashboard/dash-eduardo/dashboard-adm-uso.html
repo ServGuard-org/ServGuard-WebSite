@@ -204,22 +204,38 @@
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="father-general-use" style="display: none">
           <div
             class="child-analise-uso"
             id="card-analise-uso"
             style="display: none"
           >
             <div class="card-analise-uso">
-              <h2 class="center bold">Tendencia de Uso Semanal</h2>
+              <h2 class="center bold">Analise da Tendencia de Uso</h2>
               <div class="cards-space-graphic">
                 <div class="graphic-space">
-                  <div class="card-graphic-analise"></div>
+                  <div class="card-graphic-analise">
+                    <h4 class="bold center my-1">
+                      Previsão de Tendência Diária
+                    </h4>
+                    <canvas
+                      id="regressionChart"
+                      min-width="100%"
+                      max-height="100%"
+                    ></canvas>
+                  </div>
                 </div>
                 <div class="sgi-space">
-                  <div class="card-sgi-analise"></div>
+                  <div class="card-sgi-analise">
+                    <div class="space-logo-title">
+                      <h4 class="bold center my-2">Analise da <span class="text-purple">SGI</span></h4>
+                      <img src="../../assets/svg/logo-sgi.svg" alt="" style="max-width: 10%;">
+                    </div>
+                    <div class="space-text-scroll">
+                      <p class="little-text" style="padding: 3%; max-height: 100%;" id="placeholder-analise-ia">
+                        <img src="../../assets/gif/loading.gif" alt="">
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="button-space">
@@ -244,7 +260,13 @@
         window.location.href = "../dashboard-adm.html";
       }
 
-      function AnalisedeUso() {
+      function analisedeUso(idMaquina) {
+        // Define o ID da máquina no sessionStorage
+        sessionStorage.setItem("ID_MAQUINA", idMaquina);
+
+        // Atualiza a análise imediatamente após definir o ID
+        atualizarRegressaoLinear();
+
         const analiseUse = document.getElementById("card-analise-uso");
         analiseUse.style.display = "flex";
       }
@@ -254,58 +276,25 @@
         analiseUse.style.display = "none";
       }
 
+      const formatarTextoIA = (texto) => {
+        // Utilizando uma expressão regular para encontrar os textos dentro de **
+        return texto
+          .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>") // Substitui os negritos
+          .replace(/\n/g, "<br>"); // Substitui as quebras de linha
+      };
+
       function carregarPagina() {
         sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
         listarMaquinasDetalhesPico();
         obterDadosHistogramaUso();
         obterDadosHistogramaDisco();
         buscarFaixasUsoDisco();
-        buscarUsoHardwareAlto();
-        buscarUsoDiscoAlto();
         listarMaquinaHistorico();
       }
 
-      // ------------------------------------- //                             // ------------------------------------- //
-      // ------------------------------------- // PARAMETROS - NÃO UTILIZADOS // ------------------------------------- //
-      // ------------------------------------- //                             // ------------------------------------- //
-
-      function buscarUsoHardwareAlto() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-        fetch(`/medidas/usohardwarealto/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            document.getElementById("uso-hardware-kpi").innerText =
-              data[0].qtdMaquinas;
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar uso de hardware:", error);
-          });
-      }
-
-      function buscarUsoDiscoAlto() {
-        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-        fetch(`/medidas/usoDiscoAlto/${idEmpresa}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            document.getElementById("uso-disco-kpi").innerText =
-              data[0].qtdMaquinas;
-          })
-          .catch((error) => {
-            console.error("Erro ao buscar uso de disco:", error);
-          });
-      }
+      // ------------------------------------- //                                     // ------------------------------------- //
+      // ------------------------------------- // PARAMETROS - FAIXAS DE USO DE DISCO // ------------------------------------- //
+      // ------------------------------------- //                                     // ------------------------------------- //
 
       function buscarFaixasUsoDisco() {
         const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
@@ -419,6 +408,7 @@
       // ------------------------------------- //                     // ------------------------------------- //
       // ------------------------------------- // LISTAGEM DE MÁQUINA // ------------------------------------- //
       // ------------------------------------- //                     // ------------------------------------- //
+
       function adicionarMaquina(
         idMaquina,
         nome,
@@ -429,7 +419,7 @@
         const elementoPai = document.getElementById("father-machine-space");
 
         const novoElemento = `
-          <div class="machine-card">
+          <div class="machine-card" onclick="analisedeUso(${idMaquina})">
             <div class="column-item">
               <p class="little-text bold">${idMaquina}</p>
             </div>
@@ -501,31 +491,42 @@
           for (const maquina of maquinas) {
             try {
               const historico = await historicoCpuRam(maquina.idMaquina);
-              console.log(historico);
 
-              const usoProcessamento = Math.round((Number(maquina.usoCPU) + Number(maquina.usoRAM)) / 2);
-              const percentualUsado = Math.round((Number(maquina.discoUsado) / Number(maquina.discoTotal)) * 100);
+              const usoProcessamento = Math.round(
+                (Number(maquina.usoCPU) + Number(maquina.usoRAM)) / 2
+              );
+              const percentualUsado = Math.round(
+                (Number(maquina.discoUsado) / Number(maquina.discoTotal)) * 100
+              );
 
               const historicoUso = []; // Dados históricos de uso de CPU
 
               historico.forEach((processamento) => {
                 historicoUso.push(Number(processamento.usoProcessamento));
-              })
+              });
 
-              console.log(historicoUso);
-
-              const maiorUsoProcessa = 25;
+              const maiorUsoProcessa = 90;
 
               // Calcular a média e o desvio padrão do histórico
               const mediaProcessa = calcularMedia(historicoUso);
-              const desvioPadraoProcessa = calcularDesvioPadrao(historicoUso, mediaProcessa);
+              const desvioPadraoProcessa = calcularDesvioPadrao(
+                historicoUso,
+                mediaProcessa
+              );
 
               // Calcular o z-score
-              const zScoreProcessa = calcularZScore(maiorUsoProcessa, mediaProcessa, desvioPadraoProcessa);
+              const zScoreProcessa = calcularZScore(
+                maiorUsoProcessa,
+                mediaProcessa,
+                desvioPadraoProcessa
+              );
 
               // Calcular a probabilidade de sobrecarga (uso > 90%)
-              const probabilidadeSobrecargaProcessa = 1 - calcularProbabilidade(zScoreProcessa);
-              const probabilidade =  (probabilidadeSobrecargaProcessa * 100).toFixed(0)
+              const probabilidadeSobrecargaProcessa =
+                1 - calcularProbabilidade(zScoreProcessa);
+              const probabilidade = (
+                probabilidadeSobrecargaProcessa * 100
+              ).toFixed(0);
 
               adicionarMaquina(
                 maquina.idMaquina,
@@ -534,8 +535,6 @@
                 percentualUsado,
                 probabilidade
               );
-
-
             } catch (error) {
               console.error(
                 `Erro ao buscar histórico para máquina ${maquina.idMaquina}:`,
@@ -547,6 +546,49 @@
           console.error("Erro ao buscar detalhes de pico das máquinas:", error);
         }
       }
+
+      // ------------------------------------- //                // ------------------------------------- //
+      // ------------------------------------- // ANALISE DE SGI // ------------------------------------- //
+      // ------------------------------------- //                // ------------------------------------- //
+
+      const gerarAnaliseIA = (dadosRegressaoLinear) => {
+
+        const dadosPreparados = `Coeficiente Angular: ${dadosRegressaoLinear.beta}, Intercepto: ${dadosRegressaoLinear.alpha}`;
+
+        let mensagem = `
+          Foi gerada uma análise de tendência utilizando uma regressão linear. A variável Y representa a porcentagem dos picos de uso 
+          do processamento da máquina, que foi calculada com base na soma do uso de CPU e RAM, dividida por 2. A variável X representa os dias.
+          A análise foi realizada com os seguintes dados: ${dadosPreparados}.
+          Com isso, temos uma previsão de como o uso do processamento da máquina varia ao longo do tempo.
+          A análise considera os dados de uma máquina específica dessa empresa.
+          Por favor, faça uma análise das tendências sem usar jargões técnicos e, ao final, forneça um comentário geral sobre os resultados obtidos.
+        `;
+
+        fetch(`/externos/GenAI/perguntar`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pergunta: mensagem.toString(),
+          }),
+        })
+          .then((resposta) =>
+            resposta.json().then((respostaFormatada) => {
+              respostaFormatada = formatarTextoIA(
+                respostaFormatada.resposta.toString()
+              );
+              console.log("Resposta IA:", respostaFormatada);
+              const elementoAnalise = document.getElementById(
+                "placeholder-analise-ia"
+              );
+              elementoAnalise.innerHTML = respostaFormatada;
+            })
+          )
+          .catch((error) => {
+            console.error("Erro ao obter resposta IA:", error);
+          });
+      };
 
       // ------------------------------------- //          // ------------------------------------- //
       // ------------------------------------- // GRÁFICOS // ------------------------------------- //
@@ -740,6 +782,224 @@
             console.error("Erro ao buscar CPU e RAM das máquinas:", error);
           });
       }
+
+      // ------------------------------------- //                                    // ------------------------------------- //
+      // ------------------------------------- // GRÁFICO - TENDENCIA DE USO MAQUINA // ------------------------------------- //
+      // ------------------------------------- //                                    // ------------------------------------- //
+
+      let chartInstance = null; // Instância do gráfico que será atualizada
+
+      function calcularRegressaoLinear(x, y) {
+        console.log("Input arrays:", x, y);
+
+        // Store original length and make copies of arrays
+        const originalLength = x.length;
+        let xVals = [...x];
+        let yVals = [...y];
+
+        // Remove o último ponto se y for 0 (outlier)
+        if (yVals[yVals.length - 1] === 0) {
+          xVals = xVals.slice(0, -1);
+          yVals = yVals.slice(0, -1);
+        }
+
+        const n = xVals.length;
+        console.log("After outlier removal - n:", n);
+
+        // Calcula médias com maior precisão
+        const xMean = xVals.reduce((sum, xi) => sum + Number(xi), 0) / n;
+        const yMean = yVals.reduce((sum, yi) => sum + Number(yi), 0) / n;
+        console.log("Means - x:", xMean, "y:", yMean);
+
+        // Calcula coeficientes
+        let numerador = 0;
+        let denominador = 0;
+
+        for (let i = 0; i < n; i++) {
+          const xi = Number(xVals[i]);
+          const yi = Number(yVals[i]);
+          numerador += (xi - xMean) * (yi - yMean);
+          denominador += Math.pow(xi - xMean, 2);
+        }
+
+        console.log(
+          "Coeficientes - numerador:",
+          numerador,
+          "denominador:",
+          denominador
+        );
+
+        // Evita divisão por zero ou valores muito pequenos
+        if (Math.abs(denominador) < 1e-10) {
+          console.log("Denominador muito pequeno, retornando média");
+          return Array(originalLength).fill(yMean);
+        }
+
+        const beta = numerador / denominador;
+        const alpha = yMean - beta * xMean;
+        console.log(
+          "Alpha (Intercepto):",
+          alpha,
+          "Beta (Coef. Angular):",
+          beta
+        );
+
+        // Calcula valores preditos
+        const predictions = Array.from(
+          { length: originalLength },
+          (_, i) => alpha + beta * (i + 1)
+        );
+        console.log("Predictions:", predictions);
+
+        gerarAnaliseIA({ alpha: alpha, beta: beta });
+
+        return predictions;
+      }
+
+      const atualizarRegressaoLinearInterface = (dados) => {
+        // Utilizando números sequenciais como valores de x
+        const x_values = dados.map((_, index) => index + 1);
+        const y_values = dados.map((d) => Number(d.pico_processamento));
+
+        const regressao = calcularRegressaoLinear(x_values, y_values);
+
+        console.log("regressao ", regressao);
+
+        regressao.forEach((r, i) => {
+          console.log(`X: ${x_values[i]} - Y: ${y_values[i]} - Y_hat: ${r}`);
+        });
+
+        // Valores preditos pela regressão
+        const y_hat = regressao;
+
+        const ctx = document.getElementById("regressionChart");
+
+        // Se o gráfico já existir, atualize-o
+        if (chartInstance) {
+          chartInstance.data.datasets[0].data = x_values.map((x, i) => ({
+            x,
+            y: y_hat[i],
+          }));
+          chartInstance.data.datasets[1].data = x_values.map((x, i) => ({
+            x,
+            y: y_values[i],
+          }));
+          chartInstance.update();
+        } else {
+          // Caso contrário, crie um novo gráfico
+          chartInstance = new Chart(ctx, {
+            type: "scatter",
+            data: {
+              datasets: [
+                {
+                  type: "line",
+                  label: `Linha de Projeção`,
+                  data: x_values.map((x, i) => ({ x, y: y_hat[i] })),
+                  borderColor: "rgb(121, 78, 212)",
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderWidth: 2,
+                  borderDash: [5, 5],
+                  tension: 0.3,
+                },
+                {
+                  type: "scatter",
+                  label: "Valores Reais",
+                  data: x_values.map((x, i) => ({ x, y: y_values[i] })),
+                  backgroundColor: "rgb(0, 0, 0)",
+                  pointRadius: 5,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Regressão Linear Simples",
+                  font: {
+                    size: 20,
+                    weight: "bold",
+                  },
+                  color: "#000",
+                  align: "center",
+                },
+              },
+              scales: {
+                x: {
+                  type: "linear",
+                  position: "bottom",
+                  title: {
+                    display: true,
+                    text: "Observações (Dias)",
+                    color: "black",
+                    font: {
+                      size: 15,
+                      weight: "bold",
+                    },
+                  },
+                  ticks: {
+                    color: "black",
+                    font: {
+                      size: 12,
+                      weight: "bold",
+                    },
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "Uso de Processamento(%)",
+                    color: "black",
+                    font: {
+                      size: 15,
+                      weight: "bold",
+                    },
+                  },
+                  ticks: {
+                    color: "black",
+                    font: {
+                      size: 13,
+                      weight: "bold",
+                    },
+                  },
+                },
+              },
+            },
+          });
+        }
+      };
+
+      const atualizarRegressaoLinear = () => {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+        // Garantir que o ID da máquina esteja sendo corretamente capturado
+        if (idMaquina) {
+          fetch(
+            `/medidas/historicoDiarioProcessamento/${idEmpresa}/${idMaquina}/`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ).then((resposta) =>
+            resposta
+              .json()
+              .then((respostaFormatada) => {
+                console.log(
+                  "Uso de Processamento por dia: ",
+                  respostaFormatada
+                );
+                atualizarRegressaoLinearInterface(respostaFormatada);
+              })
+              .catch((error) => {
+                console.error("Erro ao obter pacotes:", error);
+              })
+          );
+        } else {
+          console.log("ID da máquina não encontrado.");
+        }
+      };
     </script>
   </body>
 </html>

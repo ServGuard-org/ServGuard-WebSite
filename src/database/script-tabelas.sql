@@ -975,6 +975,45 @@ GROUP BY
 ORDER BY 
     c.dthCriacao DESC;  -- Ordenando pela data de captura, do mais recente para o mais antigo
 
+CREATE OR REPLACE VIEW vista_pico_diario_processamento AS
+SELECT
+    m.fkEmpresa AS idEmpresa,
+    DATE(c.dthCriacao) AS data,
+    m.idMaquina,
+    (
+        -- Calcula o pico de CPU
+        GREATEST(
+            MAX(CASE WHEN r.nome = 'usoCPU' THEN c.registro ELSE NULL END),
+            -- Calcula o pico de RAM
+            MAX(CASE WHEN r.nome = 'usoRAM' THEN c.registro ELSE NULL END)
+        )
+    ) AS pico_processamento
+FROM
+    Captura c
+JOIN
+    MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN
+    Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN
+    Maquina m ON mr.fkMaquina = m.idMaquina
+WHERE
+    r.nome IN ('usoCPU', 'usoRAM')
+GROUP BY
+    m.fkEmpresa,
+    m.idMaquina,
+    DATE(c.dthCriacao);
+
+SELECT
+    idEmpresa,
+    data,
+    idMaquina,
+    pico_processamento
+FROM
+    vista_pico_diario_processamento
+WHERE
+    idEmpresa = 1
+    AND idMaquina = 2;
+
 CREATE OR REPLACE VIEW ServGuard.vista_maquinas_rede_por_semana AS
 WITH MaquinasRede AS (
     SELECT 
@@ -1080,6 +1119,8 @@ FROM
     AlertasRede
 ORDER BY 
     numero_semana DESC;
+
+
 
 -- PROCEDURES
 

@@ -467,6 +467,38 @@ function obterListaHistoricoProcessamento(req, res){
     });
 }
 
+function obterHistoricoDiarioProcessamento(req, res) {
+    console.log("Parâmetros recebidos no back-end:", req.params);
+
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (!idEmpresa || idEmpresa === "null" || idEmpresa === "") {
+        console.log("Id empresa está inválido");
+        return res.status(400).send("Id da Empresa é Obrigatorio");
+    }
+
+    if (!idMaquina || idMaquina === "null" || idMaquina === "") {
+        console.log("Id máquina está inválido");
+        return res.status(400).send("Id da Máquina é Obrigatorio");
+    }
+
+    medidaModel.obterHistoricoDiarioProcessamento(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar dados no banco:", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -490,5 +522,6 @@ module.exports = {
     buscarUsoProcessamentoUltimos7,
     buscarHistoricoMaquina,
     obterListaMaquinasPico,
-    obterListaHistoricoProcessamento
+    obterListaHistoricoProcessamento,
+    obterHistoricoDiarioProcessamento
 }

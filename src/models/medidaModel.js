@@ -200,6 +200,14 @@ function obterListaHistoricoProcessamento(idEmpresa, idMaquina){
     return database.executar(instrucaoSql);
 }
 
+function obterHistoricoDiarioProcessamento(idEmpresa, idMaquina){
+    var instrucaoSql = `SELECT idEmpresa, data, idMaquina, pico_processamento FROM vista_pico_diario_processamento
+        WHERE idEmpresa = ${idEmpresa} AND idMaquina = ${idMaquina};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarDadosHistograma,
@@ -224,5 +232,6 @@ module.exports = {
     buscarUsoProcessamentoUltimos7,
     buscarHistoricoMaquina,
     obterListaMaquinasPico,
-    obterListaHistoricoProcessamento
+    obterListaHistoricoProcessamento,
+    obterHistoricoDiarioProcessamento
 }

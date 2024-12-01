@@ -94,4 +94,8 @@ router.get("/listarHistoricoProcessamento/:idEmpresa/:idMaquina", function(req,r
     medidaController.obterListaHistoricoProcessamento(req,res);
 });
 
+router.get("/historicoDiarioProcessamento/:idEmpresa/:idMaquina", function(req,res){
+    medidaController.obterHistoricoDiarioProcessamento(req,res);
+});
+
 module.exports = router;
