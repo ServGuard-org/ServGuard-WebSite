@@ -11,12 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
-
-<<<<<<< HEAD
 <body onload="consultarMaquinas(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')) ">
-=======
-<body onload="consultarMaquinas(),renderGaugeChart(), buscarUltimosDadosRede(), verificarCargo()">
->>>>>>> b2e5a4592e8d937f593e74b5c673f9e0b6bfc16f
   <section id="page-rede-analista">
     <header>
       <div class="child-navbar-card-dash-adm">
@@ -133,13 +128,10 @@
               <div class="card-body-perda-title">
                 <p class="card-title">Perda de Pacotes</p>
               </div>
-              <div id="resultadoPerda"><h2 class="card-text bold">X%</h2></div>
-              
+              <div id="resultadoPerda"><h2 class="card-text bold">X%</h2></div>          
             </div>
-
           </div>
           <div class="card-group-monitoramento">
-<<<<<<< HEAD
             <div class="father-tips">
               <div class="tooltip tooltip-white">
                 <h4>i</h4>
@@ -147,13 +139,6 @@
                   Nesta área, é apresentado um gráfico detalhado que visualiza o fluxo de pacotes de dados,
                   tanto enviados quanto recebidos, por todas as máquinas da empresa.
                   Com monitoramento a cada 30 segundos
-=======
-            <div class="father-tips-enzo">
-              <div class="tooltip tooltip-white">
-                <h4>i</h4>
-                <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
-                  PENSANDO ...
->>>>>>> b2e5a4592e8d937f593e74b5c673f9e0b6bfc16f
                 </span>
               </div>
             </div>
@@ -196,22 +181,14 @@
               </div>
               <div class="upload">
                 <h5>Upload</h5>
-<<<<<<< HEAD
                 <div id="chartUp" style="max-width: 300px; margin: auto;"></div>
-=======
-                <div id="chart2" style="max-width: 300px; margin: auto;"></div>
->>>>>>> b2e5a4592e8d937f593e74b5c673f9e0b6bfc16f
               </div>
             </div>
             <div class="button-speed-test">
               <button class="start-test" id="iniciar-speed" onclick="Clikado()">Clique Aqui</button>
-<<<<<<< HEAD
               <div class="exibir-timer">
                 <h4 id="timerInfo"></h4>
               </div>
-=======
-              <p id="timerInfo"></p>
->>>>>>> b2e5a4592e8d937f593e74b5c673f9e0b6bfc16f
             </div>
           </div>
         </div>
