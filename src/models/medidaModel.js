@@ -96,7 +96,8 @@ function buscarDistribuicaoAlertas(idEmpresa) {
 
 function buscarListaAlertas(idEmpresa) {
     var instrucaoSql = `SELECT * FROM vista_ultimos_alertas
-	                        WHERE fkEmpresa = ${idEmpresa};`;
+	                        WHERE fkEmpresa = ${idEmpresa}
+                                LIMIT 100;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
