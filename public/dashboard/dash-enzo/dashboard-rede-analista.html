@@ -11,7 +11,9 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <link rel="stylesheet" href="../dash-enzo/enzo.css">
 </head>
-<body onload="consultarMaquinas(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')) ">
+
+<body
+  onload="consultarMaquinas(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')) , buscarPerda(sessionStorage.getItem('ID_EMPRESA_USUARIO'))">
   <section id="page-rede-analista">
     <header>
       <div class="child-navbar-card-dash-adm">
@@ -111,9 +113,9 @@
               <div class="card-body-maquinas-title">
                 <p class="card-title center">Máquinas Conectadas</p>
               </div>
-              <h2 class="card-text bold" id="funcionamento_maquinas"></h2> 
+              <h2 class="card-text bold" id="funcionamento_maquinas"></h2>
             </div>
-            
+
             <div class="card-body-perda">
               <div class="father-tips-enzo">
                 <div class="tooltip tooltip-white">
@@ -128,7 +130,9 @@
               <div class="card-body-perda-title">
                 <p class="card-title">Perda de Pacotes</p>
               </div>
-              <div id="resultadoPerda"><h2 class="card-text bold">X%</h2></div>          
+              <div id="resultadoPerda">
+                <h2 class="card-text bold">X%</h2>
+              </div>
             </div>
           </div>
           <div class="card-group-monitoramento">
@@ -147,7 +151,7 @@
                 <div class="card-body-title">
                   <p class="card-title">Monitoramento de Pacotes</p>
                 </div>
-                <div class="graph-container" id="#chartPacotes">
+                <div class="graph-container" id="chartPacotes">
 
                 </div>
               </div>
@@ -162,35 +166,37 @@
                 <h4>i</h4>
                 <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
                   Nesta seção, utilizamos uma métrica específica. Ao clicar no botão "Iniciar",
-                   essa métrica obtém o último registro de dados de download e upload da rede.
-                    Esses dados, que são coletados a cada hora, são representados graficamente por meio de um medidor (gauge),
-                     permitindo uma visualização clara do valor mais recente capturado.           
-                       </span>
+                  essa métrica obtém o último registro de dados de download e upload da rede.
+                  Esses dados, que são coletados a cada hora, são representados graficamente por meio de um medidor
+                  (gauge),
+                  permitindo uma visualização clara do valor mais recente capturado.
+                </span>
               </div>
             </div>
             <div class="card-title-speed">
               <h5 class="card-title center">Speed Test</h5>
             </div>
             <div class="ultimodado">
-              <h2 id="ultimahoracapturada">...</h2>
+              <h2 id="ultimahoracapturada" style="font-size: 23px;">...</h2>
             </div>
             <div class="speed-test">
-              <div class="download">
+              <div class="download" style="margin-top: -5vh;">
                 <h5>Download</h5>
-                <div id="chartDown" style="max-width: 300px; margin: auto;"></div>
+                <div id="chartDown" style="max-width: 265px;"></div>
               </div>
               <div class="upload">
                 <h5>Upload</h5>
-                <div id="chartUp" style="max-width: 300px; margin: auto;"></div>
+                <div id="chartUp" style="max-width: 265px; "></div>
               </div>
             </div>
             <div class="button-speed-test">
               <button class="start-test" id="iniciar-speed" onclick="Clikado()">Clique Aqui</button>
               <div class="exibir-timer">
-                <h4 id="timerInfo"></h4>
+                <h4 id="timerInfo" style=" font-size: 15px; margin-left: 1.2vw; margin-top: 0.6vh;"></h4>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </main>
@@ -219,12 +225,12 @@
     window.location.href = "../dashboard-analista.html";
   }
 
- // BOTAO HABILITADO/DESABILITADO
+  // BOTAO HABILITADO/DESABILITADO
 
   // Seleciona o botão e o elemento de texto
 
   function Clikado() {
-    
+
     const button = document.getElementById("iniciar-speed");
     const timerInfo = document.getElementById("timerInfo");
 
@@ -240,8 +246,8 @@
     button.textContent = "Aguarde...";
 
     // Chama as funções para buscar os dados
-    buscarUltimosDadosUpload();
-    buscarUltimosDadosDownload();
+    obterUltimoValorUpload();
+    obterUltimoValorDownload();
     obterUltimoHorario();
 
     // Atualiza o timer na tela
@@ -259,13 +265,13 @@
         button.textContent = "Clique Aqui";
         timerInfo.textContent = "";
       } else {
-        timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
+        timerInfo.textContent = ` ${minutes}m ${seconds}s`;
       }
     }, 1000);
   }
 
   function buscarUltimosDadosRede(idEmpresa) {
-    
+
     fetch(`/recursos/buscarUltimosDadosRede/${idEmpresa}`, {
       method: "GET",
       headers: {
@@ -331,256 +337,160 @@
         console.error("Erro na requisição:", error);
       });
   }
-  
+
   function consultarMaquinas() {
-  const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-
-  fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Descomente ou declare a variável totalMaquinasElement
-      const totalMaquinasElement = document.getElementById("total_maquinas");
-      const funcionamentoMaquinasElement = document.getElementById("funcionamento_maquinas");
-
-      if (totalMaquinasElement) {
-        totalMaquinasElement.innerText = data.length;
-      }
-
-      const maquinasAtivas = data.filter(
-        (maquina) => maquina.isAtiva === 1
-      );
-
-      if (funcionamentoMaquinasElement) {
-        funcionamentoMaquinasElement.innerText = maquinasAtivas.length;
-      }
-    })
-    .catch((error) => {
-      console.error("Erro ao consultar máquinas:", error);
-    });
-}
-
-function obterUltimoValorDownload() {
     const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-    console.log("ID da empresa:", idEmpresa); // Verifique se o valor está correto
-    const element = document.querySelector("#chartDown"); // Confirme que o ID corresponde
+    verificarCargo()
 
-    fetch(`/buscarUltimosDadosDownload/${idEmpresa}`, {
+    fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
-        console.log("Resposta:", response); // Verifique o status
-        if (!response.ok) {
-          throw new Error("Erro ao obter dados do servidor.");
-        }
-        return response.json();
-      })
-      .catch(error => {
-        console.error("Erro ao obter ou processar dados:", error);
-      })
+      .then((response) => response.json())
       .then((data) => {
-        if (data && data.length > 0) {
-          const valorDownload = data[0].valor_download; // Acessa o valor de download
+        // Descomente ou declare a variável totalMaquinasElement
+        const totalMaquinasElement = document.getElementById("total_maquinas");
+        const funcionamentoMaquinasElement = document.getElementById("funcionamento_maquinas");
 
-          if (valorDownload === null || valorDownload === undefined) {
-            console.log("Valor de download não disponível.");
-            return;
-          }
+        if (totalMaquinasElement) {
+          totalMaquinasElement.innerText = data.length;
+        }
 
-          // Limpar o conteúdo do elemento do gráfico antes de criar um novo gráfico
-          const element = document.querySelector("#chartDown");
-          if (element) {
-            element.innerHTML = ""; // Remove o conteúdo anterior
-          }
+        const maquinasAtivas = data.filter(
+          (maquina) => maquina.isAtiva === 1
+        );
 
-          // Configuração do gráfico
-          var options = {
-            series: [parseFloat(valorDownload)], // Valor dinâmico
-            chart: {
-              type: "radialBar",
-              offsetY: -20,
-              sparkline: {
-                enabled: true,
-              },
-            },
-            plotOptions: {
-              radialBar: {
-                startAngle: -90,
-                endAngle: 90,
-                track: {
-                  background: "#e7e7e7",
-                  strokeWidth: "97%",
-                  margin: 5,
-                  dropShadow: {
-                    enabled: true,
-                    top: 2,
-                    left: 0,
-                    color: "#794ED4",
-                    opacity: 1,
-                    blur: 2,
-                  },
-                },
-                dataLabels: {
-                  name: {
-                    show: false,
-                  },
-                  value: {
-                    offsetY: -2,
-                    fontSize: "22px",
-                    fontWeight: "bold",
-                    color: "black",
-                    formatter: function (val) {
-                      return val.toFixed(2) + " Mbps"; // Exibe em Mbps
-                    },
-                  },
-                },
-              },
-            },
-            grid: {
-              padding: {
-                top: -10,
-              },
-            },
-            fill: {
-              type: "solid",
-              colors: ["#794ED4"], // Cor do gráfico
-            },
-          };
-
-          // Renderizar o gráfico
-          var chartDown = new ApexCharts(element, options);
-          chartDown.render();
-
-          return chartDown; // Retorna o objeto do gráfico
+        if (funcionamentoMaquinasElement) {
+          funcionamentoMaquinasElement.innerText = maquinasAtivas.length;
         }
       })
       .catch((error) => {
-        console.error("Erro ao obter ou processar dados:", error);
+        console.error("Erro ao consultar máquinas:", error);
       });
   }
-  document.addEventListener("DOMContentLoaded", function () {
-    obterUltimoValorDownload();
-  });
 
+  function obterUltimoValorDownload() {
+    const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+    if (!idEmpresa) {
+      console.error("ID da empresa não encontrado.");
+      return;
+    }
+
+    const element = document.querySelector("#chartDown");
+
+    if (!element) {
+      console.error("Elemento de download não encontrado.");
+      return;
+    }
+
+    fetch(`/recursos/buscarUltimosDadosDownload/${idEmpresa}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("Dados de download retornados:", data);
+
+        if (data && data.valor_download) {
+          // Remove ponto e converte para número
+          const valorDownload = parseFloat(data.valor_download.replace('.', ''));
+
+          if (!isNaN(valorDownload)) {
+            const valorMaximo = 150000; // 150 Mbps representados como 150.000
+            const porcentagem = (valorDownload / valorMaximo) * 100;
+
+            ApexCharts.exec('chartDown', 'destroy');
+
+            new ApexCharts(element, {
+              series: [porcentagem],
+              chart: { type: "radialBar", id: 'chartDown' },
+              plotOptions: {
+                radialBar: {
+                  dataLabels: {
+                    value: {
+                      formatter: val => `${(valorDownload / 1000).toFixed(2)} Mbps` // Exibir como Mbps real
+                    }
+                  }
+                }
+              },
+              fill: { colors: ["#008FFB"] },
+              labels: ["Download"]
+            }).render();
+          } else {
+            console.error("Valor de download inválido:", data.valor_download);
+          }
+        } else {
+          console.error("Nenhum dado válido de download retornado.");
+        }
+      })
+      .catch(error => {
+        console.error("Erro ao obter dados de download:", error);
+      });
+  }
 
   function obterUltimoValorUpload() {
     const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-    console.log("ID da empresa:", idEmpresa); // Verifique se o valor está correto
-    const element = document.querySelector("#chartUp"); // Confirme que o ID corresponde
 
-    fetch(`/buscarUltimosDadosUpload/${idEmpresa}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    })
-      .then(response => {
-        console.log("Resposta:", response); // Verifique o status
-        if (!response.ok) {
-          throw new Error("Erro ao obter dados do servidor.");
+    if (!idEmpresa) {
+      console.error("ID da empresa não encontrado.");
+      return;
+    }
+
+    const element = document.querySelector("#chartUp");
+
+    if (!element) {
+      console.error("Elemento de upload não encontrado.");
+      return;
+    }
+
+    fetch(`/recursos/buscarUltimosDadosUpload/${idEmpresa}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("Dados de upload retornados:", data);
+
+        if (data && data.valor_upload) {
+          const valorUpload = parseFloat(data.valor_upload.replace('.', ''));
+
+          if (!isNaN(valorUpload)) {
+            const valorMaximo = 150000; // 150 Mbps representados como 150.000
+            const porcentagem = (valorUpload / valorMaximo) * 100;
+
+            ApexCharts.exec('chartUp', 'destroy');
+
+            new ApexCharts(element, {
+              series: [porcentagem],
+              chart: { type: "radialBar", id: 'chartUp' },
+              plotOptions: {
+                radialBar: {
+                  dataLabels: {
+                    value: {
+                      formatter: val => `${(valorUpload / 1000).toFixed(2)} Mbps` // Exibir como Mbps real
+                    }
+                  }
+                }
+              },
+              fill: { colors: ["#00E396"] },
+              labels: ["Upload"]
+            }).render();
+          } else {
+            console.error("Valor de upload inválido:", data.valor_upload);
+          }
+        } else {
+          console.error("Nenhum dado válido de upload retornado.");
         }
-        return response.json();
       })
       .catch(error => {
-        console.error("Erro ao obter ou processar dados:", error);
-      })
-      .then((data) => {
-        if (data && data.length > 0) {
-          const valorUpload = data[0].valor_upload; // Acessa o valor de upload
-
-          if (valorUpload === null || valorUpload === undefined) {
-            console.log("Valor de upload não disponível.");
-            return;
-          }
-
-          // Limpar o conteúdo do elemento do gráfico antes de criar um novo gráfico
-          const element = document.querySelector("#chartUp");
-          if (element) {
-            element.innerHTML = ""; // Remove o conteúdo anterior
-          }
-
-          // Configuração do gráfico
-          var options = {
-            series: [parseFloat(valorUpload)], // Valor dinâmico
-            chart: {
-              type: "radialBar",
-              offsetY: -20,
-              sparkline: {
-                enabled: true,
-              },
-            },
-            plotOptions: {
-              radialBar: {
-                startAngle: -90,
-                endAngle: 90,
-                track: {
-                  background: "#e7e7e7",
-                  strokeWidth: "97%",
-                  margin:
-                    5,
-                  dropShadow: {
-                    enabled: true,
-                    top: 2,
-                    left: 0,
-
-                    color: "#794ED4",
-                    opacity: 1,
-                    blur: 2,
-                  },
-                },
-                dataLabels: {
-                  name: {
-                    show: false,
-                  },
-                  value: {
-                    offsetY: -2,
-                    fontSize: "22px",
-                    fontWeight: "bold",
-                    color: "black",
-                    formatter: function (val) {
-                      return val.toFixed(2) + " Mbps"; // Exibe em Mbps
-                    },
-                  },
-                },
-              },
-            },
-            grid: {
-              padding: {
-                top: -10,
-              },
-            },
-            fill: {
-              type: "solid",
-              colors: ["#794ED4"], // Cor do gráfico
-            },
-          };
-
-          // Renderizar o gráfico
-          var chartUp = new ApexCharts(element, options);
-          chartUp.render();
-
-          return chartUP; // Retorna o objeto do gráfico
-        }
-      })
-      .catch((error) => {
-        console.error("Erro ao obter ou processar dados:", error);
+        console.error("Erro ao obter dados de upload:", error);
       });
   }
-  document.addEventListener("DOMContentLoaded", function () {
-    obterUltimoValorUpload();
-  });
-
 
 
   function obterUltimosDadosPacotes() {
-    const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+    var idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
     console.log("ID da empresa:", idEmpresa); // Verifique se o valor está correto
-    const element = document.querySelector("#chartPacotes"); // Elemento do gráfico
+    var element = document.querySelector("#chartPacotes"); // Elemento do gráfico
 
-    fetch(`/buscarUltimosDadosPacotes/${idEmpresa}`, {
+    fetch(`/recursos/buscarUltimosDadosPacotes/${idEmpresa}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     })
@@ -655,100 +565,72 @@ function obterUltimoValorDownload() {
 
 
   function obterUltimoHorario() {
-  const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-  console.log("ID da empresa:", idEmpresa);
-    
-    // Faz a requisição GET para o servidor
-    fetch(`/buscarUltimoHorario/${idEmpresa}`)
+    const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+    const horarioElement = document.getElementById("ultimahoracapturada");
+
+    fetch(`/recursos/buscarUltimoHorario/${idEmpresa}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error("Erro ao buscar dados do último horário");
+          throw new Error("Erro ao obter o último horário.");
         }
-        return response.json(); // Retorna os dados em formato JSON
+        return response.json();
       })
       .then(data => {
-        // Verifica se a resposta contém o dado do último horário
         if (data && data.length > 0) {
-          const ultimoHorario = data[0].ultima_captura; // Pega o valor do último horário
-          // Exibe o valor no h2 dentro da div
-          document.getElementById("ultimahoracapturada").innerText = ultimoHorario;
+          const ultimoHorario = new Date(data[0].ultima_captura).toLocaleString("pt-BR");
+          horarioElement.innerText = `Última captura: ${ultimoHorario}`;
         } else {
-          // Caso não haja dados, exibe uma mensagem
-          document.getElementById("ultimahoracapturada").innerText = "Nenhum dado encontrado.";
+          horarioElement.innerText = "Nenhum dado encontrado.";
         }
       })
       .catch(error => {
-        console.error("Erro ao obter o último horário: ", error);
-        // Caso ocorra um erro, exibe uma mensagem de erro
-        document.getElementById("ultimahoracapturada").innerText = "Erro ao carregar dados.";
+        console.error("Erro ao obter o último horário:", error);
+        horarioElement.innerText = "Erro ao carregar dados.";
       });
   }
 
   // Função que busca os dados de perda de pacotes e atualiza a cada 1 hora
-function atualizarDadosPerdaDePacotes(idEmpresa) {
-    // Função que executa a busca e atualiza a div com os dados
-    function buscarDados() {
-        recursoModel.buscarPerda(idEmpresa)  // Chama a função do modelo para buscar os dados
-            .then((resposta) => {
-                // Supondo que o valor de perda de pacotes esteja dentro de `resposta.perdaPacotes`
-                const perdaPacotes = resposta.perdaPacotes;  // Acesse o valor da perda de pacotes conforme a resposta
-                
-                console.log("Dados atualizados de perda de pacotes:", perdaPacotes);
-                
-                // Atualize a div com o valor de perda de pacotes
-                document.getElementById('resultadoPerda').innerHTML = `<h2 class="card-text bold">${perdaPacotes}%</h2>`;
-            })
-            .catch((erro) => {
-                console.log("Erro ao buscar dados de perda de pacotes:", erro);
-            });
-    }
-
-  // Seleciona o botão e o elemento de texto
-
-  function Clikado() {
-    const button = document.getElementById("iniciar-speed");
-    const timerInfo = document.getElementById("timerInfo");
-
-    // Verifica se o botão já está desabilitado
-    if (button.disabled) return;
-
-    const disableTime = 30 * 60 * 1000; // 30 minutos em milissegundos
-    const endTime = new Date().getTime() + disableTime;
-
-    // Desabilita o botão e altera o texto
-    button.disabled = true;
-    button.classList.add("disabled");
-    button.textContent = "Aguarde...";
-
-    // Atualiza o timer na tela
-    const interval = setInterval(() => {
-      const currentTime = new Date().getTime();
-      const timeLeft = Math.max(0, endTime - currentTime);
-      const minutes = Math.floor(timeLeft / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-      if (timeLeft <= 0) {
-        clearInterval(interval);
-        // Reabilita o botão e limpa o texto
-        button.disabled = false;
-        button.classList.remove("disabled");
-        button.textContent = "Clique Aqui";
-        timerInfo.textContent = "";
-      } else {
-        timerInfo.textContent = `Você pode clicar novamente em ${minutes}m ${seconds}s`;
+  function buscarPerda(idEmpresa) {
+  fetch(`/recursos/buscarPerda/${idEmpresa}`)
+    .then((response) => {
+      console.log("Status da resposta:", response.status);
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar perda de pacotes: ${response.status}`);
       }
-    }, 1000);
-  }
+      return response.json();
+    })
+    .then((dados) => {
+      console.log("Dados recebidos da buscaPerda:", dados);
 
+      if (!dados || dados.length === 0 || dados[0].length === 0) {
+        document.querySelector("#resultadoPerda").innerHTML = `
+          <h2 class="card-text bold">0.0%</h2>`;
+        return;
+      }
 
-    // Chama a função imediatamente para pegar os dados ao iniciar
-    buscarDados();
+      const { pacotesEnviados, pacotesRecebidos } = dados[0][0];
 
-    // Agendar a execução da busca a cada 1 hora (3600000 ms)
-    setInterval(buscarDados, 3600000);  // 3600000 ms = 1 hora
+      // Conversão de strings para números
+      const enviados = parseFloat(pacotesEnviados);
+      const recebidos = parseFloat(pacotesRecebidos);
+
+      let perdaPacotes = 0;
+      if (enviados > 0) {
+        perdaPacotes = enviados >= recebidos
+          ? ((enviados - recebidos) / enviados) * 100
+          : 0; // Se recebidos > enviados, perda é 0%
+      }
+
+      perdaPacotes = perdaPacotes.toFixed(1); // Limitando a uma casa decimal
+
+      document.querySelector("#resultadoPerda").innerHTML = `
+        <h2 class="card-text bold">${perdaPacotes}%</h2>`;
+    })
+    .catch((erro) => {
+      console.error("Erro capturado no fetch:", erro);
+    });
 }
 
 
- 
 
 </script>

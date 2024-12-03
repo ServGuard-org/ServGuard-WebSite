@@ -70,7 +70,7 @@ function buscarUltimosDadosUpload(idEmpresa) {
             m.fkEmpresa,
             mr.fkMaquina,
             r.nome AS recurso,
-            c.registro AS valor_upload
+            c.registro AS valor_upload  
         FROM
             ServGuard.Captura c
         INNER JOIN ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
@@ -143,19 +143,20 @@ function buscarUltimosDadosPacotes(idEmpresa) {
 }
 
 function buscarPerda(idEmpresa) {
-    const instrucaoSql = `CALL obter_soma_dados_rede_por_empresa(${idEmpresa});`; // Chamada ao stored procedure
+    const instrucaoSql = `CALL obter_soma_dados_rede_por_empresa(${idEmpresa});`;
 
-    return database.executar(instrucaoSql)  // Chama a função do banco de dados
+    return database.executar(instrucaoSql, [idEmpresa])
         .then((resultados) => {
-            // Retorna os resultados recebidos
+            console.log("Resultados:", resultados);
             return resultados;
         })
         .catch((erro) => {
-            // Em caso de erro no banco de dados
-            console.log("Erro ao executar consulta:", erro);
-            throw erro; // Propaga o erro para ser tratado no controller
+            console.error("Erro durante a execução da procedure:", erro);
+            throw erro;
         });
+
 }
+
 
 module.exports = {
     buscarUltimosDadosRede,

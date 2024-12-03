@@ -45,5 +45,4 @@ router.get("/buscarPerda/:idEmpresa", function (req, res) {
     recursoController.buscarPerda(req, res);
 });
 
-
 module.exports = router;

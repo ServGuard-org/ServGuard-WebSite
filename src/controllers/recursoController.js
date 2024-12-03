@@ -134,7 +134,7 @@ function buscarUltimosDadosUpload(req, res) {
             }
         })
         .catch(function (erro) {
-            console.log("Erro ao buscar os últimos dados de pload:", erro.sqlMessage);
+            console.log("Erro ao buscar os últimos dados de upload:", erro.sqlMessage);
             res.status(500).json(erro.sqlMessage);
         });
 }
@@ -184,24 +184,27 @@ function buscarUltimoHorario(req, res) {
 
 function buscarPerda(req, res) {
     var idEmpresa = req.params.idEmpresa;
-
-    console.log("Erro no recursoController");
-
+  
     if (idEmpresa == undefined) {
-        res.status(400).send("O ID da máquina está indefinido!");
-    } else {
-        recursoModel.buscarPerda(idEmpresa)
-            .then(function (resposta) {
-                console.log("Resultados ao buscar últimos dados de perda:", JSON.stringify(resposta));
-                res.json(resposta);
-            })
-            .catch(function (erro) {
-                console.log(erro);
-                console.log("\nHouve um erro ao buscar os dados de perda! Erro: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            });
+      return res.status(400).send("O ID da empresa está indefinido!");
     }
-}
+  
+    recursoModel.buscarPerda(idEmpresa)
+      .then(function (resposta) {
+        console.log("Resultados ao buscar perda de pacotes:", JSON.stringify(resposta, null, 2));
+  
+        if (resposta.length > 0) {
+          res.status(200).json(resposta); // Enviar resposta ao cliente
+        } else {
+          res.status(204).send("Nenhum dado encontrado.");
+        }
+      })
+      .catch(function (erro) {
+        console.error("Erro ao buscar perda de pacotes:", erro);
+        res.status(500).json({ erro: "Erro ao buscar dados de perda de pacotes.", detalhe: erro });
+      });
+  }
+  
 
 module.exports = {
     buscarUltimosDadosRede,
