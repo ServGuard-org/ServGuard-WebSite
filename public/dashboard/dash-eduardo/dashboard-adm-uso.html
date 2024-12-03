@@ -11,11 +11,10 @@
       type="image/x-icon"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
 
-  <body
-    onload="carregarPagina(), obterDadosHistograma(), consultarMaquinas(), buscarUltimosDadosRede(sessionStorage.getItem('ID_EMPRESA_USUARIO')), buscarMaquinasConnect(sessionStorage.getItem('ID_EMPRESA_USUARIO'))"
-  >
+  <body onload="carregarPagina()">
     <section id="page-dashboard-usoGeral">
       <header>
         <div class="child-navbar-card-dash-adm">
@@ -85,134 +84,201 @@
             </a>
           </div>
           <div class="dash-alert-titulo">
-            <h1 class="bold">Monitoramento de Uso Geral:</h1>
-            <!-- <p style="color: var(--normal-purple);" class="bold italic">Dados baseados nos ultimos 30 dias de monitoramento.</p> -->
+            <h2 class="bold">Visão Geral do Uso de Processamento</h2>
           </div>
         </div>
 
         <div class="father-general-use">
-          <div class="child-analise-uso" id="card-analise-uso" style="display: none;">
-            <div class="card-analise-uso">
-              <h2 class="center bold">Tendencia de Uso Semanal</h2>
-              <div class="cards-space-graphic">
-                <div class="graphic-space">
-
-                  <div class="card-graphic-analise">
-
+          <div class="child-general-use">
+            <div class="general-use-content-disco">
+              <div class="general-use-father-three">
+                <div class="father-tips">
+                  <div class="tooltip tooltip-white">
+                    <h4>i</h4>
+                    <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                      Visualize a distribuição do uso de armazenamento das máquinas. O gráfico mostra a quantidade 
+                      de máquinas em cada faixa de uso de disco, facilitando a identificação das que apresentam alto 
+                      consumo de armazenamento. Ele também exibe a divisão entre armazenamento usado e livre, permitindo 
+                      uma rápida identificação da capacidade disponível.
+                      <br>
+                      <span class="bold italic">Material baseados no dia atual.</span>
+                    </span>
                   </div>
-
                 </div>
-                <div class="sgi-space">
-
-                  <div class="card-sgi-analise">
-                    
+                <h4 class="armazenamento bold center">Resumo do Armazenamento da Empresa:</h4>
+                <div class="space-disco-info">
+                  <div class="info-disco-maquinas">
+                    <h5 class="bold">
+                      Distribuição das Máquinas por Uso de Armazenamento:
+                    </h5>
+                    <div class="item-faixa">
+                      <p class="">Faixa de 100-81%:</p>
+                      <div class="space-disco-faixa">
+                        <h3 class="bold" id="faixa-disco-alta">0</h3>
+                      </div>
+                    </div>
+                    <div class="item-faixa">
+                      <p class="">Faixa de 80-51%:</p>
+                      <div class="space-disco-faixa">
+                        <h3 class="bold" id="faixa-disco-media">0</h3>
+                      </div>
+                    </div>
+                    <div class="item-faixa">
+                      <p class="">Faixa de 50-0%:</p>
+                      <div class="space-disco-faixa">
+                        <h3 class="bold" id="faixa-disco-baixa">0</h3>
+                      </div>
+                    </div>
                   </div>
 
+                  <div id="histograma-disco" class="space-graphic-disco"></div>
                 </div>
               </div>
-              <div class="button-space">
-                <button class="btn-dashboard" onclick="fecharAnalise()">Fechar</button>
+            </div>
+            <div class="general-use-content-medium">
+              <div class="father-tips">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                    Visualize a distribuição dos picos de uso de processamento das máquinas.
+                    <br>
+                    O gráfico mostra como as máquinas estão distribuídas em diferentes faixas de uso de processamento,
+                    determinamos o uso de processamento com o cálculo de CPU mais RAM dividido por dois,
+                    permitindo identificar rapidamente quais estão consumindo mais recursos de processamento.
+                    <br>
+                    <span class="bold italic">Dados baseados nos últimos 7 dias.</span>
+                  </span>
+                </div>
+              </div>
+              <div class="general-use-father-three">
+                <h4 class="bold center">
+                  Distribuição dos Picos de Uso de Processamento
+                </h4>
+                <canvas
+                  id="histograma-uso"
+                  class="space-graphic"
+                  style="height: 280px"
+                ></canvas>
               </div>
             </div>
           </div>
+
           <div class="child-general-use">
-            <div class="general-use-content-medium">
-              <div class="general-use-father-three">
-                <h4 class="bold center">
-                  Histograma de Uso de Hardware das Máquinas:
-                </h4>
-                <div class="space-graphic"></div>
-              </div>
-            </div>
-
             <div class="general-use-content-large">
-              <div class="gerenal-use-father-one">
-                <div class="general-use-cards-info">
-                  <div class="card-info">
-                    <h5 class="center">
-                      Quantidade de Máquinas com Uso de Hardware Maior que 80%
-                    </h5>
-                    <h1 class="bold center">2</h1>
-                  </div>
-                  <div class="card-info">
-                    <h5 class="center">
-                      Quantidade de Máquinas com Uso de Disco Maior que 80%
-                    </h5>
-                    <h1 class="bold center">2</h1>
-                  </div>
-                </div>
-
-                <div class="general-use-card-tendencia">
-                  <h3 class="bold center">Tendência de Uso:</h3>
-                  <p class="center">
-                    Acompanhe aqui as tendências de uso das máquinas,
-                    identificando padrões críticos de desempenho e antecipando
-                    possíveis sobrecargas.
-                  </p>
-                  <button class="btn-dashboard" onclick="AnalisedeUso()">
-                    Ver Análise de Uso
-                  </button>
+              <div class="father-tips" style="z-index: 999;">
+                <div class="tooltip tooltip-white">
+                  <h4>i</h4>
+                  <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                    Aqui são listadas as máquinas com suas informações principais. Mostramos o 
+                    <span class="bold">hostname</span> da máquina, o <span class="bold">uso de processamento</span> 
+                    (calculado pela média entre o uso de <span class="bold">CPU</span> e  <span class="bold">RAM</span>, 
+                    considerando o pico nos últimos 7 dias), o <span class="bold">uso de isco atual</span> e a 
+                    <span class="bold">probabilidade de sobrecarga</span>. A sobrecarga é calculada com 
+                    base no <span class="bold">Z-score</span>, que avalia o histórico da máquina para determinar a chance 
+                    de o uso de processamento ultrapassar 90%.
+                    <br>
+                    <span class="bold italic">Dados baseados nos últimos 7 dias e dados do dia atual.</span>
+                  </span>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="child-general-use">
-            <div class="general-use-content-medium">
-              <div class="general-use-father-three">
-                <h4 class="bold center">
-                  Histograma de Uso de Disco das Máquinas:
-                </h4>
-                <div class="space-graphic"></div>
-              </div>
-            </div>
-            <div class="general-use-content-large">
               <div class="general-use-father-two">
                 <div class="list-machine-menu">
-                  <h3>Lista de Máquinas:</h3>
+                  <h4 class="bold">Detalhes das Máquinas Monitoradas:</h4>
                 </div>
                 <div class="list-machine-card">
                   <div class="column-machine">
                     <div class="column-item">
-                      <p class="little-text bold">ID</p>
+                      <p class="little-text bold center">ID</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Hostname</p>
+                      <p class="little-text bold center">Hostname</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Uso de Hardware</p>
+                      <p class="little-text bold center">Processamento</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">Uso de Disco</p>
+                      <p class="little-text bold center">Uso de Disco</p>
                     </div>
                     <div class="column-item">
-                      <p class="little-text bold">
-                        Problabilidade de Sobrecarga
+                      <p class="little-text bold center">
+                        Probabilidade de Sobrecarga
                       </p>
                     </div>
                   </div>
 
                   <hr class="line-list-machine" />
 
-                  <div class="machine-card-space">
-                    <div class="machine-card">
-                      <div class="column-item">
-                        <p class="little-text bold">01</p>
+                  <div class="machine-card-space" id="father-machine-space">
+                    <!-- LISTA DAS MÁQUINAS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="child-analise-uso"
+            id="card-analise-uso"
+            style="display: none"
+          >
+            <div class="card-analise-uso">
+              <h2 class="center bold">Previsão de Tendências de Uso</h2>
+              <div class="cards-space-graphic">
+                <div class="graphic-space">
+                  <div class="card-graphic-analise">
+                    <div class="father-tips" style="top: 10px; right: 10px;">
+                      <div class="tooltip tooltip-white">
+                        <h4>i</h4>
+                        <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                          Este gráfico exibe a tendência do consumo diário de processamento, com base 
+                          nos picos de uso (o uso de processamento é calculado pela média entre o uso 
+                          de CPU e RAM). A linha de regressão linear mostra a tendência do uso ao longo 
+                          dos dias, permitindo identificar padrões de aumento ou diminuição no consumo 
+                          de recursos.
+                          <br>
+                          <span class="bold italic">Dados baseado no histórico do uso de Processamento.</span>
+                        </span>
                       </div>
-                      <div class="column-item">
-                        <p class="little-text bold">BOOK-1AMQ3DUG8E</p>
+                    </div>
+                    <h4 class="bold center my-1">
+                      Tendência de Consumo Diário de Processamento
+                    </h4>
+                    <canvas
+                      id="regressionChart"
+                      min-width="100%"
+                      max-height="100%"
+                    ></canvas>
+                  </div>
+                </div>
+                <div class="sgi-space">
+                  <div class="card-sgi-analise">
+                    <div class="father-tips" style="top: 10px; right: 10px;">
+                      <div class="tooltip tooltip-white">
+                        <h4>i</h4>
+                        <span class="tooltiptext tooltip-left text-black"  style="text-align: left">
+                          A Inteligência Artificial SGI realiza uma análise da regressão linear da 
+                          tendência de consumo diário de processamento, ajudando a compreender os 
+                          padrões de aumento ou diminuição no uso de recursos ao longo do tempo.
+                          <br>
+                          <span class="bold italic">Dados baseado na regressão linear.</span>
+                        </span>
                       </div>
-                      <div class="column-item">
-                        <p class="little-text bold">80%</p>
-                      </div>
-                      <div class="column-item">
-                        <p class="little-text bold">60%</p>
-                      </div>
-                      <div class="column-item">
-                        <p class="little-text bold">95%</p>
-                      </div>
+                    </div>
+                    <div class="space-logo-title">
+                      <h4 class="bold center my-2">Analise da <span class="text-purple">SGI</span></h4>
+                      <img src="../../assets/svg/logo-sgi.svg" alt="" style="max-width: 10%;">
+                    </div>
+                    <div class="space-text-scroll">
+                      <p class="little-text" style="padding: 3%; max-height: 100%;" id="placeholder-analise-ia">
+                        <img src="../../assets/gif/loading.gif" alt="">
+                      </p>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="button-space">
+                <button class="btn-dashboard" onclick="fecharAnalise()">
+                  Fechar
+                </button>
               </div>
             </div>
           </div>
@@ -227,45 +293,750 @@
         window.location.href = "../index.html";
       }
 
-      function DashboardAnalista() {
-        window.location.href = "dashboard-analista.html";
-      }
-      function DashboardUsoGeral() {
-        window.location.href =
-          "../dashboard/dash-caio/dashboard-adm-alert.html";
-      }
-      function DashboardRede() {
-        window.location.href =
-          "../dashboard/dash-marcio/dashboard-adm-rede.html";
-      }
-      function DashboardAlerta() {
-        window.location.href =
-          "../dashboard/dash-caio/dashboard-adm-alert.html";
-      }
-
       function voltar() {
         window.location.href = "../dashboard-adm.html";
       }
-      function carregarPagina() {
-        sessionStorage.removeItem("VOLTAR_PAGINA");
-        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
-        obterDadosDeApoio1();
-        obterDadosDeApoio2();
-        carregarListaAlertas();
-        buscarDistribuicao();
-        buscarDadosGrafico();
-      }
 
-      // ------------------------ // ANALISE DE USO // ------------------------ //
-      function AnalisedeUso(){
+      function analisedeUso(idMaquina) {
+        // Define o ID da máquina no sessionStorage
+        sessionStorage.setItem("ID_MAQUINA", idMaquina);
+
+        // Atualiza a análise imediatamente após definir o ID
+        atualizarRegressaoLinear();
+
         const analiseUse = document.getElementById("card-analise-uso");
         analiseUse.style.display = "flex";
       }
 
-      function fecharAnalise(){
+      function fecharAnalise() {
         const analiseUse = document.getElementById("card-analise-uso");
         analiseUse.style.display = "none";
       }
+
+      const formatarTextoIA = (texto) => {
+        // Utilizando uma expressão regular para encontrar os textos dentro de **
+        return texto
+          .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>") // Substitui os negritos
+          .replace(/\n/g, "<br>"); // Substitui as quebras de linha
+      };
+
+      function carregarPagina() {
+        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
+        listarMaquinasDetalhesPico();
+        obterDadosHistogramaUso();
+        obterDadosHistogramaDisco();
+        buscarFaixasUsoDisco();
+        listarMaquinaHistorico();
+      }
+
+      // ------------------------------------- //                                     // ------------------------------------- //
+      // ------------------------------------- // PARAMETROS - FAIXAS DE USO DE DISCO // ------------------------------------- //
+      // ------------------------------------- //                                     // ------------------------------------- //
+
+      function buscarFaixasUsoDisco() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const faixaBaixa = document.getElementById("faixa-disco-baixa");
+        const faixaMedia = document.getElementById("faixa-disco-media");
+        const faixaAlta = document.getElementById("faixa-disco-alta");
+
+        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            let discUsoBaixo = 0;
+            let discUsoMedio = 0;
+            let discUsoAlto = 0;
+
+            data.forEach((maquina) => {
+              let totalUsado = maquina.discoUsado;
+              let totalArmazenamento = maquina.discoTotal;
+
+              let percentualUsado = Math.round(
+                (totalUsado / totalArmazenamento) * 100
+              );
+              let percentualLivre = 100 - percentualUsado;
+
+              if (percentualUsado >= 0 && percentualUsado <= 50) {
+                discUsoBaixo++;
+              } else if (percentualUsado >= 51 && percentualUsado <= 80) {
+                discUsoMedio++;
+              } else if (percentualUsado >= 81 && percentualUsado <= 100) {
+                discUsoAlto++;
+              } else {
+                console.log("Erro: valor de uso fora do intervalo esperado");
+              }
+            });
+
+            faixaBaixa.innerHTML = discUsoBaixo;
+            faixaMedia.innerHTML = discUsoMedio;
+            faixaAlta.innerHTML = discUsoAlto;
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de disco:", error);
+          });
+      }
+
+      // ------------------------------------- //           // ------------------------------------- //
+      // ------------------------------------- // Z - SCORE // ------------------------------------- //
+      // ------------------------------------- //           // ------------------------------------- //
+
+      // Função para calcular a média
+      function calcularMedia(valores) {
+        const soma = valores.reduce((acc, val) => acc + val, 0);
+        return soma / valores.length;
+      }
+
+      // Função para calcular o desvio padrão
+      function calcularDesvioPadrao(valores, media) {
+        const variancia =
+          valores.reduce((acc, val) => acc + Math.pow(val - media, 2), 0) /
+          valores.length;
+        return Math.sqrt(variancia);
+      }
+
+      // Função para calcular o z-score
+      function calcularZScore(valor, media, desvioPadrao) {
+        return (valor - media) / desvioPadrao;
+      }
+
+      // Função para calcular a probabilidade acumulada de um z-score
+      function calcularProbabilidade(zScore) {
+        const tabelaZ = {
+          0.0: 0.5,
+          0.1: 0.5398,
+          0.2: 0.5793,
+          0.3: 0.6179,
+          0.4: 0.6554,
+          0.5: 0.6915,
+          0.6: 0.7257,
+          0.7: 0.758,
+          0.8: 0.7881,
+          0.9: 0.8159,
+          1.0: 0.8413,
+          1.1: 0.8643,
+          1.2: 0.8849,
+          1.3: 0.9032,
+          1.4: 0.9192,
+          1.5: 0.9332,
+          1.6: 0.9452,
+          1.7: 0.9554,
+          1.8: 0.9641,
+          1.9: 0.9713,
+          2.0: 0.9772,
+          2.1: 0.9821,
+          2.2: 0.9861,
+          2.3: 0.9893,
+          2.4: 0.9918,
+          2.5: 0.9938,
+        };
+
+        if (zScore > 2.5) {
+          return 0.9994; // Para valores grandes, consideramos quase 100%
+        }
+
+        const chave = Math.round(zScore * 10) / 10;
+        return tabelaZ[chave] || 0;
+      }
+
+      // ------------------------------------- //                     // ------------------------------------- //
+      // ------------------------------------- // LISTAGEM DE MÁQUINA // ------------------------------------- //
+      // ------------------------------------- //                     // ------------------------------------- //
+
+      function adicionarMaquina(
+        idMaquina,
+        nome,
+        usoProcessamento,
+        usoArmazenamento,
+        probabilidade
+      ) {
+        const elementoPai = document.getElementById("father-machine-space");
+
+        const novoElemento = `
+          <div class="machine-card" onclick="analisedeUso(${idMaquina})">
+            <div class="column-item">
+              <p class="little-text bold">${idMaquina}</p>
+            </div>
+            <div class="column-item">
+              <p class="little-text bold">${nome}</p>
+            </div>
+            <div class="column-item">
+              <p class="little-text bold">${usoProcessamento}%</p>
+            </div>
+            <div class="column-item">
+              <p class="little-text bold">${usoArmazenamento}%</p>
+            </div>
+            <div class="column-item">
+              <p class="little-text bold">${probabilidade}%</p>
+            </div>
+          </div>
+        `;
+
+        elementoPai.innerHTML += novoElemento;
+      }
+
+      // ------------------------------------- // Listando maquinas e seus pico de uso // -------------------------------------//
+
+      async function historicoCpuRam(idMaquina) {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        try {
+          const response = await fetch(
+            `/medidas/listarHistoricoProcessamento/${idEmpresa}/${idMaquina}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Erro na resposta: ${response.status}`);
+          }
+
+          const data = await response.json();
+          return data; // Retorna os dados para quem chamou a função
+        } catch (error) {
+          console.error("Erro ao buscar histórico de CPU/RAM:", error);
+          throw error; // Repropaga o erro para quem chamou
+        }
+      }
+
+      // ------------------------------------- // Listando maquinas e seus pico de uso // -------------------------------------//
+      async function listarMaquinasDetalhesPico() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        try {
+          const response = await fetch(
+            `/medidas/listarMaquinasPico/${idEmpresa}`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar máquinas: ${response.status}`);
+          }
+
+          const maquinas = await response.json();
+
+          for (const maquina of maquinas) {
+            try {
+              const historico = await historicoCpuRam(maquina.idMaquina);
+
+              const usoProcessamento = Math.round(
+                (Number(maquina.usoCPU) + Number(maquina.usoRAM)) / 2
+              );
+              const percentualUsado = Math.round(
+                (Number(maquina.discoUsado) / Number(maquina.discoTotal)) * 100
+              );
+
+              const historicoUso = []; // Dados históricos de uso de CPU
+
+              historico.forEach((processamento) => {
+                historicoUso.push(Number(processamento.usoProcessamento));
+              });
+
+              const maiorUsoProcessa = 90;
+
+              // Calcular a média e o desvio padrão do histórico
+              const mediaProcessa = calcularMedia(historicoUso);
+              const desvioPadraoProcessa = calcularDesvioPadrao(
+                historicoUso,
+                mediaProcessa
+              );
+
+              // Calcular o z-score
+              const zScoreProcessa = calcularZScore(
+                maiorUsoProcessa,
+                mediaProcessa,
+                desvioPadraoProcessa
+              );
+
+              // Calcular a probabilidade de sobrecarga (uso > 90%)
+              const probabilidadeSobrecargaProcessa =
+                1 - calcularProbabilidade(zScoreProcessa);
+              const probabilidade = (
+                probabilidadeSobrecargaProcessa * 100
+              ).toFixed(0);
+
+              adicionarMaquina(
+                maquina.idMaquina,
+                maquina.nome,
+                usoProcessamento,
+                percentualUsado,
+                probabilidade
+              );
+            } catch (error) {
+              console.error(
+                `Erro ao buscar histórico para máquina ${maquina.idMaquina}:`,
+                error
+              );
+            }
+          }
+        } catch (error) {
+          console.error("Erro ao buscar detalhes de pico das máquinas:", error);
+        }
+      }
+
+      // ------------------------------------- //                // ------------------------------------- //
+      // ------------------------------------- // ANALISE DE SGI // ------------------------------------- //
+      // ------------------------------------- //                // ------------------------------------- //
+
+      const gerarAnaliseIA = (dadosRegressaoLinear) => {
+
+        const dadosPreparados = `Coeficiente Angular: ${dadosRegressaoLinear.beta}, Intercepto: ${dadosRegressaoLinear.alpha}`;
+
+        let mensagem = `
+          Foi gerada uma análise de tendência utilizando uma regressão linear. A variável Y representa a porcentagem dos picos de uso 
+          do processamento da máquina, que foi calculada com base na soma do uso de CPU e RAM, dividida por 2. A variável X representa os dias.
+          A análise foi realizada com os seguintes dados: ${dadosPreparados}.
+          Com isso, temos uma previsão de como o uso do processamento da máquina varia ao longo do tempo.
+          A análise considera os dados de uma máquina específica dessa empresa.
+          Por favor, faça uma análise das tendências sem usar jargões técnicos e, ao final, forneça um comentário geral sobre os resultados obtidos.
+        `;
+
+        fetch(`/externos/GenAI/perguntar`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pergunta: mensagem.toString(),
+          }),
+        })
+          .then((resposta) =>
+            resposta.json().then((respostaFormatada) => {
+              respostaFormatada = formatarTextoIA(
+                respostaFormatada.resposta.toString()
+              );
+              console.log("Resposta IA:", respostaFormatada);
+              const elementoAnalise = document.getElementById(
+                "placeholder-analise-ia"
+              );
+              elementoAnalise.innerHTML = respostaFormatada;
+            })
+          )
+          .catch((error) => {
+            console.error("Erro ao obter resposta IA:", error);
+          });
+      };
+
+      // ------------------------------------- //          // ------------------------------------- //
+      // ------------------------------------- // GRÁFICOS // ------------------------------------- //
+      // ------------------------------------- //          // ------------------------------------- //
+
+      function obterDadosHistogramaDisco() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+
+        fetch(`/medidas/usoDiscoMaquinas/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            let totalArmazenamento = 0;
+            let totalUsado = 0;
+
+            data.forEach((maquina) => {
+              totalArmazenamento += Number(maquina.discoTotal);
+              totalUsado += Number(maquina.discoUsado);
+            });
+
+            const percentualUsado = Math.round(
+              (totalUsado / totalArmazenamento) * 100
+            );
+            const percentualLivre = 100 - percentualUsado;
+
+            const dadosMocados = [
+              { faixa: "Usado", quantidade: percentualUsado },
+              { faixa: "Livre", quantidade: percentualLivre },
+            ];
+
+            // Extraindo dados para o gráfico
+            const series = dadosMocados.map((dado) => dado.quantidade);
+            const labels = dadosMocados.map((dado) => dado.faixa);
+
+            // Definindo cores personalizadas para cada faixa
+            const coresPersonalizadas = ["#6D4BC7", "#a6a6a7"]; // Exemplo de cores para "Usado" e "Livre"
+
+            // Configuração do gráfico
+            var options = {
+              series: series,
+              chart: {
+                width: 380,
+                type: "donut",
+              },
+              labels: labels,
+              plotOptions: {
+                pie: {
+                  startAngle: -90,
+                  endAngle: 270,
+                },
+              },
+              dataLabels: {
+                enabled: false,
+              },
+              fill: {
+                type: "gradient",
+              },
+              legend: {
+                formatter: function (val, opts) {
+                  return (
+                    val + " - " + opts.w.globals.series[opts.seriesIndex] + "%"
+                  );
+                },
+              },
+              title: {
+                text: "Percentual de Armazenamento Usado vs Livre",
+              },
+              tooltip: {
+                y: {
+                  formatter: function (val) {
+                    return val + "%"; // Adiciona o símbolo de porcentagem ao tooltip
+                  },
+                },
+              },
+              colors: coresPersonalizadas, // Definindo as cores
+              responsive: [
+                {
+                  breakpoint: 480,
+                  options: {
+                    chart: {
+                      width: 200,
+                    },
+                    legend: {
+                      position: "bottom",
+                    },
+                  },
+                },
+              ],
+            };
+
+            // Renderizando o gráfico
+            var chart = new ApexCharts(
+              document.querySelector("#histograma-disco"),
+              options
+            );
+            chart.render();
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar uso de disco:", error);
+          });
+      }
+
+      function obterDadosHistogramaUso() {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        let faixa25 = 0;
+        let faixa50 = 0;
+        let faixa75 = 0;
+        let faixa90 = 0;
+        let faixa100 = 0;
+
+        fetch(`/medidas/usoProcessamentoUltimos7/${idEmpresa}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            for (let i = 0; i < data.length; i++) {
+              let usoProcessamento = Number(data[i].maiorUsoSomadoDividido);
+
+              if (usoProcessamento >= 0 && usoProcessamento <= 25) {
+                faixa25++;
+              } else if (usoProcessamento >= 26 && usoProcessamento <= 50) {
+                faixa50++;
+              } else if (usoProcessamento >= 51 && usoProcessamento <= 75) {
+                faixa75++;
+              } else if (usoProcessamento >= 76 && usoProcessamento <= 90) {
+                faixa90++;
+              } else if (usoProcessamento >= 91 && usoProcessamento <= 100) {
+                faixa100++;
+              } else {
+                console.log("Erro: valor de uso fora do intervalo esperado");
+              }
+            }
+
+            const dadosMocados = [
+              { faixa: "0-25%", quantidade: faixa25 },
+              { faixa: "26-50%", quantidade: faixa50 },
+              { faixa: "51-75%", quantidade: faixa75 },
+              { faixa: "76-90%", quantidade: faixa90 },
+              { faixa: "91-100%", quantidade: faixa100 },
+            ];
+
+            const labels = dadosMocados.map((item) => item.faixa);
+            const dados = dadosMocados.map((item) => item.quantidade);
+
+            const ctx = document
+              .getElementById("histograma-uso")
+              .getContext("2d");
+            const grafico = new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: "Máquinas por Faixa de Uso de Hardware",
+                    data: dados,
+                    backgroundColor: [
+                      "#36206d",
+                      "#4E2E9E",
+                      "#7D5CC5",
+                      "#9870FF",
+                      "#c090ff",
+                    ],
+                    barThickness: 152,
+                    borderRadius: 5,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: "top",
+                  },
+                },
+                scales: {
+                  x: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar CPU e RAM das máquinas:", error);
+          });
+      }
+
+      // ------------------------------------- //                                    // ------------------------------------- //
+      // ------------------------------------- // GRÁFICO - TENDENCIA DE USO MAQUINA // ------------------------------------- //
+      // ------------------------------------- //                                    // ------------------------------------- //
+
+      let chartInstance = null; // Instância do gráfico que será atualizada
+
+      function calcularRegressaoLinear(x, y) {
+        console.log("Input arrays:", x, y);
+
+        // Store original length and make copies of arrays
+        const originalLength = x.length;
+        let xVals = [...x];
+        let yVals = [...y];
+
+        // Remove o último ponto se y for 0 (outlier)
+        if (yVals[yVals.length - 1] === 0) {
+          xVals = xVals.slice(0, -1);
+          yVals = yVals.slice(0, -1);
+        }
+
+        const n = xVals.length;
+        console.log("After outlier removal - n:", n);
+
+        // Calcula médias com maior precisão
+        const xMean = xVals.reduce((sum, xi) => sum + Number(xi), 0) / n;
+        const yMean = yVals.reduce((sum, yi) => sum + Number(yi), 0) / n;
+        console.log("Means - x:", xMean, "y:", yMean);
+
+        // Calcula coeficientes
+        let numerador = 0;
+        let denominador = 0;
+
+        for (let i = 0; i < n; i++) {
+          const xi = Number(xVals[i]);
+          const yi = Number(yVals[i]);
+          numerador += (xi - xMean) * (yi - yMean);
+          denominador += Math.pow(xi - xMean, 2);
+        }
+
+        console.log(
+          "Coeficientes - numerador:",
+          numerador,
+          "denominador:",
+          denominador
+        );
+
+        // Evita divisão por zero ou valores muito pequenos
+        if (Math.abs(denominador) < 1e-10) {
+          console.log("Denominador muito pequeno, retornando média");
+          return Array(originalLength).fill(yMean);
+        }
+
+        const beta = numerador / denominador;
+        const alpha = yMean - beta * xMean;
+        console.log(
+          "Alpha (Intercepto):",
+          alpha,
+          "Beta (Coef. Angular):",
+          beta
+        );
+
+        // Calcula valores preditos
+        const predictions = Array.from(
+          { length: originalLength },
+          (_, i) => alpha + beta * (i + 1)
+        );
+        console.log("Predictions:", predictions);
+
+        gerarAnaliseIA({ alpha: alpha, beta: beta });
+
+        return predictions;
+      }
+
+      const atualizarRegressaoLinearInterface = (dados) => {
+        // Utilizando números sequenciais como valores de x
+        const x_values = dados.map((_, index) => index + 1);
+        const y_values = dados.map((d) => Number(d.pico_processamento));
+
+        const regressao = calcularRegressaoLinear(x_values, y_values);
+
+        console.log("regressao ", regressao);
+
+        regressao.forEach((r, i) => {
+          console.log(`X: ${x_values[i]} - Y: ${y_values[i]} - Y_hat: ${r}`);
+        });
+
+        // Valores preditos pela regressão
+        const y_hat = regressao;
+
+        const ctx = document.getElementById("regressionChart");
+
+        // Se o gráfico já existir, atualize-o
+        if (chartInstance) {
+          chartInstance.data.datasets[0].data = x_values.map((x, i) => ({
+            x,
+            y: y_hat[i],
+          }));
+          chartInstance.data.datasets[1].data = x_values.map((x, i) => ({
+            x,
+            y: y_values[i],
+          }));
+          chartInstance.update();
+        } else {
+          // Caso contrário, crie um novo gráfico
+          chartInstance = new Chart(ctx, {
+            type: "scatter",
+            data: {
+              datasets: [
+                {
+                  type: "line",
+                  label: `Linha de Projeção`,
+                  data: x_values.map((x, i) => ({ x, y: y_hat[i] })),
+                  borderColor: "rgb(121, 78, 212)",
+                  backgroundColor: "rgba(255, 99, 132, 0.2)",
+                  borderWidth: 2,
+                  borderDash: [5, 5],
+                  tension: 0.3,
+                },
+                {
+                  type: "scatter",
+                  label: "Valores Reais",
+                  data: x_values.map((x, i) => ({ x, y: y_values[i] })),
+                  backgroundColor: "rgb(0, 0, 0)",
+                  pointRadius: 5,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Regressão Linear Simples",
+                  font: {
+                    size: 20,
+                    weight: "bold",
+                  },
+                  color: "#000",
+                  align: "center",
+                },
+              },
+              scales: {
+                x: {
+                  type: "linear",
+                  position: "bottom",
+                  title: {
+                    display: true,
+                    text: "Observações (Dias)",
+                    color: "black",
+                    font: {
+                      size: 15,
+                      weight: "bold",
+                    },
+                  },
+                  ticks: {
+                    color: "black",
+                    font: {
+                      size: 12,
+                      weight: "bold",
+                    },
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "Uso de Processamento(%)",
+                    color: "black",
+                    font: {
+                      size: 15,
+                      weight: "bold",
+                    },
+                  },
+                  ticks: {
+                    color: "black",
+                    font: {
+                      size: 13,
+                      weight: "bold",
+                    },
+                  },
+                },
+              },
+            },
+          });
+        }
+      };
+
+      const atualizarRegressaoLinear = () => {
+        const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+        const idMaquina = sessionStorage.getItem("ID_MAQUINA");
+
+        // Garantir que o ID da máquina esteja sendo corretamente capturado
+        if (idMaquina) {
+          fetch(
+            `/medidas/historicoDiarioProcessamento/${idEmpresa}/${idMaquina}/`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ).then((resposta) =>
+            resposta
+              .json()
+              .then((respostaFormatada) => {
+                console.log(
+                  "Uso de Processamento por dia: ",
+                  respostaFormatada
+                );
+                atualizarRegressaoLinearInterface(respostaFormatada);
+              })
+              .catch((error) => {
+                console.error("Erro ao obter pacotes:", error);
+              })
+          );
+        } else {
+          console.log("ID da máquina não encontrado.");
+        }
+      };
     </script>
   </body>
 </html>

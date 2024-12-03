@@ -134,6 +134,81 @@ function buscarMaquinasConnect(idEmpresa){
     return database.executar(instrucaoSql, [idEmpresa]);
 }
 
+function buscarUsoHardwareAlto(idEmpresa) {
+    var instrucaoSql = `SELECT qtdMaquinas FROM ServGuard.MaquinasUsoHardAlto
+        WHERE fkEmpresa = ${idEmpresa};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarUsoDiscoAlto(idEmpresa){
+    var instrucaoSql = `SELECT COUNT(*) AS qtdMaquinas FROM ServGuard.ArmazenamentoMaquinas
+        WHERE fkEmpresa = ${idEmpresa} AND (usadoTotal / capacidadeTotal) > 0.8;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarRamCpuMaquina(idEmpresa){
+    var instrucaoSql = `SELECT * FROM ServGuard.UsoRamCpuPorEmpresa
+        WHERE fkEmpresa = ${idEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarUsoDiscoMaquinas(idEmpresa){
+    var instrucaoSql = `SELECT idMaquina, discoUsado, discoTotal FROM detalhesDiscoMaquinas
+        WHERE fkEmpresa = ${idEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarUsoProcessamentoUltimos7(idEmpresa){
+    var instrucaoSql = `SELECT * FROM ServGuard.MaioresUsosCpuRamUltimos7Dias
+        WHERE idEmpresa = ${idEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function buscarHistoricoMaquina(idEmpresa){
+    var instrucaoSql = `SELECT * FROM ServGuard.HistoricoUsoMaquinaEmpresa WHERE idEmpresa = 1
+        ORDER BY idMaquina, dataCaptura DESC;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function obterListaMaquinasPico(idEmpresa){
+    var instrucaoSql = `SELECT * FROM detalhesMaquinasPico
+        WHERE fkEmpresa = ${idEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function obterListaHistoricoProcessamento(idEmpresa, idMaquina){
+    var instrucaoSql = `SELECT * FROM ServGuard.HistoricoCpuRam 
+        WHERE fkEmpresa = ${idEmpresa}
+        AND idMaquina = ${idMaquina}; 
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function obterHistoricoDiarioProcessamento(idEmpresa, idMaquina){
+    var instrucaoSql = `SELECT idEmpresa, data, idMaquina, pico_processamento FROM vista_pico_diario_processamento
+        WHERE idEmpresa = ${idEmpresa} AND idMaquina = ${idMaquina};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -149,5 +224,14 @@ module.exports = {
     buscarPorcentagemAlertasRAM,
     buscarMediaGaugeCPU,
     buscarMediaGaugeRAM,
-    buscarUsoTotalSemanal
+    buscarUsoTotalSemanal,
+    buscarUsoHardwareAlto,
+    buscarUsoDiscoAlto,
+    buscarRamCpuMaquina,
+    buscarUsoDiscoMaquinas,
+    buscarUsoProcessamentoUltimos7,
+    buscarHistoricoMaquina,
+    obterListaMaquinasPico,
+    obterListaHistoricoProcessamento,
+    obterHistoricoDiarioProcessamento
 }

@@ -36,4 +36,12 @@ router.get("/obterPacotes/:idEmpresa", function (req, res) {
   empresaController.obterPacotes(req, res);
 });
 
+router.get("/obterQtdMaquinasPorSemana/:idEmpresa", function (req, res) {
+  empresaController.obterQtdMaquinasPorSemana(req, res);
+});
+
+router.get("/obterQtdAlertasSemana/:idEmpresa", function (req, res) {
+  empresaController.obterQtdAlertasSemana(req, res);
+});
+
 module.exports = router;

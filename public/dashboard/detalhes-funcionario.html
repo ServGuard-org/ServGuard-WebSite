@@ -1,380 +1,328 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ServGuard | Perfil Funcionário</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link
-      rel="shortcut icon"
-      href="../assets/svg/logo-white.svg"
-      type="image/x-icon"
-    />
-    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
 
-  <body
-    onload="carregarDados(sessionStorage.getItem('ID_USUARIO')), verificarCargo()"
-  >
-    <!-- ----- TELA PRINCIPAL ----- -->
-    <section id="page-detalhes-funcionario">
-      <header>
-        <div class="child-navbar-card-dash-adm">
-          <div class="navbar-logo-dash-adm">
-            <img src="../assets/svg/logo.svg" alt="#logo" />
-          </div>
-          <div class="navbar-navlink-dash-adm">
-            <ul class="list-navlink-dash-adm">
-              <li>
-                <a href="dashboard-adm.html" class="link-dash-adm">
-                  <img
-                    src="../assets/svg/layout-icon.svg"
-                    alt="#icone-layout"
-                  />
-                </a>
-                <p class="little-text">Início</p>
-              </li>
-              <li>
-                <a href="dashboard-analista.html" class="link-dash-adm">
-                  <img src="../assets/svg/search.svg" alt="#icone-layout" />
-                </a>
-                <p class="little-text">Detalhes</p>
-              </li>
-              <li>
-                <a
-                  href="./gerenciamento-funcionario.html"
-                  class="link-dash-adm"
-                >
-                  <img
-                    src="../assets/svg/func-icon.svg"
-                    alt="#icone-funcionario"
-                  />
-                </a>
-                <p class="little-text">Funcionário</p>
-              </li>
-              <li>
-                <a href="./gerenciamento-maquina.html" class="link-dash-adm">
-                  <img src="../assets/svg/server-icon.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">Máquina</p>
-              </li>
-              <li>
-                <a href="./chat-sgi.html" class="link-dash-adm">
-                  <img src="../assets/svg/logo-sgi.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">SGI</p>
-              </li>
-              <li>
-                <a href="detalhes-funcionario.html" class="link-dash-adm active">
-                  <img src="../assets/svg/perfil-icon-white.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">Perfil</p>
-              </li>
-            </ul>
-          </div>
-          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-            <img src="../assets/svg/exit-icon.svg" alt="" />
-          </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ServGuard | Perfil Funcionário</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="shortcut icon" href="../assets/svg/logo-white.svg" type="image/x-icon" />
+  <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body onload="carregarDados(sessionStorage.getItem('ID_USUARIO')), verificarCargo()">
+  <!-- ----- TELA PRINCIPAL ----- -->
+  <section id="page-detalhes-funcionario">
+    <header>
+      <div class="child-navbar-card-dash-adm">
+        <div class="navbar-logo-dash-adm">
+          <img src="../assets/svg/logo.svg" alt="#logo" />
         </div>
-      </header>
+        <div class="navbar-navlink-dash-adm">
+          <ul class="list-navlink-dash-adm" id="ul-nav">
+            <li id="li-adm">
+              <a href="dashboard-adm.html" class="link-dash-adm">
+                <img src="../assets/svg/layout-icon.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Início</p>
+            </li>
+            <li>
+              <a href="dashboard-analista.html" class="link-dash-adm">
+                <img src="../assets/svg/search.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Detalhes</p>
+            </li>
+            <li id="li-funcionario">
+              <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+              </a>
+              <p class="little-text">Funcionário</p>
+            </li>
+            <li>
+              <a href="./gerenciamento-maquina.html" class="link-dash-adm">
+                <img src="../assets/svg/server-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Máquina</p>
+            </li>
+            <li>
+              <a href="./chat-sgi.html" class="link-dash-adm">
+                <img src="../assets/svg/logo-sgi.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">SGI</p>
+            </li>
+            <li>
+              <a href="detalhes-funcionario.html" class="link-dash-adm active">
+                <img src="../assets/svg/perfil-icon-white.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Perfil</p>
+            </li>
+          </ul>
+        </div>
+        <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+          <img src="../assets/svg/exit-icon.svg" alt="" />
+        </a>
+      </div>
+    </header>
 
-      <!-- //// FIM NAVBAR //// -->
+    <!-- //// FIM NAVBAR //// -->
 
-      <main>
-        <h1 class="bold m-2">Informações da Conta:</h1>
-        <div class="father-informacoes-da-conta">
-          <div class="child-informacoes-da-conta">
-            <div class="dados-perfil">
-              <h4 class="bold">ID: <span id="id" class="thin"></span></h4>
-              <h4 class="bold">Nome: <span id="nome" class="thin"></span></h4>
-              <h4 class="bold">
-                E-mail: <span id="email" class="thin"></span>
-              </h4>
-              <h4 class="bold">Cargo: <span id="cargo" class="thin"></span></h4>
-            </div>
-            <h4>
-              Caso ainda esteja utilizando a senha criada pelo administrador,
-              por questões de segurança é de grande importância alterá-la
-              clicando no botão de “<span
-                class="bold"
-                style="color: var(--dark-purple)"
-                >alterar meus dados</span
-              >”.
+    <main>
+      <h1 class="bold m-2">Informações da Conta:</h1>
+      <div class="father-informacoes-da-conta">
+        <div class="child-informacoes-da-conta">
+          <div class="dados-perfil">
+            <h4 class="bold">ID: <span id="id" class="thin"></span></h4>
+            <h4 class="bold">Nome: <span id="nome" class="thin"></span></h4>
+            <h4 class="bold">
+              E-mail: <span id="email" class="thin"></span>
             </h4>
+            <h4 class="bold">Cargo: <span id="cargo" class="thin"></span></h4>
           </div>
-          <div class="alinhamento-botao">
-            <button
-              class="botao-alterar bold"
-              onclick="exibirEditar(), editarFuncionario(sessionStorage.getItem('ID_USUARIO'))"
-            >
-              Alterar Meus Dados
-            </button>
-          </div>
+          <h4>
+            Caso ainda esteja utilizando a senha criada pelo administrador,
+            por questões de segurança é de grande importância alterá-la
+            clicando no botão de “<span class="bold" style="color: var(--dark-purple)">alterar meus dados</span>”.
+          </h4>
         </div>
-      </main>
-    </section>
-    <!-- ----- FIM - TELA PRINCIPAL ----- -->
-    <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
-    <section class="sessao-popup" id="popupEditar" style="display: none">
-      <div class="father-detalhes-funcionario">
-        <h3 class="bold">
-          Altere o campo que quiser alterar e clique em “<span
-            style="color: var(--dark-purple)"
-            >atualizar</span
-          >”
-        </h3>
-        <div class="child-campos mb-1">
-          <div class="campo-input-big">
-            <label for="percentage-input" class="input-title">Nome:</label>
-            <input
-              type="text"
-              placeholder="Coloque o Nome Completo"
-              name="input"
-              class="input-text"
-              id="ipt_nome_editar"
-            />
-          </div>
-
-          <div class="campo-input-big">
-            <label for="percentage-input" class="input-title">E-mail:</label>
-            <input
-              type="text"
-              placeholder="Coloque seu E-mail"
-              name="input"
-              class="input-text"
-              id="ipt_email_editar"
-            />
-          </div>
-
-          <div class="campo-input-big">
-            <label for="percentage-input" class="input-title">Senha:</label>
-            <input
-              type="text"
-              placeholder="Insira sua Senha"
-              name="input"
-              class="input-text"
-              id="ipt_senha_editar"
-            />
-          </div>
-
-          <div class="campo-input-big">
-            <label for="percentage-input" class="input-title"
-              >Confirmar Senha:</label
-            >
-            <input
-              type="text"
-              placeholder="Confirmar sua Senha"
-              name="input"
-              class="input-text"
-              id="ipt_confirmar_senha_editar"
-            />
-          </div>
-        </div>
-        <div class="father-popup-botao">
-          <button
-            class="botao-cadastrar-executar"
-            onclick="atualizarDados(sessionStorage.getItem('ID_USUARIO'))"
-          >
-            <b>Atualizar</b>
+        <div class="alinhamento-botao">
+          <button class="botao-alterar bold"
+            onclick="exibirEditar(), editarFuncionario(sessionStorage.getItem('ID_USUARIO'))">
+            Alterar Meus Dados
           </button>
-          <p
-            onclick="sairEditar()"
-            class="botao-cadastrar-cancelar italic underline bold"
-          >
-            Cancelar
-          </p>
         </div>
       </div>
-    </section>
-    <!-- ----- FIM - POPUP DE CADASTRO FUNCIONARIO ----- -->
-  </body>
-  <script>
-    function verificarCargo() {
-      var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
-      if (isADM !== null && Number(isADM) === 0) {
-        document.getElementById("li-adm").style.display = "none";
-        document.getElementById("li-funcionario").style.display = "none";
-        document.getElementById("ul-nav").style.display = "flex";
-      } else {
-        document.getElementById("ul-nav").style.display = "flex";
-      }
+    </main>
+  </section>
+  <!-- ----- FIM - TELA PRINCIPAL ----- -->
+  <!-- ----- POPUP DE CADASTRO FUNCIONARIO ----- -->
+  <section class="sessao-popup" id="popupEditar" style="display: none">
+    <div class="father-detalhes-funcionario">
+      <h3 class="bold">
+        Altere o campo que quiser alterar e clique em “<span style="color: var(--dark-purple)">atualizar</span>”
+      </h3>
+      <div class="child-campos mb-1">
+        <div class="campo-input-big">
+          <label for="percentage-input" class="input-title">Nome:</label>
+          <input type="text" placeholder="Coloque o Nome Completo" name="input" class="input-text"
+            id="ipt_nome_editar" />
+        </div>
+
+        <div class="campo-input-big">
+          <label for="percentage-input" class="input-title">E-mail:</label>
+          <input type="text" placeholder="Coloque seu E-mail" name="input" class="input-text" id="ipt_email_editar" />
+        </div>
+
+        <div class="campo-input-big">
+          <label for="percentage-input" class="input-title">Senha:</label>
+          <input type="text" placeholder="Insira sua Senha" name="input" class="input-text" id="ipt_senha_editar" />
+        </div>
+
+        <div class="campo-input-big">
+          <label for="percentage-input" class="input-title">Confirmar Senha:</label>
+          <input type="text" placeholder="Confirmar sua Senha" name="input" class="input-text"
+            id="ipt_confirmar_senha_editar" />
+        </div>
+      </div>
+      <div class="father-popup-botao">
+        <button class="botao-cadastrar-executar" onclick="atualizarDados(sessionStorage.getItem('ID_USUARIO'))">
+          <b>Atualizar</b>
+        </button>
+        <p onclick="sairEditar()" class="botao-cadastrar-cancelar italic underline bold">
+          Cancelar
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- ----- FIM - POPUP DE CADASTRO FUNCIONARIO ----- -->
+</body>
+<script>
+  function verificarCargo() {
+    var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+    if (isADM !== null && Number(isADM) === 0) {
+      document.getElementById("li-adm").style.display = "none";
+      document.getElementById("li-funcionario").style.display = "none";
+      document.getElementById("ul-nav").style.display = "flex";
+    } else {
+      document.getElementById("ul-nav").style.display = "flex";
     }
+  }
 
-    function sairNavbar() {
-      event.preventDefault();
-      sessionStorage.clear();
-      window.location.href = "../index.html";
-    }
+  function sairNavbar() {
+    event.preventDefault();
+    sessionStorage.clear();
+    window.location.href = "../index.html";
+  }
 
-    function exibirEditar() {
-      document.getElementById("popupEditar").style.display = "flex"; // Exibe o popup corretamente
-    }
-    function sairEditar() {
-      document.getElementById("ipt_nome_editar").value = "";
-      document.getElementById("ipt_email_editar").value = "";
-      document.getElementById("ipt_senha_editar").value = "";
-      document.getElementById("ipt_confirmar_senha_editar").value = "";
-      document.getElementById("popupEditar").style.display = "none"; // Exibe o popup corretamente
-    }
+  function exibirEditar() {
+    document.getElementById("popupEditar").style.display = "flex"; // Exibe o popup corretamente
+  }
+  function sairEditar() {
+    document.getElementById("ipt_nome_editar").value = "";
+    document.getElementById("ipt_email_editar").value = "";
+    document.getElementById("ipt_senha_editar").value = "";
+    document.getElementById("ipt_confirmar_senha_editar").value = "";
+    document.getElementById("popupEditar").style.display = "none"; // Exibe o popup corretamente
+  }
 
-    function carregarDados(idUsuario) {
-      fetch(`/usuarios/consultarPorId/${idUsuario}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((respostaBruta) => {
-          if (respostaBruta.ok) {
-            respostaBruta.json().then((resposta) => {
-              const campoId = document.getElementById("id");
-              const campoNome = document.getElementById("nome");
-              const campoEmail = document.getElementById("email");
-              const campoCargo = document.getElementById("cargo");
+  function carregarDados(idUsuario) {
+    fetch(`/usuarios/consultarPorId/${idUsuario}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((respostaBruta) => {
+        if (respostaBruta.ok) {
+          respostaBruta.json().then((resposta) => {
+            const campoId = document.getElementById("id");
+            const campoNome = document.getElementById("nome");
+            const campoEmail = document.getElementById("email");
+            const campoCargo = document.getElementById("cargo");
 
-              campoId.innerHTML = "";
-              campoCargo.innerHTML = "";
-              campoEmail.innerHTML = "";
-              campoNome.innerHTML = "";
+            campoId.innerHTML = "";
+            campoCargo.innerHTML = "";
+            campoEmail.innerHTML = "";
+            campoNome.innerHTML = "";
 
-              campoId.innerHTML = sessionStorage.getItem("ID_USUARIO");
-              campoCargo.innerHTML =
-                resposta.isAdm == 1 ? `Administrador` : `Analista`;
-              campoEmail.innerHTML = resposta.email;
-              campoNome.innerHTML = resposta.nome;
+            campoId.innerHTML = sessionStorage.getItem("ID_USUARIO");
+            campoCargo.innerHTML =
+              resposta.isAdm == 1 ? `Administrador` : `Analista`;
+            campoEmail.innerHTML = resposta.email;
+            campoNome.innerHTML = resposta.nome;
 
-              sessionStorage.setItem("NOME_USUARIO", resposta.nome);
-              sessionStorage.setItem("EMAIL_USUARIO", resposta.email);
-            });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Falha ao Acessar Menu de Edição!",
-              color: "#1D1D1F",
-              background: "#EEE9FA",
-              confirmButtonColor: "#4E2E9E",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log("Erro! ", error);
-        });
-    }
-
-    function editarFuncionario(idUsuario) {
-      fetch(`/usuarios/consultarPorId/${idUsuario}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((respostaBruta) => {
-          if (respostaBruta.ok) {
-            respostaBruta.json().then((resposta) => {
-              const iptNome = document.getElementById("ipt_nome_editar");
-              const iptEmail = document.getElementById("ipt_email_editar");
-
-              iptEmail.value = "";
-              iptNome.value = "";
-
-              iptEmail.value = resposta.email;
-              iptNome.value = resposta.nome;
-            });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Falha ao Acessar Menu de Edição!",
-              color: "#1D1D1F",
-              background: "#EEE9FA",
-              confirmButtonColor: "#4E2E9E",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log("Erro! ", error);
-        });
-    }
-
-    function atualizarDados(idUsuario) {
-      const iptSenha = document.getElementById("ipt_senha_editar");
-      const iptConfirmarSenha = document.getElementById(
-        "ipt_confirmar_senha_editar"
-      );
-
-      const senha = iptSenha.value ? iptSenha.value : undefined;
-      const confirmarSenha = iptConfirmarSenha.value
-        ? iptConfirmarSenha.value
-        : undefined;
-
-      if (senha || confirmarSenha) {
-        if (senha && confirmarSenha) {
-          if (senha != confirmarSenha) {
-            Swal.fire({
-              icon: "error",
-              title: "Senhas Diferentes",
-              text: "Verifique se os campos contém a mesma senha",
-              color: "#1D1D1F",
-              background: "#EEE9FA",
-              confirmButtonColor: "#4E2E9E",
-            });
-            return;
-          }
+            sessionStorage.setItem("NOME_USUARIO", resposta.nome);
+            sessionStorage.setItem("EMAIL_USUARIO", resposta.email);
+          });
         } else {
           Swal.fire({
             icon: "error",
-            title: "Campos Faltantes",
-            text: "Verifique se os campos de senha e confirmar senha estão preenchidos, caso queira mudar a senha.",
+            title: "Falha ao Acessar Menu de Edição!",
+            color: "#1D1D1F",
+            background: "#EEE9FA",
+            confirmButtonColor: "#4E2E9E",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Erro! ", error);
+      });
+  }
+
+  function editarFuncionario(idUsuario) {
+    fetch(`/usuarios/consultarPorId/${idUsuario}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((respostaBruta) => {
+        if (respostaBruta.ok) {
+          respostaBruta.json().then((resposta) => {
+            const iptNome = document.getElementById("ipt_nome_editar");
+            const iptEmail = document.getElementById("ipt_email_editar");
+
+            iptEmail.value = "";
+            iptNome.value = "";
+
+            iptEmail.value = resposta.email;
+            iptNome.value = resposta.nome;
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Falha ao Acessar Menu de Edição!",
+            color: "#1D1D1F",
+            background: "#EEE9FA",
+            confirmButtonColor: "#4E2E9E",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Erro! ", error);
+      });
+  }
+
+  function atualizarDados(idUsuario) {
+    const iptSenha = document.getElementById("ipt_senha_editar");
+    const iptConfirmarSenha = document.getElementById(
+      "ipt_confirmar_senha_editar"
+    );
+
+    const senha = iptSenha.value ? iptSenha.value : undefined;
+    const confirmarSenha = iptConfirmarSenha.value
+      ? iptConfirmarSenha.value
+      : undefined;
+
+    if (senha || confirmarSenha) {
+      if (senha && confirmarSenha) {
+        if (senha != confirmarSenha) {
+          Swal.fire({
+            icon: "error",
+            title: "Senhas Diferentes",
+            text: "Verifique se os campos contém a mesma senha",
             color: "#1D1D1F",
             background: "#EEE9FA",
             confirmButtonColor: "#4E2E9E",
           });
           return;
         }
-      }
-
-      const nome = document.getElementById("ipt_nome_editar").value;
-      const email = document.getElementById("ipt_email_editar").value;
-
-      if (!nome || !email) {
+      } else {
         Swal.fire({
           icon: "error",
           title: "Campos Faltantes",
-          text: "Verifique se campos de nome e e-mail estão completos.",
+          text: "Verifique se os campos de senha e confirmar senha estão preenchidos, caso queira mudar a senha.",
           color: "#1D1D1F",
           background: "#EEE9FA",
           confirmButtonColor: "#4E2E9E",
         });
         return;
       }
-
-      fetch("/usuarios/alterar/senha", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nome: nome,
-          email: email,
-          senha: senha,
-          idUsuario: idUsuario,
-        }),
-      })
-        .then((resposta) => {
-          if (resposta.ok) {
-            sairEditar();
-            carregarDados(idUsuario);
-            Swal.fire({
-              icon: "success",
-              title: "Dados Alterados Com Sucesso!",
-              text: `Id de funcionário editado: ${idUsuario}`,
-              color: "#1D1D1F",
-              background: "#EEE9FA",
-              confirmButtonColor: "#4E2E9E",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log("Erro! ", error);
-        });
     }
-  </script>
+
+    const nome = document.getElementById("ipt_nome_editar").value;
+    const email = document.getElementById("ipt_email_editar").value;
+
+    if (!nome || !email) {
+      Swal.fire({
+        icon: "error",
+        title: "Campos Faltantes",
+        text: "Verifique se campos de nome e e-mail estão completos.",
+        color: "#1D1D1F",
+        background: "#EEE9FA",
+        confirmButtonColor: "#4E2E9E",
+      });
+      return;
+    }
+
+    fetch("/usuarios/alterar/senha", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nome: nome,
+        email: email,
+        senha: senha,
+        idUsuario: idUsuario,
+      }),
+    })
+      .then((resposta) => {
+        if (resposta.ok) {
+          sairEditar();
+          carregarDados(idUsuario);
+          Swal.fire({
+            icon: "success",
+            title: "Dados Alterados Com Sucesso!",
+            text: `Id de funcionário editado: ${idUsuario}`,
+            color: "#1D1D1F",
+            background: "#EEE9FA",
+            confirmButtonColor: "#4E2E9E",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Erro! ", error);
+      });
+  }
+</script>
+
 </html>

@@ -267,14 +267,17 @@ JOIN (
 -- VIEW PARA O E DO ETL
 -- AJUSTE - ÚLTIMOS 7 DIAS
 CREATE OR REPLACE VIEW vista_registro_cpu AS
-	SELECT registro, idEmpresa, fkRecurso FROM Captura 
-		JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
-		JOIN Maquina ON fkMaquina = idMaquina
-		JOIN Empresa ON fkEmpresa = idEmpresa;
+SELECT 
+    registro, 
+    idEmpresa, 
+    fkRecurso 
+FROM Captura
+JOIN MaquinaRecurso ON fkMaquinaRecurso = idMaquinaRecurso
+JOIN Maquina ON fkMaquina = idMaquina
+JOIN Empresa ON fkEmpresa = idEmpresa
+WHERE dthCriacao >= DATE_SUB(CURDATE(), INTERVAL 7 DAY);
         
-SELECT registro FROM vista_registro_cpu
-	 WHERE idEmpresa = 1 AND fkRecurso = 1;
-             
+        
              
 -- VIEW PARA O PLOT DO HISTOGRAMA
 CREATE OR REPLACE VIEW vista_histograma_cpu AS
@@ -420,7 +423,7 @@ FROM vista_irregularidade_total_e_percentual
 WHERE fkEmpresa = 1;
 
 -- Dados media de alertas
--- AJUSTE - ÚLTIMOS 30 DIAS
+-- AJUSTADA - ÚLTIMOS 30 DIAS
 CREATE OR REPLACE VIEW vista_capturas_alerta_total_e_media_diaria AS
     SELECT 
         (SELECT COUNT(*) FROM Captura 
@@ -556,7 +559,6 @@ SELECT * FROM vista_ultimas_metricas WHERE idMaquina = 1;
 
 -- ranking de recursos mais problematicos
 CREATE OR REPLACE VIEW vista_ranking_recurso AS
--- AJUSTE - DIA ATUAL
 	SELECT (SELECT COUNT(DISTINCT idMaquina) AS DicosIrregulares FROM vista_irregularidade_disco WHERE (usado / capacidade) > 0.85) AS qtdDISCO,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 1 AND isAlerta=1) AS qtdCPU,
 			(SELECT COUNT(registro) AS qtdCpu FROM vista_irregularidade WHERE idEmpresa = 1 AND fkRecurso = 2 AND isAlerta=1) AS qtdRAM,
@@ -735,6 +737,389 @@ GROUP BY
     maquina.idMaquina, maquina.fkEmpresa, DATE(captura.dthCriacao)
 ORDER BY
     maquina.idMaquina, data_registro;
+
+CREATE VIEW ServGuard.MaquinasUsoHardAlto AS
+WITH UltimaCaptura AS (
+    SELECT 
+        MR.fkMaquina, 
+        C.fkMaquinaRecurso,
+        R.nome AS nomeRecurso,
+        MAX(C.dthCriacao) AS ultimaCaptura
+    FROM 
+        ServGuard.Captura C
+    JOIN 
+        ServGuard.MaquinaRecurso MR ON C.fkMaquinaRecurso = MR.idMaquinaRecurso
+    JOIN 
+        ServGuard.Recurso R ON MR.fkRecurso = R.idRecurso
+    WHERE 
+        (R.nome = 'usoCPU' OR R.nome = 'usoRAM') -- Filtro apenas para CPU e RAM
+    GROUP BY 
+        MR.fkMaquina, C.fkMaquinaRecurso, R.nome
+)
+SELECT 
+    M.idMaquina,
+    M.nome AS nomeMaquina,
+    M.fkEmpresa,
+    COUNT(DISTINCT M.idMaquina) AS qtdMaquinas
+FROM 
+    ServGuard.Maquina M
+JOIN 
+    ServGuard.MaquinaRecurso MR ON M.idMaquina = MR.fkMaquina
+JOIN 
+    UltimaCaptura UC ON MR.idMaquinaRecurso = UC.fkMaquinaRecurso
+JOIN 
+    ServGuard.Captura C ON UC.fkMaquinaRecurso = C.fkMaquinaRecurso AND UC.ultimaCaptura = C.dthCriacao
+JOIN 
+    ServGuard.Recurso R ON MR.fkRecurso = R.idRecurso
+WHERE 
+    (R.nome = 'usoCPU' AND C.registro) OR (R.nome = 'usoRAM' AND C.registro) > 80 -- Filtra máquinas com uso > 80%
+GROUP BY 
+    M.idMaquina, M.nome, M.fkEmpresa;
+    
+    
+CREATE VIEW ServGuard.ArmazenamentoMaquinas AS
+SELECT 
+    M.fkEmpresa,                           -- Identificador da empresa
+    M.idMaquina,                           -- Identificador da máquina
+    SUM(V.capacidade) AS capacidadeTotal,  -- Soma da capacidade total de todos os volumes da máquina
+    SUM(CV.usado) AS usadoTotal            -- Soma do uso total de todos os volumes da máquina
+FROM 
+    ServGuard.Maquina M
+JOIN 
+    ServGuard.Volume V ON M.idMaquina = V.fkMaquina
+JOIN 
+    ServGuard.CapturaVolume CV ON V.idVolume = CV.fkVolume
+JOIN 
+    (SELECT 
+        fkVolume, 
+        MAX(dthCriacao) AS ultimaCaptura -- Garante que usamos a última captura de cada volume
+     FROM 
+        ServGuard.CapturaVolume
+     GROUP BY 
+        fkVolume) AS UC ON CV.fkVolume = UC.fkVolume AND CV.dthCriacao = UC.ultimaCaptura
+GROUP BY 
+    M.fkEmpresa, M.idMaquina;
+    
+
+CREATE VIEW ServGuard.UsoRamCpuPorEmpresa AS
+SELECT 
+    M.fkEmpresa,               -- Identificador da empresa
+    M.idMaquina,               -- Identificador da máquina
+    M.nome AS nomeMaquina,     -- Nome da máquina (ou apelido)
+    RAM.registro AS usoRAM,    -- Uso de RAM da máquina
+    CPU.registro AS usoCPU     -- Uso de CPU da máquina
+FROM 
+    ServGuard.Maquina M
+JOIN 
+    ServGuard.MaquinaRecurso MR_RAM ON M.idMaquina = MR_RAM.fkMaquina
+JOIN 
+    ServGuard.Recurso R_RAM ON MR_RAM.fkRecurso = R_RAM.idRecurso AND R_RAM.nome = 'usoRAM'
+JOIN 
+    ServGuard.Captura RAM ON MR_RAM.idMaquinaRecurso = RAM.fkMaquinaRecurso AND RAM.dthCriacao = (
+        SELECT MAX(C.dthCriacao)
+        FROM ServGuard.Captura C
+        WHERE C.fkMaquinaRecurso = MR_RAM.idMaquinaRecurso
+    )
+JOIN 
+    ServGuard.MaquinaRecurso MR_CPU ON M.idMaquina = MR_CPU.fkMaquina
+JOIN 
+    ServGuard.Recurso R_CPU ON MR_CPU.fkRecurso = R_CPU.idRecurso AND R_CPU.nome = 'usoCPU'
+JOIN 
+    ServGuard.Captura CPU ON MR_CPU.idMaquinaRecurso = CPU.fkMaquinaRecurso AND CPU.dthCriacao = (
+        SELECT MAX(C.dthCriacao)
+        FROM ServGuard.Captura C
+        WHERE C.fkMaquinaRecurso = MR_CPU.idMaquinaRecurso
+    );
+
+CREATE VIEW ServGuard.MaioresUsosCpuRamUltimos7Dias AS
+SELECT
+    e.idEmpresa,
+    e.nome AS nomeEmpresa,
+    m.idMaquina,
+    m.nome AS nomeMaquina,
+    MAX(CASE WHEN r.nome = 'usoCPU' THEN c.registro ELSE 0 END) AS maiorUsoCPU,
+    MAX(CASE WHEN r.nome = 'usoRAM' THEN c.registro ELSE 0 END) AS maiorUsoRAM,
+    (MAX(CASE WHEN r.nome = 'usoCPU' THEN c.registro ELSE 0 END) + 
+     MAX(CASE WHEN r.nome = 'usoRAM' THEN c.registro ELSE 0 END)) / 2 AS maiorUsoSomadoDividido,
+    MAX(c.dthCriacao) AS dataCaptura
+FROM
+    ServGuard.Empresa e
+JOIN
+    ServGuard.Maquina m ON e.idEmpresa = m.fkEmpresa
+JOIN
+    ServGuard.MaquinaRecurso mr ON m.idMaquina = mr.fkMaquina
+JOIN
+    ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN
+    ServGuard.Captura c ON mr.idMaquinaRecurso = c.fkMaquinaRecurso
+WHERE
+    r.nome IN ('usoCPU', 'usoRAM') -- Filtro para CPU e RAM
+    AND c.dthCriacao >= CURDATE() - INTERVAL 7 DAY -- Filtra os últimos 7 dias
+GROUP BY
+    e.idEmpresa, m.idMaquina
+ORDER BY
+    maiorUsoSomadoDividido DESC;
+
+CREATE OR REPLACE VIEW detalhesMaquinasPico AS
+SELECT 
+    m.idMaquina,
+    m.fkEmpresa,
+    IFNULL(m.apelido, 'indefinido') AS apelido,
+    m.nome,
+    -- Uso de CPU nos últimos 7 dias
+    (SELECT MAX(c.registro) 
+     FROM ServGuard.Captura c
+     JOIN ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina
+     AND mr.fkRecurso = (SELECT r.idRecurso FROM ServGuard.Recurso r WHERE r.nome = 'usoCPU')
+     AND c.dthCriacao > NOW() - INTERVAL 7 DAY
+    ) AS usoCPU,
+    -- Uso de RAM nos últimos 7 dias
+    (SELECT MAX(c.registro) 
+     FROM ServGuard.Captura c
+     JOIN ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+     WHERE mr.fkMaquina = m.idMaquina
+     AND mr.fkRecurso = (SELECT r.idRecurso FROM ServGuard.Recurso r WHERE r.nome = 'usoRAM')
+     AND c.dthCriacao > NOW() - INTERVAL 7 DAY
+    ) AS usoRAM,
+    m.modeloCPU,
+    m.qtdNucleosFisicos,
+    m.qtdNucleosLogicos,
+    m.capacidadeRAM,
+    m.MACAddress,
+    m.isAtiva,
+    -- Captura o último valor de usado do disco
+    (SELECT SUM(cv.usado)
+     FROM ServGuard.CapturaVolume cv
+     JOIN ServGuard.Volume v2 ON v2.idVolume = cv.fkVolume
+     WHERE v2.fkMaquina = m.idMaquina 
+     AND cv.dthCriacao = (
+         SELECT MAX(cv2.dthCriacao)
+         FROM ServGuard.CapturaVolume cv2
+         WHERE cv2.fkVolume = v2.idVolume
+     )
+    ) AS discoUsado,
+    -- Soma a capacidade total dos volumes
+    SUM(DISTINCT v.capacidade) AS discoTotal
+FROM 
+    ServGuard.Maquina m
+LEFT JOIN 
+    ServGuard.Volume v ON v.fkMaquina = m.idMaquina
+GROUP BY 
+    m.idMaquina,
+    m.fkEmpresa,
+    m.apelido,
+    m.nome,
+    m.modeloCPU,
+    m.qtdNucleosFisicos,
+    m.qtdNucleosLogicos,
+    m.capacidadeRAM,
+    m.MACAddress,
+    m.isAtiva
+ORDER BY 
+    m.isAtiva DESC;
+
+CREATE OR REPLACE VIEW detalhesDiscoMaquinas AS
+SELECT 
+    m.idMaquina,
+    m.fkEmpresa,  -- Incluindo fkEmpresa para filtrar se necessário
+    -- Captura o último valor de usado do disco
+    (SELECT SUM(cv.usado)
+     FROM ServGuard.CapturaVolume cv
+     JOIN ServGuard.Volume v2 ON v2.idVolume = cv.fkVolume
+     WHERE v2.fkMaquina = m.idMaquina 
+     AND cv.dthCriacao = (
+         SELECT MAX(cv2.dthCriacao)
+         FROM ServGuard.CapturaVolume cv2
+         WHERE cv2.fkVolume = v2.idVolume
+     )
+    ) AS discoUsado,
+    -- Soma a capacidade total dos volumes
+    SUM(DISTINCT v.capacidade) AS discoTotal
+FROM 
+    ServGuard.Maquina m
+LEFT JOIN 
+    ServGuard.Volume v ON v.fkMaquina = m.idMaquina
+GROUP BY 
+    m.idMaquina,
+    m.fkEmpresa
+ORDER BY 
+    m.idMaquina;
+
+
+CREATE OR REPLACE VIEW ServGuard.HistoricoCpuRam AS
+SELECT 
+    m.idMaquina,
+    m.nome AS nomeMaquina,
+    c.dthCriacao AS dataCaptura,
+    m.fkEmpresa,  -- Incluindo o ID da empresa para que você possa filtrar depois
+    AVG(
+        CASE 
+            WHEN r.nome = 'usoCPU' THEN c.registro
+            WHEN r.nome = 'usoRAM' THEN c.registro
+            ELSE NULL
+        END
+    ) AS usoProcessamento -- Calculando a média de CPU e RAM para cada captura
+FROM 
+    ServGuard.Captura c
+JOIN 
+    ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN 
+    ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+JOIN 
+    ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+WHERE 
+    r.nome IN ('usoCPU', 'usoRAM')  -- Filtrando para CPU e RAM
+GROUP BY 
+    m.idMaquina, m.nome, c.dthCriacao, m.fkEmpresa  -- Agrupando por máquina, data e empresa
+ORDER BY 
+    c.dthCriacao DESC;  -- Ordenando pela data de captura, do mais recente para o mais antigo
+
+CREATE OR REPLACE VIEW vista_pico_diario_processamento AS
+SELECT
+    m.fkEmpresa AS idEmpresa,
+    DATE(c.dthCriacao) AS data,
+    m.idMaquina,
+    (
+        -- Calcula o pico de CPU
+        GREATEST(
+            MAX(CASE WHEN r.nome = 'usoCPU' THEN c.registro ELSE NULL END),
+            -- Calcula o pico de RAM
+            MAX(CASE WHEN r.nome = 'usoRAM' THEN c.registro ELSE NULL END)
+        )
+    ) AS pico_processamento
+FROM
+    Captura c
+JOIN
+    MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+JOIN
+    Recurso r ON mr.fkRecurso = r.idRecurso
+JOIN
+    Maquina m ON mr.fkMaquina = m.idMaquina
+WHERE
+    r.nome IN ('usoCPU', 'usoRAM')
+GROUP BY
+    m.fkEmpresa,
+    m.idMaquina,
+    DATE(c.dthCriacao);
+
+SELECT
+    idEmpresa,
+    data,
+    idMaquina,
+    pico_processamento
+FROM
+    vista_pico_diario_processamento
+WHERE
+    idEmpresa = 1
+    AND idMaquina = 2;
+
+CREATE OR REPLACE VIEW ServGuard.vista_maquinas_rede_por_semana AS
+WITH MaquinasRede AS (
+    SELECT 
+        CONCAT(
+            YEAR(dthCriacao), 
+            LPAD(WEEK(dthCriacao, 1), 2, '0')
+        ) AS numero_semana,
+        m.fkEmpresa,
+        COUNT(DISTINCT mr.fkMaquina) AS quantidade_maquinas
+    FROM 
+        ServGuard.Captura c
+    JOIN 
+        ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+    JOIN 
+        ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+    JOIN 
+        ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+    WHERE 
+        r.nome IN (
+            'velocidadeDownload',
+            'velocidadeUpload',
+            'pacotesEnviados',
+            'pacotesRecebidos',
+            'megabytesEnviados',
+            'megabytesRecebidos',
+            'descartePacotesEntrada',
+            'descartePacotesSaida',
+            'erroPacotesEntrada',
+            'erroPacotesSaida'
+        )
+        AND m.isAtiva = 1
+    GROUP BY 
+        numero_semana,
+        m.fkEmpresa
+)
+SELECT 
+    numero_semana,
+    quantidade_maquinas,
+    fkEmpresa
+FROM 
+    MaquinasRede
+ORDER BY 
+    numero_semana DESC;
+
+CREATE OR REPLACE VIEW ServGuard.vista_alertas_rede_por_semana AS
+WITH AlertasRede AS (
+    SELECT 
+        CONCAT(
+            YEAR(c.dthCriacao), 
+            LPAD(WEEK(c.dthCriacao, 1), 2, '0')
+        ) AS numero_semana,
+        m.fkEmpresa,
+        
+        SUM(CASE 
+            WHEN r.nome IN ('pacotesEnviados', 'pacotesRecebidos') 
+            THEN 1 
+            ELSE 0 
+        END) AS total_alertas_pacotes,
+        
+        SUM(CASE 
+            WHEN r.nome IN ('megabytesEnviados', 'megabytesRecebidos') 
+            THEN 1 
+            ELSE 0 
+        END) AS total_alertas_megabytes,
+        
+        SUM(CASE 
+            WHEN r.nome IN ('descartePacotesEntrada', 'descartePacotesSaida', 'erroPacotesEntrada', 'erroPacotesSaida') 
+            THEN 1 
+            ELSE 0 
+        END) AS total_alertas_erros_descartes
+        
+    FROM 
+        ServGuard.Captura c
+    JOIN 
+        ServGuard.MaquinaRecurso mr ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+    JOIN 
+        ServGuard.Recurso r ON mr.fkRecurso = r.idRecurso
+    JOIN 
+        ServGuard.Maquina m ON mr.fkMaquina = m.idMaquina
+    WHERE 
+        c.isAlerta = 1
+        AND r.nome IN (
+            'pacotesEnviados',
+            'pacotesRecebidos',
+            'megabytesEnviados',
+            'megabytesRecebidos',
+            'descartePacotesEntrada',
+            'descartePacotesSaida',
+            'erroPacotesEntrada',
+            'erroPacotesSaida'
+        )
+    GROUP BY 
+        numero_semana,
+        m.fkEmpresa
+)
+SELECT 
+    numero_semana,
+    fkEmpresa,
+    total_alertas_pacotes,
+    total_alertas_megabytes,
+    total_alertas_erros_descartes
+FROM 
+    AlertasRede
+ORDER BY 
+    numero_semana DESC;
+
 
 
 -- PROCEDURES

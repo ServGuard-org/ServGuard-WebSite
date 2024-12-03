@@ -62,4 +62,40 @@ router.get("/dadosGraficoAlertas/:idEmpresa", function (req, res) {
     medidaController.buscarDadosGraficoAlertas(req,res);
 });
 
+router.get("/usohardwarealto/:idEmpresa", function(req,res){
+    medidaController.buscarUsoHardwareAlto(req,res);
+});
+
+router.get("/usoDiscoAlto/:idEmpresa", function (req, res){
+    medidaController.buscarUsoDiscoAlto(req,res);
+});
+
+router.get("/usoRamCpuPorMaquina/:idEmpresa", function (req, res){
+    medidaController.buscarRamCpuMaquina(req,res);
+});
+
+router.get("/usoDiscoMaquinas/:idEmpresa", function(req, res){
+    medidaController.buscarUsoDiscoMaquinas(req,res);
+});
+
+router.get("/usoProcessamentoUltimos7/:idEmpresa", function(req, res){
+    medidaController.buscarUsoProcessamentoUltimos7(req,res);
+});
+
+router.get("/usoMaquinaHistorico/:idEmpresa", function(req,res){
+    medidaController.buscarHistoricoMaquina(req,res);
+});
+
+router.get("/listarMaquinasPico/:idEmpresa", function(req,res){
+    medidaController.obterListaMaquinasPico(req,res);
+});
+
+router.get("/listarHistoricoProcessamento/:idEmpresa/:idMaquina", function(req,res){
+    medidaController.obterListaHistoricoProcessamento(req,res);
+});
+
+router.get("/historicoDiarioProcessamento/:idEmpresa/:idMaquina", function(req,res){
+    medidaController.obterHistoricoDiarioProcessamento(req,res);
+});
+
 module.exports = router;

@@ -21,26 +21,41 @@
 .father-general-use{
     position: relative;
     display: flex;
-    flex-direction: column;
-    gap: var(--gap-2);
+    gap: var(--gap-3);
     width: 100%;
     height: 100%;
     z-index: 10;
 
     & .child-general-use{
         display: flex;
-        gap: var(--gap-4);
-        width: 100%;
-        height: 50%;
+        flex-direction: column;
+        gap: var(--gap-3);
+        width: 50%;
+        height: 100%;
 
         & .general-use-content-large{
-            width: 55%;
+            width: 100%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap-3);
         }
 
         & .general-use-content-medium{
-            width: 45%;
-            height: 100%;
+            width: 100%;
+            height: 52%;
+            padding: var(--gap-2);
+
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.50);
+            background: rgba(255, 255, 255, 0.11);
+            box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+            backdrop-filter: blur(2px);
+        }
+
+        & .general-use-content-disco{
+            width: 100%;
+            height: 48%;
             padding: var(--gap-1);
 
             border-radius: 30px;
@@ -86,6 +101,7 @@
                     padding: var(--gap-3);
 
                     & .card-graphic-analise{
+                        position: relative;
                         width: 100%;
                         height: 100%;
                         border: 2px solid var(--normal-purple);
@@ -99,10 +115,56 @@
                     padding: var(--gap-3);
 
                     & .card-sgi-analise{
+                        position: relative;
                         width: 100%;
                         height: 100%;
                         border: 2px solid var(--normal-purple);
                         border-radius: 10px;
+
+                        & .space-logo-title{
+                            width: 100%;
+                            height: 63px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: var(--gap-2);
+                        }
+
+                        & .space-text-scroll{
+                            width: 100%;
+                            height: calc(100% - 63px);
+                            overflow-y: auto;
+
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        & .space-text-scroll::-webkit-scrollbar {
+                            width: 12px;
+                            /* Largura da barra de rolagem */
+                        }
+                        
+                        & .space-text-scroll::-webkit-scrollbar-track {
+                            background: #f0f0f000;
+                            /* Cor de fundo da trilha */
+                            border-radius: 10px;
+                            /* Cantos arredondados */
+                        }
+                        
+                        & .space-text-scroll::-webkit-scrollbar-thumb {
+                            background-color: var(--light-purple);
+                            /* Cor do "polegar" da barra */
+                            border-radius: 10px;
+                            /* Cantos arredondados */
+                            border: 3px solid #f0f0f0;
+                            /* Espaçamento interno */
+                        }
+                        
+                        & .space-text-scroll::-webkit-scrollbar-thumb:hover {
+                            background-color: var(--dark-purple);
+                            /* Cor ao passar o mouse */
+                        }
                     }
                 }
             }
@@ -138,28 +200,27 @@
         box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
         backdrop-filter: blur(2px);
     }
+}
 
-    & .general-use-cards-info{
+.general-use-cards-info{
+    display: flex;
+    gap: var(--gap-3);
+    width: 100%;
+    height: 25%;
+
+    & .card-info{
         display: flex;
         flex-direction: column;
-        gap: var(--gap-2);
-        width: 50%;
+        justify-content: space-between;
+        width: 100%;
         height: 100%;
+        padding: var(--gap-1);
 
-        & .card-info{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 100%;
-            height: 50%;
-            padding: var(--gap-1);
-
-            border-radius: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.50);
-            background: rgba(255, 255, 255, 0.11);
-            box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
-            backdrop-filter: blur(2px);
-        }
+        border-radius: 30px;
+        border: 2px solid rgba(255, 255, 255, 0.50);
+        background: rgba(255, 255, 255, 0.11);
+        box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
+        backdrop-filter: blur(2px);
     }
 }
 
@@ -169,7 +230,9 @@
     gap: var(--gap-1);
     width: 100%;
     height: 100%;
+    max-height: 760px;
     padding: var(--gap-1);
+    overflow: hidden;
 
     border-radius: 30px;
     border: 2px solid rgba(255, 255, 255, 0.50);
@@ -180,11 +243,14 @@
     & .list-machine-menu{
         width: 100%;
         height: 43px;
+        display: flex;
+        align-items: center;
     }
 
     & .list-machine-card{
         width: 100%;
-        height: calc(100% - 43px);
+        height: calc(100% - 60px);
+        position: relative;
 
         & .column-machine{
             display: grid;
@@ -193,7 +259,7 @@
             grid-template-columns: 1fr 3fr 2fr 2fr 3fr;
             width: 100%;
             height: 30px;
-            padding: 0px 5px 0px 5px;
+            padding: 0px 20px 0px 9px;
 
             & .column-item{
                 display: flex;
@@ -212,8 +278,7 @@
             overflow-y: scroll;
             overflow-x: hidden;
             width: 99.8%;
-            max-height: 210px;
-            height: calc(100% - 44px);
+            height: calc(100% - 50px);
             padding: 0px 5px 0px 5px;
             
             & .machine-card{
@@ -231,12 +296,20 @@
                 background: rgba(255, 255, 255, 0.11);
                 box-shadow: 0px 0px 82.7px -41px rgba(121, 78, 212, 0.90);
                 backdrop-filter: blur(2px);
+                transition: all 0.5s ease;
 
                 & .column-item{
                     display: flex;
                     justify-content: center;
                     align-items: center;
                 }
+            }
+
+            & .machine-card:hover{
+                background: rgba(125, 88, 206, 0.788);
+                transition: all 0.5s ease;
+                color: var(--white-normal);
+                cursor: pointer;
             }
         }
 
@@ -256,6 +329,18 @@
             border-radius: 10px;
         }
     }
+
+    & .list-machine-card::after {
+        content: ''; /* Necessário para criar o pseudo-elemento */
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        width: 100%;
+        height: 10%; /* Tamanho do gradiente de blur */
+        background: #f7edfd88; /* Cor de fundo com transparência */
+        filter: blur(10px); /* Aplica o efeito de desfoque */
+        pointer-events: none; /* Garante que o pseudo-elemento não interfira na interação */
+    }
 }
 
 .general-use-father-three{
@@ -265,14 +350,61 @@
     width: 100%;
     height: 100%;
 
-    & h4{
+    & .Armazenamento{
         width: 100%;
         height: 33px;
     }
 
     & .space-graphic{
-        background: rgb(0, 66, 128);
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: calc(100% - 33px);
+    }
+
+    & .space-disco-info{
+        display: flex;
+        gap: var(--gap-2);
+        width: 100%;
+        height: 100%;
+
+        & .space-graphic-disco{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+        }
+
+        & .info-disco-maquinas{
+            width: 50%;
+            height: 100%;
+            padding: var(--gap-2);
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap-2);
+
+            border: 2px solid var(--normal-purple);
+            border-radius: 20px;
+
+            & .item-faixa{
+                width: 100%;
+                height: 50px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 10px;
+                border: 2px solid var(--normal-purple);
+                padding: 0px var(--gap-1);
+
+                & .space-disco-faixa{
+                    width: 45%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
     }
 }

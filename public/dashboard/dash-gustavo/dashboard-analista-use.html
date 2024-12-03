@@ -19,8 +19,8 @@
                     <img src="../../assets/svg/logo.svg" alt="#logo" />
                 </div>
                 <div class="navbar-navlink-dash-adm">
-                    <ul class="list-navlink-dash-adm">
-                        <li>
+                    <ul class="list-navlink-dash-adm" id="ul-nav">
+                        <li id="li-adm">
                             <a href="../dashboard-adm.html" class="link-dash-adm">
                                 <img src="../../assets/svg/layout-icon.svg" alt="#icone-layout" />
                             </a>
@@ -32,7 +32,7 @@
                             </a>
                             <p class="little-text">Detalhes</p>
                         </li>
-                        <li>
+                        <li id="li-funcionario">
                             <a href="../gerenciamento-funcionario.html" class="link-dash-adm">
                                 <img src="../../assets/svg/func-icon.svg" alt="#icone-funcionario" />
                             </a>
@@ -144,13 +144,13 @@
                                 <div class="dash-titulo-gauge1">
                                     <h4 class="bold">Média de uso CPU</h4>
                                 </div>
-                                <div id="gaugeChart" style="max-width: 300px; margin: auto;"></div>
+                                <div id="gaugeChart" style="max-width: 280px; margin: auto;"></div>
                             </div>
                             <div class="dash-alert-grafic-box2">
                                 <div class="dash-titulo-gauge2">
                                     <h4 class="bold">Média de uso RAM</h4>
                                 </div>
-                                <div id="gaugeChart2" style="max-width: 300px; margin: auto;"></div>
+                                <div id="gaugeChart2" style="max-width: 280px; margin: auto;"></div>
                             </div>
                         </div>
                     </div>
@@ -208,9 +208,9 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="dash-alert-coluna-2-grafic">
-                            <div class="area-grafic" id="chartBarras" 
-                            style="width: 100%; height: 100%; margin: 0 auto; position: relative"></div>
+                        <div class="dash-alert-coluna-2-grafic ">
+                            <div class="area-grafic" id="chartBarras"
+                                style="width: 100%; height: 100%;"></div>
                         </div>
                     </div>
                 </div>
@@ -219,6 +219,19 @@
     </section>
 </body>
 <script>
+
+    function verificarCargo() {
+        var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+        if (isADM !== null && Number(isADM) === 0) {
+            document.getElementById('li-adm').style.display = 'none';
+            document.getElementById('li-funcionario').style.display = 'none';
+            document.getElementById('ul-nav').style.display = 'flex';
+        } else {
+            document.getElementById('li-adm').style.display = 'flex';
+            document.getElementById('li-funcionario').style.display = 'flex';
+            document.getElementById('ul-nav').style.display = 'flex';
+        }
+    }
 
     const idMaquina = sessionStorage.getItem("ID_MAQUINA");
 
@@ -243,9 +256,8 @@
     }
 
     function carregarPagina() {
-        sessionStorage.removeItem("VOLTAR_PAGINA");
-        sessionStorage.setItem("VOLTAR_PAGINA", "D_Alert");
         consultarMaquina();
+        verificarCargo();
         // consultarMaquinasFuncionamento();
         // obterIrrCPU();
         // obterIrrRAM();
@@ -718,7 +730,7 @@
             .then(response => response.json())
             .then(data => {
                 // Processar os dados recebidos
-                const categories = data.map(item => item.data_registro); // Datas no eixo X
+                const categories = data.map(item => formatarData(item.data_registro)); // Datas no eixo X
                 const usoCPU = data.map(item => item.media_semanal_uso_cpu); // Média de uso CPU
                 const usoRAM = data.map(item => item.media_semanal_uso_ram); // Média de uso RAM
 
@@ -777,7 +789,7 @@
                     xaxis: {
                         categories: categories, // Datas no eixo X
                         title: {
-                            text: 'Dos Últimos 7 Dias'
+                            text: 'Data'
                         }
                     },
                     yaxis: {
@@ -824,7 +836,7 @@
             .then(response => response.json())
             .then(data => {
                 // Processar os dados recebidos
-                const categories = data.map(item => item.data_registro); // Datas no eixo X
+                const categories = data.map(item => formatarData(item.data_registro)); // Datas no eixo X
                 const usoCPU = data.map(item => item.media_semanal_uso_cpu); // Média de uso CPU
                 const usoRAM = data.map(item => item.media_semanal_uso_ram); // Média de uso RAM
 
@@ -862,7 +874,7 @@
                     xaxis: {
                         categories: categories, // Datas no eixo X
                         title: {
-                            text: 'Dos Últimos 7 Dias'
+                            text: 'Data'
                         }
                     },
                     yaxis: {
@@ -1015,10 +1027,10 @@
     //         });
     // }
 
-    // const formatarData = data => {
-    //     const dataFormatada = new Date(data);
-    //     return dataFormatada.toLocaleDateString();
-    // }
+    function formatarData(data) {
+        const dataFormatada = new Date(data);
+        return dataFormatada.toLocaleDateString();
+    }
 
     // function atualizarMapaInterface(dadosMapa) {
 

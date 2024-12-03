@@ -309,6 +309,196 @@ function buscarMaquinasConnect(req, res){
     });
 }
 
+function buscarUsoHardwareAlto(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarUsoHardwareAlto(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar quantidade de maquinas com uso de Hardware alto", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarUsoDiscoAlto(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarUsoDiscoAlto(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar quantidade de maquinas com uso de Disco alto", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarRamCpuMaquina(req,res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarRamCpuMaquina(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar uso de CPU e Ram das Máquinas", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarUsoDiscoMaquinas(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarUsoDiscoMaquinas(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar uso de Disco das Máquinas", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarUsoProcessamentoUltimos7(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarUsoProcessamentoUltimos7(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar uso de processamento das Máquinas nos ultimos 7 dias", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarHistoricoMaquina(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.buscarHistoricoMaquina(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar uso de processamento das Máquinas nos ultimos 7 dias", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function obterListaMaquinasPico(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio.");
+    }
+    medidaModel.obterListaMaquinasPico(idEmpresa).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar maquinas e uso de cpu e ram dos ultimos 7 dias", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function obterListaHistoricoProcessamento(req, res){
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (idEmpresa == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Empresa é Obrigatorio");
+    }
+    if (idMaquina == undefined){
+        console.log("Id empresa está undefined");
+        return res.status(400).send("Id da Máquina é Obrigatorio");
+    }
+    medidaModel.obterListaHistoricoProcessamento(idEmpresa, idMaquina).then(function (resultado){
+        if (resultado.length > 0){
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro){
+        console.log(erro);
+        console.log("Houve um erro ao buscar historico de Maquinas da Empresa!", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function obterHistoricoDiarioProcessamento(req, res) {
+    console.log("Parâmetros recebidos no back-end:", req.params);
+
+    var idEmpresa = req.params.idEmpresa;
+    var idMaquina = req.params.idMaquina;
+
+    if (!idEmpresa || idEmpresa === "null" || idEmpresa === "") {
+        console.log("Id empresa está inválido");
+        return res.status(400).send("Id da Empresa é Obrigatorio");
+    }
+
+    if (!idMaquina || idMaquina === "null" || idMaquina === "") {
+        console.log("Id máquina está inválido");
+        return res.status(400).send("Id da Máquina é Obrigatorio");
+    }
+
+    medidaModel.obterHistoricoDiarioProcessamento(idEmpresa, idMaquina)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar dados no banco:", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
 module.exports = {
     buscarDadosHistograma,
     buscarEscalaInstabilidade,
@@ -324,5 +514,14 @@ module.exports = {
     buscarPorcentagemAlertasRAM,
     buscarMediaGaugeCPU,
     buscarMediaGaugeRAM,
-    buscarUsoTotalSemanal
+    buscarUsoTotalSemanal,
+    buscarUsoHardwareAlto,
+    buscarUsoDiscoAlto,
+    buscarRamCpuMaquina,
+    buscarUsoDiscoMaquinas,
+    buscarUsoProcessamentoUltimos7,
+    buscarHistoricoMaquina,
+    obterListaMaquinasPico,
+    obterListaHistoricoProcessamento,
+    obterHistoricoDiarioProcessamento
 }

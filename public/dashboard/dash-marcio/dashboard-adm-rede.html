@@ -220,31 +220,43 @@
                         <div class="dash-rede-dentro-historico">
                             <div class="dash-rede-dentro-historico-topo">
                                 <div class="dash-rede-itens-rede">
-                                    <h4 class="bold">Contagem de Alertas Semana (<span id="placeholder-semana-historico"
+                                    <h4 class="bold">Máquinas Medidas Semana (<span id="placeholder-semana-anterior-historico"
+                                        class="dash-rede-cor-anterior">DD/MM/YY</span>) x (<span id="placeholder-semana-historico"
                                             class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
-                                    <div class="dash-rede-itens-historico">
-                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): <span
-                                                id="contagem-pacotes">...</span></p>
-                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Megabytes (E/R):
-                                            <span id="contagem-megabytes">...</span>
+                                    <div class="dash-rede-itens-historico"
+                                        style="align-items: center; justify-content: center;">
+                                        <p class="bold" style="font-weight: 700; font-size: 30px;">
+                                            <span
+                                            id="contagem-maquinas-medidas-anterior" class="dash-rede-cor-anterior">...</span>
+                                            x
+                                            <span
+                                                id="contagem-maquinas-medidas" class="dash-rede-cor-atual">...</span> &nbsp; Máquina(s)
                                         </p>
-                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Erros e Descartes
-                                            (E/R): <span id="contagem-errosdesc">...</span></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="dash-rede-dentro-historico-baixo">
                                 <div class="dash-rede-itens-rede">
-                                    <h4 class="bold">Médias Semana (<span id="placeholder-semana-historico"
+                                    <h4 class="bold">Contagem de Alertas Semanas: (<span id="placeholder-semana-anterior-historico"
+                                        class="dash-rede-cor-anterior">DD/MM/YY</span>) X (<span id="placeholder-semana-historico"
                                             class="dash-rede-cor-atual">DD/MM/YY</span>)</h4>
                                     <div class="dash-rede-itens-historico">
-                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): <span
-                                                id="media-pacotes">...</span></p>
+                                        <p class="bold" style="font-weight: 700; font-size: 19px;">Pacotes (E/R): 
+                                            <span
+                                                id="contagem-pacotes-anterior" class="dash-rede-cor-anterior">...</span>
+                                                x
+                                            <span
+                                                id="contagem-pacotes" class="dash-rede-cor-atual">...</span></p>
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Megabytes (E/R):
-                                            <span id="media-megabytes">...</span>
+                                            <span id="contagem-megabytes-anterior" class="dash-rede-cor-anterior">...</span>
+                                            x
+                                            <span id="contagem-megabytes" class="dash-rede-cor-atual">...</span>
                                         </p>
                                         <p class="bold" style="font-weight: 700; font-size: 19px;">Erros e Descartes
-                                            (E/R): <span id="media-errosdesc">...</span></p>
+                                            (E/R): 
+                                            <span id="contagem-errosdesc-anterior" class="dash-rede-cor-anterior">...</span>
+                                            x
+                                            <span id="contagem-errosdesc" class="dash-rede-cor-atual">...</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -375,9 +387,13 @@
                 throw new Error(`Erro na requisição: ${resposta.status} - ${resposta.statusText}`);
             }
 
-            const semanas = await resposta.json();
+            const semanasRaw = await resposta.json();
 
-            dados.semanas = semanas;
+            // cortando a primeira e úiltima posição (semanas possíveis de causar problemas)
+            const semanas = semanasRaw.slice(1, semanasRaw.length - 1);
+            // apesar de tudo, os dados devem permanecer completos para evitar problemas
+            dados.semanas = semanasRaw;
+
             select.innerHTML = ""
             semanas.forEach(semana => {
                 const option = document.createElement('option');
@@ -398,9 +414,11 @@
 
     const atualizarContagensMedias = () => {
         const elementosData = document.querySelectorAll('#placeholder-semana-historico');
-        console.log(elementosData)
+        const elementosDataAnterior = document.querySelectorAll('#placeholder-semana-anterior-historico');
         const data = formatarData(dados.semana.inicio_semana);
-        elementosData.forEach(ed => ed.innerHTML = data)
+        const dataAnterior = formatarData(dados.semanaAnterior.inicio_semana);
+        elementosDataAnterior.forEach(ed => ed.innerHTML = dataAnterior);
+        elementosData.forEach(ed => ed.innerHTML = data);
     }
 
     const gerarAnaliseIA = dadosRegressaoLinear => {
@@ -829,6 +847,56 @@
         atualizarMapa(semanaNumero);
         atualizarRegressaoLinear();
         atualizarContagensMedias();
+        atualizarQtdMaquinasMedidas(semanaNumero);
+        atualizarQtdDados(semanaNumero);
+
+    }
+
+    const atualizarQtdMaquinasMedidas = numeroSemana => {
+
+        fetch(`/empresas/obterQtdMaquinasPorSemana/${sessionStorage.getItem(`ID_EMPRESA_USUARIO`)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(resposta => resposta.json().then(respostaFormatada => {
+                const contagemMaquinasSemana = respostaFormatada.find(rf => rf.numero_semana == numeroSemana);
+                const contagemMaquinasSemanaAnterior = respostaFormatada.find(rf => rf.numero_semana == numeroSemana - 1);
+                const elementoContagemAnterior = document.getElementById(`contagem-maquinas-medidas-anterior`);
+                const elementoContagem = document.getElementById(`contagem-maquinas-medidas`);
+                elementoContagemAnterior.innerHTML = contagemMaquinasSemanaAnterior.quantidade_maquinas;
+                elementoContagem.innerHTML = contagemMaquinasSemana.quantidade_maquinas;
+            })
+        )
+
+    }
+
+    const atualizarQtdDados = numeroSemana => {
+
+        fetch(`/empresas/obterQtdAlertasSemana/${sessionStorage.getItem(`ID_EMPRESA_USUARIO`)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(resposta => resposta.json().then(respostaFormatada => {
+                const contagemMaquinasSemana = respostaFormatada.find(rf => rf.numero_semana == numeroSemana);
+                const contagemMaquinasSemanaAnterior = respostaFormatada.find(rf => rf.numero_semana == numeroSemana - 1);
+                const elementoPacotes = document.getElementById(`contagem-pacotes`);
+                const elementoMegabytes = document.getElementById(`contagem-megabytes`);
+                const elementoErrosDesc = document.getElementById(`contagem-errosdesc`);
+                const elementoPacotesAnterior = document.getElementById(`contagem-pacotes-anterior`);
+                const elementoMegabytesAnterior = document.getElementById(`contagem-megabytes-anterior`);
+                const elementoErrosDescAnterior = document.getElementById(`contagem-errosdesc-anterior`);
+
+                elementoPacotesAnterior.innerHTML = contagemMaquinasSemanaAnterior.total_alertas_pacotes;
+                elementoMegabytesAnterior.innerHTML = contagemMaquinasSemanaAnterior.total_alertas_megabytes;
+                elementoErrosDescAnterior.innerHTML = contagemMaquinasSemanaAnterior.total_alertas_erros_descartes;
+                elementoPacotes.innerHTML = contagemMaquinasSemana.total_alertas_pacotes;
+                elementoMegabytes.innerHTML = contagemMaquinasSemana.total_alertas_megabytes;
+                elementoErrosDesc.innerHTML = contagemMaquinasSemana.total_alertas_erros_descartes;
+
+            })
+        )
 
     }
 

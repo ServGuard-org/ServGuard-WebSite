@@ -1,134 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ServGuard | Ger. Máquina</title>
-    <link rel="stylesheet" href="../css/main.css" />
-    <link
-      rel="shortcut icon"
-      href="../assets/svg/logo-white.svg"
-      type="image/x-icon"
-    />
-    <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
 
-  <body
-    onload="document.getElementById('pai-maquinas').innerHTML = '';
-consultarMaquinas(), verificarCargo()"
-  >
-    <!-- ----- TELA PRINCIPAL ----- -->
-    <section id="page-gerenciamento-maquina">
-      <header>
-        <div class="child-navbar-card-dash-adm">
-          <div class="navbar-logo-dash-adm">
-            <img src="../assets/svg/logo.svg" alt="#logo" />
-          </div>
-          <div class="navbar-navlink-dash-adm">
-            <ul class="list-navlink-dash-adm">
-              <li>
-                <a href="dashboard-adm.html" class="link-dash-adm">
-                  <img
-                    src="../assets/svg/layout-icon.svg"
-                    alt="#icone-layout"
-                  />
-                </a>
-                <p class="little-text">Início</p>
-              </li>
-              <li>
-                <a href="dashboard-analista.html" class="link-dash-adm">
-                  <img src="../assets/svg/search.svg" alt="#icone-layout" />
-                </a>
-                <p class="little-text">Detalhes</p>
-              </li>
-              <li>
-                <a
-                  href="./gerenciamento-funcionario.html"
-                  class="link-dash-adm"
-                >
-                  <img
-                    src="../assets/svg/func-icon.svg"
-                    alt="#icone-funcionario"
-                  />
-                </a>
-                <p class="little-text">Funcionário</p>
-              </li>
-              <li>
-                <a href="./gerenciamento-maquina.html" class="link-dash-adm active">
-                  <img src="../assets/svg/server-icon-white.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">Máquina</p>
-              </li>
-              <li>
-                <a href="./chat-sgi.html" class="link-dash-adm">
-                  <img src="../assets/svg/logo-sgi.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">SGI</p>
-              </li>
-              <li>
-                <a href="detalhes-funcionario.html" class="link-dash-adm">
-                  <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
-                </a>
-                <p class="little-text">Perfil</p>
-              </li>
-            </ul>
-          </div>
-          <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
-            <img src="../assets/svg/exit-icon.svg" alt="" />
-          </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ServGuard | Ger. Máquina</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="shortcut icon" href="../assets/svg/logo-white.svg" type="image/x-icon" />
+  <!-- IMPORTANDO A BIBLIOTECA DO SWEETALERT -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body onload="document.getElementById('pai-maquinas').innerHTML = '';
+consultarMaquinas(), verificarCargo()">
+  <!-- ----- TELA PRINCIPAL ----- -->
+  <section id="page-gerenciamento-maquina">
+    <header>
+      <div class="child-navbar-card-dash-adm">
+        <div class="navbar-logo-dash-adm">
+          <img src="../assets/svg/logo.svg" alt="#logo" />
         </div>
-      </header>
-
-      <!-- //// FIM NAVBAR //// -->
-
-      <main>
-        <div class="father-maquina-card">
-          <h3 class="bold">Gerenciamento de máquinas:</h3>
-          <div
-            class="child-maquina-card"
-            style="background-color: var(--dark-purple)"
-          >
-            <p class="bold text-white italic">
-              Total: <span id="num_total"></span>
-            </p>
-          </div>
-          <div class="child-maquina-card">
-            <p class="bold italic">Ativas: <span id="num_ana"></span></p>
-          </div>
-          <div class="child-maquina-card">
-            <p class="bold italic">Inativas: <span id="num_adms"></span></p>
-          </div>
+        <div class="navbar-navlink-dash-adm">
+          <ul class="list-navlink-dash-adm" id="ul-nav">
+            <li id="li-adm">
+              <a href="dashboard-adm.html" class="link-dash-adm">
+                <img src="../assets/svg/layout-icon.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Início</p>
+            </li>
+            <li>
+              <a href="dashboard-analista.html" class="link-dash-adm">
+                <img src="../assets/svg/search.svg" alt="#icone-layout" />
+              </a>
+              <p class="little-text">Detalhes</p>
+            </li>
+            <li id="li-funcionario">
+              <a href="./gerenciamento-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/func-icon.svg" alt="#icone-funcionario" />
+              </a>
+              <p class="little-text">Funcionário</p>
+            </li>
+            <li>
+              <a href="./gerenciamento-maquina.html" class="link-dash-adm active">
+                <img src="../assets/svg/server-icon-white.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Máquina</p>
+            </li>
+            <li>
+              <a href="./chat-sgi.html" class="link-dash-adm">
+                <img src="../assets/svg/logo-sgi.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">SGI</p>
+            </li>
+            <li>
+              <a href="detalhes-funcionario.html" class="link-dash-adm">
+                <img src="../assets/svg/perfil-icon.svg" alt="#icone-" />
+              </a>
+              <p class="little-text">Perfil</p>
+            </li>
+          </ul>
         </div>
+        <a href="#" class="navbar-exit-dash-adm" onclick="sairNavbar()">
+          <img src="../assets/svg/exit-icon.svg" alt="" />
+        </a>
+      </div>
+    </header>
 
-        <div class="father-maquina-lista">
-          <div class="child-maquina-colunas">
-            <!-- apenas para alinhar -->
-            <a href="#" class="child-elemento-editar"></a>
-            <div class="child-maquina-elemento-father-colunas">
-              <div class="child-maquina-elemento-coluna-area-id">
-                <p class="bold">ID</p>
-              </div>
-              <div class="child-maquina-elemento-coluna-area-nome">
-                <p class="bold">Nome</p>
-              </div>
-              <div class="child-maquina-elemento-coluna-area-apelido">
-                <p class="bold">Apelido</p>
-              </div>
-              <div class="child-maquina-elemento-coluna-area-cpu">
-                <p class="bold">CPU</p>
-              </div>
-              <div class="child-maquina-elemento-coluna-area-ram">
-                <p class="bold">RAM</p>
-              </div>
-              <div class="child-maquina-elemento-coluna-area-armazenamento">
-                <p class="bold">Armazenamento</p>
-              </div>
-              <div class="child-maquina-elemento-coluna-area-acao"></div>
+    <!-- //// FIM NAVBAR //// -->
+
+    <main>
+      <div class="father-maquina-card">
+        <h3 class="bold">Gerenciamento de Máquinas:</h3>
+        <div class="child-maquina-card" style="background-color: var(--dark-purple)">
+          <p class="bold text-white italic">
+            Total: <span id="num_total"></span>
+          </p>
+        </div>
+        <div class="child-maquina-card">
+          <p class="bold italic">Ativas: <span id="num_ana"></span></p>
+        </div>
+        <div class="child-maquina-card">
+          <p class="bold italic">Inativas: <span id="num_adms"></span></p>
+        </div>
+      </div>
+
+      <div class="father-maquina-lista">
+        <div class="child-maquina-colunas">
+          <!-- apenas para alinhar -->
+          <a href="#" class="child-elemento-editar"></a>
+          <div class="child-maquina-elemento-father-colunas">
+            <div class="child-maquina-elemento-coluna-area-id">
+              <p class="bold">ID</p>
             </div>
+            <div class="child-maquina-elemento-coluna-area-nome">
+              <p class="bold">Nome</p>
+            </div>
+            <div class="child-maquina-elemento-coluna-area-apelido">
+              <p class="bold">Apelido</p>
+            </div>
+            <div class="child-maquina-elemento-coluna-area-cpu">
+              <p class="bold">CPU</p>
+            </div>
+            <div class="child-maquina-elemento-coluna-area-ram">
+              <p class="bold">RAM</p>
+            </div>
+            <div class="child-maquina-elemento-coluna-area-armazenamento">
+              <p class="bold">Armazenamento</p>
+            </div>
+            <div class="child-maquina-elemento-coluna-area-acao"></div>
           </div>
-          <div class="child-maquina-father-elemento" id="pai-maquinas">
-            <!-- <div class="child-maquina-elemento">
+        </div>
+        <div class="child-maquina-father-elemento" id="pai-maquinas">
+          <!-- <div class="child-maquina-elemento">
                         <a href="#" class="child-elemento-editar" onclick="exibirEditar()">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
@@ -158,406 +141,261 @@ consultarMaquinas(), verificarCargo()"
                             </div>
                         </div>
                     </div> -->
-          </div>
-        </div>
-      </main>
-    </section>
-    <!-- ----- FIM - TELA PRINCIPAL ----- -->
-
-    <!-- ----- POPUP DE EDITAR MAQUINA ----- -->
-    <section class="sessao-popup" id="popupEditar" style="display: none">
-      <div class="father-editar-maquina">
-        <h3 class="bold">
-          Altere o campo que quiser e clique em "<span
-            style="color: var(--dark-purple)"
-            >atualizar</span
-          >"
-        </h3>
-
-        <div class="father-campo-input mb-1">
-          <div class="campo-input-big">
-            <label for="percentage-input" class="input-title"
-              >Apelido da Máquina:</label
-            >
-            <input
-              type="text"
-              placeholder="Coloque um Apelido para a Máquina"
-              name="input"
-              class="input-text"
-              id="input_apelido"
-            />
-          </div>
-          <div class="child-icon-bin bin-width-little">
-            <button class="btn-class-cleaner" data-btn="input_apelido"></button>
-          </div>
-        </div>
-
-        <div class="child-campos">
-          <h5 class="bold">Parâmetros para Disparo de Alertas:</h5>
-
-          <div class="father-campos-column">
-            <div class="child-campos-column">
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_cpu" class="input-title"
-                    >Uso de CPU(%):</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira o uso de CPU"
-                    name="input"
-                    class="input-text"
-                    id="input_cpu"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_cpu"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_ram" class="input-title"
-                    >Uso de RAM(%):</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira o uso de RAM"
-                    name="input"
-                    class="input-text"
-                    id="input_ram"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_ram"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_total" class="input-title"
-                    >Uso Total(%):</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira o uso total"
-                    name="input"
-                    class="input-text"
-                    id="input_total"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_total"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_velo_download" class="input-title"
-                    >Velocidade de Download (Mbps):</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira a velocidade de download"
-                    name="input"
-                    class="input-text"
-                    id="input_velo_download"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_velo_download"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_velo_upload" class="input-title"
-                    >Velocidade de Upload (Mbps):</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira a velocidade de upload"
-                    name="input"
-                    class="input-text"
-                    id="input_velo_upload"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_velo_upload"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_err_pac_in" class="input-title"
-                    >Erro de Pcts. Entrada:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira erros de pacotes de entrada"
-                    name="input"
-                    class="input-text"
-                    id="input_err_pac_in"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_err_pac_in"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_err_pac_out" class="input-title"
-                    >Erro de Pcts. Saída:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira erros de pacotes de saída"
-                    name="input"
-                    class="input-text"
-                    id="input_err_pac_out"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_err_pac_out"
-                  ></button>
-                </div>
-              </div>
-            </div>
-
-            <div class="child-campos-column">
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_desc_pac_in" class="input-title"
-                    >Descarte de Pcts. Entrada:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira descarte de pacotes de entrada"
-                    name="input"
-                    class="input-text"
-                    id="input_desc_pac_in"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_desc_pac_in"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_desc_pac_out" class="input-title"
-                    >Descarte de Pcts. Saída:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira descarte de pacotes de saída"
-                    name="input"
-                    class="input-text"
-                    id="input_desc_pac_out"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_desc_pac_out"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_mbs_in" class="input-title"
-                    >Megabytes Recebidos:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira megabytes recebidos"
-                    name="input"
-                    class="input-text"
-                    id="input_mbs_in"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_mbs_in"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_mbs_out" class="input-title"
-                    >Megabytes Enviados:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira megabytes enviados"
-                    name="input"
-                    class="input-text"
-                    id="input_mbs_out"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_mbs_out"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_pac_in" class="input-title"
-                    >Pacotes Recebidos:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira pacotes recebidos"
-                    name="input"
-                    class="input-text"
-                    id="input_pac_in"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_pac_in"
-                  ></button>
-                </div>
-              </div>
-
-              <div class="father-campo-input">
-                <div class="campo-input">
-                  <label for="input_pac_out" class="input-title"
-                    >Pacotes Enviados:</label
-                  >
-                  <input
-                    type="number"
-                    placeholder="Insira pacotes enviados"
-                    name="input"
-                    class="input-text"
-                    id="input_pac_out"
-                  />
-                </div>
-                <div class="child-icon-bin bin-width-normal">
-                  <button
-                    class="btn-class-cleaner"
-                    data-btn="input_pac_out"
-                  ></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="father-popup-botao mt-1">
-          <button class="botao-cadastrar-executar" id="botao_atualizar">
-            <b>Atualizar</b>
-          </button>
-          <p
-            onclick="sairEditar()"
-            class="botao-cadastrar-cancelar italic underline bold"
-          >
-            Sair
-          </p>
         </div>
       </div>
-    </section>
-  </body>
-  <script>
-    function verificarCargo() {
-      sessionStorage.removeItem("VOLTAR_PAGINA");
-      sessionStorage.setItem("VOLTAR_PAGINA", "D_Maquina");
+    </main>
+  </section>
+  <!-- ----- FIM - TELA PRINCIPAL ----- -->
 
-      var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
-      if (isADM !== null && Number(isADM) === 0) {
-        document.getElementById("li-adm").style.display = "none";
-        document.getElementById("li-funcionario").style.display = "none";
-        document.getElementById("ul-nav").style.display = "flex";
-      } else {
-        document.getElementById("li-adm").style.display = "flex";
-        document.getElementById("li-funcionario").style.display = "flex";
-        document.getElementById("ul-nav").style.display = "flex";
-      }
+  <!-- ----- POPUP DE EDITAR MAQUINA ----- -->
+  <section class="sessao-popup" id="popupEditar" style="display: none">
+    <div class="father-editar-maquina">
+      <h3 class="bold">
+        Altere o campo que quiser e clique em "<span style="color: var(--dark-purple)">atualizar</span>"
+      </h3>
+
+      <div class="father-campo-input mb-1">
+        <div class="campo-input-big">
+          <label for="percentage-input" class="input-title">Apelido da Máquina:</label>
+          <input type="text" placeholder="Coloque um Apelido para a Máquina" name="input" class="input-text"
+            id="input_apelido" />
+        </div>
+        <div class="child-icon-bin bin-width-little">
+          <button class="btn-class-cleaner" data-btn="input_apelido"></button>
+        </div>
+      </div>
+
+      <div class="child-campos">
+        <h5 class="bold">Parâmetros para Disparo de Alertas:</h5>
+
+        <div class="father-campos-column">
+          <div class="child-campos-column">
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_cpu" class="input-title">Uso de CPU(%):</label>
+                <input type="number" placeholder="Insira o uso de CPU" name="input" class="input-text" id="input_cpu" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_cpu"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_ram" class="input-title">Uso de RAM(%):</label>
+                <input type="number" placeholder="Insira o uso de RAM" name="input" class="input-text" id="input_ram" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_ram"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_total" class="input-title">Uso Total(%):</label>
+                <input type="number" placeholder="Insira o uso total" name="input" class="input-text"
+                  id="input_total" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_total"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_velo_download" class="input-title">Velocidade de Download (Mbps):</label>
+                <input type="number" placeholder="Insira a velocidade de download" name="input" class="input-text"
+                  id="input_velo_download" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_velo_download"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_velo_upload" class="input-title">Velocidade de Upload (Mbps):</label>
+                <input type="number" placeholder="Insira a velocidade de upload" name="input" class="input-text"
+                  id="input_velo_upload" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_velo_upload"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_err_pac_in" class="input-title">Erro de Pcts. Entrada:</label>
+                <input type="number" placeholder="Insira erros de pacotes de entrada" name="input" class="input-text"
+                  id="input_err_pac_in" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_err_pac_in"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_err_pac_out" class="input-title">Erro de Pcts. Saída:</label>
+                <input type="number" placeholder="Insira erros de pacotes de saída" name="input" class="input-text"
+                  id="input_err_pac_out" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_err_pac_out"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="child-campos-column">
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_desc_pac_in" class="input-title">Descarte de Pcts. Entrada:</label>
+                <input type="number" placeholder="Insira descarte de pacotes de entrada" name="input" class="input-text"
+                  id="input_desc_pac_in" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_desc_pac_in"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_desc_pac_out" class="input-title">Descarte de Pcts. Saída:</label>
+                <input type="number" placeholder="Insira descarte de pacotes de saída" name="input" class="input-text"
+                  id="input_desc_pac_out" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_desc_pac_out"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_mbs_in" class="input-title">Megabytes Recebidos:</label>
+                <input type="number" placeholder="Insira megabytes recebidos" name="input" class="input-text"
+                  id="input_mbs_in" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_mbs_in"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_mbs_out" class="input-title">Megabytes Enviados:</label>
+                <input type="number" placeholder="Insira megabytes enviados" name="input" class="input-text"
+                  id="input_mbs_out" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_mbs_out"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_pac_in" class="input-title">Pacotes Recebidos:</label>
+                <input type="number" placeholder="Insira pacotes recebidos" name="input" class="input-text"
+                  id="input_pac_in" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_pac_in"></button>
+              </div>
+            </div>
+
+            <div class="father-campo-input">
+              <div class="campo-input">
+                <label for="input_pac_out" class="input-title">Pacotes Enviados:</label>
+                <input type="number" placeholder="Insira pacotes enviados" name="input" class="input-text"
+                  id="input_pac_out" />
+              </div>
+              <div class="child-icon-bin bin-width-normal">
+                <button class="btn-class-cleaner" data-btn="input_pac_out"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="father-popup-botao mt-1">
+        <button class="botao-cadastrar-executar" id="botao_atualizar">
+          <b>Atualizar</b>
+        </button>
+        <p onclick="sairEditar()" class="botao-cadastrar-cancelar italic underline bold">
+          Fechar
+        </p>
+      </div>
+    </div>
+  </section>
+</body>
+<script>
+  function verificarCargo() {
+    sessionStorage.removeItem("VOLTAR_PAGINA");
+    sessionStorage.setItem("VOLTAR_PAGINA", "D_Maquina");
+
+    var isADM = sessionStorage.getItem("IS_ADM_USUARIO");
+    if (isADM !== null && Number(isADM) === 0) {
+      document.getElementById("li-adm").style.display = "none";
+      document.getElementById("li-funcionario").style.display = "none";
+      document.getElementById("ul-nav").style.display = "flex";
+    } else {
+      document.getElementById("li-adm").style.display = "flex";
+      document.getElementById("li-funcionario").style.display = "flex";
+      document.getElementById("ul-nav").style.display = "flex";
     }
-    function sairNavbar() {
-      event.preventDefault();
-      sessionStorage.clear();
-      window.location.href = "../index.html";
-    }
+  }
+  function sairNavbar() {
+    event.preventDefault();
+    sessionStorage.clear();
+    window.location.href = "../index.html";
+  }
 
-    function DetalhesMaquina(idMaquina) {
-      sessionStorage.setItem("ID_MAQUINA", idMaquina);
-      window.location.href = "details-machine.html";
-    }
+  function DetalhesMaquina(idMaquina) {
+    sessionStorage.setItem("ID_MAQUINA", idMaquina);
+    window.location.href = "details-machine.html";
+  }
 
-    function exibirEditar(idMaquina) {
-      listarPorId(idMaquina);
-      document.getElementById("popupEditar").style.display = "flex"; // Exibe o popup corretamente
-    }
-    function sairEditar() {
-      const listaIds = [
-        "input_apelido",
-        "input_ram",
-        "input_cpu",
-        "input_total",
-        "input_velo_download",
-        "input_velo_upload",
-        "input_err_pac_in",
-        "input_err_pac_out",
-        "input_desc_pac_in",
-        "input_desc_pac_out",
-        "input_mbs_in",
-        "input_mbs_out",
-        "input_pac_in",
-        "input_pac_out",
-      ];
+  function exibirEditar(idMaquina) {
+    listarPorId(idMaquina);
+    document.getElementById("popupEditar").style.display = "flex"; // Exibe o popup corretamente
+  }
+  function sairEditar() {
+    const listaIds = [
+      "input_apelido",
+      "input_ram",
+      "input_cpu",
+      "input_total",
+      "input_velo_download",
+      "input_velo_upload",
+      "input_err_pac_in",
+      "input_err_pac_out",
+      "input_desc_pac_in",
+      "input_desc_pac_out",
+      "input_mbs_in",
+      "input_mbs_out",
+      "input_pac_in",
+      "input_pac_out",
+    ];
 
-      listaIds.forEach((id) => {
-        document.getElementById(id).value = "";
-      });
+    listaIds.forEach((id) => {
+      document.getElementById(id).value = "";
+    });
 
-      document.getElementById("popupEditar").style.display = "none"; // Exibe o popup corretamente
-    }
+    document.getElementById("popupEditar").style.display = "none"; // Exibe o popup corretamente
+  }
 
-    function adicionarMaquina(
-      idMaquina,
-      nome,
-      apelido,
-      cpu,
-      ram,
-      armazenamentoUsado,
-      armazenamentoTotal
-    ) {
-      console.log("chamou adicionarMaquina()!!!!!!!!!!!!!!!!");
+  function adicionarMaquina(
+    idMaquina,
+    nome,
+    apelido,
+    cpu,
+    ram,
+    armazenamentoUsado,
+    armazenamentoTotal
+  ) {
+    console.log("chamou adicionarMaquina()!!!!!!!!!!!!!!!!");
 
-      const elementoPai = document.getElementById("pai-maquinas");
+    const elementoPai = document.getElementById("pai-maquinas");
 
-      const novoElemento = `<div class="child-maquina-elemento">
+    const novoElemento = `<div class="child-maquina-elemento">
                         <a href="#" class="child-elemento-editar" onclick="exibirEditar(${idMaquina})">
                             <img src="../assets/svg/edit.svg" alt="#icone-">
                         </a>
@@ -588,205 +426,162 @@ consultarMaquinas(), verificarCargo()"
                         </div>
                     </div>`;
 
-      elementoPai.innerHTML += novoElemento;
-    }
+    elementoPai.innerHTML += novoElemento;
+  }
 
-    function consultarMaquinas() {
-      document.getElementById("pai-maquinas").innerHTML = "";
-      const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+  function consultarMaquinas() {
+    document.getElementById("pai-maquinas").innerHTML = "";
+    const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-      fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          document.getElementById("num_total").innerText = data.length;
+    fetch(`/maquinas/listarPorEmpresa/${idEmpresa}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("num_total").innerText = data.length;
 
-          const maquinasAtivas = data.filter(
-            (maquina) => maquina.isAtiva === 1
+        const maquinasAtivas = data.filter(
+          (maquina) => maquina.isAtiva === 1
+        );
+        document.getElementById("num_ana").innerText = maquinasAtivas.length;
+
+        const maquinasInativas = data.filter(
+          (maquina) => maquina.isAtiva === 0
+        );
+        document.getElementById("num_adms").innerText =
+          maquinasInativas.length;
+
+        data.forEach((maquina) => {
+          adicionarMaquina(
+            maquina.idMaquina,
+            maquina.nome,
+            maquina.apelido,
+            maquina.modeloCPU,
+            Math.ceil(maquina.capacidadeRAM),
+            parseInt(maquina.discoUsado),
+            parseInt(maquina.discoTotal)
           );
-          document.getElementById("num_ana").innerText = maquinasAtivas.length;
-
-          const maquinasInativas = data.filter(
-            (maquina) => maquina.isAtiva === 0
-          );
-          document.getElementById("num_adms").innerText =
-            maquinasInativas.length;
-
-          data.forEach((maquina) => {
-            adicionarMaquina(
-              maquina.idMaquina,
-              maquina.nome,
-              maquina.apelido,
-              maquina.modeloCPU,
-              Math.ceil(maquina.capacidadeRAM),
-              parseInt(maquina.discoUsado),
-              parseInt(maquina.discoTotal)
-            );
-          });
         });
-    }
+      });
+  }
 
-    function listarPorId(idMaquina) {
-      fetch(`/maquinas/listarPorId/${idMaquina}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  function listarPorId(idMaquina) {
+    fetch(`/maquinas/listarPorId/${idMaquina}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        document.getElementById("input_apelido").value = data[0].apelido;
       })
-        .then((response) => response.json())
-        .then((data) => {
-          document.getElementById("input_apelido").value = data[0].apelido;
-        })
-        .catch((error) => {
-          console.error("Erro ao listar por id: ", error);
+      .catch((error) => {
+        console.error("Erro ao listar por id: ", error);
+      });
+
+    fetch(`/maquinas/listarAlertaPorId/${idMaquina}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((alerta) => {
+          switch (alerta.recursoNome) {
+            case "usoCPU":
+              document.getElementById("input_cpu").value = alerta.maxRecurso;
+              break;
+            case "usoRAM":
+              document.getElementById("input_ram").value = alerta.maxRecurso;
+              break;
+            case "usoTotal":
+              document.getElementById("input_total").value =
+                alerta.maxRecurso;
+              break;
+            case "velocidadeDownload":
+              document.getElementById("input_velo_download").value =
+                alerta.maxRecurso;
+              break;
+            case "velocidadeUpload":
+              document.getElementById("input_velo_upload").value =
+                alerta.maxRecurso;
+              break;
+            case "erroPacotesEntrada":
+              document.getElementById("input_err_pac_in").value =
+                alerta.maxRecurso;
+              break;
+            case "erroPacotesSaida":
+              document.getElementById("input_err_pac_out").value =
+                alerta.maxRecurso;
+              break;
+            case "descartePacotesEntrada":
+              document.getElementById("input_desc_pac_in").value =
+                alerta.maxRecurso;
+              break;
+            case "descartePacotesSaida":
+              document.getElementById("input_desc_pac_out").value =
+                alerta.maxRecurso;
+              break;
+            case "megabytesRecebidos":
+              document.getElementById("input_mbs_in").value =
+                alerta.maxRecurso;
+              break;
+            case "megabytesEnviados":
+              document.getElementById("input_mbs_out").value =
+                alerta.maxRecurso;
+              break;
+            case "pacotesRecebidos":
+              document.getElementById("input_pac_in").value =
+                alerta.maxRecurso;
+              break;
+            case "pacotesEnviados":
+              document.getElementById("input_pac_out").value =
+                alerta.maxRecurso;
+              break;
+            default:
+              console.warn("Recurso não reconhecido:", alerta.recursoNome);
+          }
         });
 
-      fetch(`/maquinas/listarAlertaPorId/${idMaquina}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        botao = document.getElementById("botao_atualizar");
+
+        botao.setAttribute("onclick", `atualizarDados(${data[0].idMaquina})`);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          data.forEach((alerta) => {
-            switch (alerta.recursoNome) {
-              case "usoCPU":
-                document.getElementById("input_cpu").value = alerta.maxRecurso;
-                break;
-              case "usoRAM":
-                document.getElementById("input_ram").value = alerta.maxRecurso;
-                break;
-              case "usoTotal":
-                document.getElementById("input_total").value =
-                  alerta.maxRecurso;
-                break;
-              case "velocidadeDownload":
-                document.getElementById("input_velo_download").value =
-                  alerta.maxRecurso;
-                break;
-              case "velocidadeUpload":
-                document.getElementById("input_velo_upload").value =
-                  alerta.maxRecurso;
-                break;
-              case "erroPacotesEntrada":
-                document.getElementById("input_err_pac_in").value =
-                  alerta.maxRecurso;
-                break;
-              case "erroPacotesSaida":
-                document.getElementById("input_err_pac_out").value =
-                  alerta.maxRecurso;
-                break;
-              case "descartePacotesEntrada":
-                document.getElementById("input_desc_pac_in").value =
-                  alerta.maxRecurso;
-                break;
-              case "descartePacotesSaida":
-                document.getElementById("input_desc_pac_out").value =
-                  alerta.maxRecurso;
-                break;
-              case "megabytesRecebidos":
-                document.getElementById("input_mbs_in").value =
-                  alerta.maxRecurso;
-                break;
-              case "megabytesEnviados":
-                document.getElementById("input_mbs_out").value =
-                  alerta.maxRecurso;
-                break;
-              case "pacotesRecebidos":
-                document.getElementById("input_pac_in").value =
-                  alerta.maxRecurso;
-                break;
-              case "pacotesEnviados":
-                document.getElementById("input_pac_out").value =
-                  alerta.maxRecurso;
-                break;
-              default:
-                console.warn("Recurso não reconhecido:", alerta.recursoNome);
-            }
-          });
+      .catch((error) => {
+        console.error("Erro ao listar parametros por maquina: ", error);
+      });
+  }
 
-          botao = document.getElementById("botao_atualizar");
+  function atualizarDados(idMaquina) {
+    const apelido = document.getElementById("input_apelido").value;
+    const cpu = document.getElementById("input_cpu").value;
+    const ram = document.getElementById("input_ram").value;
+    const total = document.getElementById("input_total").value;
+    const veloDownload = document.getElementById("input_velo_download").value;
+    const veloUpload = document.getElementById("input_velo_upload").value;
+    const errPacIn = document.getElementById("input_err_pac_in").value;
+    const errPacOut = document.getElementById("input_err_pac_out").value;
+    const descPacIn = document.getElementById("input_desc_pac_in").value;
+    const descPacOut = document.getElementById("input_desc_pac_out").value;
+    const mbsIn = document.getElementById("input_mbs_in").value;
+    const mbsOut = document.getElementById("input_mbs_out").value;
+    const pacIn = document.getElementById("input_pac_in").value;
+    const pacOut = document.getElementById("input_pac_out").value;
 
-          botao.setAttribute("onclick", `atualizarDados(${data[0].idMaquina})`);
-        })
-        .catch((error) => {
-          console.error("Erro ao listar parametros por maquina: ", error);
-        });
-    }
-
-    function atualizarDados(idMaquina) {
-      const apelido = document.getElementById("input_apelido").value;
-      const cpu = document.getElementById("input_cpu").value;
-      const ram = document.getElementById("input_ram").value;
-      const total = document.getElementById("input_total").value;
-      const veloDownload = document.getElementById("input_velo_download").value;
-      const veloUpload = document.getElementById("input_velo_upload").value;
-      const errPacIn = document.getElementById("input_err_pac_in").value;
-      const errPacOut = document.getElementById("input_err_pac_out").value;
-      const descPacIn = document.getElementById("input_desc_pac_in").value;
-      const descPacOut = document.getElementById("input_desc_pac_out").value;
-      const mbsIn = document.getElementById("input_mbs_in").value;
-      const mbsOut = document.getElementById("input_mbs_out").value;
-      const pacIn = document.getElementById("input_pac_in").value;
-      const pacOut = document.getElementById("input_pac_out").value;
-
-      if (apelido !== "indefinido") {
-        fetch(`/maquinas/atualizarApelidoPorId`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            idMaquina: idMaquina,
-            apelido: apelido || "indefinido",
-          }),
-        })
-          .then((response) => {
-            if (response.ok) {
-              Swal.fire({
-                icon: "success",
-                title: "Dados atualizados com sucesso!",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => {
-                window.location.reload();
-              });
-            }
-
-            response.json();
-          })
-          .then((data) => {
-            console.log("Atualizado com sucesso: ", data);
-          })
-          .catch((error) => {
-            console.error("Erro ao atualizar: ", error);
-          });
-      }
-
-      fetch(`/alertas/atualizarPorMaquina/${idMaquina}`, {
+    if (apelido !== "indefinido") {
+      fetch(`/maquinas/atualizarApelidoPorId`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          usoCPU: cpu || null, // Se cpu estiver definido, usa seu valor; caso contrário, usa null
-          usoRAM: ram || null, // Se ram estiver definido, usa seu valor; caso contrário, usa null
-          usoTotal: total || null, // Se total estiver definido, usa seu valor; caso contrário, usa null
-          velocidadeDownload: veloDownload || null,
-          velocidadeUpload: veloUpload || null,
-          erroPacotesEntrada: errPacIn || null,
-          erroPacotesSaida: errPacOut || null,
-          descartePacotesEntrada: descPacIn || null,
-          descartePacotesSaida: descPacOut || null,
-          megabytesRecebidos: mbsIn || null,
-          megabytesEnviados: mbsOut || null,
-          pacotesRecebidos: pacIn || null,
-          pacotesEnviados: pacOut || null,
+          idMaquina: idMaquina,
+          apelido: apelido || "indefinido",
         }),
       })
         .then((response) => {
@@ -796,26 +591,70 @@ consultarMaquinas(), verificarCargo()"
               title: "Dados atualizados com sucesso!",
               showConfirmButton: false,
               timer: 1500,
+            }).then(() => {
+              window.location.reload();
             });
           }
-          response.json().then((data) => {
-            document.getElementById("pai-maquinas").innerHTML = "";
-            consultarMaquinas();
-            console.log("Atualizado com sucesso: ", data);
-          });
+
+          response.json();
+        })
+        .then((data) => {
+          console.log("Atualizado com sucesso: ", data);
         })
         .catch((error) => {
           console.error("Erro ao atualizar: ", error);
         });
-
-      sairEditar();
     }
 
-    document.querySelectorAll(".btn-class-cleaner").forEach((button) => {
-      button.addEventListener("click", function () {
-        const inputId = this.getAttribute("data-btn");
-        document.getElementById(inputId).value = "";
+    fetch(`/alertas/atualizarPorMaquina/${idMaquina}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usoCPU: cpu || null, // Se cpu estiver definido, usa seu valor; caso contrário, usa null
+        usoRAM: ram || null, // Se ram estiver definido, usa seu valor; caso contrário, usa null
+        usoTotal: total || null, // Se total estiver definido, usa seu valor; caso contrário, usa null
+        velocidadeDownload: veloDownload || null,
+        velocidadeUpload: veloUpload || null,
+        erroPacotesEntrada: errPacIn || null,
+        erroPacotesSaida: errPacOut || null,
+        descartePacotesEntrada: descPacIn || null,
+        descartePacotesSaida: descPacOut || null,
+        megabytesRecebidos: mbsIn || null,
+        megabytesEnviados: mbsOut || null,
+        pacotesRecebidos: pacIn || null,
+        pacotesEnviados: pacOut || null,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          Swal.fire({
+            icon: "success",
+            title: "Dados atualizados com sucesso!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        response.json().then((data) => {
+          document.getElementById("pai-maquinas").innerHTML = "";
+          consultarMaquinas();
+          console.log("Atualizado com sucesso: ", data);
+        });
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar: ", error);
       });
+
+    sairEditar();
+  }
+
+  document.querySelectorAll(".btn-class-cleaner").forEach((button) => {
+    button.addEventListener("click", function () {
+      const inputId = this.getAttribute("data-btn");
+      document.getElementById(inputId).value = "";
     });
-  </script>
+  });
+</script>
+
 </html>
