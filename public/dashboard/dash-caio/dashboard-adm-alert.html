@@ -141,11 +141,12 @@
                 <div class="dash-alert-coluna-2">
                     <div class="dash-alert-coluna-2-dados">
                         <div class="dados-metade">
-                            <h5 class="bold italic">Total de ocorrências de hoje:
-                                <samp id="id_total_ocorrencias" style="font-size: larger;">...</samp>
-                            </h5>
+    
                             <h5 class="bold italic">Média de ocorrências por dia:
                                 <samp id="id_media_ocorrencias" style="font-size: larger;">...</samp>
+                            </h5>
+                            <h5 class="bold italic">Total de ocorrências de hoje:
+                                <samp id="id_total_ocorrencias" style="font-size: larger;">...</samp>
                             </h5>
                         </div>
                         <div class="dados-parte-meio"></div>
@@ -153,7 +154,7 @@
                             <h5 class="bold italic">Total de máquinas ativas:
                                 <samp id="id_total_maquinas" style="font-size: larger;">...</samp>
                             </h5>
-                            <h5 class="bold italic">Total de máquinas irregulares:
+                            <h5 class="bold italic">Máquinas irregulares hoje:
                                 <samp id="id_irregularidade_maquinas" style="font-size: larger;"
                                     class="text-black">...</samp>
                             </h5>
@@ -216,8 +217,9 @@
                                     <h4>Análise da <span class="bold">SGI</span></h4>
                                 </div>
                                 <div class="campo-sgi-resp">
-                                    <p class="little-text" style="max-height: 100%; max-width: 100%; padding-bottom: 2%;"
-                                    id="placeholder-analise-ia"><img src="../../assets/gif/loading.gif" alt=""></p>
+                                    <p class="little-text"
+                                        style="max-height: 100%; max-width: 100%; padding-bottom: 2%;"
+                                        id="placeholder-analise-ia"><img src="../../assets/gif/loading.gif" alt=""></p>
                                 </div>
                             </div>
                         </div>
@@ -348,11 +350,11 @@
                             gerarAnaliseIA(
                                 totalA,
                                 json[0].qtdCpu,
-                                cpu, 
+                                cpu,
                                 json[0].qtdRam,
-                                ram, 
+                                ram,
                                 json[0].qtdUsoGeral,
-                                usoGeral, 
+                                usoGeral,
                                 json[0].qtdRede,
                                 rede
                             )
@@ -418,11 +420,11 @@
     }
 
     function gerarAnaliseIA(totalA,
-                            cpuTotal, cpuPercent, 
-                            ramTotal, ramPercent, 
-                            usoGeralTotal, usoGeralPercent, 
-                            redeTotal, redePercent
-                            ) {
+        cpuTotal, cpuPercent,
+        ramTotal, ramPercent,
+        usoGeralTotal, usoGeralPercent,
+        redeTotal, redePercent
+    ) {
 
         let mensagem = `
             Com base no gráfico de radar gerado, quais insights podem ser obtidos sobre a distribuição de alertas entre 
