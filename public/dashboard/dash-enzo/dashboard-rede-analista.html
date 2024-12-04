@@ -485,83 +485,81 @@
   }
 
 
-  function obterUltimosDadosPacotes() {
+// Arrays para armazenar os dados das séries
+let enviados = [];
+let recebidos = [];
+
+function obterUltimosDadosPacotes() {
     var idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
-    console.log("ID da empresa:", idEmpresa); // Verifique se o valor está correto
-    var element = document.querySelector("#chartPacotes"); // Elemento do gráfico
+    console.log("ID da empresa:", idEmpresa);
+    var element = document.querySelector("#chartPacotes");
 
     fetch(`/recursos/buscarUltimosDadosPacotes/${idEmpresa}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
     })
-      .then(response => {
-        console.log("Resposta:", response);
+    .then(response => {
         if (!response.ok) {
-          throw new Error("Erro ao obter dados do servidor.");
+            throw new Error("Erro ao obter dados do servidor.");
         }
         return response.json();
-      })
-      .catch(error => {
-        console.error("Erro ao obter ou processar dados:", error);
-      })
-      .then(data => {
+    })
+    .then(data => {
         if (data && data.length > 0) {
-          // Mapeia os dados para o formato de { x: datetime, y: valor }
-          const seriesData = data.map(item => ({
-            x: new Date(item.dataHora).getTime(),
-            y: item.valor
-          }));
+            // Obter o novo dado enviado
+            const novoEnviado = data.find(item => item.recurso === 'pacotesEnviados');
+            const novoRecebido = data.find(item => item.recurso === 'pacotesRecebidos');
 
-          // Limpa o conteúdo anterior do gráfico
-          if (element) {
-            element.innerHTML = "";
-          }
-
-          // Configuração do gráfico
-          var options = {
-            series: [{
-              name: "Pacotes",
-              data: seriesData
-            }],
-            chart: {
-              type: "line",
-              height: 350,
-              animations: {
-                enabled: true,
-                easing: "linear",
-                dynamicAnimation: { speed: 1000 }
-              },
-              toolbar: { show: false },
-              zoom: { enabled: false }
-            },
-            dataLabels: { enabled: false },
-            stroke: { curve: "smooth" },
-            xaxis: {
-              type: "datetime",
-              title: { text: "Data e Hora" }
-            },
-            yaxis: {
-              title: { text: "Quantidade de Pacotes" }
+            if (novoEnviado) {
+                enviados.push({ x: new Date(novoEnviado.dataHora).getTime(), y: novoEnviado.valor });
+                if (enviados.length > 10) enviados.shift(); // Remove o mais antigo
             }
-          };
 
-          // Renderiza o gráfico
-          var chartPacotes = new ApexCharts(element, options);
-          chartPacotes.render();
+            if (novoRecebido) {
+                recebidos.push({ x: new Date(novoRecebido.dataHora).getTime(), y: novoRecebido.valor });
+                if (recebidos.length > 10) recebidos.shift(); // Remove o mais antigo
+            }
 
-          return chartPacotes; // Retorna o objeto do gráfico
+            if (element) {
+                element.innerHTML = ""; // Limpa o gráfico anterior
+            }
+
+            var options = {
+                series: [
+                    { name: "Pacotes Enviados", data: enviados },
+                    { name: "Pacotes Recebidos", data: recebidos }
+                ],
+                chart: {
+                    type: "line",
+                    height: 350,
+                    animations: {
+                        enabled: true,
+                        easing: "linear",
+                        dynamicAnimation: { speed: 1000 }
+                    },
+                    toolbar: { show: false },
+                    zoom: { enabled: false }
+                },
+                dataLabels: { enabled: false },
+                stroke: { curve: "smooth" },
+                xaxis: { type: "datetime", title: { text: "Data e Hora" } },
+                yaxis: { title: { text: "Quantidade de Pacotes" } }
+            };
+
+            var chartPacotes = new ApexCharts(element, options);
+            chartPacotes.render();
         }
-      })
-      .catch(error => {
+    })
+    .catch(error => {
         console.error("Erro ao processar os dados:", error);
-      });
-  }
+    });
+}
 
-  // Atualiza os dados a cada 30 segundos
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     obterUltimosDadosPacotes(); // Chamada inicial
     setInterval(obterUltimosDadosPacotes, 30000); // Atualização a cada 30 segundos
-  });
+});
+
 
 
   function obterUltimoHorario() {

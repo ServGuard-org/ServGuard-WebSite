@@ -116,25 +116,29 @@ ORDER BY
 
 function buscarUltimosDadosPacotes(idEmpresa) {
     var instrucaoSql = `
-        SELECT
-            e.nome AS empresa,
-            r.nome AS recurso,
-            r.unidadeMedida,
-            c.registro AS valor,
-            c.dthCriacao AS dataHora
-        FROM
-            ServGuard.Empresa e
-        JOIN ServGuard.Maquina m ON m.fkEmpresa = e.idEmpresa
-        JOIN ServGuard.MaquinaRecurso mr ON mr.fkMaquina = m.idMaquina
-        JOIN ServGuard.Recurso r ON r.idRecurso = mr.fkRecurso
-        JOIN ServGuard.Captura c ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
-        WHERE
-            e.idEmpresa = ${idEmpresa}
-            AND r.nome IN ('pacotesEnviados', 'pacotesRecebidos')
-        ORDER BY
-            c.dthCriacao DESC
-            LIMIT 10
-        ;
+           SELECT
+    e.nome AS empresa,
+    r.nome AS recurso,
+    r.unidadeMedida,
+    c.registro AS valor,
+    c.dthCriacao AS dataHora
+FROM
+    ServGuard.Empresa e
+JOIN ServGuard.Maquina m ON m.fkEmpresa = e.idEmpresa
+JOIN ServGuard.MaquinaRecurso mr ON mr.fkMaquina = m.idMaquina
+JOIN ServGuard.Recurso r ON r.idRecurso = mr.fkRecurso
+JOIN ServGuard.Captura c ON c.fkMaquinaRecurso = mr.idMaquinaRecurso
+WHERE
+    e.idEmpresa = ${idEmpresa}
+    AND r.nome IN ('pacotesEnviados', 'pacotesRecebidos')
+    AND c.dthCriacao = (
+        SELECT MAX(c2.dthCriacao)
+        FROM ServGuard.Captura c2
+        WHERE c2.fkMaquinaRecurso = c.fkMaquinaRecurso
+    )
+ORDER BY
+    c.dthCriacao DESC;
+
     `;
 
 
