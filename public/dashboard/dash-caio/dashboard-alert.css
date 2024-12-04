@@ -37,6 +37,21 @@
     justify-content: center;
 }
 
+.dash-alert-titulo-sgi{
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-2);
+
+    & .logo-sgi{
+        width: 50px;
+    }
+}
+
 .dash-alert-pai {
     width: 100%;
     height: 87%;
