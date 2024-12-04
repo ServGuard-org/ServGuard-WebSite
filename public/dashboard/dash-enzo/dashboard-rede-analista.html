@@ -142,7 +142,7 @@
                 <span class="tooltiptext tooltip-left text-black" style="text-align: left;">
                   Nesta área, é apresentado um gráfico detalhado que visualiza o fluxo de pacotes de dados,
                   tanto enviados quanto recebidos, por todas as máquinas da empresa.
-                  Com monitoramento a cada 30 segundos
+                  Com monitoramento a cada 30 segundos.
                 </span>
               </div>
             </div>
@@ -170,6 +170,11 @@
                   Esses dados, que são coletados a cada hora, são representados graficamente por meio de um medidor
                   (gauge),
                   permitindo uma visualização clara do valor mais recente capturado.
+                  O velocidade maxima de Download e Upload do grafico são de 150Mbps.
+                  Caso o valor de Download e Upload ultapassem 
+                  Vermelho (Menor do que 25%): Indica um desempenho crítico ou abaixo do esperado, exigindo atenção imediata.
+                  Roxo (25% - 75%): Representa um desempenho moderado, indicando que o sistema está funcionando, mas não no nível ideal.
+                  Verde (Maior do que 75%): Sinaliza que o desempenho está excelente ou ideal, sem necessidade de preocupação.
                 </span>
               </div>
             </div>
@@ -432,64 +437,114 @@
     const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
     if (!idEmpresa) {
-      console.error("ID da empresa não encontrado.");
-      return;
+        console.error("ID da empresa não encontrado.");
+        return;
     }
 
     const element = document.querySelector("#chartUp");
 
     if (!element) {
-      console.error("Elemento de upload não encontrado.");
-      return;
+        console.error("Elemento de upload não encontrado.");
+        return;
     }
 
     fetch(`/recursos/buscarUltimosDadosUpload/${idEmpresa}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log("Dados de upload retornados:", data);
+        .then(response => response.json())
+        .then(data => {
+            console.log("Dados de upload retornados:", data);
 
-        if (data && data.valor_upload) {
-          const valorUpload = parseFloat(data.valor_upload.replace('.', ''));
+            if (data && data.valor_upload) {
+                const valorUpload = parseFloat(data.valor_upload.replace('.', ''));
 
-          if (!isNaN(valorUpload)) {
-            const valorMaximo = 150000; // 150 Mbps representados como 150.000
-            const porcentagem = (valorUpload / valorMaximo) * 100;
+                if (!isNaN(valorUpload)) {
+                    const valorMaximo = 150000; // 150 Mbps representados como 150.000
+                    const porcentagem = (valorUpload / valorMaximo) * 100;
 
-            ApexCharts.exec('chartUp', 'destroy');
-
-            new ApexCharts(element, {
-              series: [porcentagem],
-              chart: { type: "radialBar", id: 'chartUp' },
-              plotOptions: {
-                radialBar: {
-                  dataLabels: {
-                    value: {
-                      formatter: val => `${(valorUpload / 1000).toFixed(2)} Mbps` // Exibir como Mbps real
+                    // Determinar cor com base na porcentagem
+                    let cor;
+                    if (porcentagem < 25) {
+                        cor = "#FF4560"; // Vermelho
+                    } else if (porcentagem >= 25 && porcentagem <= 75) {
+                        cor = "#794ED4"; // Roxo
+                    } else {
+                        cor = "#28bb49"; // Verde
                     }
-                  }
+
+                    // Destrói gráfico anterior se existir
+                    ApexCharts.exec('chartUp', 'destroy');
+
+                    var options = {
+                        series: [porcentagem],
+                        chart: {
+                            type: "radialBar",
+                            id: 'chartUp',
+                            offsetY: -20,
+                            sparkline: {
+                                enabled: true
+                            }
+                        },
+                        plotOptions: {
+                            radialBar: {
+                                startAngle: -90,
+                                endAngle: 90,
+                                track: {
+                                    background: "#e7e7e7",
+                                    strokeWidth: "97%",
+                                    margin: 5,
+                                    dropShadow: {
+                                        enabled: true,
+                                        top: 2,
+                                        left: 0,
+                                        color: cor,
+                                        opacity: 1,
+                                        blur: 2
+                                    }
+                                },
+                                dataLabels: {
+                                    name: { show: false },
+                                    value: {
+                                        offsetY: -2,
+                                        fontSize: "25px",
+                                        fontWeight: "bold",
+                                        color: "black",
+                                        formatter: function (val) {
+                                            return `${(valorUpload / 1000).toFixed(2)} Mbps`; // Exibe em Mbps
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        grid: {
+                            padding: { top: -10 }
+                        },
+                        fill: {
+                            type: "solid",
+                            colors: [cor] // Cor dinâmica baseada no valor
+                        }
+                    };
+
+                    // Renderizar o gráfico
+                    var chart = new ApexCharts(element, options);
+                    chart.render();
+                } else {
+                    console.error("Valor de upload inválido:", data.valor_upload);
                 }
-              },
-              fill: { colors: ["#00E396"] },
-              labels: ["Upload"]
-            }).render();
-          } else {
-            console.error("Valor de upload inválido:", data.valor_upload);
-          }
-        } else {
-          console.error("Nenhum dado válido de upload retornado.");
-        }
-      })
-      .catch(error => {
-        console.error("Erro ao obter dados de upload:", error);
-      });
-  }
+            } else {
+                console.error("Nenhum dado válido de upload retornado.");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao obter dados de upload:", error);
+        });
+}
+
 
 
 // Arrays para armazenar os dados das séries
 let enviados = [];
 let recebidos = [];
 
-function obterUltimosDadosPacotes() {
+function obterUltimosDadosPacote() {
     var idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
     console.log("ID da empresa:", idEmpresa);
     var element = document.querySelector("#chartPacotes");
@@ -506,18 +561,17 @@ function obterUltimosDadosPacotes() {
     })
     .then(data => {
         if (data && data.length > 0) {
-            // Obter o novo dado enviado
             const novoEnviado = data.find(item => item.recurso === 'pacotesEnviados');
             const novoRecebido = data.find(item => item.recurso === 'pacotesRecebidos');
 
             if (novoEnviado) {
                 enviados.push({ x: new Date(novoEnviado.dataHora).getTime(), y: novoEnviado.valor });
-                if (enviados.length > 10) enviados.shift(); // Remove o mais antigo
+                if (enviados.length > 10) enviados.shift(); // Mantém no máximo 10 pontos
             }
 
             if (novoRecebido) {
                 recebidos.push({ x: new Date(novoRecebido.dataHora).getTime(), y: novoRecebido.valor });
-                if (recebidos.length > 10) recebidos.shift(); // Remove o mais antigo
+                if (recebidos.length > 10) recebidos.shift(); // Mantém no máximo 10 pontos
             }
 
             if (element) {
@@ -530,20 +584,55 @@ function obterUltimosDadosPacotes() {
                     { name: "Pacotes Recebidos", data: recebidos }
                 ],
                 chart: {
-                    type: "line",
+                    type: 'line',
                     height: 350,
-                    animations: {
+                    dropShadow: {
                         enabled: true,
-                        easing: "linear",
-                        dynamicAnimation: { speed: 1000 }
+                        color: '#000',
+                        top: 18,
+                        left: 7,
+                        blur: 10,
+                        opacity: 0.2
                     },
+                    zoom: { enabled: false },
                     toolbar: { show: false },
-                    zoom: { enabled: false }
                 },
-                dataLabels: { enabled: false },
-                stroke: { curve: "smooth" },
-                xaxis: { type: "datetime", title: { text: "Data e Hora" } },
-                yaxis: { title: { text: "Quantidade de Pacotes" } }
+                colors: ['#4E7AD4', '#8A2BE2'], // Azul e Roxo
+                dataLabels: { enabled: true },
+                stroke: { curve: 'smooth' },
+                title: {
+                    text: 'Pacotes Enviados e Recebidos',
+                    align: 'left'
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5
+                    }
+                },
+                markers: { size: 1 },
+                xaxis: {
+                    type: 'datetime',
+                    title: { text: 'Data e Hora' }
+                },
+                yaxis: {
+                    title: { text: 'Quantidade de Pacotes' },
+                    min: 0,
+                    labels: {
+                        formatter: function (value) {
+                            return value.toString();
+                        }
+                    },
+                    tickAmount: 5
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'right',
+                    floating: true,
+                    offsetY: -25,
+                    offsetX: -5
+                }
             };
 
             var chartPacotes = new ApexCharts(element, options);
@@ -556,10 +645,9 @@ function obterUltimosDadosPacotes() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    obterUltimosDadosPacotes(); // Chamada inicial
-    setInterval(obterUltimosDadosPacotes, 30000); // Atualização a cada 30 segundos
+    obterUltimosDadosPacote(); // Chamada inicial
+    setInterval(obterUltimosDadosPacote, 30000); // Atualização a cada 30 segundos
 });
-
 
 
   function obterUltimoHorario() {
