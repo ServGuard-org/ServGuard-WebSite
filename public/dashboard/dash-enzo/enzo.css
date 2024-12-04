@@ -261,3 +261,9 @@ button.disabled {
     }
   }
 }
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s, 0s;
+}
