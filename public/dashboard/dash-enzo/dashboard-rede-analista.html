@@ -376,62 +376,85 @@
       });
   }
 
-  function obterUltimoValorDownload() {
-    const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
+function obterUltimoValorDownload() {
+  const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
 
-    if (!idEmpresa) {
-      console.error("ID da empresa não encontrado.");
-      return;
-    }
+  if (!idEmpresa) {
+    console.error("ID da empresa não encontrado.");
+    return;
+  }
 
-    const element = document.querySelector("#chartDown");
+  const element = document.querySelector("#chartDown");
 
-    if (!element) {
-      console.error("Elemento de download não encontrado.");
-      return;
-    }
+  if (!element) {
+    console.error("Elemento de download não encontrado.");
+    return;
+  }
 
-    fetch(`/recursos/buscarUltimosDadosDownload/${idEmpresa}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log("Dados de download retornados:", data);
+  fetch(`/recursos/buscarUltimosDadosDownload/${idEmpresa}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("Dados de download retornados:", data);
 
-        if (data && data.valor_download) {
-          // Remove ponto e converte para número
-          const valorDownload = parseFloat(data.valor_download.replace('.', ''));
+      if (data && data.valor_download) {
+        // Remove ponto e converte para número
+        const valorDownload = parseFloat(data.valor_download.replace('.', ''));
 
-          if (!isNaN(valorDownload)) {
-            const valorMaximo = 150000; // 150 Mbps representados como 150.000
-            const porcentagem = (valorDownload / valorMaximo) * 100;
+        if (!isNaN(valorDownload)) {
+          const valorMaximo = 150000; // 150 Mbps representados como 150.000
+          const porcentagem = (valorDownload / valorMaximo) * 100;
 
-            ApexCharts.exec('chartDown', 'destroy');
+          // Define a cor com base na porcentagem
+          const cor = 
+            porcentagem < 25 ? "#FF4560" :       // Vermelho para menos de 25%
+            porcentagem <= 75 ? "#794ED4" :       // Roxo entre 25% e 75%
+            "#28bb49";                            // Verde acima de 75%
 
-            new ApexCharts(element, {
-              series: [porcentagem],
-              chart: { type: "radialBar", id: 'chartDown' },
-              plotOptions: {
-                radialBar: {
-                  dataLabels: {
-                    value: {
-                      formatter: val => `${(valorDownload / 1000).toFixed(2)} Mbps` // Exibir como Mbps real
-                    }
+          ApexCharts.exec('chartDown', 'destroy'); // Remove gráfico anterior
+
+          new ApexCharts(element, {
+            series: [porcentagem],
+            chart: { type: "radialBar", id: 'chartDown' },
+            plotOptions: {
+              radialBar: {
+                startAngle: -90,
+                endAngle: 90,
+                track: {
+                  background: "#e7e7e7",
+                  strokeWidth: "97%",
+                  dropShadow: {
+                    enabled: true,
+                    top: 2,
+                    color: cor,
+                    opacity: 0.7,
+                    blur: 3
+                  }
+                },
+                dataLabels: {
+                  value: {
+                    offsetY: -2,
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    color: "black",
+                    formatter: val => `${(valorDownload / 1000).toFixed(2)} Mbps` // Exibir em Mbps
                   }
                 }
-              },
-              fill: { colors: ["#008FFB"] },
-              labels: ["Download"]
-            }).render();
-          } else {
-            console.error("Valor de download inválido:", data.valor_download);
-          }
+              }
+            },
+            fill: { colors: [cor] },
+            labels: [""]
+          }).render();
         } else {
-          console.error("Nenhum dado válido de download retornado.");
+          console.error("Valor de download inválido:", data.valor_download);
         }
-      })
-      .catch(error => {
-        console.error("Erro ao obter dados de download:", error);
-      });
-  }
+      } else {
+        console.error("Nenhum dado válido de download retornado.");
+      }
+    })
+    .catch(error => {
+      console.error("Erro ao obter dados de download:", error);
+    });
+}
 
   function obterUltimoValorUpload() {
     const idEmpresa = sessionStorage.getItem("ID_EMPRESA_USUARIO");
@@ -504,7 +527,7 @@
                                     name: { show: false },
                                     value: {
                                         offsetY: -2,
-                                        fontSize: "25px",
+                                        fontSize: "16px",
                                         fontWeight: "bold",
                                         color: "black",
                                         formatter: function (val) {
